@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product Form</title>
+</head>
+
+<body>
+    <div class="container">
+        <form>
+            <div class="product-info">
+                <h2>Product Information</h2>
+                <label for="abs-pn">ABS Product P/N</label>
+
+                <label for="old-abs-pn">Old ABS P/N</label>
+                <input type="text" class="form-control" id="old-abs-pn">
+
+                <label for="customer">Customer</label>
+
+                <label for="customer-id">Customer ID</label>
+                <input type="text" class="form-control" id="customer-id" placeholder="ABSO">
+
+                <label for="category">Category</label>
+                <select class="form-control" name="category" id="category">
+                    <option value="1">Option 1</option>
+                    <option value="2">Option 2</option>
+                    <option value="3">Option 3</option>
+                </select>
+
+                <label for="oem-pn">OEM Product P/N</label>
+                <input type="text" class="form-control" id="oem-pn">
+
+                <label for="title">Title</label>
+                <input type="text" class="form-control" id="title">
+
+                <label for="description">Description</label>
+                <input type="text" class="form-control" id="description">
+
+                <label for="replication">Replication</label>
+                <select class="form-control" name="replication" id="replication">
+                    <option value="1">Option 1</option>
+                    <option value="2">Option 2</option>
+                    <option value="3">Option 3</option>
+                </select>
+
+                <label for="master-format">Master Format</label>
+                <select class="form-control" name="master-format" id="master-format">
+                    <option value="1">Option 1</option>
+                    <option value="2">Option 2</option>
+                    <option value="3">Option 3</option>
+                </select>
+
+                <label for="master-received">Master Received</label>
+                <input type="date" class="form-control" name="master-received" id="master-received">
+
+                <label for="master-label">Master Label</label>
+                <input type="text" class="form-control" id="master-label">
+
+                <label for="master-capacity">Master Capacity</label>
+                <input type="text" class="form-control" id="master-capacity">
+
+                <label for="master-location">Master Location</label>
+                <select class="form-control" name="master-location" id="master-location">
+                    <option value="1">Option 1</option>
+                    <option value="2">Option 2</option>
+                    <option value="3">Option 3</option>
+                </select>
+
+                <label for="films-location">Films Location</label>
+                <select class="form-control" name="films-location" id="films-location">
+                    <option value="1">Option 1</option>
+                    <option value="2">Option 2</option>
+                    <option value="3">Option 3</option>
+                </select>
+
+                <label for="date-code-required">Date Code Required?</label>
+                <input type="checkbox" class="form-control" id="date-code-required">
+
+                <label for="date-code-position">Date Code Position</label>
+                <input type="text" class="form-control" id="date-code-position">
+
+                <label for="inner-hub">Inner Hub</label>
+                <input type="text" class="form-control" id="inner-hub">
+
+                <label for="inner-hub-position">Inner Hub Position</label>
+                <input type="text" class="form-control" id="inner-hub-position">
+            </div>
+
+            <div class="product-color">
+                <h2>Color Information</h2>
+                <label for="floodcoat">Floodcoat?</label>
+                <input type="checkbox" class="form-control" id="floodcoat">
+
+                <label for="rimage-print">Rimage Print?</label>
+                <input type="checkbox" class="form-control" id="rimage-print">
+
+                <label for="number-of-colors">Number of Colors?</label>
+                <select class="form-control" name="number-of-colors" id="number-of-colors">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                </select>
+                <!--depending on number-of-colors, input fields will be added or removed
+                dont forget to implement-->
+
+                <label for="color-notes">Color Notes</label>
+                <input type="text" class="form-control" id="color-notes">
+            </div>
+
+            <div class="product-components">
+                <h2>Components Info</h2>
+                <label for="component-add">Components</label>
+                <button type="button" id="component-add">Add New</button>
+                <!--every time "Add New" button is pressed, add new component listing of the product
+                dont forget to implement-->
+
+                <label for="packaging-notes">Packaging Notes</label>
+                <input type="text" class="form-control" id="packaging-notes">
+
+                <label for="product-notes">Product Notes</label>
+                <input type="text" class="form-control" id="product-notes">
+
+                <label for="product-status">Product Status</label>
+                <select class="form-control" name="product-status" id="product-status">
+                    <option value="cur">Current</option>
+                    <option value="new">New</option>
+                </select>
+            </div>
+
+            <div class="submit">
+                <button type="submit" id="add-product">Add Product</button>
+            </div>
+        </form>
+
+        <div class="location">
+            <label for="add-location">Choose a new location for this Product</label>
+            <select class="form-control" name="master-location" id="master-location" aria-placeholder="Select Value">
+                <option value="1">Option 1</option>
+                <option value="2">Option 2</option>
+                <option value="3">Option 3</option>
+            </select>
+            <button type="submit" id="add-location">Add Location</button>
+        </div>
+    </div>
+</body>
+
+</html>
