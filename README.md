@@ -7,3 +7,4 @@
 # Nataly Avalos 
 # Kyler Ng
 # Mark Chavez
+# Victor Dumaslan
