@@ -20,6 +20,8 @@ function HomePage() {
         <br></br>
         <Link to = "Order">+ Add Order</Link>
         <br></br>
+        <Link to = "Shipping">+ Add Shipping</Link>
+        <br></br>
         <Link to = "Product">+ Add Product</Link>
         <br></br>
         <Link to = "Item_Check_In">+ Item Check In</Link>
