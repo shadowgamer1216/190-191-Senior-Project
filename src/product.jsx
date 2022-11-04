@@ -25,6 +25,7 @@ const Product = () => {
 
                         <p>
                             Customer Absolute Media, Inc.
+                            
                         </p>
                         <p>
                             Customer ID
@@ -32,7 +33,23 @@ const Product = () => {
                         </p>
                         <p>
                             Category
-                            
+                            <input name = "Category"/>                        
+                        </p>
+                        <p>
+                            OEM Product P/N
+                            <input name = "OEM"/>                        
+                        </p>
+                        <p>
+                            Title
+                            <input name = "Title"/>                        
+                        </p>
+                        <p>
+                            Description
+                            <input name = "Description"/>                        
+                        </p>
+                        <p>
+                            Category
+                            <input name = "Category"/>                        
                         </p>
 
 
