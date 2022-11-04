@@ -25,16 +25,21 @@ const Product = () => {
 
                         <p>
                             Customer Absolute Media, Inc.
-
                         </p>
+                        <p>
+                            Customer ID
+                            <input name = "ID"/>
+                        </p>
+                        <p>
+                            Category
+                            
+                        </p>
+
 
                     </label>
                 </fieldset>
                 
             </form>
-            
-
-
 
 
             <button onClick={() => navigate(-1)}>Home</button>
