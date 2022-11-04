@@ -8,4 +8,4 @@
 # Kyler Ng
 # Mark Chavez
 # Victor Dumaslan
-# Jared ROque
+# Jared Roque
