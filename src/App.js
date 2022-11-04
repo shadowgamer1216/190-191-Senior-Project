@@ -1,6 +1,5 @@
 import './App.css';
 
-import testLogo from './absolutemedialogo.png';
 import {
   BrowserRouter as Router,
   Routes,
@@ -14,7 +13,6 @@ import ProductPage from './product';
 function App() {
   return (
     <div className="App">
-    
       <Routes>
         <Route path = '/' element = {<HomePage/>} />
         <Route path = "product" element = {<ProductPage/>} />      
