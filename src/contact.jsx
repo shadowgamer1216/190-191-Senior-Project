@@ -440,7 +440,7 @@ const Contact = () => {
                         <p>
                             Notes
                             <textarea> 
-                                
+
                             </textarea>
 
                         </p>
@@ -455,7 +455,8 @@ const Contact = () => {
 
 
             <button onClick={() => navigate(-1)}>Home</button>
-            <button onClick={() => navigate(-1)}>Submit</button>
+            <br></br>
+            <button onClick={() => navigate(-1)}>Add</button>
         </div>
     );
 };
