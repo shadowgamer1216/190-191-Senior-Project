@@ -13,6 +13,7 @@ import ContactPage from './contact';
 import ComponentsPage from './components';
 import LocationPage from './location';
 import OrderPage from './order';
+import CompanyPage from './company';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path = "contact" element = {<ContactPage/>} /> 
         <Route path = "location" element = {<LocationPage/>} />
         <Route path = "order" element = {<OrderPage/>} />
+        <Route path = "company" element = {<CompanyPage/>} />
       </Routes>
     
     </div>
