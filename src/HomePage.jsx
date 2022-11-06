@@ -12,7 +12,7 @@ function HomePage() {
         </h1> 
         <Link to = "Company">+ Add Company</Link>
         <br></br>
-        <Link to = "Component">+ Add Component</Link>
+        <Link to = "Components">+ Add Component</Link>
         <br></br>
         <Link to = "Contact">+ Add Contact</Link>
         <br></br>
