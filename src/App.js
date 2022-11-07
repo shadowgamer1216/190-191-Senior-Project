@@ -14,6 +14,7 @@ import ComponentsPage from './components';
 import LocationPage from './location';
 import OrderPage from './order';
 import CompanyPage from './company';
+import ItemCheckInPage from './itemCheckIn'
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path = "location" element = {<LocationPage/>} />
         <Route path = "order" element = {<OrderPage/>} />
         <Route path = "company" element = {<CompanyPage/>} />
+        <Route path = "itemCheckIn" element = {<ItemCheckInPage/>} />
       </Routes>
     
     </div>

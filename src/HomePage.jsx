@@ -24,7 +24,7 @@ function HomePage() {
         <br></br>
         <Link to = "Product">+ Add Product</Link>
         <br></br>
-        <Link to = "Item_Check_In">+ Item Check In</Link>
+        <Link to = "ItemCheckIn">+ Item Check In</Link>
         <br></br>
         <Link to = "View">+ View</Link>
         <br></br>
