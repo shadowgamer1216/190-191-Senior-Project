@@ -14,7 +14,9 @@ import ComponentsPage from './components';
 import LocationPage from './location';
 import OrderPage from './order';
 import CompanyPage from './company';
-import ItemCheckInPage from './itemCheckIn'
+import ItemCheckInPage from './itemCheckIn';
+import Shipping from './shipping';
+
 
 function App() {
   return (
@@ -29,6 +31,7 @@ function App() {
         <Route path = "order" element = {<OrderPage/>} />
         <Route path = "company" element = {<CompanyPage/>} />
         <Route path = "itemCheckIn" element = {<ItemCheckInPage/>} />
+        <Route path = "shipping" element = {<Shipping/>} />
       </Routes>
     
     </div>
