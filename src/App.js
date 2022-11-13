@@ -15,7 +15,7 @@ import LocationPage from './location';
 import OrderPage from './order';
 import CompanyPage from './company';
 import ItemCheckInPage from './itemCheckIn';
-import Shipping from './shipping';
+import Shipping from './Shipping';
 
 
 function App() {
