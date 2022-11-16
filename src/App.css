@@ -43,6 +43,10 @@
   padding: 5px 20px;
 }
 
+.wrapper {
+  text-align: left;
+}
+
 .wrapper fieldset {
   margin: 20px 0;
 }
@@ -74,4 +78,46 @@ div.location {
 div.wrapper .form-col label {
   display: flex;
   align-items: left;
+}
+
+.HomePage {
+  /*align-items:center;*/
+  background-color: white;
+  font-size:xx-large;
+
+}
+
+.HomePageBar {
+  top: 50%;
+  left: 50%;
+  width: auto;
+  height: 100%;
+  background-color: rgb(255, 0, 0);
+  background-position: 0% 50%;
+  /*background-size: 50%;*/
+  /*background-repeat: no-repeat;*/
+  font-weight: 700;
+  border: 2px;
+  color: white;
+}
+
+.HomePageButton {
+  color: white;
+  background-color: red;
+  font-size: 30px;
+  font-weight: 20px;
+  padding: 15px;
+  width: 20%;
+  border:2px;
+  /*table-layout: fixed;*/
+  /*border-collapse: collapse;*/
+}
+
+.HomePageButtonWrapper {
+  /*text-align: center;*/
+  /*display:inline-block;*/
+  /*top:50%;*/
+  /*left:50%;*/
+  margin: 0 auto;
+  display: block;
 }
