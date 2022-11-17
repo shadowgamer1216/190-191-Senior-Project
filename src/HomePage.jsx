@@ -15,79 +15,76 @@ function HomePage() {
           Absolute Media, Inc
         </h1>
       </div>
-        <div class='testblock1'>
-        <Link to = "Company">
-          <div className="Add Company">
-          <button type="button" id="Add Company" class="HomePageButton">+ Add Company</button>
-          <Link to = "Shipping">
-          <button type="button" id="Add Shipping" class="HomePageButton">+ Add Shipping</button>
+
+        <div class='block1'>
+          <Link to = "Company">
+            <button type="button" id="Add Company" class="HomePageButton">+ Add Company</button>
           </Link>
-          </div>
-        </Link>
+          <Link to = "Shipping">
+            <button type="button" id="Add Shipping" class="HomePageButton">+ Add Shipping</button>
+          </Link>
+          
         </div>
 
-        <Link to = "Components">
-        <div className="Add Component">
-            <button type="Add Component" id="Add Component" class="HomePageButton">Add Component</button>
-          </div>
-        </Link>
+        <div class='block2'>
+          <Link to = "Components">
+            <button type="Add Component" id="Add Component" class="HomePageButton">+ Add Component</button>
+          </Link>
+          <Link to = "Contact">
+            <button type="Add Contact" id="Add Contact" class="HomePageButton">+ Add Contact</button>
+          </Link>
+        </div>
+
         {/*<br></br>*/}
         
 
-        <Link to = "Contact">
-        <div className="Add Contact">
-            <button type="Add Contact" id="Add Contact" class="HomePageButton">Add Contact</button>
-          </div>
-        </Link>
+        
         {/*<br></br>*/}
-
+        <div class='block3'>
         <Link to = "Location">
-        <div className="Add Location">
-            <button type="Add Location" id="Add Location" class="HomePageButton">Add Location</button>
-          </div>
-        </Link>
+        <button type="Add Location" id="Add Location" class="HomePageButton">+ Add Location</button>
+          </Link>
+          <Link to = "Order">
+          <button type="Add Order" id="Add Order" class="HomePageButton">+ Add Order</button>
+          </Link>
+        </div>
+
+      
         {/*<br></br>*/}
 
-        <Link to = "Order">
-        <div className="Add Order">
-            <button type="Add Order" id="Add Order" class="HomePageButton">Add Order</button>
-          </div>
-        </Link>
+       
         {/*<br></br>*/}
 
+        <div class='block4'>
         <Link to = "Shipping">
-        <div className="Add Shipping">
-            <button type="Add Shipping" id="Add Shipping" class="HomePageButton">Add Shipping</button>
-          </div>
-        </Link>
+        <button type="Add Product" id="Add Product" class="HomePageButton">+ Add Product</button>
+          </Link>
+          <Link to = "ItemCheckIn">
+        <button type="Item Check In" id="Item Check In" class="HomePageButton">Item Check In</button>
+          </Link>
+        </div>
+
+       
         {/*<br></br>*/}
 
-        <Link to = "Product">
-        <div className="Add Product">
-            <button type="Add Product" id="Add Product" class="HomePageButton">Add Product</button>
-          </div>
-        </Link>
+       
         {/*<br></br>*/}
-
-        <Link to = "ItemCheckIn">
-        <div className="Item Check In">
-            <button type="Item Check In" id="Item Check In" class="HomePageButton">Item Check In</button>
-          </div>
-        </Link>
-        {/*<br></br>*/}
-
-        <Link to = "View">
-        <div className="View">
-            <button type="View" id="View" class="HomePageButton">View</button>
-          </div>
-        </Link>
-        {/*<br></br>*/}
-
+        <div class='block5'>
         <Link to = "Edit">
-        <div className="Edit">
-            <button type="Edit" id="Edit" class="HomePageButton">Edit</button>
-          </div>
-        </Link>
+        <button type="Edit" id="Edit" class="HomePageButton">Edit</button>
+          </Link>
+          <Link to = "View">
+          <button type="View" id="View" class="HomePageButton">View</button>
+          </Link>
+        </div>
+
+       
+        {/*<br></br>*/}
+
+  
+        {/*<br></br>*/}
+
+       
         {/*<br></br>*/}
     </div>
   );

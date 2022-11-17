@@ -103,14 +103,27 @@ div.wrapper .form-col label {
 
 .HomePageButton {
   color: white;
-  background-color: red;
+  background-color: gray;
   font-size: 30px;
   font-weight: 20px;
   padding: 15px;
   width: 20%;
   border:2px;
+  margin-right: 40px;
+  margin-left: 40px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 20px;
   /*table-layout: fixed;*/
   /*border-collapse: collapse;*/
+}
+
+.HomePageButton:hover {
+  background-color: red;
+}
+
+.HomePageButton:active {
+  transform: translateY(4px);
 }
 
 .HomePageButtonWrapper {
