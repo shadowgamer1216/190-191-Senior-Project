@@ -6,32 +6,46 @@ import { Link, useNavigate } from "react-router-dom"
 const Contact = () => {
     const navigate = useNavigate();
     return (
-        <div className="wrapper">
-            <h1>
-                Add Contact
-            </h1>
+        <div className="Page">
+            {/*<div class="AbsoMedia">
+                Absolute Media, Inc
+    </div>*/}
+
+            {/*<div className="BlackBar">
+            </div>*/}
+           {/*} <div className="PageTitleName">
+                <h1>
+                    Contacts
+                </h1>
+        </div>*/}
+            <div className="PageTitleBar">
+                <h0>
+                    Add Contact
+                </h0>
+            </div>
             <form>
                 <fieldset>
                     <label>
                         <p>
                             Customer ID
-                            <input name = "ABS"/>
+                            {/*<input name = "ABS"/>*/}
+                            {/*<input type="text" size="100" STYLE="color: #00000; font-size: 12px; background-color: #D1E2FE;"></input>*/}
+                            <input type="text" STYLE="color: #00000; font-size: 12px; background-color: #D1E2FE;"></input>
                         </p>
-
                         <p> 
                             Company
-                            <input name = "OldABS"/>
+                            <input type="text" STYLE="color: #00000; font-size: 12px; background-color: #D1E2FE;"></input>
                         </p>
 
                         <p>
                             First
-                            <input first = ""/>
+                            <input type="text" STYLE="color: #00000; font-size: 12px; background-color: #D1E2FE;"></input>
 
                         </p>
 
                         <p>
                             Last
-                            <input last = ""/>
+                            <input type="text" STYLE="color: #00000; font-size: 12px; background-color: #D1E2FE;"></input>
 
                         </p>
 
@@ -48,43 +62,43 @@ const Contact = () => {
 
                         <p>
                             Cell Phone Number
-                            <input phone = ""/>
+                            <input type="text" STYLE="color: #00000; font-size: 12px; background-color: #D1E2FE;"></input>
 
                         </p>
 
                         <p>
                             Third Party Company
-                            <input third_party = ""/>
+                            <input type="text" STYLE="color: #00000; font-size: 12px; background-color: #D1E2FE;"></input>
 
                         </p>
 
                         <p>
                             Title
-                            <input title = ""/>
+                            <input type="text" STYLE="color: #00000; font-size: 12px; background-color: #D1E2FE;"></input>
 
                         </p>
 
                         <p>
                             Dept
-                            <input dept = ""/>
+                            <input type="text" STYLE="color: #00000; font-size: 12px; background-color: #D1E2FE;"></input>
 
                         </p>
 
                         <p>
                             Add 1
-                            <input add1 = ""/>
+                            <input type="text" STYLE="color: #00000; font-size: 12px; background-color: #D1E2FE;"></input>
 
                         </p>
 
                         <p>
                             Add 2
-                            <input add2 = ""/>
+                            <input type="text" STYLE="color: #00000; font-size: 12px; background-color: #D1E2FE;"></input>
 
                         </p>
 
                         <p>
                             City
-                            <input city = ""/>
+                            <input type="text" STYLE="color: #00000; font-size: 12px; background-color: #D1E2FE;"></input>
 
                         </p>
 
@@ -149,7 +163,7 @@ const Contact = () => {
 
                         <p>
                             Zip
-                            <input zip = ""/>
+                            <input type="text" STYLE="color: #00000; font-size: 12px; background-color: #D1E2FE;"></input>
 
                         </p>
 
@@ -415,31 +429,31 @@ const Contact = () => {
 
                         <p>
                             Phone
-                            <input phone = ""/>
+                            <input type="text" STYLE="color: #00000; font-size: 12px; background-color: #D1E2FE;"></input>
 
                         </p>
 
                         <p>
                             Extension
-                            <input extension = ""/>
+                            <input type="text" STYLE="color: #00000; font-size: 12px; background-color: #D1E2FE;"></input>
 
                         </p>
 
                         <p>
                             Fax
-                            <input fax = ""/>
+                            <input type="text" STYLE="color: #00000; font-size: 12px; background-color: #D1E2FE;"></input>
 
                         </p>
 
                         <p>
                             Email
-                            <input email = ""/>
+                            <input type="text" STYLE="color: #00000; font-size: 12px; background-color: #D1E2FE;"></input>
 
                         </p>
 
                         <p>
                             Notes
-                            <textarea> 
+                            <textarea rows="4" cols="50" STYLE="color: #00000; background-color: #D1E2FE;"> 
 
                             </textarea>
 
