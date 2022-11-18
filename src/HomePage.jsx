@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 function HomePage() {
   return (
     
-    /*<div>*/
     <div class='HomePage'>
       {/*<img src={logo} className="App-logo" alt="logo" />*/}
       <div class='HomePageBar'>
@@ -33,59 +32,34 @@ function HomePage() {
           <Link to = "Contact">
             <button type="Add Contact" id="Add Contact" class="HomePageButton">+ Add Contact</button>
           </Link>
-        </div>
+        </div> 
 
-        {/*<br></br>*/}
-        
-
-        
-        {/*<br></br>*/}
         <div class='block3'>
-        <Link to = "Location">
-        <button type="Add Location" id="Add Location" class="HomePageButton">+ Add Location</button>
+          <Link to = "Location">
+            <button type="Add Location" id="Add Location" class="HomePageButton">+ Add Location</button>
           </Link>
           <Link to = "Order">
-          <button type="Add Order" id="Add Order" class="HomePageButton">+ Add Order</button>
+            <button type="Add Order" id="Add Order" class="HomePageButton">+ Add Order</button>
           </Link>
         </div>
-
-      
-        {/*<br></br>*/}
-
-       
-        {/*<br></br>*/}
 
         <div class='block4'>
-        <Link to = "Shipping">
-        <button type="Add Product" id="Add Product" class="HomePageButton">+ Add Product</button>
-          </Link>
+          <Link to = "Shipping">
+            <button type="Add Product" id="Add Product" class="HomePageButton">+ Add Product</button>
+            </Link>
           <Link to = "ItemCheckIn">
-        <button type="Item Check In" id="Item Check In" class="HomePageButton">Item Check In</button>
+            <button type="Item Check In" id="Item Check In" class="HomePageButton">+ Item Check In</button>
           </Link>
         </div>
 
-       
-        {/*<br></br>*/}
-
-       
-        {/*<br></br>*/}
         <div class='block5'>
-        <Link to = "Edit">
-        <button type="Edit" id="Edit" class="HomePageButton">Edit</button>
+          <Link to = "Edit">
+            <button type="Edit" id="Edit" class="HomePageButton">Edit</button>
           </Link>
           <Link to = "View">
-          <button type="View" id="View" class="HomePageButton">View</button>
+            <button type="View" id="View" class="HomePageButton">View</button>
           </Link>
         </div>
-
-       
-        {/*<br></br>*/}
-
-  
-        {/*<br></br>*/}
-
-       
-        {/*<br></br>*/}
     </div>
   );
 }
