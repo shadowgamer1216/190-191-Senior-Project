@@ -121,7 +121,7 @@ const Product = () => {
                             <label htmlFor="category" className="col-sm-2 col-form-label">Category</label>
                             <div className="input-group input-group-sm mb-3 col-sm-3">
                                 <select className="form-control" name="category" id="category">
-                                    <option selected value="">Select Category</option>
+                                    <option defaultValue="0">Select Category</option>
                                     <option value="1">Option 1</option>
                                     <option value="2">Option 2</option>
                                     <option value="3">Option 3</option>
@@ -154,7 +154,7 @@ const Product = () => {
                             <label htmlFor="replication" className="col-sm-2 col-form-label">Replication</label>
                             <div className="input-group input-group-sm mb-3 col-sm-3">
                                 <select className="form-control" name="replication" id="replication">
-                                    <option defaultValue="">Select Type</option>
+                                    <option defaultValue="0">Select Type</option>
                                     <option value="1">Option 1</option>
                                     <option value="2">Option 2</option>
                                     <option value="3">Option 3</option>
@@ -166,7 +166,7 @@ const Product = () => {
                             <label htmlFor="master-format" className="col-sm-2 col-form-label">Master Format</label>
                             <div className="input-group input-group-sm mb-3 col-sm-3">
                                 <select className="form-control" name="master-format" id="master-format">
-                                    <option selected value="">Select Format</option>
+                                    <option defaultValue="0">Select Format</option>
                                     <option value="1">Option 1</option>
                                     <option value="2">Option 2</option>
                                     <option value="3">Option 3</option>
@@ -199,7 +199,7 @@ const Product = () => {
                             <label htmlFor="master-location" className="col-sm-2 col-form-label">Master Location</label>
                             <div className="input-group input-group-sm mb-3 col-sm-3">
                                 <select className="form-control" name="master-location" id="master-location">
-                                    <option selected value="">Select Location</option>
+                                    <option defaultValue="0">Select Location</option>
                                     <option value="1">Option 1</option>
                                     <option value="2">Option 2</option>
                                     <option value="3">Option 3</option>
@@ -211,7 +211,7 @@ const Product = () => {
                             <label htmlFor="films-location" className="col-sm-2 col-form-label">Films Location</label>
                             <div className="input-group input-group-sm mb-3 col-sm-3">
                                 <select className="form-control" name="films-location" id="films-location">
-                                    <option selected value="">Select Location</option>
+                                    <option defaultValue="0">Select Location</option>
                                     <option value="1">Option 1</option>
                                     <option value="2">Option 2</option>
                                     <option value="3">Option 3</option>
@@ -257,7 +257,7 @@ const Product = () => {
                             <label htmlFor="number-of-colors" className="col-sm-2 col-form-label">Number of Colors?</label>
                             <div className="input-group input-group-sm mb-3 col-sm-2">
                                 <select className="form-control" name="number-of-colors" id="number-of-colors">
-                                    <option selected value="">Select Value</option>
+                                    <option defaultValue="0">Select Value</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
@@ -317,7 +317,7 @@ const Product = () => {
                             <label htmlFor="product-status" className="col-sm-2 col-form-label">Product Status</label>
                             <div className="input-group input-group-sm mb-3 col-sm-2">
                                 <select className="form-control" name="product-status" id="product-status">
-                                    <option selected value="">Select Status</option>
+                                    <option defaultValue="0">Select Status</option>
                                     <option value="cur">Current</option>
                                     <option value="new">New</option>
                                 </select>
@@ -334,8 +334,8 @@ const Product = () => {
                 <div className="product-location m-3 p-3">
                     <label htmlFor="add-location" className="col-form-label-sm">Choose a new location for this Product</label>
                     <div className="input-group input-group-sm mb-3 col-sm-4">
-                        <select className="form-control form-control-sm" name="add-location" id="add-location" placeholder="Select Value">
-                            <option selected value="">Select Location</option>
+                        <select className="form-control form-control-sm" name="add-location" id="add-location">
+                            <option defaultValue="0">Select Location</option>
                             <option value="1">Option 1</option>
                             <option value="2">Option 2</option>
                             <option value="3">Option 3</option>
@@ -350,7 +350,7 @@ const Product = () => {
 
             </div>
 
-            <div className="footer">
+            <footer className="footer">
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-sm">
@@ -364,7 +364,7 @@ const Product = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </footer>
         </div>
     );
 };
