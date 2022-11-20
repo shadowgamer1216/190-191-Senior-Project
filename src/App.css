@@ -64,6 +64,9 @@ textarea#productarea {
   background-color: ghostwhite;
 }
 
+.page {
+  background-color: ghostwhite;
+}
 .container {
   background-color: white;
   position: relative;
