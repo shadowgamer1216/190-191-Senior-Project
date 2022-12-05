@@ -4,55 +4,114 @@ import { Link, useNavigate } from "react-router-dom"
 import { useState } from "react";
 
 function AddComponent() {
-    const [inputValues, setInputValues] = useState({});
-    const [counter, setCounter] = useState(0);
-
-    const handleClick = () => {
-        setCounter(counter + 1);
-        console.log(counter);
-    };
-
-    const handleOnChange = (e) => {
-        const abc = {};
-        abc[e.target.className] = e.target.value;
-        setInputValues({ ...inputValues, ...abc });
-    };
-
-    const removeClick = () => {
-        //const element = document.getElementById("temp").remove();
-        setCounter(counter - 1);
-        console.log(counter);
-    };
+    const [inputFields, setInputFields] = useState([
+        { field: '' }
+    ])
+    const handleChange = (index, event) => {
+        let data = [...inputFields];
+        data[index][event.target.name] = event.target.value;
+        setInputFields(data);
+    }
+    const addField = () => {
+        let newField = { field: '' }
+        setInputFields([...inputFields, newField])
+    }
+    const removeField = (index) => {
+        let data = [...inputFields];
+        data.splice(index, 1)
+        setInputFields(data)
+    }
 
     return (
         <div className="product">
             <div className="form-row">
                 <div className="input-group input-group-sm mb-3 col-sm-10">
-                    <button type="button" id="component-add" className="btn btn-outline-primary btn-sm" onClick={handleClick}>Add New Component</button>
+                    <button type="button" id="component-add" className="btn btn-outline-primary btn-sm" onClick={addField}>Add New Component</button>
                 </div>
             </div>
-
-            {Object.keys(inputValues).map((c) => {
-                return <p>{inputValues[c]}</p>;
-            })}
-
-            {Array.from(Array(counter)).map((c, index) => {
+            {inputFields.map((input, index) => {
                 return (
-                    <div id="temp">
+                    <div className="it-field" key={index}>
                         <div className="form-row">
-                            <label className="col-sm-2 col-form-label">Component #{counter}</label>
+                            <label className="col-sm-2 col-form-label">Component #{index + 1}</label>
                             <div className="input-group input-group-sm mb-3 col-sm-9">
-                                <input onChange={handleOnChange} key={c} className="form-control" type="text"></input>
+                                <input
+                                    key={index}
+                                    className="form-control field"
+                                    type="text"
+                                    value={input.field}
+                                    onChange={event => handleChange(index, event)}
+                                />
                             </div>
                             <div className="input-group input-group-sm mb-3 col-sm-1">
-                                <button type="button" id="component-remove" className="btn btn-outline-danger btn-sm" onClick={removeClick}>X</button>
+                                <button
+                                    type="button"
+                                    id="component-remove"
+                                    className="btn btn-outline-danger btn-sm"
+                                    onClick={removeField}
+                                >X</button>
                             </div>
                         </div>
                     </div>
                 );
             })}
+        </div>
+    );
+}
 
+function AddColor() {
+    const [inputFields, setInputFields] = useState([
+        { field: '' }
+    ])
+    const handleChange = (index, event) => {
+        let data = [...inputFields];
+        data[index][event.target.name] = event.target.value;
+        setInputFields(data);
+    }
+    const addField = () => {
+        let newField = { field: '' }
+        setInputFields([...inputFields, newField])
+    }
+    const removeField = (index) => {
+        let data = [...inputFields];
+        data.splice(index, 1)
+        setInputFields(data)
+    }
 
+    return (
+        <div className="product">
+            <div className="form-row">
+                <div className="input-group input-group-sm mb-3 col-sm">
+                    <button type="button" id="component-add" className="btn btn-outline-primary btn-sm" onClick={addField}>Add New Color</button>
+                </div>
+            </div>
+
+            {inputFields.map((input, index) => {
+                return (
+                    <div className="it-field" key={index}>
+                        <div className="form-row">
+                            <label className="col-sm-2 col-form-label">Color #{index + 1}</label>
+                            <div className="input-group input-group-sm mb-3 col-sm-9">
+                                <input
+                                    key={index}
+                                    className="form-control field"
+                                    type="text"
+                                    value={input.field}
+                                    onChange={event => handleChange(index, event)}
+                                />
+                            </div>
+                            <div className="input-group input-group-sm mb-3 col-sm-1">
+                                <button
+                                    type="button"
+                                    id="color-remove"
+                                    className="btn btn-outline-danger btn-sm"
+                                    onClick={removeField}
+                                >X</button>
+                            </div>
+                        </div>
+                    </div>
+                );
+            })}
         </div>
     );
 }
@@ -254,21 +313,7 @@ const Product = () => {
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="number-of-colors" className="col-sm-2 col-form-label">Number of Colors?</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-2">
-                                <select className="form-control" name="number-of-colors" id="number-of-colors">
-                                    <option defaultValue="0">Select Value</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
-                                    <option value="8">8</option>
-                                </select>
-                            </div>
-
+                            <div className="input-group input-group-sm col-sm-2"></div>
                             <div className="input-group input-group-sm col-sm-2 pl-5">
                                 <div className="form-group custom-control custom-checkbox">
                                     <input type="checkbox" className="custom-control-input" id="floodcoat" />
@@ -283,6 +328,8 @@ const Product = () => {
                                 </div>
                             </div>
                         </div>
+
+                        <AddColor></AddColor>
 
                         <div className="form-row">
                             <label htmlFor="color-notes" className="col-sm-2 col-form-label">Color Notes</label>
