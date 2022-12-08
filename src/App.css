@@ -225,3 +225,56 @@ Link.nav-link {
   font-weight: bolder;
   font-size: x-large;
 }
+
+
+#Shipping-CSS
+.address-title{
+  text-align: center;
+  color: white;
+  background-color:red
+}
+
+.address-information{
+  text-align: center;
+  font-size: large;
+
+}
+
+.address-field{
+  text-align: left;
+  color: red;
+  background-color: #E2EAFF;
+}
+
+.order-information{
+  text-align: center;
+  font-size: large;
+
+}
+
+input{
+  background-color: #E2EAFF;
+  width: 100%;
+}
+table{
+  text-align:left;
+  table-layout: auto;
+  width: 100%;
+}
+.order-details{
+  text-align: center;
+  color: white;
+  background-color: red;
+}
+
+.shipping-title{
+  text-align: center;
+  color: white;
+  background-color: red;
+}
+
+.final-order-field{
+  text-align: left;
+  color: #E2EAFF;
+  background-color: #E2EAFF;
+}
