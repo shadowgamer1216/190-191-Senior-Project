@@ -1,0 +1,68 @@
+.container{
+    background-color: white;
+    position: relative;
+    min-height: 100%;
+    overflow: hidden;
+  }
+  
+  .address-title{
+    text-align: center;
+    color: white;
+    background-color:red
+  }
+  
+  .address-information{
+    text-align: center;
+    font-size: large;
+  
+  }
+  .order-information{
+    text-align: center;
+    font-size: large;
+  
+  }
+  
+  .address-field{
+    text-align: left;
+    color: red;
+    background-color: #E2EAFF;
+  }
+  
+  .final-order-field{
+    text-align: left;
+    color: #E2EAFF;
+    background-color: #E2EAFF;
+  }
+  
+  .shipping-title{
+    text-align: center;
+    color: white;
+    background-color: red;
+  }
+  
+  .order-details{
+    text-align: center;
+    color: white;
+    background-color: red;
+  }
+  
+  table{
+    text-align:left;
+    table-layout: auto;
+    width: 100%;
+  }
+  
+  input{
+    background-color: #E2EAFF;
+    width: 100%;
+  }
+  
+  Link.nav-link {
+    color: white;
+  }
+  
+  
+  footer {
+    background-color: red;
+    color: white;
+  }
