@@ -627,7 +627,7 @@ const Order = () => {
                     <div className="form-row">
                         <label htmlFor="invoiceNotes" className="col-sm-2 col-form-label">Invoice Notes</label>
                         <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <textarea rows="4" cols="50" className="form-control" name="invoiceNotes" id="invoiceNotes" />
+                                <textarea rows="4" cols="50" className="form-control" name="invoiceNotes" id="custom-area" />
                             </div>
                     </div>
                 </div>
@@ -740,7 +740,7 @@ const Order = () => {
                     <div className="form-row">
                         <label htmlFor="customerProvidedMaterial" className="col-sm-2 col-form-label">Customer Provided Material</label>
                         <div className="input-group input-group-sm mb-3 col-sm-10">
-                            <textarea rows="4" cols="50" className="form-control" name="customerProvidedMaterial" id="customerProvidedMaterial" />
+                            <textarea rows="4" cols="50" className="form-control" name="customerProvidedMaterial" id="custom-area" />
                         </div>
                     </div>
 
@@ -754,21 +754,21 @@ const Order = () => {
                     <div className="form-row">
                         <label htmlFor="customerNotes" className="col-sm-2 col-form-label">Customer Notes</label>
                         <div className="input-group input-group-sm mb-3 col-sm-10">
-                            <textarea rows="4" cols="50" className="form-control" name="customerNotes" id="customerNotes" />
+                            <textarea rows="4" cols="50" className="form-control" name="customerNotes" id="custom-area" />
                         </div>
                     </div>
 
                     <div className="form-row">
                         <label htmlFor="vendorNotes" className="col-sm-2 col-form-label">Vendor Notes</label>
                         <div className="input-group input-group-sm mb-3 col-sm-10">
-                            <textarea rows="4" cols="50" className="form-control" name="vendorNotes" id="vendorNotes" />
+                            <textarea rows="4" cols="50" className="form-control" name="vendorNotes" id="custom-area" />
                         </div>
                     </div>
 
                     <div className="form-row">
                         <label htmlFor="orderNotes" className="col-sm-2 col-form-label">Order Notes</label>
                         <div className="input-group input-group-sm mb-3 col-sm-10">
-                            <textarea rows="4" cols="50" className="form-control" name="orderNotes" id="orderNotes" />
+                            <textarea rows="4" cols="50" className="form-control" name="orderNotes" id="custom-area" />
                         </div>
                     </div>
 
@@ -784,9 +784,12 @@ const Order = () => {
                     </div>
                 </div>
 
+                <div className="submit p-3">
+                    <button type="submit" id="add-product" className="btn btn-success">Submit</button>
+                </div>
+
             </form>
 
-            <button className="btn btn-outline-dark" onClick={() => navigate(-1)}>Submit</button>
             <button className="btn btn-outline-dark" onClick={() => navigate(-1)}>Home</button>
             
             </div>
