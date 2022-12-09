@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom"
 const Company = () => {
     const navigate = useNavigate();
     return (
-    <div className="company-page">
+        <div className="company-page">
             <nav className="navbar navbar-expand-lg navbar-dark bg-maroon">
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
@@ -141,7 +141,7 @@ const Company = () => {
                         <div className="form-row">
                             <label htmlFor="zip" className="col-sm-2 col-form-label">Zip</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" readOnly className="form-control" id="zip"/>
+                                <input type="text" readOnly className="form-control" id="zip" />
                             </div>
                         </div>
 
@@ -149,7 +149,7 @@ const Company = () => {
                         <div className="form-row">
                             <label htmlFor="country" className="col-sm-2 col-form-label">Country</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" readOnly className="form-control" id="country"/>
+                                <input type="text" readOnly className="form-control" id="country" />
                             </div>
                         </div>
 
@@ -164,42 +164,42 @@ const Company = () => {
                         <div className="form-row">
                             <label htmlFor="sp" className="col-sm-2 col-form-label">Salesperson</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" readOnly className="form-control" id="sp"/>
+                                <input type="text" readOnly className="form-control" id="sp" />
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="phone" className="col-sm-2 col-form-label">Phone</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" readOnly className="form-control" id="phone"/>
+                                <input type="text" readOnly className="form-control" id="phone" />
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="ext" className="col-sm-2 col-form-label">Extension</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" readOnly className="form-control" id="ext"/>
+                                <input type="text" readOnly className="form-control" id="ext" />
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="fax" className="col-sm-2 col-form-label">Fax</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" readOnly className="form-control" id="fax"/>
+                                <input type="text" readOnly className="form-control" id="fax" />
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="email" className="col-sm-2 col-form-label">Email</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" readOnly className="form-control" id="email"/>
+                                <input type="text" readOnly className="form-control" id="email" />
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="wAddr" className="col-sm-2 col-form-label">WebAddress</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" readOnly className="form-control" id="wAddr"/>
+                                <input type="text" readOnly className="form-control" id="wAddr" />
                             </div>
                         </div>
                     </div>
@@ -212,7 +212,7 @@ const Company = () => {
                         <div className="form-row">
                             <label htmlFor="TID" className="col-sm-2 col-form-label">Tax ID</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" readOnly className="form-control" id="TID"/>
+                                <input type="text" readOnly className="form-control" id="TID" />
                             </div>
                         </div>
 
@@ -227,14 +227,14 @@ const Company = () => {
                         </div>
 
                         <div className="form-row">
-                        <div className="input-group input-group-sm col-sm-3 pl-5">
+                            <div className="input-group input-group-sm col-sm-3 pl-5">
                                 <div className="form-group custom-control custom-checkbox">
                                     <input type="checkbox" className="custom-control-input" id="creditCheck" />
                                     <label htmlFor="creditCheck" className="custom-control-label">Credit Checked?</label>
                                 </div>
                             </div>
 
-                            
+
                             <div className="input-group input-group-sm col-sm-3 pl-5">
                                 <div className="form-group custom-control custom-checkbox">
                                     <input type="checkbox" className="custom-control-input" id="customerCheck" />
@@ -260,21 +260,21 @@ const Company = () => {
                         <div className="form-row">
                             <label htmlFor="otherClass" className="col-sm-2 col-form-label">Other Classification</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" readOnly className="form-control" id="otherClass"/>
+                                <input type="text" readOnly className="form-control" id="otherClass" />
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="notes" className="col-sm-2 col-form-label">Notes</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <textarea rows="4" cols="50" className="form-control" name="notes" id="companyarea" />
+                                <textarea rows="4" cols="50" className="form-control" name="notes" id="custom-area" />
                             </div>
                         </div>
                     </div>
 
                     <div className="Add/Cancel">
-                            <button type="Add" id="add-company" className="btn btn-success m-2">Add</button>
-                            <button type="Cancel" id="Cancel-company" className="btn btn-success m-2">Cancel</button>
+                        <button type="Add" id="add-company" className="btn btn-success m-2">Add</button>
+                        <button type="Cancel" id="Cancel-company" className="btn btn-success m-2">Cancel</button>
 
                     </div>
                 </form>
@@ -299,7 +299,7 @@ const Company = () => {
                 </div>
             </footer>
 
-    </div> 
+        </div>
     )// country might need to be changed to a dropdown menu, not sure
     //status might have something else in the dropbox, it is not shown
 }
