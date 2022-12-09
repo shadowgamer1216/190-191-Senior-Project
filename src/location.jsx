@@ -111,13 +111,13 @@ const Location = () => {
                         <div className="section-headers">
                             <h5>Location History</h5>
                         </div>
-
-                        <table striped bordered hover size="sm">
-                                <thead>
+                        
+                        <table class="table">
+                                <thead class="thead-light">
                                     <tr>
-                                        <th>Item ID</th>
-                                        <th>Qty</th>
-                                        <th>Date Added</th>
+                                        <th scope ="col">Item ID</th>
+                                        <th scope ="col">Qty</th>
+                                        <th scope ="col">Date Added</th>
                                     </tr>
                                 </thead>
                                 <tbody>
