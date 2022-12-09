@@ -235,34 +235,8 @@ Link.nav-link {
   font-size: x-large;
 }
 
-
-/*Shipping-CSS*/
-.address-table {
+.form-row-address{
   text-align: center;
-}
-
-.shipping-via {
-  text-align: center;
-  border-top: 1px dashed red;
-  border-bottom: 1px dashed red;
-
-}
-
-.shipping-tvia {
-  border-bottom: 1px dashed red;
-}
-
-.order-information {
-  text-align: center;
-}
-
-input {
-  background-color: #E2EAFF;
-  width: 100%;
-}
-
-table {
-  text-align: left;
-  table-layout: auto;
-  width: 100%;
+  font-size: medium;
+  padding-left: 5%;
 }
