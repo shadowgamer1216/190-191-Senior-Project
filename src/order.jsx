@@ -142,11 +142,19 @@ const Order = () => {
 
                     <div className = "form-container">
                         <div className="form-row">
-                            <label htmlFor="nonInventory1" className="col-sm-2 col-form-label">1</label>
+                            <label htmlFor="nonInventory1" className="col-sm-2 col-form-label">Item 1</label>
                             <div className="input-group input-group-sm mb-3 col-sm-2">
                                 <input type="text" readOnly className="form-control" id="nonInventory1" />
                             </div>
                         </div>
+                    </div>
+
+                    <div className="form-row">
+                        <label htmlFor="Invoice" className="col-sm-2 col-form-label">Invoice</label>
+                        <label htmlFor="packingSlip" className="col-sm-2 col-form-label">Packing Slip</label>
+                        <label htmlFor="Quantity" className="col-sm-2 col-form-label">Quantity</label>
+                        <label htmlFor="unitPrice" className="col-sm-2 col-form-label">Unit Price $</label>
+                        <label htmlFor="totalPrice" className="col-sm-2 col-form-label">Total Price $</label>
                     </div>
 
                     <div className="form-row">
@@ -184,11 +192,19 @@ const Order = () => {
 
                     <div className = "form-container">
                         <div className="form-row">
-                            <label htmlFor="nonInventory2" className="col-sm-2 col-form-label">2</label>
+                            <label htmlFor="nonInventory2" className="col-sm-2 col-form-label">Item 2</label>
                             <div className="input-group input-group-sm mb-3 col-sm-2">
                                 <input type="text" readOnly className="form-control" id="nonInventory2" />
                             </div>
                         </div>
+                    </div>
+
+                    <div className="form-row">
+                        <label htmlFor="Invoice" className="col-sm-2 col-form-label">Invoice</label>
+                        <label htmlFor="packingSlip" className="col-sm-2 col-form-label">Packing Slip</label>
+                        <label htmlFor="Quantity" className="col-sm-2 col-form-label">Quantity</label>
+                        <label htmlFor="unitPrice" className="col-sm-2 col-form-label">Unit Price $</label>
+                        <label htmlFor="totalPrice" className="col-sm-2 col-form-label">Total Price $</label>
                     </div>
 
                     <div className="form-row">
@@ -226,11 +242,19 @@ const Order = () => {
 
                     <div className = "form-container">
                         <div className="form-row">
-                            <label htmlFor="nonInventory3" className="col-sm-2 col-form-label">3</label>
+                            <label htmlFor="nonInventory3" className="col-sm-2 col-form-label">Item 3</label>
                             <div className="input-group input-group-sm mb-3 col-sm-2">
                                 <input type="text" readOnly className="form-control" id="nonInventory3" />
                             </div>
                         </div>
+                    </div>
+
+                    <div className="form-row">
+                        <label htmlFor="Invoice" className="col-sm-2 col-form-label">Invoice</label>
+                        <label htmlFor="packingSlip" className="col-sm-2 col-form-label">Packing Slip</label>
+                        <label htmlFor="Quantity" className="col-sm-2 col-form-label">Quantity</label>
+                        <label htmlFor="unitPrice" className="col-sm-2 col-form-label">Unit Price $</label>
+                        <label htmlFor="totalPrice" className="col-sm-2 col-form-label">Total Price $</label>
                     </div>
 
                     <div className="form-row">
@@ -268,11 +292,19 @@ const Order = () => {
 
                     <div className = "form-container">
                         <div className="form-row">
-                            <label htmlFor="nonInventory4" className="col-sm-2 col-form-label">4</label>
+                            <label htmlFor="nonInventory4" className="col-sm-2 col-form-label">Item 4</label>
                             <div className="input-group input-group-sm mb-3 col-sm-2">
                                 <input type="text" readOnly className="form-control" id="nonInventory4" />
                             </div>
                         </div>
+                    </div>
+
+                    <div className="form-row">
+                        <label htmlFor="Invoice" className="col-sm-2 col-form-label">Invoice</label>
+                        <label htmlFor="packingSlip" className="col-sm-2 col-form-label">Packing Slip</label>
+                        <label htmlFor="Quantity" className="col-sm-2 col-form-label">Quantity</label>
+                        <label htmlFor="unitPrice" className="col-sm-2 col-form-label">Unit Price $</label>
+                        <label htmlFor="totalPrice" className="col-sm-2 col-form-label">Total Price $</label>
                     </div>
 
                     <div className="form-row">
@@ -310,11 +342,19 @@ const Order = () => {
 
                     <div className = "form-container">
                         <div className="form-row">
-                            <label htmlFor="nonInventory5" className="col-sm-2 col-form-label">5</label>
+                            <label htmlFor="nonInventory5" className="col-sm-2 col-form-label">Item 5</label>
                             <div className="input-group input-group-sm mb-3 col-sm-2">
                                 <input type="text" readOnly className="form-control" id="nonInventory5" />
                             </div>
                         </div>
+                    </div>
+
+                    <div className="form-row">
+                        <label htmlFor="Invoice" className="col-sm-2 col-form-label">Invoice</label>
+                        <label htmlFor="packingSlip" className="col-sm-2 col-form-label">Packing Slip</label>
+                        <label htmlFor="Quantity" className="col-sm-2 col-form-label">Quantity</label>
+                        <label htmlFor="unitPrice" className="col-sm-2 col-form-label">Unit Price $</label>
+                        <label htmlFor="totalPrice" className="col-sm-2 col-form-label">Total Price $</label>
                     </div>
 
                     <div className="form-row">
@@ -357,7 +397,7 @@ const Order = () => {
                     </div>
 
                     <div className="form-row">
-                        <label htmlFor="inventory1" className="col-sm-2 col-form-label">1</label>
+                        <label htmlFor="inventory1" className="col-sm-2 col-form-label">Item 1</label>
                         <div className="input-group input-group-sm mb-3 col-sm-3">
                             <select className="form-control" name="inventory1" id="inventory1">
                                 <option defaultValue="0">Select Value</option>
@@ -375,6 +415,14 @@ const Order = () => {
                     </div>
 
                     <div className="form-row">
+                        <label htmlFor="Invoice" className="col-sm-2 col-form-label">Invoice</label>
+                        <label htmlFor="packingSlip" className="col-sm-2 col-form-label">Packing Slip</label>
+                        <label htmlFor="Quantity" className="col-sm-2 col-form-label">Quantity</label>
+                        <label htmlFor="unitPrice" className="col-sm-2 col-form-label">Unit Price $</label>
+                        <label htmlFor="totalPrice" className="col-sm-2 col-form-label">Total Price $</label>
+                    </div>
+
+                    <div className="form-row">
 
                         <div className="input-group input-group-sm col-sm-2 pl-5">
                             <div className="form-group custom-control custom-checkbox">
@@ -408,7 +456,7 @@ const Order = () => {
                     </div>
 
                     <div className="form-row">
-                        <label htmlFor="inventory2" className="col-sm-2 col-form-label">2</label>
+                        <label htmlFor="inventory2" className="col-sm-2 col-form-label">Item 2</label>
                         <div className="input-group input-group-sm mb-3 col-sm-3">
                             <select className="form-control" name="inventory2" id="inventory2">
                                 <option defaultValue="0">Select Value</option>
@@ -426,6 +474,14 @@ const Order = () => {
                     </div>
 
                     <div className="form-row">
+                        <label htmlFor="Invoice" className="col-sm-2 col-form-label">Invoice</label>
+                        <label htmlFor="packingSlip" className="col-sm-2 col-form-label">Packing Slip</label>
+                        <label htmlFor="Quantity" className="col-sm-2 col-form-label">Quantity</label>
+                        <label htmlFor="unitPrice" className="col-sm-2 col-form-label">Unit Price $</label>
+                        <label htmlFor="totalPrice" className="col-sm-2 col-form-label">Total Price $</label>
+                    </div>
+
+                    <div className="form-row">
 
                         <div className="input-group input-group-sm col-sm-2 pl-5">
                             <div className="form-group custom-control custom-checkbox">
@@ -459,7 +515,7 @@ const Order = () => {
                     </div>
 
                     <div className="form-row">
-                        <label htmlFor="inventory3" className="col-sm-2 col-form-label">3</label>
+                        <label htmlFor="inventory3" className="col-sm-2 col-form-label">Item 3</label>
                         <div className="input-group input-group-sm mb-3 col-sm-3">
                             <select className="form-control" name="inventory3" id="inventory3">
                                 <option defaultValue="0">Select Value</option>
@@ -474,6 +530,14 @@ const Order = () => {
                         <div className="form-row">
                             <label htmlFor="item1">Item 3 Quantity and Price</label>
                         </div>
+                    </div>
+
+                    <div className="form-row">
+                        <label htmlFor="Invoice" className="col-sm-2 col-form-label">Invoice</label>
+                        <label htmlFor="packingSlip" className="col-sm-2 col-form-label">Packing Slip</label>
+                        <label htmlFor="Quantity" className="col-sm-2 col-form-label">Quantity</label>
+                        <label htmlFor="unitPrice" className="col-sm-2 col-form-label">Unit Price $</label>
+                        <label htmlFor="totalPrice" className="col-sm-2 col-form-label">Total Price $</label>
                     </div>
 
                     <div className="form-row">
