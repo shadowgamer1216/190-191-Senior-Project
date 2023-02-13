@@ -20,5 +20,5 @@ create table contact_table(
 	email TEXT,
 	cell_phone TEXT,
 	third_party_company TEXT,
-	notes TEXT,
+	notes TEXT
 );
