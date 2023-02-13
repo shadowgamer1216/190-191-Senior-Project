@@ -1,10 +1,21 @@
 import React from "react";
+import {useState, useEffect} from "react";
 import './App.css'
 import { Link, useNavigate } from "react-router-dom"
+import Axios from "axios";
 
 
 const Contact = () => {
     const navigate = useNavigate();
+    const [customerID, setCustomerID] = useState("");
+
+
+    const submit = () => {
+        Axios.post("http://localhost:3001/api/insert", {customerID: customerID})
+        .then(()=> {
+            alert('success');
+        })
+    };
     return (
         <div className="page">
             <nav className="navbar navbar-expand-lg navbar-dark bg-maroon">
@@ -38,7 +49,9 @@ const Contact = () => {
                         <div className="form-row">
                             <label htmlFor="customer-id" className="col-sm-2 col-form-label">Customer ID</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" readOnly className="form-control" id="customer-id" />
+                                <input type="text" className="form-control" id="customer-id" onChange={(e) =>{
+                                    setCustomerID(e.target.value)
+                                }}/>
                             </div>
                         </div>
 
@@ -240,7 +253,7 @@ const Contact = () => {
 
 
                     <div className="submit p-3">
-                        <button type="submit" id="add-contact" className="btn btn-success">Submit</button>
+                        <button onClick = {submit} type="submit" id="add-contact" className="btn btn-success">Submit</button>
                     </div>
 
                 </form>

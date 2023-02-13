@@ -1,24 +1,28 @@
-const bodyParser = require("body-parser");
+const bodyParser = require("body-parser")
 const express = require("express");
 const app = express();
-const mysql = require("mysql");
-const cors = require("cors");
+const mysql = require("mysql2");
+const cors = require('cors');
 
-app.use(cors());
-app.use(express.json());
-app.use(bodyParser.urlencoded({extended: true}));
+
+
 
 const db = mysql.createPool({
     host: "localhost",
     user: "root",
-    password: "password",
-    database: "database",
+    password: "password1!",
+    database: "absolutemedia",
 });
+app.use(cors());
+app.use(express.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
-app.get('/', (req, res) => {
-    const sqlInsert = "INSERT INTO test_table (test_data) VALUES ('testing');"
-    db.query(sqlInsert, (err, result)=> {
-        res.send("hello");
+app.post("/api/insert", (req, res)=> {
+    const customerID = req.body.customerID;
+    const sqlInsert = "INSERT INTO contact (customerID) Values (?)";
+    db.query(sqlInsert, (customerID), (err, result)=>{
+        console.log(err);
+    
     });
 });
 
