@@ -1,10 +1,21 @@
 import React from "react";
+import {useState, useEffect} from "react";
 import './App.css'
 import { Link, useNavigate } from "react-router-dom"
+import Axios from "axios";
 
 
 const Contact = () => {
     const navigate = useNavigate();
+    const [customerID, setCustomerID] = useState("");
+
+
+    const submit = () => {
+        Axios.post("http://localhost:3001/api/insert", {customerID: customerID})
+        .then(()=> {
+            alert('success');
+        })
+    };
     return (
         <div className="page">
             <nav className="navbar navbar-expand-lg navbar-dark bg-maroon">
@@ -36,37 +47,39 @@ const Contact = () => {
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="abs-pn" className="col-sm-2 col-form-label">Customer ID</label>
+                            <label htmlFor="customer-id" className="col-sm-2 col-form-label">Customer ID</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" readOnly className="form-control" id="customer-id" />
+                                <input type="text" className="form-control" id="customer-id" onChange={(e) =>{
+                                    setCustomerID(e.target.value)
+                                }}/>
                             </div>
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="old-abs-pn" className="col-sm-2 col-form-label">Company</label>
+                            <label htmlFor="company" className="col-sm-2 col-form-label">Company</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
                                 <input type="text" className="form-control" id="company" />
                             </div>
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="customer" className="col-sm-2 col-form-label">First</label>
+                            <label htmlFor="first" className="col-sm-2 col-form-label">First Name</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
                                 <input type="text" className="form-control" id="first" />
                             </div>
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="customer-id" className="col-sm-2 col-form-label">Last</label>
+                            <label htmlFor="last" className="col-sm-2 col-form-label">Last Name</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
                                 <input type="text" className="form-control" id="last" />
                             </div>
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="category" className="col-sm-2 col-form-label">Contact Type</label>
+                            <label htmlFor="contact-type" className="col-sm-2 col-form-label">Contact Type</label>
                             <div className="input-group input-group-sm mb-3 col-sm-3">
-                                <select className="form-control" name="category" id="contact-type">
+                                <select className="form-control" name="contact-type" id="contact-type">
                                     <option defaultValue="0">Value</option>
                                     <option value="1">Shipping</option>
                                     <option value="2">Billing</option>
@@ -77,28 +90,28 @@ const Contact = () => {
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="oem-pn" className="col-sm-2 col-form-label">Title</label>
+                            <label htmlFor="title" className="col-sm-2 col-form-label">Title</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
                                 <input type="text" className="form-control" id="title" />
                             </div>
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="title" className="col-sm-2 col-form-label">Dept</label>
+                            <label htmlFor="dept" className="col-sm-2 col-form-label">Department</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
                                 <input type="text" className="form-control" id="dept" />
                             </div>
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="title" className="col-sm-2 col-form-label">Add 1</label>
+                            <label htmlFor="add1" className="col-sm-2 col-form-label">Address 1</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
                                 <input type="text" className="form-control" id="add1" />
                             </div>
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="title" className="col-sm-2 col-form-label">Add 2</label>
+                            <label htmlFor="add2" className="col-sm-2 col-form-label">Address 2</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
                                 <input type="text" className="form-control" id="add2" />
                             </div>
@@ -106,7 +119,7 @@ const Contact = () => {
 
 
                         <div className="form-row">
-                            <label htmlFor="master-label" className="col-sm-2 col-form-label">City</label>
+                            <label htmlFor="city" className="col-sm-2 col-form-label">City</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
                                 <input type="text" className="form-control" id="city" />
                             </div>
@@ -173,56 +186,56 @@ const Contact = () => {
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="date-code-position" className="col-sm-2 col-form-label">Zip</label>
+                            <label htmlFor="zip" className="col-sm-2 col-form-label">Zip</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
                                 <input type="text" className="form-control" id="zip" />
                             </div>
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="inner-hub" className="col-sm-2 col-form-label">Country</label>
+                            <label htmlFor="country" className="col-sm-2 col-form-label">Country</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
                                 <input type="text" className="form-control" id="country" />
                             </div>
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="inner-hub-position" className="col-sm-2 col-form-label">Phone</label>
+                            <label htmlFor="phone" className="col-sm-2 col-form-label">Phone</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
                                 <input type="text" className="form-control" id="phone" />
                             </div>
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="inner-hub-position" className="col-sm-2 col-form-label">Extension</label>
+                            <label htmlFor="extension" className="col-sm-2 col-form-label">Extension</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
                                 <input type="text" className="form-control" id="extension" />
                             </div>
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="inner-hub-position" className="col-sm-2 col-form-label">Fax</label>
+                            <label htmlFor="fax" className="col-sm-2 col-form-label">Fax</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
                                 <input type="text" className="form-control" id="fax" />
                             </div>
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="inner-hub-position" className="col-sm-2 col-form-label">Email</label>
+                            <label htmlFor="email" className="col-sm-2 col-form-label">Email</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
                                 <input type="text" className="form-control" id="email" />
                             </div>
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="inner-hub-position" className="col-sm-2 col-form-label">Cell Phone Number</label>
+                            <label htmlFor="cell-phone-number" className="col-sm-2 col-form-label">Cell Phone Number</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
                                 <input type="text" className="form-control" id="cell-phone-number" />
                             </div>
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="inner-hub-position" className="col-sm-2 col-form-label">Third Party Company</label>
+                            <label htmlFor="third-party-company" className="col-sm-2 col-form-label">Third Party Company</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
                                 <input type="text" className="form-control" id="third-party-company" />
                             </div>
@@ -231,7 +244,7 @@ const Contact = () => {
                         <div className="form-row">
                             <label htmlFor="notes" className="col-sm-2 col-form-label">Notes</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <textarea rows="4" cols="50" className="form-control" name="color-notes" id="productarea" />
+                                <textarea rows="4" cols="50" className="form-control" name="notes" id="custom-area" />
                             </div>
                         </div>
 
@@ -239,8 +252,8 @@ const Contact = () => {
 
 
 
-                    <div className="submit">
-                        <button type="submit" id="add-contact" className="btn btn-success">Submit</button>
+                    <div className="submit p-3">
+                        <button onClick = {submit} type="submit" id="add-contact" className="btn btn-success">Submit</button>
                     </div>
 
                 </form>

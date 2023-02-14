@@ -119,7 +119,7 @@ function AddColor() {
 const Product = () => {
     const navigate = useNavigate();
     return (
-        <div className="product-page">
+        <div className="page">
             <nav className="navbar navbar-expand-lg navbar-dark bg-maroon">
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
@@ -205,7 +205,7 @@ const Product = () => {
                         <div className="form-row">
                             <label htmlFor="description" className="col-sm-2 col-form-label">Description</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <textarea rows="4" cols="50" className="form-control" name="description" id="productarea" />
+                                <textarea rows="4" cols="50" className="form-control" name="description" id="custom-area" />
                             </div>
                         </div>
 
@@ -334,7 +334,7 @@ const Product = () => {
                         <div className="form-row">
                             <label htmlFor="color-notes" className="col-sm-2 col-form-label">Color Notes</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <textarea rows="4" cols="50" className="form-control" name="color-notes" id="productarea" />
+                                <textarea rows="4" cols="50" className="form-control" name="color-notes" id="custom-area" />
                             </div>
                         </div>
                     </div>
@@ -349,14 +349,14 @@ const Product = () => {
                         <div className="form-row">
                             <label htmlFor="packaging-notes" className="col-sm-2 col-form-label">Packaging Notes</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <textarea rows="4" cols="50" className="form-control" name="packaging-notes" id="productarea" />
+                                <textarea rows="4" cols="50" className="form-control" name="packaging-notes" id="custom-area" />
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="product-notes" className="col-sm-2 col-form-label">Product Notes</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <textarea rows="4" cols="50" className="form-control" name="product-notes" id="productarea" />
+                                <textarea rows="4" cols="50" className="form-control" name="product-notes" id="custom-area" />
                             </div>
                         </div>
 

@@ -94,7 +94,7 @@ const Location = () => {
                         <div className="form-row">
                             <label htmlFor="notes" className="col-sm-2 col-form-label">Notes</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <textarea rows="4" cols="50" className="form-control" name="notes" id="notes" />
+                                <textarea rows="4" cols="50" className="form-control" name="notes" id="custom-area" />
                             </div>
                         </div>
 
