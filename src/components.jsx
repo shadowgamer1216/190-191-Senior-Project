@@ -63,7 +63,7 @@ function AddItem() {
 const Components = () => {
     const navigate = useNavigate();
     return (
-        <div className="component-page">
+        <div className="page">
             <nav className="navbar navbar-expand-lg navbar-dark bg-maroon">
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
