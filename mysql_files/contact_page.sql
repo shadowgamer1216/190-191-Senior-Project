@@ -74,4 +74,4 @@ create table product_table(
 	product_notes TEXT, 
 	product_status TEXT,
 	location_id INT, 
-)
+);
