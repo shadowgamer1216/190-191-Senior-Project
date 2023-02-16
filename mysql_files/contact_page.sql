@@ -45,3 +45,33 @@ create table item_check_in_table(
 	date_in DATETIME;
 	date_completed DATE
 );
+
+create table product_table(
+	product_pn INT PRIMARY KEY NOT NULL, 
+	old_pn INT, 
+	customer_name TEXT,
+	customer_id INT, 
+	product_category TEXT,
+	oem_pn INT, 
+	product_title TEXT, 
+	product_desc TEXT, 
+	replication TEXT, 
+	master_format TEXT, 
+	master_received DATE, 
+	master_label TEXT, 
+	master_capacity TEXT, 
+	master_location TEXT, 
+	date_code_req BIT, 
+	date_code_position TEXT, 
+	inner_hub TEXT, 
+	inner_hub_position TEXT, 
+	flood_coat BIT, 
+	rimage_print BIT, 
+	color TEXT,
+	color_notes TEXT, 
+	component TEXT, 
+	packaging_notes TEXT, 
+	product_notes TEXT, 
+	product_status TEXT,
+	location_id INT, 
+)
