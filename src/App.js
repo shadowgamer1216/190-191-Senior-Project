@@ -33,17 +33,16 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path = '/login' element = {<Login/>} />
         <Route path = '/' element = {<HomePage/>} />
-        <Route path = "product" element = {<ProductPage/>} />    
-        <Route path = "contact" element = {<ContactPage/>} />
-        <Route path = "components" element = {<ComponentsPage/>} />
-        <Route path = "contact" element = {<ContactPage/>} /> 
-        <Route path = "location" element = {<LocationPage/>} />
-        <Route path = "order" element = {<OrderPage/>} />
-        <Route path = "company" element = {<CompanyPage/>} />
-        <Route path = "itemCheckIn" element = {<ItemCheckInPage/>} />
-        <Route path = "shipping" element = {<Shipping/>} />
+        <Route path = "/product" element = {<ProductPage/>} />    
+        <Route path = "/contact" element = {<ContactPage/>} />
+        <Route path = "/components" element = {<ComponentsPage/>} />
+        <Route path = "/contact" element = {<ContactPage/>} /> 
+        <Route path = "/location" element = {<LocationPage/>} />
+        <Route path = "/order" element = {<OrderPage/>} />
+        <Route path = "/company" element = {<CompanyPage/>} />
+        <Route path = "/itemCheckIn" element = {<ItemCheckInPage/>} />
+        <Route path = "/shipping" element = {<Shipping/>} />
       </Routes>
     
     </div>
