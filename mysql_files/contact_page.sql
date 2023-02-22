@@ -26,7 +26,7 @@ create table contact_table(
 create table location_table(
 	location_id INT PRIMARY KEY NOT NULL,
 	location_type TEXT,
-	item_id INT,
+	item_id INT FOREIGN KEY REFERENCES item_check_in_table(item_id),
 	qty INT,
 	item_owner TEXT,
 	physical_location TEXT,
@@ -34,8 +34,8 @@ create table location_table(
 );
 
 create table item_check_in_table(
-	customer_id INT PRIMARY KEY NOT NULL,
-	item_id INT,
+	item_id INT PRIMARY KEY NOT NULL,
+	customer_id INT FOREIGN KEY REFERENCES contact_table(customer_id),
 	mfr_pn TEXT,
 	item_description TEXT,
 	carrier TEXT,
