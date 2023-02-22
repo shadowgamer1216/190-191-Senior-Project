@@ -46,6 +46,26 @@ create table item_check_in_table(
 	date_completed DATE
 );
 
+create table component_table (
+	customer_id TEXT PRIMARY KEY NOT NULL,
+	component_type TEXT,
+	oem_pn INT,
+	description_1 TEXT,
+	description_2 TEXT,
+	description_3 TEXT,
+	description_4 TEXT,
+	description_5 TEXT,
+	size TEXT,
+	supplier_brand_id TEXT,
+	color TEXT,
+	notes TEXT,
+	owned_by TEXT,
+	uom TEXT,
+	component_status TEXT,
+	packaging_component BIT,
+	item_location TEXT,
+);
+
 create table product_table(
 	product_pn INT PRIMARY KEY NOT NULL, 
 	old_pn INT, 
