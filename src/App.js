@@ -1,4 +1,7 @@
 import './App.css';
+import React, { useState } from 'react';
+
+
 
 import {
   BrowserRouter as Router,
@@ -16,12 +19,21 @@ import OrderPage from './order';
 import CompanyPage from './company';
 import ItemCheckInPage from './itemCheckIn';
 import Shipping from './Shipping';
+import Login from './login';
+import useToken from './useToken';
 
 
 function App() {
+  const { token, setToken } = useToken();
+
+
+  if(!token) {
+    return <Login setToken={setToken} />
+  }
   return (
     <div className="App">
       <Routes>
+        <Route path = '/login' element = {<Login/>} />
         <Route path = '/' element = {<HomePage/>} />
         <Route path = "product" element = {<ProductPage/>} />    
         <Route path = "contact" element = {<ContactPage/>} />

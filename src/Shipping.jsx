@@ -45,7 +45,7 @@ const Shipping = () => {
               <label htmlFor="shipvia-add" className="col-md-2 col-form-label"><u>Ship Via</u></label>
             </div>
             <div className="input-group input-group-sm mb-3 col-sm-12">
-              <input type="text" readOnly className="form-control" 
+              <input type="text" className="form-control" 
                 id="search-dir" placeholder="No Records"></input>
             </div>
           </div>
@@ -65,7 +65,7 @@ const Shipping = () => {
             <div className ="form-row">
               <label htmlFor="cname" className="col-sm-2 col-form-label">Company Name</label>
               <div className ="input-group input-group-sm mb-3 col-sm-10">
-                <input type="text" readOnly className="form-control"
+                <input type="text" className="form-control"
                   id="cname" />
               </div>
             </div>
@@ -73,7 +73,7 @@ const Shipping = () => {
             <div className ="form-row">
               <label htmlFor="con-name" className="col-sm-2 col-form-label">Contact Name</label>
               <div className ="input-group input-group-sm mb-3 col-sm-10">
-                <input type="text" readOnly className="form-control"
+                <input type="text" className="form-control"
                   id="con-name" />
               </div>
             </div>
@@ -81,7 +81,7 @@ const Shipping = () => {
             <div className ="form-row">
               <label htmlFor="add1" className="col-sm-2 col-form-label">Address 1</label>
               <div className ="input-group input-group-sm mb-3 col-sm-10">
-                <input type="text" readOnly className="form-control"
+                <input type="text" className="form-control"
                   id="add1" />
               </div>
             </div>
@@ -89,7 +89,7 @@ const Shipping = () => {
             <div className ="form-row">
               <label htmlFor="add2" className="col-sm-2 col-form-label">Address 2</label>
               <div className ="input-group input-group-sm mb-3 col-sm-10">
-                <input type="text" readOnly className="form-control"
+                <input type="text" className="form-control"
                   id="add2" />
               </div>
             </div>
@@ -98,7 +98,7 @@ const Shipping = () => {
               <label htmlFor="csz" className="col-sm-2 col-form-label">City | State | Zip</label>
               
               <div className ="input-group input-group-sm mb-3 col-sm-6">
-                <input type="text" readOnly className="form-control"
+                <input type="text" className="form-control"
                   id="city" />
               </div>
               
@@ -160,7 +160,7 @@ const Shipping = () => {
               </div>
 
               <div className ="input-group input-group-sm mb-3 col-sm-2">
-                <input type="text" readOnly className="form-control"
+                <input type="text" className="form-control"
                   id="zip" />
               </div>
             </div>
@@ -168,7 +168,7 @@ const Shipping = () => {
             <div className ="form-row">
               <label htmlFor="province" className="col-sm-2 col-form-label">Province</label>
               <div className ="input-group input-group-sm mb-3 col-sm-10">
-                <input type="text" readOnly className="form-control"
+                <input type="text" className="form-control"
                   id="province" />
               </div>
             </div>
@@ -176,7 +176,7 @@ const Shipping = () => {
             <div className ="form-row">
               <label htmlFor="country" className="col-sm-2 col-form-label">Country</label>
               <div className ="input-group input-group-sm mb-3 col-sm-10">
-                <input type="text" readOnly className="form-control"
+                <input type="text" className="form-control"
                   id="country" />
               </div>
             </div>
@@ -184,7 +184,7 @@ const Shipping = () => {
             <div className ="form-row">
               <label htmlFor="phone" className="col-sm-2 col-form-label">Phone</label>
               <div className ="input-group input-group-sm mb-3 col-sm-10">
-                <input type="text" readOnly className="form-control"
+                <input type="text" className="form-control"
                   id="phone" />
               </div>
             </div>
@@ -192,7 +192,7 @@ const Shipping = () => {
             <div className ="form-row">
               <label htmlFor="fax" className="col-sm-2 col-form-label">Fax</label>
               <div className ="input-group input-group-sm mb-3 col-sm-10">
-                <input type="text" readOnly className="form-control"
+                <input type="text" className="form-control"
                   id="fax" />
               </div>
             </div>
@@ -200,7 +200,7 @@ const Shipping = () => {
             <div className ="form-row">
               <label htmlFor="email" className="col-sm-2 col-form-label">Email</label>
               <div className ="input-group input-group-sm mb-3 col-sm-10">
-                <input type="text" readOnly className="form-control"
+                <input type="text" className="form-control"
                   id="email" />
               </div>
             </div>
@@ -255,7 +255,7 @@ const Shipping = () => {
             <div className ="form-row">
               <label htmlFor="other-ship" className="col-sm-2 col-form-label">Other Ship Method</label>
               <div className ="input-group input-group-sm mb-3 col-sm-10">
-                <input type="text" readOnly className="form-control"
+                <input type="text" className="form-control"
                   id="other-ship" />
               </div>
             </div>
@@ -274,7 +274,7 @@ const Shipping = () => {
             <div className ="form-row">
               <label htmlFor="acc-num" className="col-sm-2 col-form-label">Account Number</label>
               <div className ="input-group input-group-sm mb-3 col-sm-10">
-                <input type="text" readOnly className="form-control"
+                <input type="text" className="form-control"
                   id="acc-num" />
               </div>
             </div>
@@ -282,7 +282,7 @@ const Shipping = () => {
             <div className ="form-row">
               <label htmlFor="ship-date" className="col-sm-2 col-form-label">Requested Ship Date/Time</label>
               <div className ="input-group input-group-sm mb-3 col-sm-2">
-                <input type="text" readOnly className="form-control"
+                <input type="text" className="form-control"
                   id="ship-date" />
               </div>
 
@@ -296,7 +296,7 @@ const Shipping = () => {
             <div className ="form-row">
               <label htmlFor="arr-date" className="col-sm-2 col-form-label">Requested Arrival Date/Time</label>
               <div className ="input-group input-group-sm mb-3 col-sm-2">
-                <input type="text" readOnly className="form-control"
+                <input type="text" className="form-control"
                   id="arr-date" />
               </div>
 
@@ -345,19 +345,19 @@ const Shipping = () => {
             </div>
             <div className="form-row">
               <div className="input-group input-group-sm mb-3 col-sm-3">
-                <input type="text" readOnly className="form-control" 
+                <input type="text" className="form-control" 
                   id="search-dir"></input>
               </div>
               <div className="input-group input-group-sm mb-3 col-sm-3">
-                <input type="text" readOnly className="form-control" 
+                <input type="text" className="form-control" 
                   id="search-dir"></input>
               </div>
               <div className="input-group input-group-sm mb-3 col-sm-3">
-                <input type="text" readOnly className="form-control" 
+                <input type="text" className="form-control" 
                   id="search-dir"></input>
               </div>
               <div className="input-group input-group-sm mb-3 col-sm-3">
-                <input type="text" readOnly className="form-control" 
+                <input type="text" className="form-control" 
                   id="search-dir"></input>
               </div>
             </div>

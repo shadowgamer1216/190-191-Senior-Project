@@ -96,7 +96,7 @@ const Components = () => {
                         <div className="form-row">
                             <label htmlFor="CID" className="col-sm-2 col-form-label">Customer ID</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" readOnly className="form-control" id="CID" />
+                                <input type="text" className="form-control" id="CID" />
                             </div>
                         </div>
 
@@ -116,49 +116,49 @@ const Components = () => {
                         <div className="form-row">
                             <label htmlFor="oem" className="col-sm-2 col-form-label">OEM P/N</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" readOnly className="form-control" id="oem" />
+                                <input type="text" className="form-control" id="oem" />
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="desription1" className="col-sm-2 col-form-label">Description 1</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" readOnly className="form-control" id="description1" />
+                                <input type="text" className="form-control" id="description1" />
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="desription2" className="col-sm-2 col-form-label">Description 2</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" readOnly className="form-control" id="description2" />
+                                <input type="text" className="form-control" id="description2" />
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="desription3" className="col-sm-2 col-form-label">Description 3</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" readOnly className="form-control" id="description3" />
+                                <input type="text" className="form-control" id="description3" />
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="desription4" className="col-sm-2 col-form-label">Description 4</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" readOnly className="form-control" id="description4" />
+                                <input type="text" className="form-control" id="description4" />
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="desription5" className="col-sm-2 col-form-label">Description 5</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" readOnly className="form-control" id="description5" />
+                                <input type="text" className="form-control" id="description5" />
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="size" className="col-sm-2 col-form-label">Size</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" readOnly className="form-control" id="size" />
+                                <input type="text" className="form-control" id="size" />
                             </div>
                         </div>
 
@@ -177,7 +177,7 @@ const Components = () => {
                         <div className="form-row">
                             <label htmlFor="color" className="col-sm-2 col-form-label">Color</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" readOnly className="form-control" id="color" />
+                                <input type="text" className="form-control" id="color" />
                             </div>
                         </div>
 
