@@ -33,8 +33,7 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path = '/login' element = {<Login/>} />
-        <Route path = '/' element = {<HomePage/>} />
+        <Route path = "/" element = {<HomePage/>} />
         <Route path = "product" element = {<ProductPage/>} />    
         <Route path = "contact" element = {<ContactPage/>} />
         <Route path = "components" element = {<ComponentsPage/>} />
