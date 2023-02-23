@@ -1,8 +1,8 @@
 create schema 191_database; /* schema for entire DB */
 
 create table contact_table(
-	customer_id INT PRIMARY KEY NOT NULL,
-	company_name TEXT, 
+	customer_id CHAR PRIMARY KEY NOT NULL,
+	company_name TEXT FOREIGN KEY (company_name) REFERENCES company_table(company_name), 
 	fname TEXT,
 	lname TEXT,
 	contact_type TEXT,
