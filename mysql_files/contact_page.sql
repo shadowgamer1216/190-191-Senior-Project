@@ -26,7 +26,7 @@ create table contact_table(
 create table location_table(
 	location_id INT PRIMARY KEY NOT NULL,
 	location_type TEXT,
-	item_id INT,
+	item_id INT FOREIGN KEY REFERENCES item_check_in_table(item_id),
 	qty INT,
 	item_owner TEXT,
 	physical_location TEXT,
@@ -34,8 +34,8 @@ create table location_table(
 );
 
 create table item_check_in_table(
-	customer_id INT PRIMARY KEY NOT NULL,
-	item_id INT,
+	item_id INT PRIMARY KEY NOT NULL,
+	customer_id INT FOREIGN KEY REFERENCES contact_table(customer_id),
 	mfr_pn TEXT,
 	item_description TEXT,
 	carrier TEXT,
@@ -44,6 +44,26 @@ create table item_check_in_table(
 	signed_by_for TEXT,
 	date_in DATETIME;
 	date_completed DATE
+);
+
+create table component_table (
+	customer_id TEXT PRIMARY KEY NOT NULL,
+	component_type TEXT,
+	oem_pn INT,
+	description_1 TEXT,
+	description_2 TEXT,
+	description_3 TEXT,
+	description_4 TEXT,
+	description_5 TEXT,
+	size TEXT,
+	supplier_brand_id TEXT,
+	color TEXT,
+	notes TEXT,
+	owned_by TEXT,
+	uom TEXT,
+	component_status TEXT,
+	packaging_component BIT,
+	item_location TEXT,
 );
 
 create table product_table(
