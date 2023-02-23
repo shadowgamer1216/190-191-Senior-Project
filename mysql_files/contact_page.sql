@@ -160,3 +160,33 @@ create table order_table (
     order_notes TEXT,
     order_status TEXT
 );
+
+create table shipping_table(
+	customer_id INT PRIMARY KEY NOT NULL,
+	company_name TEXT,
+	contact_name TEXT, 
+	add1 TEXT,
+	add2 TEXT,
+	city TEXT,
+	country_state TEXT,
+	zip INT,
+	province TEXT,
+	country TEXT,
+	phone TEXT,
+	fax TEXT,
+);
+
+create table shipment_info_table{
+	fedex TEXT,
+	ups TEXT,
+	courier_willcall TEXT,
+	other_ship_method TEXT,
+	payment_type TEXT,
+	account_number TEXT,
+	request_ship_date DATE,
+	request_ship_time DATETIME,
+	arrival_ship_date DATE,
+	arrival_ship_time DATETIME,
+	fob TEXT,
+	notes TEXT
+}
