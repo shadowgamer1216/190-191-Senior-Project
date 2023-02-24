@@ -78,7 +78,7 @@ const Components = () => {
                     </div>
                 </div>
 
-                <button className="btn btn-outline-light">Sign In</button>
+                <button className="btn btn-outline-light" onClick={() => navigate("/login")}>Sign In</button>
             </nav>
 
 

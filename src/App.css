@@ -243,6 +243,39 @@ Link.nav-link {
 
 .login-wrapper {
   display: flex;
-  flex-direction: column;
+  flex-direction: column;  
   align-items: center;
+}
+
+.login-button{
+  background-color: #e7e7e7; 
+  color: #000000;
+  border: 2px solid black;
+  padding: 10px 28px;
+  text-align: center;
+  text-decoration: none;
+  text-decoration-color: #000000;
+  display: inline-block;
+  font-size: 18px;
+  border-radius: 10px;
+ 
+
+}
+
+.login-button:hover{
+  background-color: darkgray; 
+  color: white;
+}
+.login-button:active {
+  background-color: darkgray;
+  transform: translateY(4px);
+}
+
+.username_box{
+  margin-top: -20px;
+  margin-bottom: -20px;
+}
+.password_box{
+  margin-top: -2px;
+
 }
