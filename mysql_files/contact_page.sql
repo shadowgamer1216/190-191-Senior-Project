@@ -1,26 +1,30 @@
 create schema 191_database; /* schema for entire DB */
 
-create table contact_table(
-	customer_id CHAR PRIMARY KEY NOT NULL,
-	company_name TEXT FOREIGN KEY (company_name) REFERENCES company_table(company_name), 
-	fname TEXT,
-	lname TEXT,
-	contact_type TEXT,
-	title TEXT,
-	dept TEXT,
-	add1 TEXT,
-	add2 TEXT,
-	city TEXT,
-	country_state TEXT,
-	zip INT,
-	country TEXT,
-	phone TEXT,
-	extension TEXT,
-	fax TEXT,
-	email TEXT,
-	cell_phone TEXT,
-	third_party_company TEXT,
-	notes TEXT
+create table contact_table (
+  contact_id mediumint NOT NULL auto_increment,
+  customer_id varchar(8) NOT NULL default '',
+  company varchar(128) NOT NULL default '',
+  fname varchar(64) default NULL,
+  lname varchar(64) default NULL,
+  contact_type varchar(64) default NULL,
+  title varchar(64) default NULL,
+  dept varchar(128) default NULL,
+  add_1 varchar(64) default NULL,
+  add_2 varchar(64) default NULL,
+  city varchar(64) default NULL,
+  state_in_country varchar(4) default NULL,
+  zip varchar(16) default NULL,
+  country varchar(128) default NULL,
+  phone varchar(15) default NULL,
+  extension varchar(5) default NULL,
+  cell_phone_number varchar(15) default NULL,
+  third_party_company varchar(128) default '',
+  fax varchar(15) default NULL,
+  email varchar(128) default NULL,
+  notes mediumtext,
+  PRIMARY KEY  (contact_id)
+  #PRIMARY KEY  (contact_id),
+  #FOREIGN KEY (company) REFERENCES company_table(company_name)
 );
 
 create table location_table(
