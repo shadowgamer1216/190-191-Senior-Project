@@ -31,6 +31,10 @@ export default function Login({ setToken }) {
 
   return(
     <div className="login-wrapper">
+      <nav className="navbar navbar-expand-lg navbar-dark bg-maroon">
+                <label className="navbar-brand">ABSOLUTE MEDIA, INC.</label>                
+            </nav>
+
       <h1>Please Log In</h1>
       <form onSubmit={handleSubmit}>
         <label>

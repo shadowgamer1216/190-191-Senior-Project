@@ -10,9 +10,9 @@ function HomePage() {
     <div class='HomePage'>
       {/*<img src={logo} className="App-logo" alt="logo" />*/}
       <div class='HomePageBar'>
-        <h1>
-          Absolute Media, Inc
-        </h1>
+      <nav className="navbar navbar-expand-lg navbar-dark bg-maroon">
+                <label className="navbar-brand">ABSOLUTE MEDIA, INC.</label>
+            </nav>
       </div>
 
         <div class='block1'>
