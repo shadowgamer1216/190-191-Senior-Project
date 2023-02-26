@@ -194,3 +194,26 @@ create table shipment_info_table{
 	fob TEXT,
 	notes TEXT
 }
+
+create table company_table{
+	company_ID INT PRIMARY KEY NOT NULL,
+	company_Name TEXT,
+	tax_ID INT,
+	status TEXT,
+	customer BIT,
+	OEM BIT,
+	credit_checked BIT,
+	vendor BIT,
+	salesperson TEXT,
+	phone INT,
+	extension INT,
+	fax TEXT,
+	email TEXT,
+	web_addr TEXT,
+	country TEXT,
+	state TEXT,
+	zip INT,
+	city TEXT,
+	Addr1 TEXT,
+	Addr2 TEXT
+}
