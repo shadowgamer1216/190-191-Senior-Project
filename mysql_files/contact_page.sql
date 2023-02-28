@@ -46,7 +46,7 @@ create table item_check_in_table(
 	quantity INT,
 	disposition TEXT,
 	signed_by_for TEXT,
-	date_in DATETIME;
+	date_in DATETIME,
 	date_completed DATE
 );
 
@@ -67,38 +67,63 @@ create table component_table (
 	uom TEXT,
 	component_status TEXT,
 	packaging_component BIT,
-	item_location TEXT,
+	item_location TEXT
 );
 
-create table product_table(
-	product_pn INT PRIMARY KEY NOT NULL, 
-	old_pn INT, 
-	customer_name TEXT,
-	customer_id INT, 
-	product_category TEXT,
-	oem_pn INT, 
-	product_title TEXT, 
-	product_desc TEXT, 
-	replication TEXT, 
-	master_format TEXT, 
-	master_received DATE, 
-	master_label TEXT, 
-	master_capacity TEXT, 
-	master_location TEXT, 
-	date_code_req BIT, 
-	date_code_position TEXT, 
-	inner_hub TEXT, 
-	inner_hub_position TEXT, 
-	flood_coat BIT, 
-	rimage_print BIT, 
-	color TEXT,
-	color_notes TEXT, 
-	component TEXT, 
-	packaging_notes TEXT, 
-	product_notes TEXT, 
-	product_status TEXT,
-	location_id INT, 
+DROP TABLE IF EXISTS product_table;
+CREATE TABLE product_table (
+  product_id INT(25) NOT NULL AUTO_INCREMENT,
+  old_abs_pn INT(11) DEFAULT '0',
+  oem_product_pn VARCHAR(50) DEFAULT NULL,
+  customer VARCHAR(200) DEFAULT NULL,
+  customer_id VARCHAR(4) DEFAULT NULL,
+  product_category VARCHAR(50) DEFAULT NULL,
+  product_title VARCHAR(200) DEFAULT NULL,
+  product_description TEXT,
+  product_replication VARCHAR(50) DEFAULT NULL,
+  master_format VARCHAR(50) DEFAULT NULL,
+  master_recd DATE DEFAULT NULL,
+  master_label VARCHAR(50) DEFAULT NULL,
+  master_capacity VARCHAR(50) DEFAULT NULL,
+  master_loc VARCHAR(50) DEFAULT NULL,
+  films_loc VARCHAR(50) DEFAULT NULL,
+  date_code_req CHAR(1) DEFAULT NULL,
+  date_code_position VARCHAR(50) DEFAULT NULL,
+  inner_hub VARCHAR(10) DEFAULT NULL,
+  inner_hub_position VARCHAR(50) DEFAULT NULL,
+  floodcoat CHAR(1) DEFAULT NULL,
+  rimage_print CHAR(1) DEFAULT NULL,
+  no_of_colors CHAR(2) DEFAULT NULL,
+  color_1 VARCHAR(25) DEFAULT NULL,
+  color_2 VARCHAR(25) DEFAULT NULL,
+  color_3 VARCHAR(25) DEFAULT NULL,
+  color_4 VARCHAR(25) DEFAULT NULL,
+  color_5 VARCHAR(25) DEFAULT NULL,
+  color_6 VARCHAR(25) DEFAULT NULL,
+  color_7 VARCHAR(25) DEFAULT NULL,
+  color_8 VARCHAR(25) DEFAULT NULL,
+  color_notes TEXT,
+  component_1 VARCHAR(50) DEFAULT NULL,
+  component_2 VARCHAR(50) DEFAULT NULL,
+  component_3 VARCHAR(50) DEFAULT NULL,
+  component_4 VARCHAR(50) DEFAULT NULL,
+  component_5 VARCHAR(50) DEFAULT NULL,
+  component_6 VARCHAR(50) DEFAULT NULL,
+  component_7 VARCHAR(50) DEFAULT NULL,
+  component_8 VARCHAR(50) DEFAULT NULL,
+  component_9 VARCHAR(50) DEFAULT NULL,
+  component_10 VARCHAR(50) DEFAULT NULL,
+  component_11 VARCHAR(50) DEFAULT NULL,
+  component_12 VARCHAR(50) DEFAULT NULL,
+  packaging_notes TEXT,
+  product_notes TEXT,
+  date_created DATETIME DEFAULT '0000-00-00 00:00:00',
+  product_status VARCHAR(25) NOT NULL DEFAULT 'Current',
+  PRIMARY KEY (product_id),
+  KEY (customer_id)
 );
+INSERT INTO product_table (product_id, old_abs_pn, oem_product_pn, customer, customer_id, product_category, product_title, product_description, product_replication, master_format, master_recd, master_label, master_capacity, master_loc, films_loc, date_code_req, date_code_position, inner_hub, inner_hub_position, floodcoat, rimage_print, no_of_colors, color_1, color_2, color_3, color_4, color_5, color_6, color_7, color_8, color_notes, component_1, component_2, component_3, component_4, component_5, component_6, component_7, component_8, component_9, component_10, component_11, component_12, packaging_notes, product_notes, date_created, product_status)
+VALUES();
 
 create table order_table (
 	-- Billing Information (Company's Information)
@@ -194,10 +219,10 @@ create table shipping_table(
 	province TEXT,
 	country TEXT,
 	phone TEXT,
-	fax TEXT,
+	fax TEXT
 );
 
-create table shipment_info_table{
+create table shipment_info_table(
 	fedex TEXT,
 	ups TEXT,
 	courier_willcall TEXT,
@@ -210,9 +235,9 @@ create table shipment_info_table{
 	arrival_ship_time DATETIME,
 	fob TEXT,
 	notes TEXT
-}
+);
 
-create table company_table{
+create table company_table(
 	company_ID INT PRIMARY KEY NOT NULL,
 	company_Name TEXT,
 	tax_ID INT,
@@ -233,4 +258,4 @@ create table company_table{
 	city TEXT,
 	Addr1 TEXT,
 	Addr2 TEXT
-}
+);
