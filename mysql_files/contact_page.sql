@@ -101,6 +101,16 @@ create table product_table(
 );
 
 create table order_table (
+	-- Billing Information (Company's Information)
+    company_name TEXT,
+    contact TEXT,
+    phone INT,
+    address1 TEXT,
+    address2 TEXT,
+    city TEXT,
+    state TEXT,
+    zip INT,
+    -- Product Information
 	product_id INT PRIMARY KEY NOT NULL,
     product_category TEXT,
     OEM_product_id INT,
@@ -110,39 +120,46 @@ create table order_table (
     requestor TEXT,
     customer_contact TEXT,
     re_order BIT,
+    -- Custom Product
+    product_title TEXT,
+    product_id INT,
     factory_order_quantity INT,
     custom_invoice BIT,
     custom_packing_slip BIT,
     custom_quantity INT,
     custom_unit_price FLOAT,
     custom_total_price FLOAT,
+    -- Non-Inventory Line Items
     non_inventory_line_item TEXT,
     non_inventory_invoice BIT,
     non_inventory_packing_slip BIT,
     non_inventory_quantity INT,
     non_inventory_unit_price FLOAT,
     non_inventory_total_price FLOAT,
+    -- Inventory Items
     inventory_item TEXT,
     inventory_invoice BIT,
     inventory_packing_slip BIT,
     inventory_quantity INT,
     inventory_unit_price FLOAT,
     inventory_total_price FLOAT,
-    assembly_charges INT,
-    assembly_charges1 FLOAT,
-    assembly_charges2 FLOAT,
-    date_code_printing_charges INT,
-    date_code_printing_charges1 FLOAT,
-    date_code_printing_charges2 FLOAT,
+    -- Billing Information
+    assembly_charges_quantity INT,
+    assembly_charges_unit_price FLOAT,
+    assembly_charges_total_price FLOAT,
+    date_code_printing_charges_quantity INT,
+    date_code_printing_charges1_unit_price FLOAT,
+    date_code_printing_charges2_total_price FLOAT,
     date_code_setup_charge FLOAT,
-    art_manipulation FLOAT,
     number_of_screens INT,
+    art_manipulation FLOAT,
     sub_total FLOAT,
     taxable BIT,
     tax_rate FLOAT,
     tax FLOAT,
     freight_charges FLOAT,
     order_price_total FLOAT,
+    -- Invoice Information
     invoice_date DATE,
     invoice_date_paid DATE,
     invoice_notes TEXT,
@@ -193,4 +210,27 @@ create table shipment_info_table{
 	arrival_ship_time DATETIME,
 	fob TEXT,
 	notes TEXT
+}
+
+create table company_table{
+	company_ID INT PRIMARY KEY NOT NULL,
+	company_Name TEXT,
+	tax_ID INT,
+	status TEXT,
+	customer BIT,
+	OEM BIT,
+	credit_checked BIT,
+	vendor BIT,
+	salesperson TEXT,
+	phone INT,
+	extension INT,
+	fax TEXT,
+	email TEXT,
+	web_addr TEXT,
+	country TEXT,
+	state TEXT,
+	zip INT,
+	city TEXT,
+	Addr1 TEXT,
+	Addr2 TEXT
 }
