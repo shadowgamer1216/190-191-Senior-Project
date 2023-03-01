@@ -10,6 +10,11 @@ var fs = require("fs");
 var path = require("path");
 var Sequelize = require("sequelize");
 var env = process.env.NODE_ENV || "development";
+var fs = require("fs");
+var path = require("path");
+var Sequelize = require("sequelize");
+var env = process.env.NODE_ENV || "development";
+var db = {};
 const sequelize = new Sequelize(
     'absolutemedia',
     'root',
@@ -30,15 +35,16 @@ const sequelize = new Sequelize(
  * db here, such as MongoDB, Fauna, SQL, etc.
  */
 
-
-function dbpush (sequelize, Sequelize) {
-
-    var User = sequelize.define('users', {
+    var User = sequelize.define('user', {
 
         id: {
             autoIncrement: true,
             primaryKey: true,
             type: Sequelize.INTEGER
+        },
+
+        createdAt: {
+          type: Sequelize.DATE
         },
 
         username: {
@@ -48,14 +54,21 @@ function dbpush (sequelize, Sequelize) {
         password: {
             type: Sequelize.STRING,
             allowNull: false
-        },
+        }
 
     });
 
-    return User;
+    (async () => {
+      await User.sync();
+      
 
-}
-const users = []
+
+    })();
+
+
+
+
+//const users = [user]
 
 export async function createUser({ username, password }) {
   // Here you should create the user and save the salt and hashed password (some dbs may have
@@ -64,16 +77,16 @@ export async function createUser({ username, password }) {
   const hash = crypto
     .pbkdf2Sync(password, salt, 1000, 64, 'sha512')
     .toString('hex')
-  const user = {
+  const user = await User.create({
     id: uuidv4(),
     createdAt: Date.now(),
     username,
     hash,
     salt,
-  }
+  });
 
   // This is an in memory store for users, there is no data persistence without a proper DB
-  users.push(user)
+  
 
   return { username, createdAt: Date.now() }
 }
@@ -81,7 +94,7 @@ export async function createUser({ username, password }) {
 // Here you should lookup for the user in your DB
 export async function findUser({ username }) {
   // This is an in memory store for users, there is no data persistence without a proper DB
-  return users.find((user) => user.username === username)
+  return User.findAll({where: {username: username}});
 }
 
 // Compare the password of an already fetched user (using `findUser`) and compare the
