@@ -7,13 +7,32 @@ import Axios from "axios";
 
 const Contact = () => {
     const navigate = useNavigate();
-    const [customerID, setCustomerID] = useState("");
+    const [customer_id, setCustomerID] = useState("");
+    const [company, setCompany] = useState(""); //testing company
+    const [fname, setFname] = useState(""); 
+    const [lname, setLname] = useState(""); 
+    const [contact_type, setContactType] = useState("");
+    const [title, setTitle] = useState("");
+    const [dept, setDept] = useState("");
+    const [add_1, setAdd_1] = useState("");
+    const [add_2, setAdd_2] = useState("");
+    const [city, setCity] = useState("");
+    const [state_in_country, setState] = useState("");
+    const [zip, setZip] = useState("");
+    const [country, setCountry] = useState("");
+    const [phone, setPhone] = useState("");
+    const [extension, setExtension] = useState("");
+    const [cell_phone_number, setCell] = useState("");
+    const [third_party_company, setThirdParty] = useState("");
+    const [fax, setFax] = useState("");
+    const [email, setEmail] = useState("");
+    const [notes, setNotes] = useState("");
 
 
     const submit = () => {
-        Axios.post("http://localhost:3001/api/insert", {customerID: customerID})
+        Axios.post("http://localhost:3001/api/insert", {customer_id: customer_id, company: company, fname: fname, lname: lname, contact_type: contact_type, title: title, dept:dept, add_1: add_1, add_2: add_2, city: city, state_in_country: state_in_country, zip: zip, country: country, phone:phone, extension: extension, cell_phone_number: cell_phone_number, third_party_company:third_party_company, fax:fax, email:email, notes:notes})
         .then(()=> {
-            alert('success');
+            alert('inserted');
         })
     };
     return (
@@ -58,33 +77,42 @@ const Contact = () => {
                         <div className="form-row">
                             <label htmlFor="company" className="col-sm-2 col-form-label">Company</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="company" />
+                                <input type="text" className="form-control" id="company-id" onChange={(e) =>{
+                                    setCompany(e.target.value)
+                                }}/>
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="first" className="col-sm-2 col-form-label">First Name</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="first" />
+                            <input type="text" className="form-control" id="first" onChange={(e) =>{
+                                    setFname(e.target.value)
+                                }}/>
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="last" className="col-sm-2 col-form-label">Last Name</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="last" />
+                                <input type="text" className="form-control" id="last" onChange={(e) =>{
+                                    setLname(e.target.value)
+                                }}/>
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="contact-type" className="col-sm-2 col-form-label">Contact Type</label>
                             <div className="input-group input-group-sm mb-3 col-sm-3">
-                                <select className="form-control" name="contact-type" id="contact-type">
-                                    <option defaultValue="0">Value</option>
-                                    <option value="1">Shipping</option>
-                                    <option value="2">Billing</option>
-                                    <option value="3">Contact</option>
-                                    <option value="4">Other</option>
+                               {/* <select className="form-control" name="contact-type" id="contact-type"> */ }
+                                <select className="form-control" name="contact-type" id="contact-type" onChange={(e) =>{
+                                    setContactType(e.target.value)
+                                }}>
+                                    <option defaultValue="Not Selected">Value</option>
+                                    <option value="Shipping">Shipping</option>
+                                    <option value="Billing">Billing</option>
+                                    <option value="Contact">Contact</option>
+                                    <option value="Other">Other</option>
                                 </select>
                             </div>
                         </div>
@@ -92,28 +120,36 @@ const Contact = () => {
                         <div className="form-row">
                             <label htmlFor="title" className="col-sm-2 col-form-label">Title</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="title" />
+                            <input type="text" className="form-control" id="title" onChange={(e) =>{
+                                    setTitle(e.target.value)
+                                }}/>
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="dept" className="col-sm-2 col-form-label">Department</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="dept" />
+                                <input type="text" className="form-control" id="dept" onChange={(e) =>{
+                                    setDept(e.target.value)
+                                }}/> 
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="add1" className="col-sm-2 col-form-label">Address 1</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="add1" />
+                                <input type="text" className="form-control" id="add1" onChange={(e) =>{
+                                    setAdd_1(e.target.value)
+                                }}/> 
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="add2" className="col-sm-2 col-form-label">Address 2</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="add2" />
+                                <input type="text" className="form-control" id="add2" onChange={(e) =>{
+                                    setAdd_2(e.target.value)
+                                }}/> 
                             </div>
                         </div>
 
@@ -121,14 +157,19 @@ const Contact = () => {
                         <div className="form-row">
                             <label htmlFor="city" className="col-sm-2 col-form-label">City</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="city" />
+                                <input type="text" className="form-control" id="city" onChange={(e) =>{
+                                    setCity(e.target.value)
+                                }}/> 
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="state" className="col-sm-2 col-form-label">State</label>
                             <div className="input-group input-group-sm mb-3 col-sm-3">
-                                <select className="form-control" name="state" id="state">
+                                {/*<select className="form-control" name="state" id="state"> */}
+                                <select className="form-control" name="state" id="state" onChange={(e) =>{
+                                    setState(e.target.value)
+                                }}>
                                     <option selected value="">Select State</option>
                                     <option value="AL">AL</option>
                                     <option value="AK">AK</option>
@@ -188,63 +229,81 @@ const Contact = () => {
                         <div className="form-row">
                             <label htmlFor="zip" className="col-sm-2 col-form-label">Zip</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="zip" />
+                                <input type="text" className="form-control" id="zip" onChange={(e) =>{
+                                    setZip(e.target.value)
+                                }}/> 
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="country" className="col-sm-2 col-form-label">Country</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="country" />
+                                <input type="text" className="form-control" id="country" onChange={(e) =>{
+                                    setCountry(e.target.value)
+                                }}/> 
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="phone" className="col-sm-2 col-form-label">Phone</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="phone" />
+                                <input type="text" className="form-control" id="phone" onChange={(e) =>{
+                                    setPhone(e.target.value)
+                                }}/> 
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="extension" className="col-sm-2 col-form-label">Extension</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="extension" />
+                                <input type="text" className="form-control" id="extension" onChange={(e) =>{
+                                    setExtension(e.target.value)
+                                }}/> 
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="fax" className="col-sm-2 col-form-label">Fax</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="fax" />
+                                <input type="text" className="form-control" id="fax" onChange={(e) =>{
+                                    setFax(e.target.value)
+                                }}/> 
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="email" className="col-sm-2 col-form-label">Email</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="email" />
+                                <input type="text" className="form-control" id="email" onChange={(e) =>{
+                                    setEmail(e.target.value)
+                                }}/> 
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="cell-phone-number" className="col-sm-2 col-form-label">Cell Phone Number</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="cell-phone-number" />
+                                <input type="text" className="form-control" id="cell-phone-number" onChange={(e) =>{
+                                    setCell(e.target.value)
+                                }}/> 
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="third-party-company" className="col-sm-2 col-form-label">Third Party Company</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="third-party-company" />
+                                <input type="text" className="form-control" id="third-party-company" onChange={(e) =>{
+                                    setThirdParty(e.target.value)
+                                }}/> 
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="notes" className="col-sm-2 col-form-label">Notes</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <textarea rows="4" cols="50" className="form-control" name="notes" id="custom-area" />
+                                <textarea rows="4" cols="50" className="form-control" name="notes" id="custom-area" onChange={(e) =>{
+                                    setNotes(e.target.value)
+                                }} />
                             </div>
                         </div>
 
