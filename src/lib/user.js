@@ -10,7 +10,6 @@ var fs = require("fs");
 var path = require("path");
 var Sequelize = require("sequelize");
 var env = process.env.NODE_ENV || "development";
-var config = require(path.join(__dirname, '..', 'config', 'config.json'))[env];
 const sequelize = new Sequelize(
     'absolutemedia',
     'root',
@@ -34,7 +33,7 @@ const sequelize = new Sequelize(
 
 function dbpush (sequelize, Sequelize) {
 
-    var User = sequelize.define('user', {
+    var User = sequelize.define('users', {
 
         id: {
             autoIncrement: true,
@@ -56,33 +55,6 @@ function dbpush (sequelize, Sequelize) {
     return User;
 
 }
-
-"use strict";
-
-
-
-
-fs
-    .readdirSync(__dirname)
-    .filter(function (file) {
-        return (file.indexOf(".") !== 0) && (file !== "index.js");
-    })
-    .forEach(function (file) {
-        var model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes)
-        db[model.name] = model;
-    });
-
-Object.keys(db).forEach(function (modelName) {
-    if ("associate" in db[modelName]) {
-        db[modelName].associate(db);
-    }
-});
-
-
-db.sequelize = sequelize;
-db.Sequelize = Sequelize;
-
-
 const users = []
 
 export async function createUser({ username, password }) {
