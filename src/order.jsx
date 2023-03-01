@@ -1,9 +1,224 @@
 import React from "react";
 import './App.css'
 import { Link, useNavigate } from "react-router-dom"
+import { useState, useEffect } from "react";
+import Axios from 'axios';
+
+function AddNonItem() {
+    const [inputFields, setInputFields] = useState([
+        { field: '' }
+    ])
+    const handleChange = (index, event) => {
+        let data = [...inputFields];
+        data[index][event.target.name] = event.target.value;
+        setInputFields(data);
+    }
+    const addField = () => {
+        let newField = { field: '' }
+        setInputFields([...inputFields, newField])
+    }
+    const removeField = (index) => {
+        let data = [...inputFields];
+        data.splice(index, 1)
+        setInputFields(data)
+    }
+
+    return (
+        <div className="order">
+            <div className="form-row">
+                <div className="input-group input-group-sm mb-3 col-sm-10">
+                    <button type="button" id="item-add" className="btn btn-outline-primary btn-sm" onClick={addField}>Add New Non-Inventory Item</button>
+                </div>
+            </div>
+            {inputFields.map((input, index) => {
+                return (
+                    <div className="it-field" key={index}>
+                        <div className="form-row">
+                            <label className="col-sm-2 col-form-label">Non-Inventory Item #{index + 1}</label>
+                            <div className="input-group input-group-sm mb-3 col-sm-9">
+                                <input
+                                    key={index}
+                                    className="form-control field"
+                                    type="text"
+                                    value={input.field}
+                                    onChange={event => handleChange(index, event)}
+                                />
+                            </div>
+                            <div className="input-group input-group-sm mb-3 col-sm-1">
+                                <button
+                                    type="button"
+                                    id="component-remove"
+                                    className="btn btn-outline-danger btn-sm"
+                                    onClick={removeField}
+                                >X</button>
+                            </div>
+                            
+                            <label className="col-sm-2.75 col-form-label">Invoice</label>
+                            <div className="input-group input-group-sm mb-3 col-sm-1">
+                                <div className="form-group custom-control custom-checkbox">
+                                    <input type="checkbox" className="custom-control-input" id="invoice1" />
+                                    <label htmlFor="invoice" className="custom-control-label"></label>
+                                </div>
+                            </div>
+
+                            <label className="col-sm-2.75 col-form-label">Packing Slip</label>
+                            <div className="input-group input-group-sm mb-3 col-sm-1">
+                                <div className="form-group custom-control custom-checkbox">
+                                    <input type="checkbox" className="custom-control-input" id="packingSlip1" />
+                                   <label htmlFor="packingSlip" className="custom-control-label"></label>
+                                </div>
+                            </div>
+
+                            <label className="col-sm-2.75 col-form-label">Quantity</label>
+                            <div className="input-group input-group-sm mb-3 col-sm-1">
+                                <input type="text" className="form-control" id="quantity1" />
+                            </div>
+
+                            <label className="col-sm-2.75 col-form-label">Unit Price $</label>
+                            <div className="input-group input-group-sm mb-3 col-sm-1">
+                                <input type="text" className="form-control" id="unitPrice1" />
+                            </div>
+
+                            <label className="col-sm-2.75 col-form-label">Total Price $</label>
+                            <div className="input-group input-group-sm mb-3 col-sm-1">
+                                <input type="text" className="form-control" id="totalPrice1" />
+                            </div>
+                        </div>
+                    </div>
+                );
+            })}
+        </div>
+    );
+}
+
+function AddItem() {
+    const [inputFields, setInputFields] = useState([
+        { field: '' }
+    ])
+    const handleChange = (index, event) => {
+        let data = [...inputFields];
+        data[index][event.target.name] = event.target.value;
+        setInputFields(data);
+    }
+    const addField = () => {
+        let newField = { field: '' }
+        setInputFields([...inputFields, newField])
+    }
+    const removeField = (index) => {
+        let data = [...inputFields];
+        data.splice(index, 1)
+        setInputFields(data)
+    }
+
+    return (
+        <div className="order">
+            <div className="form-row">
+                <div className="input-group input-group-sm mb-3 col-sm-10">
+                    <button type="button" id="item-add" className="btn btn-outline-primary btn-sm" onClick={addField}>Add New Inventory Item</button>
+                </div>
+            </div>
+            {inputFields.map((input, index) => {
+                return (
+                    <div className="it-field" key={index}>
+                        <div className="form-row">
+                            <label className="col-sm-2 col-form-label">Inventory Item #{index + 1}</label>
+                            <div className="input-group input-group-sm mb-3 col-sm-3">
+                                <select key={index} className="form-control" value={input.field} onChange={event => handleChange(index, event)}>
+                                    <option defaultValue="0">Select Value</option>
+                                    <option value="1">Option 1</option>
+                                    <option value="2">Option 2</option>
+                                    <option value="3">Option 3</option>
+                                </select>
+                            </div>
+
+                            <div className="input-group input-group-sm mb-3 col-sm-1">
+                                <button
+                                    type="button"
+                                    id="component-remove"
+                                    className="btn btn-outline-danger btn-sm"
+                                    onClick={removeField}
+                                >X</button>
+                            </div>
+
+                            <div className="form-row">
+                                <label className="col-sm-2.75 col-form-label">Invoice</label>
+                                <div className="input-group input-group-sm mb-3 col-sm-1">
+                                    <div className="form-group custom-control custom-checkbox">
+                                        <input type="checkbox" className="custom-control-input" id="invoice1" />
+                                        <label htmlFor="invoice" className="custom-control-label"></label>
+                                    </div>
+                                </div>
+
+                                <label className="col-sm-2.75 col-form-label">Packing Slip</label>
+                                <div className="input-group input-group-sm mb-3 col-sm-1">
+                                    <div className="form-group custom-control custom-checkbox">
+                                        <input type="checkbox" className="custom-control-input" id="packingSlip1" />
+                                        <label htmlFor="packingSlip" className="custom-control-label"></label>
+                                    </div>
+                                </div>
+
+                                <label className="col-sm-2.75 col-form-label">Quantity</label>
+                                <div className="input-group input-group-sm mb-3 col-sm-1">
+                                    <input type="text" className="form-control" id="quantity1" />
+                                </div>
+
+                                <label className="col-sm-2.75 col-form-label">Unit Price $</label>
+                                <div className="input-group input-group-sm mb-3 col-sm-1">
+                                    <input type="text" className="form-control" id="unitPrice1" />
+                                </div>
+
+                                <label className="col-sm-2.75 col-form-label">Total Price $</label>
+                                <div className="input-group input-group-sm mb-3 col-sm-1">
+                                    <input type="text" className="form-control" id="totalPrice1" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                );
+            })}
+        </div>
+    );
+}
 
 const Order = () => {
     const navigate = useNavigate();
+    const [salesPerson, setSalesPerson] = useState("");
+    const [requestor, setRequestor] = useState("");
+    const [cContact, setCCustomer] = useState("");
+    const [reOrder, setReOrder] = useState("");
+
+    // Custom Product
+    const [factoryOrderQuantity, setFactoryOrderQuantity] = useState("");
+    const [customInvoice, setCustomInvoice] = useState("");
+    const [customPackingSlip, setCustomPackingSlip] = useState("");
+    const [customQuantity, setCustomQuantity] = useState("");
+    const [customUnitPrice, setCustomUnitPrice] = useState("");
+    const [customTotalPrice, setCustomTotalPrice] = useState("");
+
+    // Non-Inventory Line Items
+    // Inventory Items
+    // Billing Information
+    // Invoice Information
+    // Job Information
+
+    const submit = () => {
+        Axios.post("http://localhost:3001/api/insert", {
+            salesPerson: salesPerson,
+            requestor: requestor,
+            cContact: cContact,
+            reOrder: reOrder,
+            factoryOrderQuantity: factoryOrderQuantity,
+            customInvoice: customInvoice,
+            customPackingSlip: customPackingSlip,
+            customQuantity: customQuantity,
+            customUnitPrice: customUnitPrice,
+            customTotalPrice: customTotalPrice
+        })
+        .then(() => {
+            alert('inserted');
+        })
+    };
+
     return (
         <div className="page">
             <nav className="navbar navbar-expand-lg navbar-dark bg-maroon">
@@ -37,21 +252,21 @@ const Order = () => {
                     <div className="form-row">
                         <label htmlFor="salesPerson" className="col-sm-2 col-form-label">SalesPerson</label>
                         <div className="input-group input-group-sm mb-3 col-sm-10">
-                            <input type="text" readOnly className="form-control" id="salesPerson" />
+                            <input type="text" className="form-control" id="salesPerson" />
                         </div>
                     </div>
 
                     <div className="form-row">
                         <label htmlFor="requestor" className="col-sm-2 col-form-label">Requestor</label>
                         <div className="input-group input-group-sm mb-3 col-sm-10">
-                            <input type="text" readOnly className="form-control" id="requestor" />
+                            <input type="text" className="form-control" id="requestor" />
                         </div>
                     </div>
 
                     <div className="form-row">
                         <label htmlFor="cContact" className="col-sm-2 col-form-label">Customer Contact</label>
                         <div className="input-group input-group-sm mb-3 col-sm-10">
-                            <input type="text" readOnly className="form-control" id="cContact" />
+                            <input type="text" className="form-control" id="cContact" />
                         </div>
                     </div>
 
@@ -89,49 +304,41 @@ const Order = () => {
                     <div className="form-row">
                         <label htmlFor="factoryOrderQuantity" className="col-sm-2 col-form-label">Factory Order Quantity</label>
                         <div className="input-group input-group-sm mb-3 col-sm-10">
-                            <input type="text" readOnly className="form-control" id="factoryOrderQuantity" />
+                            <input type="text" className="form-control" id="factoryOrderQuantity" />
                         </div>
                     </div>
 
                     <div className="form-row">
-                        <label htmlFor="Invoice" className="col-sm-2 col-form-label">Invoice</label>
-                        <label htmlFor="packingSlip" className="col-sm-2 col-form-label">Packing Slip</label>
-                        <label htmlFor="Quantity" className="col-sm-2 col-form-label">Quantity</label>
-                        <label htmlFor="unitPrice" className="col-sm-2 col-form-label">Unit Price $</label>
-                        <label htmlFor="totalPrice" className="col-sm-2 col-form-label">Total Price $</label>
-                    </div>
-
-                    <div className="form-row">
-
-                        <div className="input-group input-group-sm col-sm-2 pl-5">
+                        <label className="col-sm-2.75 col-form-label">Invoice</label>
+                        <div className="input-group input-group-sm mb-3 col-sm-1">
                             <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" className="custom-control-input" id="invoice" />
-                                <label htmlFor="invoice" className="custom-control-label"></label>
+                                <input type="checkbox" className="custom-control-input" id="customInvoice" />
+                                <label htmlFor="customInvoice" className="custom-control-label"></label>
                             </div>
                         </div>
 
-                        <div className="input-group input-group-sm col-sm-2 pl-5">
+                        <label className="col-sm-2.75 col-form-label">Packing Slip</label>
+                        <div className="input-group input-group-sm mb-3 col-sm-1">
                             <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" className="custom-control-input" id="packingSlip" />
-                                <label htmlFor="packingSlip" className="custom-control-label"></label>
+                                <input type="checkbox" className="custom-control-input" id="CustomPackingSlip" />
+                                <label htmlFor="CustomPackingSlip" className="custom-control-label"></label>
                             </div>
                         </div>
 
+                        <label className="col-sm-2.75 col-form-label">Quantity</label>
                         <div className="input-group input-group-sm mb-3 col-sm-1">
-                            <input type="text" readOnly className="form-control" id="quantity" />
+                            <input type="text" className="form-control" id="customQuantity" />
                         </div>
 
-                        <div className="input-group input-group-sm mb-3 col-sm-1"></div>
-
+                        <label className="col-sm-2.75 col-form-label">Unit Price $</label>
                         <div className="input-group input-group-sm mb-3 col-sm-1">
-                            <input type="text" readOnly className="form-control" id="unitPrice" />
+                            <input type="text" className="form-control" id="customUnitPrice" />
                         </div>
 
-                        <div className="input-group input-group-sm mb-3 col-sm-1"></div>
-
+                        <label className="col-sm-2.75 col-form-label">Total Price $</label>
                         <div className="input-group input-group-sm mb-3 col-sm-1">
-                            <input type="text" readOnly className="form-control" id="totalPrice" />
-                        </div>
+                            <input type="text" READONLY className="form-control" id="customTotalPrice" />
+                         </div>
                     </div>
                 </div>
 
@@ -140,255 +347,7 @@ const Order = () => {
                         <h5>Non-Inventory Line Items</h5>
                     </div>
 
-                    <div className = "form-container">
-                        <div className="form-row">
-                            <label htmlFor="nonInventory1" className="col-sm-2 col-form-label">Item 1</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-2">
-                                <input type="text" readOnly className="form-control" id="nonInventory1" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="form-row">
-                        <label htmlFor="Invoice" className="col-sm-2 col-form-label">Invoice</label>
-                        <label htmlFor="packingSlip" className="col-sm-2 col-form-label">Packing Slip</label>
-                        <label htmlFor="Quantity" className="col-sm-2 col-form-label">Quantity</label>
-                        <label htmlFor="unitPrice" className="col-sm-2 col-form-label">Unit Price $</label>
-                        <label htmlFor="totalPrice" className="col-sm-2 col-form-label">Total Price $</label>
-                    </div>
-
-                    <div className="form-row">
-
-                        <div className="input-group input-group-sm col-sm-2 pl-5">
-                            <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" className="custom-control-input" id="invoice1" />
-                                <label htmlFor="invoice" className="custom-control-label"></label>
-                            </div>
-                        </div>
-
-                        <div className="input-group input-group-sm col-sm-2 pl-5">
-                            <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" className="custom-control-input" id="packingSlip1" />
-                                <label htmlFor="packingSlip" className="custom-control-label"></label>
-                            </div>
-                        </div>
-
-                        <div className="input-group input-group-sm mb-3 col-sm-1">
-                            <input type="text" readOnly className="form-control" id="quantity1" />
-                        </div>
-
-                        <div className="input-group input-group-sm mb-3 col-sm-1"></div>
-
-                        <div className="input-group input-group-sm mb-3 col-sm-1">
-                            <input type="text" readOnly className="form-control" id="unitPrice1" />
-                        </div>
-
-                        <div className="input-group input-group-sm mb-3 col-sm-1"></div>
-
-                        <div className="input-group input-group-sm mb-3 col-sm-1">
-                            <input type="text" readOnly className="form-control" id="totalPrice1" />
-                        </div>
-                    </div>
-
-                    <div className = "form-container">
-                        <div className="form-row">
-                            <label htmlFor="nonInventory2" className="col-sm-2 col-form-label">Item 2</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-2">
-                                <input type="text" readOnly className="form-control" id="nonInventory2" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="form-row">
-                        <label htmlFor="Invoice" className="col-sm-2 col-form-label">Invoice</label>
-                        <label htmlFor="packingSlip" className="col-sm-2 col-form-label">Packing Slip</label>
-                        <label htmlFor="Quantity" className="col-sm-2 col-form-label">Quantity</label>
-                        <label htmlFor="unitPrice" className="col-sm-2 col-form-label">Unit Price $</label>
-                        <label htmlFor="totalPrice" className="col-sm-2 col-form-label">Total Price $</label>
-                    </div>
-
-                    <div className="form-row">
-
-                        <div className="input-group input-group-sm col-sm-2 pl-5">
-                            <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" className="custom-control-input" id="invoice2" />
-                                <label htmlFor="invoice" className="custom-control-label"></label>
-                            </div>
-                        </div>
-
-                        <div className="input-group input-group-sm col-sm-2 pl-5">
-                            <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" className="custom-control-input" id="packingSlip2" />
-                                <label htmlFor="packingSlip" className="custom-control-label"></label>
-                            </div>
-                        </div>
-
-                        <div className="input-group input-group-sm mb-3 col-sm-1">
-                            <input type="text" readOnly className="form-control" id="quantity2" />
-                        </div>
-
-                        <div className="input-group input-group-sm mb-3 col-sm-1"></div>
-
-                        <div className="input-group input-group-sm mb-3 col-sm-1">
-                            <input type="text" readOnly className="form-control" id="unitPrice2" />
-                        </div>
-
-                        <div className="input-group input-group-sm mb-3 col-sm-1"></div>
-
-                        <div className="input-group input-group-sm mb-3 col-sm-1">
-                            <input type="text" readOnly className="form-control" id="totalPrice2" />
-                        </div>
-                    </div>
-
-                    <div className = "form-container">
-                        <div className="form-row">
-                            <label htmlFor="nonInventory3" className="col-sm-2 col-form-label">Item 3</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-2">
-                                <input type="text" readOnly className="form-control" id="nonInventory3" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="form-row">
-                        <label htmlFor="Invoice" className="col-sm-2 col-form-label">Invoice</label>
-                        <label htmlFor="packingSlip" className="col-sm-2 col-form-label">Packing Slip</label>
-                        <label htmlFor="Quantity" className="col-sm-2 col-form-label">Quantity</label>
-                        <label htmlFor="unitPrice" className="col-sm-2 col-form-label">Unit Price $</label>
-                        <label htmlFor="totalPrice" className="col-sm-2 col-form-label">Total Price $</label>
-                    </div>
-
-                    <div className="form-row">
-
-                        <div className="input-group input-group-sm col-sm-2 pl-5">
-                            <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" className="custom-control-input" id="invoice3" />
-                                <label htmlFor="invoice" className="custom-control-label"></label>
-                            </div>
-                        </div>
-
-                        <div className="input-group input-group-sm col-sm-2 pl-5">
-                            <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" className="custom-control-input" id="packingSlip3" />
-                                <label htmlFor="packingSlip" className="custom-control-label"></label>
-                            </div>
-                        </div>
-
-                        <div className="input-group input-group-sm mb-3 col-sm-1">
-                            <input type="text" readOnly className="form-control" id="quantity3" />
-                        </div>
-
-                        <div className="input-group input-group-sm mb-3 col-sm-1"></div>
-
-                        <div className="input-group input-group-sm mb-3 col-sm-1">
-                            <input type="text" readOnly className="form-control" id="unitPrice3" />
-                        </div>
-
-                        <div className="input-group input-group-sm mb-3 col-sm-1"></div>
-
-                        <div className="input-group input-group-sm mb-3 col-sm-1">
-                            <input type="text" readOnly className="form-control" id="totalPrice3" />
-                        </div>
-                    </div>
-
-                    <div className = "form-container">
-                        <div className="form-row">
-                            <label htmlFor="nonInventory4" className="col-sm-2 col-form-label">Item 4</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-2">
-                                <input type="text" readOnly className="form-control" id="nonInventory4" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="form-row">
-                        <label htmlFor="Invoice" className="col-sm-2 col-form-label">Invoice</label>
-                        <label htmlFor="packingSlip" className="col-sm-2 col-form-label">Packing Slip</label>
-                        <label htmlFor="Quantity" className="col-sm-2 col-form-label">Quantity</label>
-                        <label htmlFor="unitPrice" className="col-sm-2 col-form-label">Unit Price $</label>
-                        <label htmlFor="totalPrice" className="col-sm-2 col-form-label">Total Price $</label>
-                    </div>
-
-                    <div className="form-row">
-
-                        <div className="input-group input-group-sm col-sm-2 pl-5">
-                            <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" className="custom-control-input" id="invoice4" />
-                                <label htmlFor="invoice" className="custom-control-label"></label>
-                            </div>
-                        </div>
-
-                        <div className="input-group input-group-sm col-sm-2 pl-5">
-                            <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" className="custom-control-input" id="packingSlip4" />
-                                <label htmlFor="packingSlip" className="custom-control-label"></label>
-                            </div>
-                        </div>
-
-                        <div className="input-group input-group-sm mb-3 col-sm-1">
-                            <input type="text" readOnly className="form-control" id="quantity4" />
-                        </div>
-
-                        <div className="input-group input-group-sm mb-3 col-sm-1"></div>
-
-                        <div className="input-group input-group-sm mb-3 col-sm-1">
-                            <input type="text" readOnly className="form-control" id="unitPrice4" />
-                        </div>
-
-                        <div className="input-group input-group-sm mb-3 col-sm-1"></div>
-
-                        <div className="input-group input-group-sm mb-3 col-sm-1">
-                            <input type="text" readOnly className="form-control" id="totalPrice4" />
-                        </div>
-                    </div>
-
-                    <div className = "form-container">
-                        <div className="form-row">
-                            <label htmlFor="nonInventory5" className="col-sm-2 col-form-label">Item 5</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-2">
-                                <input type="text" readOnly className="form-control" id="nonInventory5" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="form-row">
-                        <label htmlFor="Invoice" className="col-sm-2 col-form-label">Invoice</label>
-                        <label htmlFor="packingSlip" className="col-sm-2 col-form-label">Packing Slip</label>
-                        <label htmlFor="Quantity" className="col-sm-2 col-form-label">Quantity</label>
-                        <label htmlFor="unitPrice" className="col-sm-2 col-form-label">Unit Price $</label>
-                        <label htmlFor="totalPrice" className="col-sm-2 col-form-label">Total Price $</label>
-                    </div>
-
-                    <div className="form-row">
-
-                        <div className="input-group input-group-sm col-sm-2 pl-5">
-                            <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" className="custom-control-input" id="invoice5" />
-                                <label htmlFor="invoice" className="custom-control-label"></label>
-                            </div>
-                        </div>
-
-                        <div className="input-group input-group-sm col-sm-2 pl-5">
-                            <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" className="custom-control-input" id="packingSlip5" />
-                                <label htmlFor="packingSlip" className="custom-control-label"></label>
-                            </div>
-                        </div>
-
-                        <div className="input-group input-group-sm mb-3 col-sm-1">
-                            <input type="text" readOnly className="form-control" id="quantity5" />
-                        </div>
-
-                        <div className="input-group input-group-sm mb-3 col-sm-1"></div>
-
-                        <div className="input-group input-group-sm mb-3 col-sm-1">
-                            <input type="text" readOnly className="form-control" id="unitPrice5" />
-                        </div>
-
-                        <div className="input-group input-group-sm mb-3 col-sm-1"></div>
-
-                        <div className="input-group input-group-sm mb-3 col-sm-1">
-                            <input type="text" readOnly className="form-control" id="totalPrice5" />
-                        </div>
-                    </div>
+                    <AddNonItem></AddNonItem>
                 </div>
 
                 <div className="company-info pt-3">
@@ -396,182 +355,7 @@ const Order = () => {
                         <h5>Inventory Items</h5>
                     </div>
 
-                    <div className="form-row">
-                        <label htmlFor="inventory1" className="col-sm-2 col-form-label">Item 1</label>
-                        <div className="input-group input-group-sm mb-3 col-sm-3">
-                            <select className="form-control" name="inventory1" id="inventory1">
-                                <option defaultValue="0">Select Value</option>
-                                <option value="1">Option 1</option>
-                                <option value="2">Option 2</option>
-                                <option value="3">Option 3</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div className = "form-row">
-                        <div className="form-row">
-                            <label htmlFor="item1">Item 1 Quantity and Price</label>
-                        </div>
-                    </div>
-
-                    <div className="form-row">
-                        <label htmlFor="Invoice" className="col-sm-2 col-form-label">Invoice</label>
-                        <label htmlFor="packingSlip" className="col-sm-2 col-form-label">Packing Slip</label>
-                        <label htmlFor="Quantity" className="col-sm-2 col-form-label">Quantity</label>
-                        <label htmlFor="unitPrice" className="col-sm-2 col-form-label">Unit Price $</label>
-                        <label htmlFor="totalPrice" className="col-sm-2 col-form-label">Total Price $</label>
-                    </div>
-
-                    <div className="form-row">
-
-                        <div className="input-group input-group-sm col-sm-2 pl-5">
-                            <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" className="custom-control-input" id="item1" />
-                                <label htmlFor="invoice" className="custom-control-label"></label>
-                            </div>
-                        </div>
-
-                        <div className="input-group input-group-sm col-sm-2 pl-5">
-                            <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" className="custom-control-input" id="item1" />
-                                <label htmlFor="packingSlip" className="custom-control-label"></label>
-                            </div>
-                        </div>
-
-                        <div className="input-group input-group-sm mb-3 col-sm-1">
-                            <input type="text" readOnly className="form-control" id="item1" />
-                        </div>
-
-                        <div className="input-group input-group-sm mb-3 col-sm-1"></div>
-
-                        <div className="input-group input-group-sm mb-3 col-sm-1">
-                            <input type="text" readOnly className="form-control" id="item1" />
-                        </div>
-
-                        <div className="input-group input-group-sm mb-3 col-sm-1"></div>
-
-                        <div className="input-group input-group-sm mb-3 col-sm-1">
-                            <input type="text" readOnly className="form-control" id="item1" />
-                        </div>
-                    </div>
-
-                    <div className="form-row">
-                        <label htmlFor="inventory2" className="col-sm-2 col-form-label">Item 2</label>
-                        <div className="input-group input-group-sm mb-3 col-sm-3">
-                            <select className="form-control" name="inventory2" id="inventory2">
-                                <option defaultValue="0">Select Value</option>
-                                <option value="1">Option 1</option>
-                                <option value="2">Option 2</option>
-                                <option value="3">Option 3</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div className = "form-row">
-                        <div className="form-row">
-                            <label htmlFor="item1">Item 2 Quantity and Price</label>
-                        </div>
-                    </div>
-
-                    <div className="form-row">
-                        <label htmlFor="Invoice" className="col-sm-2 col-form-label">Invoice</label>
-                        <label htmlFor="packingSlip" className="col-sm-2 col-form-label">Packing Slip</label>
-                        <label htmlFor="Quantity" className="col-sm-2 col-form-label">Quantity</label>
-                        <label htmlFor="unitPrice" className="col-sm-2 col-form-label">Unit Price $</label>
-                        <label htmlFor="totalPrice" className="col-sm-2 col-form-label">Total Price $</label>
-                    </div>
-
-                    <div className="form-row">
-
-                        <div className="input-group input-group-sm col-sm-2 pl-5">
-                            <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" className="custom-control-input" id="item2" />
-                                <label htmlFor="invoice" className="custom-control-label"></label>
-                            </div>
-                        </div>
-
-                        <div className="input-group input-group-sm col-sm-2 pl-5">
-                            <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" className="custom-control-input" id="item2" />
-                                <label htmlFor="packingSlip" className="custom-control-label"></label>
-                            </div>
-                        </div>
-
-                        <div className="input-group input-group-sm mb-3 col-sm-1">
-                            <input type="text" readOnly className="form-control" id="item2" />
-                        </div>
-
-                        <div className="input-group input-group-sm mb-3 col-sm-1"></div>
-
-                        <div className="input-group input-group-sm mb-3 col-sm-1">
-                            <input type="text" readOnly className="form-control" id="item2" />
-                        </div>
-
-                        <div className="input-group input-group-sm mb-3 col-sm-1"></div>
-
-                        <div className="input-group input-group-sm mb-3 col-sm-1">
-                            <input type="text" readOnly className="form-control" id="item2" />
-                        </div>
-                    </div>
-
-                    <div className="form-row">
-                        <label htmlFor="inventory3" className="col-sm-2 col-form-label">Item 3</label>
-                        <div className="input-group input-group-sm mb-3 col-sm-3">
-                            <select className="form-control" name="inventory3" id="inventory3">
-                                <option defaultValue="0">Select Value</option>
-                                <option value="1">Option 1</option>
-                                <option value="2">Option 2</option>
-                                <option value="3">Option 3</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div className = "form-row">
-                        <div className="form-row">
-                            <label htmlFor="item1">Item 3 Quantity and Price</label>
-                        </div>
-                    </div>
-
-                    <div className="form-row">
-                        <label htmlFor="Invoice" className="col-sm-2 col-form-label">Invoice</label>
-                        <label htmlFor="packingSlip" className="col-sm-2 col-form-label">Packing Slip</label>
-                        <label htmlFor="Quantity" className="col-sm-2 col-form-label">Quantity</label>
-                        <label htmlFor="unitPrice" className="col-sm-2 col-form-label">Unit Price $</label>
-                        <label htmlFor="totalPrice" className="col-sm-2 col-form-label">Total Price $</label>
-                    </div>
-
-                    <div className="form-row">
-
-                        <div className="input-group input-group-sm col-sm-2 pl-5">
-                            <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" className="custom-control-input" id="item3" />
-                                <label htmlFor="invoice" className="custom-control-label"></label>
-                            </div>
-                        </div>
-
-                        <div className="input-group input-group-sm col-sm-2 pl-5">
-                            <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" className="custom-control-input" id="item3" />
-                                <label htmlFor="packingSlip" className="custom-control-label"></label>
-                            </div>
-                        </div>
-
-                        <div className="input-group input-group-sm mb-3 col-sm-1">
-                            <input type="text" readOnly className="form-control" id="item3" />
-                        </div>
-
-                        <div className="input-group input-group-sm mb-3 col-sm-1"></div>
-
-                        <div className="input-group input-group-sm mb-3 col-sm-1">
-                            <input type="text" readOnly className="form-control" id="item3" />
-                        </div>
-
-                        <div className="input-group input-group-sm mb-3 col-sm-1"></div>
-
-                        <div className="input-group input-group-sm mb-3 col-sm-1">
-                            <input type="text" readOnly className="form-control" id="item3" />
-                        </div>
-                    </div>
+                    <AddItem></AddItem>
                 </div>
 
                 <div className="company-info pt-3">
@@ -725,7 +509,7 @@ const Order = () => {
                     <div className="form-row">
                         <label htmlFor="customerPONumber" className="col-sm-2 col-form-label">Customer PO Number</label>
                         <div className="input-group input-group-sm mb-3 col-sm-10">
-                            <input type="text" readOnly className="form-control" id="customerPONumber" />
+                            <input type="text" className="form-control" id="customerPONumber" />
                         </div>
                     </div>
 
@@ -742,7 +526,7 @@ const Order = () => {
                     <div className="form-row">
                         <label htmlFor="daysTurn" className="col-sm-2 col-form-label">Days Turn</label>
                         <div className="input-group input-group-sm mb-3 col-sm-10">
-                            <input type="text" readOnly className="form-control" id="daysTurn" />
+                            <input type="text" className="form-control" id="daysTurn" />
                         </div>
                     </div>
 
