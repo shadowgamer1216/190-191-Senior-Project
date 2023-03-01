@@ -9,7 +9,7 @@ exports.signin = function(req, res) {
 };
 
 exports.homepage = function(req, res) {
-    res.render('homepage');
+    res.render('dashboard');
 };
 
 exports.logout = function(req, res) {
