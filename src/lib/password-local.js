@@ -6,15 +6,23 @@ export const localStrategy = new Local.Strategy(function (
   password,
   done
 ) {
-  findUser({ username })
+  console.log('strat username:', username)
+  console.log('strat password:', password)
+
+  const user = findUser({ username })
     .then((user) => {
+
+
       if (user && validatePassword(user, password)) {
-        done(null, user)
+
+        done(null, user[0])
       } else {
+
         done(new Error('Invalid username and password combination'))
       }
     })
     .catch((error) => {
+
       done(error)
     })
 })

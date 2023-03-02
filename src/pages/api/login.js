@@ -11,7 +11,7 @@ const authenticate = (method, req, res) =>
       } else {
         resolve(token)
       }
-    })(req, res)
+    })(req, res, () => {} , { password: req.body.password })
   })
 
 passport.use(localStrategy)
@@ -28,7 +28,7 @@ export default nextConnect()
 
       res.status(200).send({ done: true })
     } catch (error) {
-      console.error(error)
+      console.error("I am the error " + error) //This is giving me "empty password"
       res.status(401).send(error.message)
     }
   })
