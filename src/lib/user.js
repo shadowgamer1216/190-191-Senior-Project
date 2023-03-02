@@ -51,19 +51,25 @@ const sequelize = new Sequelize(
             type: Sequelize.TEXT
         },
 
-        password: {
-            type: Sequelize.STRING,
-            allowNull: false
-        }
+        hash: {
+            type: Sequelize.STRING
+        },
+        salt: {
+          type: Sequelize.UUID,
+          allowNull: false
+          
+      }
 
     });
 
     (async () => {
-      await User.sync();
-      
-
-
-    })();
+      await User.sync()
+      .then(function () {
+        console.log('Nice! Database looks fine')
+    }).catch(function (err) {
+        console.log(err, "Something went wrong with the Database Update!")
+});
+ })();
 
 
 
@@ -74,11 +80,11 @@ export async function createUser({ username, password }) {
   // Here you should create the user and save the salt and hashed password (some dbs may have
   // authentication methods that will do it for you so you don't have to worry about it):
   const salt = crypto.randomBytes(16).toString('hex')
+  console.log(salt);
   const hash = crypto
     .pbkdf2Sync(password, salt, 1000, 64, 'sha512')
     .toString('hex')
   const user = await User.create({
-    id: uuidv4(),
     createdAt: Date.now(),
     username,
     hash,
@@ -100,6 +106,7 @@ export async function findUser({ username }) {
 // Compare the password of an already fetched user (using `findUser`) and compare the
 // password for a potential match
 export function validatePassword(user, inputPassword) {
+  console.log("usersalt" + user.salt);
   const inputHash = crypto
     .pbkdf2Sync(inputPassword, user.salt, 1000, 64, 'sha512')
     .toString('hex')
