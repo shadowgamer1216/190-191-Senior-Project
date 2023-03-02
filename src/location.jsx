@@ -1,9 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import './App.css'
 import { Link, useNavigate } from "react-router-dom"
+import Axios from "axios";
 
 const Location = () => {
-    const navigate = useNavigate();
+    const navigate = useNavigate()
+    const [location_id, setLocationID] = useState("");
+    const [location_type, setLocationType] = useState("");
+    const [item_id, setItemID] = useState("");
+    const [qty, setQty] = useState("");
+    const [item_owner, setItemOwner] = useState("");
+    const [physical_location, setPhysicalLocation] = useState("");
+    const [notes, setNotes] = useState("");
+    
+    const submit = () => {
+        Axios.post("http://localhost:3001/api/insert", {location_id: location_id, location_type: location_type, item_id: item_id, qty: qty, item_owner: item_owner, physical_location: physical_location, notes: notes})
+        .then(()=> {
+            alert('inserted');
+        })
+    };
     return (
         <div className="page">
             <nav className="navbar navbar-expand-lg navbar-dark bg-maroon">
@@ -37,14 +52,18 @@ const Location = () => {
                         <div className="form-row">
                             <label htmlFor="location-id" className="col-sm-2 col-form-label">Location ID</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="location-id" />
+                                <input type="text" className="form-control" id="location-id" onChange={(e) =>{
+                                    setLocationID(e.target.value)
+                                }}/>
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="type" className="col-sm-2 col-form-label">Type</label>
                             <div className="input-group input-group-sm mb-3 col-sm-3">
-                                <select className="form-control" name="type" id="type">
+                                <select className="form-control" name="type" id="type" onChange={(e) =>{
+                                    setLocationType(e.target.value)
+                                }}>
                                     <option selected value="">Select Value</option>
                                     <option value="1">X1_TBD</option>
                                     <option value="2">X2_TBD</option>
@@ -56,21 +75,27 @@ const Location = () => {
                         <div className="form-row">
                             <label htmlFor="item-id" className="col-sm-2 col-form-label">Item ID</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="item-id" />
+                                <input type="text" className="form-control" id="item-id" onChange={(e) =>{
+                                    setItemID(e.target.value)
+                                }}/>
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="qty" className="col-sm-2 col-form-label">Qty</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="qty" />
+                                <input type="text" className="form-control" id="qty" onChange={(e) =>{
+                                    setQty(e.target.value)
+                                }}/>
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="owner" className="col-sm-2 col-form-label">Owner</label>
                             <div className="input-group input-group-sm mb-3 col-sm-3">
-                                <select className="form-control" name="owner" id="owner">
+                                <select className="form-control" name="owner" id="owner" onChange={(e) =>{
+                                    setItemOwner(e.target.value)
+                                }}>
                                     <option selected value="">Select Value</option>
                                     <option value="1">X1_TBD</option>
                                     <option value="2">X2_TBD</option>
@@ -82,7 +107,9 @@ const Location = () => {
                         <div className="form-row">
                             <label htmlFor="physical-location" className="col-sm-2 col-form-label">Physical Location</label>
                             <div className="input-group input-group-sm mb-3 col-sm-3">
-                                <select className="form-control" name="physical-location" id="physical-location">
+                                <select className="form-control" name="physical-location" id="physical-location" onChange={(e) =>{
+                                    setPhysicalLocation(e.target.value)
+                                }}>
                                     <option selected value="">Select Value</option>
                                     <option value="1">X1_TBD</option>
                                     <option value="2">X2_TBD</option>
@@ -94,7 +121,9 @@ const Location = () => {
                         <div className="form-row">
                             <label htmlFor="notes" className="col-sm-2 col-form-label">Notes</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <textarea rows="4" cols="50" className="form-control" name="notes" id="custom-area" />
+                                <textarea rows="4" cols="50" className="form-control" name="notes" id="custom-area" onChange={(e) =>{
+                                    setNotes(e.target.value)
+                                }}/>
                             </div>
                         </div>
 
