@@ -1,5 +1,6 @@
 import './App.css';
-import React, { useState } from 'react';
+import { useState, useEffect } from "react";
+
 
 
 
@@ -19,22 +20,24 @@ import OrderPage from './order';
 import CompanyPage from './company';
 import ItemCheckInPage from './itemCheckIn';
 import Shipping from './Shipping';
-import Login from './login';
 import useToken from './useToken';
 
 
 function App() {
-  const { token, setToken } = useToken();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  useEffect(() => {
+    // Check for token or session ID in browser's cookies or local storage
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
 
-  if(!token) {
-    return <Login setToken={setToken} />
-  }
   return (
     <div className="App">
       <Routes>
         <Route path = '/' element = {<HomePage/>} />
-        <Route path = '/login' element = {<Login/>} />
         <Route path = "/product" element = {<ProductPage/>} />    
         <Route path = "/contact" element = {<ContactPage/>} />
         <Route path = "/components" element = {<ComponentsPage/>} />

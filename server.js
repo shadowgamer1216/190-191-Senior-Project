@@ -1,72 +1,31 @@
-/*const express = require('express');
-const cors = require('cors')
-const app = express();
+const express = require('express');
+const next = require('next');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
-app.use(cors());
+const port = process.env.PORT || 3000;
+const dev = process.env.NODE_ENV !== 'production';
+const app = next({ dev });
+const handle = app.getRequestHandler();
 
-app.use('/login', (req, res) => {
-  res.send({
-    token: 'test123'
+app.prepare().then(() => {
+  const server = express();
+
+  // Proxy API requests to our backend
+  server.use(
+    '/api',
+    createProxyMiddleware({
+      target: 'http://localhost:3001',
+      changeOrigin: true,
+    })
+  );
+
+  server.all('*', (req, res) => {
+    return handle(req, res);
+  });
+
+  server.listen(port, (err) => {
+    if (err) throw err;
+    console.log(`> Ready on http://localhost:${port}`);
   });
 });
 
-app.listen(8080, () => console.log('API is running on http://localhost:8080/login'));*/
-
-var express = require('express');
-var app = express();
-var path = require("path")
-var passport = require('passport')
-var session = require('express-session')
-var env = require('dotenv').config();
-var models = require("./src/app/models");
-var exphbs = require('express-handlebars')
-app.use(express.urlencoded({
-    extended: true
-})
-);
-app.use(express.json());
-
-// For Passport
-app.use(session({
-    secret: 'keyboard cat',
-    resave: true,
-    saveUninitialized: true
-})); // session secret
-
-app.use(passport.initialize());
-
-app.use(passport.session()); // persistent login sessions
-//STYLING
-app.use(express.static(path.join(__dirname, '/src/app/public')));
-
-app.get('/', function (req, res) {
-    res.send('Welcome to Passport with Sequelize');
-});
-
-//For Handlebars
-app.set('views', './src/app/views');
-app.engine('hbs', exphbs.engine({
-    extname: '.hbs',
-    defaultLayout: false,
-    layoutsDir: "views/layouts/"
-}));
-app.set('view engine', '.hbs');
-
-require('./src/app/config/passport/passport.js')(passport, models.user);
-
-//Sync Database
-models.sequelize.sync()
-    .then(function () {
-        console.log('Nice! Database looks fine')
-    }).catch(function (err) {
-        console.log(err, "Something went wrong with the Database Update!")
-});
-
-//Routes
-var authRoute = require('./src/app/routes/auth.js')(app,passport);
-
-app.listen(3001, function (err) {
-    if (!err)
-        console.log("Site is live");
-    else console.log(err)
-});
