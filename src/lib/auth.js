@@ -4,10 +4,14 @@ import { MAX_AGE, setTokenCookie, getTokenCookie } from './auth-cookies'
 const TOKEN_SECRET = process.env.TOKEN_SECRET
 
 export async function setLoginSession(res, session) {
+
   const createdAt = Date.now()
   // Create a session object with a max age that we can validate later
   const obj = { ...session, createdAt, maxAge: MAX_AGE }
+  console.log("TOKEN_SECRET:", TOKEN_SECRET);
+
   const token = await Iron.seal(obj, TOKEN_SECRET, Iron.defaults)
+  console.log("session res " + res.status)
 
   setTokenCookie(res, token)
 }

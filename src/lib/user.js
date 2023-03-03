@@ -99,19 +99,19 @@ export async function createUser({ username, password }) {
 // Here you should lookup for the user in your DB
 export async function findUser({ username }) {
   const users = await User.findAll({ where: { username: username } });
-  const user = users[0];
-  return user;
+  return users;
 }
 
 // Compare the password of an already fetched user (using `findUser`) and compare the
 // password for a potential match
-export function validatePassword(user, inputPassword) {
-  console.log('Validating password for user:', user.username);
+export function validatePassword(users, inputPassword) {
+  console.log('Validating password for user:', users[0].username);
   console.log('Input password:', inputPassword);
   const inputHash = crypto
-    .pbkdf2Sync(inputPassword, user.salt, 1000, 64, 'sha512')
+    .pbkdf2Sync(inputPassword, users[0].salt, 1000, 64, 'sha512')
     .toString('hex')
 
-  const passwordsMatch = user.hash === inputHash
+  const passwordsMatch = users[0].hash === inputHash
+  console.log("match: " + passwordsMatch)
   return passwordsMatch
 }
