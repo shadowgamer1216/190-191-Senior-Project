@@ -2,20 +2,18 @@ const bodyParser = require("body-parser")
 const express = require("express");
 const app = express();
 const mysql = require("mysql2");
-const cors = require('cors');
+const cors = require("cors");
 
-
-
-
-const db = mysql.createPool({
-    host: "localhost",
-    user: "root",
-    password: "password",
-    database: "absolutemedia",
-});
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended: true}));
+
+const db = mysql.createPool({
+    user: "root",
+    host: "localhost",
+    password: "password",
+    database: "absolutemedia",
+});
 
 app.post("/api/insert", (req, res)=> {
     const customer_id = req.body.customer_id;
@@ -46,6 +44,82 @@ app.post("/api/insert", (req, res)=> {
         console.log(result);
     
     });
+});
+
+app.post("/insertOrder", (req, res) => {
+        /*------------------------------------------ Order Page ------------------------------------------*/
+    //go to back_end directory in terminal and type 'node index.js'
+    const salesPerson = req.body.salesPerson;
+    const requestor = req.body.requestor;
+    const customerContact = req.body.customerContact;
+    const reOrder =  req.body.reOrder;
+    
+    // Custom Product
+    const factoryOrderQuantity = req.body.factoryOrderQuantity;
+    const customInvoice = req.body.customInvoice;
+    const customPackingSlip = req.body.customPackingSlip;
+    const customQuantity = req.body.customQuantity;
+    const customUnitPrice = req.body.customUnitPrice;
+    const customTotalPrice = req.body.customTotalPrice;
+
+    // Billing Information
+    const assemblyChargesQuantity = req.body.assemblyChargesQuantity;
+    const assemblyChargesUnitPrice = req.body.assemblyChargesUnitPrice;
+    const assemblyChargesTotalPrice = req.body.assemblyChargesTotalPrice;
+    const printingChargesQuantity = req.body.printingChargesQuantity;
+    const printingChargesUnitPrice = req.body.printingChargesUnitPrice;
+    const printingChargesTotalPrice = req.body.printingCharegsTotalPrice;
+    const setupCharge = req.body.setupCharge;
+    const numberOfScreens = req.body.numberOfScreens;
+    const screensPrice = req.body.screensPrice;
+    const subTotal = req.body.subTotal;
+    const taxable = req.body.taxable;
+    const taxRate = req.body.taxRate;
+    const tax = req.body.tax;
+    const freightCharges = req.body.freightCharges;
+    const priceTotal = req.body.priceTotal;
+
+    // Invoice Information
+    const invoiceDate = req.body.invoiceDate;
+    const invoiceDatePaid = req.body.invoiceDatePaid;
+    const invoiceNotes = req.body.invoiceNotes;
+
+    // Job Information
+    const ABSOrder = req.body.ABSOrder;
+    const customerOrder = req.body.customerOrder;
+    const customerPODate = req.body.customerPODate;
+    const customerPONumber = req.body.customerPONumber;
+    const creditChecked = req.body.creditChecked;
+    const daysTurn = req.body.daysTurn;
+    const dateCodePrinting = req.body.dateCodePrinting;
+    const assemblyBy = req.body.assemblyBy;
+    const discManufacturedBy = req.body.discManufacturedBy;
+    const CDBrand = req.body.CDBrand;
+    const discProvidedBy = req.body.discProvidedBy;
+    const customerProvidedMaterial = req.body.customerProvidedMaterial;
+    const customerMaterialETA = req.body.customerMaterialETA;
+    const customerNotes = req.body.customerNotes;
+    const vendorNotes = req.body.vendorNotes;
+    const orderNotes = req.body.orderNotes;
+    const orderStatus = req.body.orderStatus;
+
+    db.query(
+        "INSERT INTO order_table (salesperson, requestor, customer_contact, \
+                                  factory_order_quantity, custom_quantity, custom_unit_price, custom_total_price, \
+                                  assembly_charges_quantity, assembly_charges_unit_price, assembly_charges_total_price, date_code_printing_charges_quantity, date_code_printing_charges_unit_price, date_code_printing_charges_total_price, date_code_setup_charge, number_of_screens, art_manipulation, sub_total, tax_rate, tax, freight_charges, order_price_total, \
+                                  invoice_date, invoice_date_paid, invoice_notes, \
+                                  abs_sales_order_date, customer_order_date, customer_po_date, customer_po_number, days_turn, date_code_printing, assembly_by, disc_manufactured_by, cd_dvd_brand, disc_provided_by, customer_provided_material, customer_material_eta, customer_notes, vendor_notes, order_notes, order_status) \
+                                  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+        [salesPerson, requestor, customerContact,
+            factoryOrderQuantity, customQuantity, customUnitPrice, customTotalPrice,
+            assemblyChargesQuantity, assemblyChargesUnitPrice, assemblyChargesTotalPrice, printingChargesQuantity, printingChargesUnitPrice, printingChargesTotalPrice, setupCharge, numberOfScreens, screensPrice, subTotal, taxRate, tax, freightCharges, priceTotal,
+            invoiceDate, invoiceDatePaid, invoiceNotes,
+            ABSOrder, customerOrder, customerPODate, customerPONumber, daysTurn, dateCodePrinting, assemblyBy, discManufacturedBy, CDBrand, discProvidedBy, customerProvidedMaterial, customerMaterialETA, customerNotes, vendorNotes, orderNotes, orderStatus]
+            , (err, result) => {
+                console.log(result);
+        }
+    );
+    /*------------------------------------------ Order Page ------------------------------------------*/
 });
 
 app.listen(3001, () =>{

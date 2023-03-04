@@ -1,146 +1,177 @@
 import React from "react";
 import './App.css'
 import { Link, useNavigate } from "react-router-dom"
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Axios from 'axios';
 
-function AddNonItem() {
-    const [inputFields, setInputFields] = useState([
-        { field: '' }
-    ])
-    const handleChange = (index, event) => {
-        let data = [...inputFields];
-        data[index][event.target.name] = event.target.value;
-        setInputFields(data);
-    }
-    const addField = () => {
-        let newField = { field: '' }
-        setInputFields([...inputFields, newField])
-    }
-    const removeField = (index) => {
-        let data = [...inputFields];
-        data.splice(index, 1)
-        setInputFields(data)
-    }
+const Order = () => {
+    const navigate = useNavigate();
+    const [salesPerson, setSalesPerson] = useState("");
+    const [requestor, setRequestor] = useState("");
+    const [customerContact, setCustomerContact] = useState("");
+    const [reOrder, setReOrder] = useState("");
 
-    return (
-        <div className="order">
-            <div className="form-row">
-                <div className="input-group input-group-sm mb-3 col-sm-10">
-                    <button type="button" id="item-add" className="btn btn-outline-primary btn-sm" onClick={addField}>Add New Non-Inventory Item</button>
-                </div>
-            </div>
-            {inputFields.map((input, index) => {
-                return (
-                    <div className="it-field" key={index}>
-                        <div className="form-row">
-                            <label className="col-sm-2 col-form-label">Non-Inventory Item #{index + 1}</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-9">
-                                <input
-                                    key={index}
-                                    className="form-control field"
-                                    type="text"
-                                    value={input.field}
-                                    onChange={event => handleChange(index, event)}
-                                />
-                            </div>
-                            <div className="input-group input-group-sm mb-3 col-sm-1">
-                                <button
-                                    type="button"
-                                    id="component-remove"
-                                    className="btn btn-outline-danger btn-sm"
-                                    onClick={removeField}
-                                >X</button>
-                            </div>
-                            
-                            <label className="col-sm-2.75 col-form-label">Invoice</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-1">
-                                <div className="form-group custom-control custom-checkbox">
-                                    <input type="checkbox" className="custom-control-input" id="invoice1" />
-                                    <label htmlFor="invoice" className="custom-control-label"></label>
-                                </div>
-                            </div>
+    // Custom Product
+    const [factoryOrderQuantity, setFactoryOrderQuantity] = useState(0);
+    const [customInvoice, setCustomInvoice] = useState("");
+    const [customPackingSlip, setCustomPackingSlip] = useState("");
+    const [customQuantity, setCustomQuantity] = useState(0);
+    const [customUnitPrice, setCustomUnitPrice] = useState(0);
+    const [customTotalPrice, setCustomTotalPrice] = useState(0);
 
-                            <label className="col-sm-2.75 col-form-label">Packing Slip</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-1">
-                                <div className="form-group custom-control custom-checkbox">
-                                    <input type="checkbox" className="custom-control-input" id="packingSlip1" />
-                                   <label htmlFor="packingSlip" className="custom-control-label"></label>
-                                </div>
-                            </div>
+    // Non-Inventory Line Items
+    // Inventory Items
 
-                            <label className="col-sm-2.75 col-form-label">Quantity</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-1">
-                                <input type="text" className="form-control" id="quantity1" />
-                            </div>
+    // Billing Information
+    const [assemblyChargesQuantity, setAssemblyChargesQuantity] = useState(0);
+    const [assemblyChargesUnitPrice, setAssemblyChargesUnitPrice] = useState(0);
+    const [assemblyChargesTotalPrice, setAssemblyChargesTotalPrice] = useState(0);
+    const [printingChargesQuantity, setPrintingChargesQuantity] = useState(0);
+    const [printingChargesUnitPrice, setPrintingChargesUnitPrice] = useState(0);
+    const [printingChargesTotalPrice, setPrintingChargesTotalPrice] = useState(0);
+    const [setupCharge, setSetupCharge] = useState(0);
+    const [numberOfScreens, setNumberOfScreens] = useState(0);
+    const [screensPrice, setScreensPrice] = useState(0);
+    const [subTotal, setSubTotal] = useState(0);
+    const [taxable, setTaxable] = useState(0);
+    const [taxRate, setTaxRate] = useState(0);
+    const [tax, setTax] = useState(0);
+    const [freightCharges, setFreightCharges] = useState(0);
+    const [priceTotal, setPriceTotal] = useState(0);
 
-                            <label className="col-sm-2.75 col-form-label">Unit Price $</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-1">
-                                <input type="text" className="form-control" id="unitPrice1" />
-                            </div>
+    // Invoice Information
+    const [invoiceDate, setInvoiceDate] = useState("");
+    const [invoiceDatePaid, setInvoiceDatePaid] = useState("");
+    const [invoiceNotes, setInvoiceNotes] = useState("");
 
-                            <label className="col-sm-2.75 col-form-label">Total Price $</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-1">
-                                <input type="text" className="form-control" id="totalPrice1" />
-                            </div>
-                        </div>
+    // Job Information
+    const [ABSOrder, setABSOrder] = useState("");
+    const [customerOrder, setCustomerOrder] = useState("");
+    const [customerPODate, setCustomerPODate] = useState("");
+    const [customerPONumber, setCustomerPONumber] = useState(0);
+    const [creditChecked, setCreditChecked] = useState("");
+    const [daysTurn, setDaysTurn] = useState(0);
+    const [dateCodePrinting, setDateCodePrinting] = useState("");
+    const [assemblyBy, setAssemblyBy] = useState("");
+    const [discManufacturedBy, setDiscManufacturedBy] = useState("");
+    const [CDBrand, setCDBrand] = useState("");
+    const [discProvidedBy, setDiscProvidedBy] = useState("");
+    const [customerProvidedMaterial, setCustomerProvidedMaterial] = useState("");
+    const [customerMaterialETA, setCustomerMaterialETA] = useState("");
+    const [customerNotes, setCustomerNotes] = useState("");
+    const [vendorNotes, setVendorNotes] = useState("");
+    const [orderNotes, setOrderNotes] = useState("");
+    const [orderStatus, setOrderStatus] = useState("");
+
+    const submit = () => {
+        Axios.post("http://localhost:3001/insertOrder", {
+            salesPerson: salesPerson,
+            requestor: requestor,
+            customerContact: customerContact,
+            reOrder: reOrder,
+
+            // Custom Product
+            factoryOrderQuantity: factoryOrderQuantity,
+            customInvoice: customInvoice,
+            customPackingSlip: customPackingSlip,
+            customQuantity: customQuantity,
+            customUnitPrice: customUnitPrice,
+            customTotalPrice: customTotalPrice,
+
+            // Billing Information
+            assemblyChargesQuantity: assemblyChargesQuantity,
+            assemblyChargesUnitPrice: assemblyChargesUnitPrice,
+            assemblyChargesTotalPrice: assemblyChargesTotalPrice,
+            printingChargesQuantity: printingChargesQuantity,
+            printingChargesUnitPrice: printingChargesUnitPrice,
+            printingChargesTotalPrice: printingChargesTotalPrice,
+            setupCharge: setupCharge,
+            numberOfScreens: numberOfScreens,
+            screensPrice: screensPrice,
+            subTotal: subTotal,
+            taxRate: taxRate,
+            taxable: taxable,
+            tax: tax,
+            freightCharges: freightCharges,
+            priceTotal: priceTotal,
+
+            // Invoice Information
+            invoiceDate: invoiceDate,
+            invoiceDatePaid: invoiceDatePaid,
+            invoiceNotes: invoiceNotes,
+
+            // Job Information
+            ABSOrder: ABSOrder,
+            customerOrder: customerOrder,
+            customerPODate: customerPODate,
+            customerPONumber: customerPONumber,
+            creditChecked: creditChecked,
+            daysTurn: daysTurn,
+            dateCodePrinting: dateCodePrinting,
+            assemblyBy: assemblyBy,
+            discManufacturedBy: discManufacturedBy,
+            CDBrand: CDBrand,
+            discProvidedBy: discProvidedBy,
+            customerProvidedMaterial: customerProvidedMaterial,
+            customerMaterialETA: customerMaterialETA,
+            customerNotes: customerNotes,
+            vendorNotes: vendorNotes,
+            orderNotes: orderNotes,
+            orderStatus: orderStatus
+        }).then(() => {
+            console.log("Success");
+        })
+    };
+
+    function AddNonItem() {
+        const [inputFields, setInputFields] = useState([
+            { field: '' }
+        ])
+        const handleChange = (index, event) => {
+            let data = [...inputFields];
+            data[index][event.target.name] = event.target.value;
+            setInputFields(data);
+        }
+        const addField = () => {
+            let newField = { field: '' }
+            setInputFields([...inputFields, newField])
+        }
+        const removeField = (index) => {
+            let data = [...inputFields];
+            data.splice(index, 1)
+            setInputFields(data)
+        }
+    
+        return (
+            <div className="order">
+                <div className="form-row">
+                    <div className="input-group input-group-sm mb-3 col-sm-10">
+                        <button type="button" id="item-add" className="btn btn-outline-primary btn-sm" onClick={addField}>Add New Non-Inventory Item</button>
                     </div>
-                );
-            })}
-        </div>
-    );
-}
-
-function AddItem() {
-    const [inputFields, setInputFields] = useState([
-        { field: '' }
-    ])
-    const handleChange = (index, event) => {
-        let data = [...inputFields];
-        data[index][event.target.name] = event.target.value;
-        setInputFields(data);
-    }
-    const addField = () => {
-        let newField = { field: '' }
-        setInputFields([...inputFields, newField])
-    }
-    const removeField = (index) => {
-        let data = [...inputFields];
-        data.splice(index, 1)
-        setInputFields(data)
-    }
-
-    return (
-        <div className="order">
-            <div className="form-row">
-                <div className="input-group input-group-sm mb-3 col-sm-10">
-                    <button type="button" id="item-add" className="btn btn-outline-primary btn-sm" onClick={addField}>Add New Inventory Item</button>
                 </div>
-            </div>
-            {inputFields.map((input, index) => {
-                return (
-                    <div className="it-field" key={index}>
-                        <div className="form-row">
-                            <label className="col-sm-2 col-form-label">Inventory Item #{index + 1}</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-3">
-                                <select key={index} className="form-control" value={input.field} onChange={event => handleChange(index, event)}>
-                                    <option defaultValue="0">Select Value</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                </select>
-                            </div>
-
-                            <div className="input-group input-group-sm mb-3 col-sm-1">
-                                <button
-                                    type="button"
-                                    id="component-remove"
-                                    className="btn btn-outline-danger btn-sm"
-                                    onClick={removeField}
-                                >X</button>
-                            </div>
-
+                {inputFields.map((input, index) => {
+                    return (
+                        <div className="it-field" key={index}>
                             <div className="form-row">
+                                <label className="col-sm-2 col-form-label">Non-Inventory Item #{index + 1}</label>
+                                <div className="input-group input-group-sm mb-3 col-sm-9">
+                                    <input
+                                        key={index}
+                                        className="form-control field"
+                                        type="text"
+                                        value={input.field}
+                                        onChange={event => handleChange(index, event)}
+                                    />
+                                </div>
+                                <div className="input-group input-group-sm mb-3 col-sm-1">
+                                    <button
+                                        type="button"
+                                        id="component-remove"
+                                        className="btn btn-outline-danger btn-sm"
+                                        onClick={removeField}
+                                    >X</button>
+                                </div>
+                                
                                 <label className="col-sm-2.75 col-form-label">Invoice</label>
                                 <div className="input-group input-group-sm mb-3 col-sm-1">
                                     <div className="form-group custom-control custom-checkbox">
@@ -148,77 +179,126 @@ function AddItem() {
                                         <label htmlFor="invoice" className="custom-control-label"></label>
                                     </div>
                                 </div>
-
+    
                                 <label className="col-sm-2.75 col-form-label">Packing Slip</label>
                                 <div className="input-group input-group-sm mb-3 col-sm-1">
                                     <div className="form-group custom-control custom-checkbox">
                                         <input type="checkbox" className="custom-control-input" id="packingSlip1" />
-                                        <label htmlFor="packingSlip" className="custom-control-label"></label>
+                                       <label htmlFor="packingSlip" className="custom-control-label"></label>
                                     </div>
                                 </div>
-
+    
                                 <label className="col-sm-2.75 col-form-label">Quantity</label>
                                 <div className="input-group input-group-sm mb-3 col-sm-1">
                                     <input type="text" className="form-control" id="quantity1" />
                                 </div>
-
+    
                                 <label className="col-sm-2.75 col-form-label">Unit Price $</label>
                                 <div className="input-group input-group-sm mb-3 col-sm-1">
                                     <input type="text" className="form-control" id="unitPrice1" />
                                 </div>
-
+    
                                 <label className="col-sm-2.75 col-form-label">Total Price $</label>
                                 <div className="input-group input-group-sm mb-3 col-sm-1">
-                                    <input type="text" className="form-control" id="totalPrice1" />
+                                    <input type="text" readOnly className="form-control" id="totalPrice1" />
                                 </div>
                             </div>
                         </div>
+                    );
+                })}
+            </div>
+        );
+    }
+    
+    function AddItem() {
+        const [inputFields, setInputFields] = useState([
+            { field: '' }
+        ])
+        const handleChange = (index, event) => {
+            let data = [...inputFields];
+            data[index][event.target.name] = event.target.value;
+            setInputFields(data);
+        }
+        const addField = () => {
+            let newField = { field: '' }
+            setInputFields([...inputFields, newField])
+        }
+        const removeField = (index) => {
+            let data = [...inputFields];
+            data.splice(index, 1)
+            setInputFields(data)
+        }
+    
+        return (
+            <div className="order">
+                <div className="form-row">
+                    <div className="input-group input-group-sm mb-3 col-sm-10">
+                        <button type="button" id="item-add" className="btn btn-outline-primary btn-sm" onClick={addField}>Add New Inventory Item</button>
                     </div>
-                );
-            })}
-        </div>
-    );
-}
-
-const Order = () => {
-    const navigate = useNavigate();
-    const [salesPerson, setSalesPerson] = useState("");
-    const [requestor, setRequestor] = useState("");
-    const [cContact, setCCustomer] = useState("");
-    const [reOrder, setReOrder] = useState("");
-
-    // Custom Product
-    const [factoryOrderQuantity, setFactoryOrderQuantity] = useState("");
-    const [customInvoice, setCustomInvoice] = useState("");
-    const [customPackingSlip, setCustomPackingSlip] = useState("");
-    const [customQuantity, setCustomQuantity] = useState("");
-    const [customUnitPrice, setCustomUnitPrice] = useState("");
-    const [customTotalPrice, setCustomTotalPrice] = useState("");
-
-    // Non-Inventory Line Items
-    // Inventory Items
-    // Billing Information
-    // Invoice Information
-    // Job Information
-
-    const submit = () => {
-        Axios.post("http://localhost:3001/api/insert", {
-            salesPerson: salesPerson,
-            requestor: requestor,
-            cContact: cContact,
-            reOrder: reOrder,
-            factoryOrderQuantity: factoryOrderQuantity,
-            customInvoice: customInvoice,
-            customPackingSlip: customPackingSlip,
-            customQuantity: customQuantity,
-            customUnitPrice: customUnitPrice,
-            customTotalPrice: customTotalPrice
-        })
-        .then(() => {
-            alert('inserted');
-        })
-    };
-
+                </div>
+                {inputFields.map((input, index) => {
+                    return (
+                        <div className="it-field" key={index}>
+                            <div className="form-row">
+                                <label className="col-sm-2 col-form-label">Inventory Item #{index + 1}</label>
+                                <div className="input-group input-group-sm mb-3 col-sm-3">
+                                    <select key={index} className="form-control" value={input.field} onChange={event => handleChange(index, event)}>
+                                        <option defaultValue="0">Select Value</option>
+                                        <option value="1">Option 1</option>
+                                        <option value="2">Option 2</option>
+                                        <option value="3">Option 3</option>
+                                    </select>
+                                </div>
+    
+                                <div className="input-group input-group-sm mb-3 col-sm-1">
+                                    <button
+                                        type="button"
+                                        id="component-remove"
+                                        className="btn btn-outline-danger btn-sm"
+                                        onClick={removeField}
+                                    >X</button>
+                                </div>
+    
+                                <div className="form-row">
+                                    <label className="col-sm-2.75 col-form-label">Invoice</label>
+                                    <div className="input-group input-group-sm mb-3 col-sm-1">
+                                        <div className="form-group custom-control custom-checkbox">
+                                            <input type="checkbox" className="custom-control-input" id="invoice1" />
+                                            <label htmlFor="invoice" className="custom-control-label"></label>
+                                        </div>
+                                    </div>
+    
+                                    <label className="col-sm-2.75 col-form-label">Packing Slip</label>
+                                    <div className="input-group input-group-sm mb-3 col-sm-1">
+                                        <div className="form-group custom-control custom-checkbox">
+                                            <input type="checkbox" className="custom-control-input" id="packingSlip1" />
+                                            <label htmlFor="packingSlip" className="custom-control-label"></label>
+                                        </div>
+                                    </div>
+    
+                                    <label className="col-sm-2.75 col-form-label">Quantity</label>
+                                    <div className="input-group input-group-sm mb-3 col-sm-1">
+                                        <input type="text" className="form-control" id="quantity1" />
+                                    </div>
+    
+                                    <label className="col-sm-2.75 col-form-label">Unit Price $</label>
+                                    <div className="input-group input-group-sm mb-3 col-sm-1">
+                                        <input type="text" className="form-control" id="unitPrice1" />
+                                    </div>
+    
+                                    <label className="col-sm-2.75 col-form-label">Total Price $</label>
+                                    <div className="input-group input-group-sm mb-3 col-sm-1">
+                                        <input type="text" readOnly className="form-control" id="totalPrice1" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    );
+                })}
+            </div>
+        );
+    }
+    
     return (
         <div className="page">
             <nav className="navbar navbar-expand-lg navbar-dark bg-maroon">
@@ -252,21 +332,30 @@ const Order = () => {
                     <div className="form-row">
                         <label htmlFor="salesPerson" className="col-sm-2 col-form-label">SalesPerson</label>
                         <div className="input-group input-group-sm mb-3 col-sm-10">
-                            <input type="text" className="form-control" id="salesPerson" />
+                            <input type="text" className="form-control" id="salesPerson" 
+                            onChange = {(e) => {
+                                setSalesPerson(e.target.value)
+                            }}/>
                         </div>
                     </div>
 
                     <div className="form-row">
                         <label htmlFor="requestor" className="col-sm-2 col-form-label">Requestor</label>
                         <div className="input-group input-group-sm mb-3 col-sm-10">
-                            <input type="text" className="form-control" id="requestor" />
+                            <input type="text" className="form-control" id="requestor"
+                            onChange = {(e) => {
+                                setRequestor(e.target.value)
+                            }}/>
                         </div>
                     </div>
 
                     <div className="form-row">
                         <label htmlFor="cContact" className="col-sm-2 col-form-label">Customer Contact</label>
                         <div className="input-group input-group-sm mb-3 col-sm-10">
-                            <input type="text" className="form-control" id="cContact" />
+                            <input type="text" className="form-control" id="customerContact"
+                            onChange = {(e) => {
+                                setCustomerContact(e.target.value)
+                            }}/>
                         </div>
                     </div>
 
@@ -274,7 +363,10 @@ const Order = () => {
                         <label htmlFor="reOrder" className="col-sm-2 col-form-label">Re-Order?</label>
                         <div className="input-group input-group-sm col-sm-2 pl-5">
                             <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" className="custom-control-input" id="reOrder" />
+                                <input type="checkbox" className="custom-control-input" id="reOrder"
+                                onChange = {(e) => {
+                                    setReOrder(e.target.value)
+                                }}/>
                                 <label htmlFor="reOrder" className="custom-control-label"></label>
                             </div>
                         </div>
@@ -304,7 +396,10 @@ const Order = () => {
                     <div className="form-row">
                         <label htmlFor="factoryOrderQuantity" className="col-sm-2 col-form-label">Factory Order Quantity</label>
                         <div className="input-group input-group-sm mb-3 col-sm-10">
-                            <input type="text" className="form-control" id="factoryOrderQuantity" />
+                            <input type="text" className="form-control" id="factoryOrderQuantity"
+                            onChange = {(e) => {
+                                setFactoryOrderQuantity(e.target.value)
+                            }}/>
                         </div>
                     </div>
 
@@ -312,7 +407,10 @@ const Order = () => {
                         <label className="col-sm-2.75 col-form-label">Invoice</label>
                         <div className="input-group input-group-sm mb-3 col-sm-1">
                             <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" className="custom-control-input" id="customInvoice" />
+                                <input type="checkbox" className="custom-control-input" id="customInvoice"
+                                onChange = {(e) => {
+                                    setCustomInvoice(e.target.value)
+                                }}/>
                                 <label htmlFor="customInvoice" className="custom-control-label"></label>
                             </div>
                         </div>
@@ -320,24 +418,36 @@ const Order = () => {
                         <label className="col-sm-2.75 col-form-label">Packing Slip</label>
                         <div className="input-group input-group-sm mb-3 col-sm-1">
                             <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" className="custom-control-input" id="CustomPackingSlip" />
+                                <input type="checkbox" className="custom-control-input" id="CustomPackingSlip"
+                                onChange = {(e) => {
+                                    setCustomPackingSlip(e.target.value)
+                                }}/>
                                 <label htmlFor="CustomPackingSlip" className="custom-control-label"></label>
                             </div>
                         </div>
 
                         <label className="col-sm-2.75 col-form-label">Quantity</label>
                         <div className="input-group input-group-sm mb-3 col-sm-1">
-                            <input type="text" className="form-control" id="customQuantity" />
+                            <input type="text" className="form-control" id="customQuantity"
+                            onChange = {(e) => {
+                                setCustomQuantity(e.target.value)
+                            }}/>
                         </div>
 
                         <label className="col-sm-2.75 col-form-label">Unit Price $</label>
                         <div className="input-group input-group-sm mb-3 col-sm-1">
-                            <input type="text" className="form-control" id="customUnitPrice" />
+                            <input type="text" className="form-control" id="customUnitPrice"
+                            onChange = {(e) => {
+                                setCustomUnitPrice(e.target.value)
+                            }}/>
                         </div>
 
                         <label className="col-sm-2.75 col-form-label">Total Price $</label>
                         <div className="input-group input-group-sm mb-3 col-sm-1">
-                            <input type="text" READONLY className="form-control" id="customTotalPrice" />
+                            <input type="text" readOnly className="form-control" id="customTotalPrice"
+                            onChange = {(e) => {
+                                setCustomTotalPrice(e.target.value)
+                            }}/>
                          </div>
                     </div>
                 </div>
@@ -366,22 +476,40 @@ const Order = () => {
                     <div className="form-row">
                         <label htmlFor="assemblyCharges" className="col-sm-2 col-form-label">Assembly Charges</label>
                         <div className="input-group input-group-sm mb-3 col-sm-10">
-                            <input type="text" className="form-control" id="assemblyCharges" />
+                            <input type="text" className="form-control" id="assemblyChargesQuantity"
+                            onChange = {(e) => {
+                                setAssemblyChargesQuantity(e.target.value)
+                            }}/>
                             $
-                            <input type="text" className="form-control" id="money1" />
+                            <input type="text" className="form-control" id="assemblyChargesUnitPrice" 
+                            onChange = {(e) => {
+                                setAssemblyChargesUnitPrice(e.target.value)
+                            }}/>
                             $
-                            <input type="text" className="form-control" id="money2" />
+                            <input type="text" readOnly className="form-control" id="assemblyChargesTotalPrice"
+                            onChange = {(e) => {
+                                setAssemblyChargesTotalPrice(e.target.value)
+                            }}/>
                         </div>
                     </div>
 
                     <div className="form-row">
                         <label htmlFor="printingCharges" className="col-sm-2 col-form-label">Date Code Printing Charges</label>
                         <div className="input-group input-group-sm mb-3 col-sm-10">
-                            <input type="text" className="form-control" id="printingCharges" />
+                            <input type="text" className="form-control" id="printingChargesQuantity"
+                            onChange = {(e) => {
+                                setPrintingChargesQuantity(e.target.value)
+                            }}/>
                             $
-                            <input type="text" className="form-control" id="money1" />
+                            <input type="text" className="form-control" id="printingChargesUnitPrice"
+                            onChange = {(e) => {
+                                setPrintingChargesUnitPrice(e.target.value)
+                            }}/>
                             $
-                            <input type="text" className="form-control" id="money2" />
+                            <input type="text" readOnly className="form-control" id="printingChargesTotalPrice"
+                            onChange = {(e) => {
+                                setPrintingChargesTotalPrice(e.target.value)
+                            }}/>
                         </div>
                     </div>
 
@@ -389,19 +517,28 @@ const Order = () => {
                         <label htmlFor="setupCharge" className="col-sm-2 col-form-label">Date Code Setup Charge</label>
                         <div className="input-group input-group-sm mb-3 col-sm-10">
                             $
-                            <input type="text" className="form-control" id="setupCharge" />
+                            <input type="text" className="form-control" id="setupCharge"
+                            onChange = {(e) => {
+                                setSetupCharge(e.target.value)
+                            }}/>
                         </div>
                     </div>
 
                     <div className="form-row">
-                        <label htmlFor="chargeScreen" className="col-sm-2 col-form-label">Art Manipulation / Film Charges for Screens</label>
+                        <label htmlFor="numberofScreens" className="col-sm-2 col-form-label">Art Manipulation / Film Charges for Screens</label>
                         <div className="input-group input-group-sm mb-3 col-sm-5">
                             Number of Screens
-                            <input type="text" className="form-control" id="chargeScreen" />
+                            <input type="text" className="form-control" id="numberOfScreens"
+                            onChange = {(e) => {
+                                setNumberOfScreens(e.target.value)
+                            }}/>
                         </div>
                         <div className="input-group input-group-sm mb-3 col-sm-5">
                             $
-                            <input type="text" className="form-control" id="money" />
+                            <input type="text" className="form-control" id="screensPrice"
+                            onChange = {(e) => {
+                                setScreensPrice(e.target.value)
+                            }}/>
                         </div>
                     </div>
 
@@ -409,22 +546,30 @@ const Order = () => {
                         <label htmlFor="subTotal" className="col-sm-2 col-form-label">Sub Total</label>
                         <div className="input-group input-group-sm mb-3 col-sm-10">
                             $
-                            <input type="text" className="form-control" id="subTotal" />
+                            <input type="text" className="form-control" id="subTotal"
+                            onChange = {(e) => {
+                                setSubTotal(e.target.value)
+                            }}/>
                         </div>
                     </div>
 
                     <div className="form-row">
                         <label htmlFor="taxable" className="col-sm-2 col-form-label">Taxable?</label>
-
                         <div className="input-group input-group-sm col-sm-2 pl-5">
                             <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" className="custom-control-input" id="taxRate" />
+                                <input type="checkbox" className="custom-control-input" id="taxRate"
+                                onChange = {(e) => {
+                                    setTaxable(e.target.value)
+                                }}/>
                                 <label htmlFor="taxRate" className="custom-control-label">Tax Rate?</label>
                             </div>
                         </div>
 
                         <div className="input-group input-group-sm mb-3 col-sm-8">
-                            <input type="text" className="form-control" id="taxable" />
+                            <input type="text" className="form-control" id="taxable"
+                            onChange = {(e) => {
+                                setTaxRate(e.target.value)
+                            }}/>
                         </div>
                     </div>
 
@@ -432,7 +577,10 @@ const Order = () => {
                         <label htmlFor="tax" className="col-sm-2 col-form-label">Tax</label>
                         <div className="input-group input-group-sm mb-3 col-sm-10">
                             $
-                            <input type="text" className="form-control" id="tax" />
+                            <input type="text" className="form-control" id="tax"
+                            onChange = {(e) => {
+                                setTax(e.target.value)
+                            }}/>
                         </div>
                     </div>
 
@@ -440,7 +588,10 @@ const Order = () => {
                         <label htmlFor="freightCharges" className="col-sm-2 col-form-label">Freight Charges</label>
                         <div className="input-group input-group-sm mb-3 col-sm-10">
                             $
-                            <input type="text" className="form-control" id="freightCharges" />
+                            <input type="text" className="form-control" id="freightCharges"
+                            onChange = {(e) => {
+                                setFreightCharges(e.target.value)
+                            }}/>
                         </div>
                     </div>
 
@@ -448,7 +599,10 @@ const Order = () => {
                         <label htmlFor="priceTotal" className="col-sm-2 col-form-label">Order Price Total</label>
                         <div className="input-group input-group-sm mb-3 col-sm-10">
                             $
-                            <input type="text" className="form-control" id="priceTotal" />
+                            <input type="text" className="form-control" id="priceTotal"
+                            onChange = {(e) => {
+                                setPriceTotal(e.target.value)
+                            }}/>
                         </div>
                     </div>
                 </div>
@@ -461,21 +615,30 @@ const Order = () => {
                     <div className="form-row">
                         <label htmlFor="invoiceDate" className="col-sm-2 col-form-label">Invoice Date</label>
                         <div className="input-group input-group-sm mb-3 col-sm-3">
-                                <input type="date" className="form-control" name="invoiceDate" id="invoiceDate" />
+                                <input type="date" className="form-control" name="invoiceDate" id="invoiceDate"
+                                onChange = {(e) => {
+                                    setInvoiceDate(e.target.value)
+                                }}/>
                         </div>
                     </div>
 
                     <div className="form-row">
                         <label htmlFor="invoiceDatePaid" className="col-sm-2 col-form-label">Invoice Date Paid</label>
                         <div className="input-group input-group-sm mb-3 col-sm-3">
-                                <input type="date" className="form-control" name="invoiceDatePaid" id="invoiceDatePaid" />
+                                <input type="date" className="form-control" name="invoiceDatePaid" id="invoiceDatePaid"
+                                onChange = {(e) => {
+                                    setInvoiceDatePaid(e.target.value)
+                                }}/>
                         </div>
                     </div>
 
                     <div className="form-row">
                         <label htmlFor="invoiceNotes" className="col-sm-2 col-form-label">Invoice Notes</label>
                         <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <textarea rows="4" cols="50" className="form-control" name="invoiceNotes" id="custom-area" />
+                                <textarea rows="4" cols="50" className="form-control" name="invoiceNotes" id="invoiceNotes"
+                                onChange = {(e) => {
+                                    setInvoiceNotes(e.target.value)
+                                }}/>
                             </div>
                     </div>
                 </div>
@@ -488,28 +651,40 @@ const Order = () => {
                     <div className="form-row">
                         <label htmlFor="ABSOrder" className="col-sm-2 col-form-label">ABS Sales Order Date</label>
                         <div className="input-group input-group-sm mb-3 col-sm-3">
-                                <input type="date" className="form-control" name="ABSOrder" id="ABSOrder" />
+                                <input type="date" className="form-control" name="ABSOrder" id="ABSOrder"
+                                onChange = {(e) => {
+                                    setABSOrder(e.target.value)
+                                }}/>
                         </div>
                     </div>
                     
                     <div className="form-row">
                         <label htmlFor="customerOrder" className="col-sm-2 col-form-label">Customer Order Date</label>
                         <div className="input-group input-group-sm mb-3 col-sm-3">
-                                <input type="date" className="form-control" name="customerOrder" id="customerOrder" />
+                                <input type="date" className="form-control" name="customerOrder" id="customerOrder"
+                                onChange = {(e) => {
+                                    setCustomerOrder(e.target.value)
+                                }}/>
                         </div>
                     </div>
 
                     <div className="form-row">
                         <label htmlFor="customerPODate" className="col-sm-2 col-form-label">Customer PO Date</label>
                         <div className="input-group input-group-sm mb-3 col-sm-3">
-                                <input type="date" className="form-control" name="customerPODate" id="customerPODate" />
+                                <input type="date" className="form-control" name="customerPODate" id="customerPODate"
+                                onChange = {(e) => {
+                                    setCustomerPODate(e.target.value)
+                                }}/>
                         </div>
                     </div>
 
                     <div className="form-row">
                         <label htmlFor="customerPONumber" className="col-sm-2 col-form-label">Customer PO Number</label>
                         <div className="input-group input-group-sm mb-3 col-sm-10">
-                            <input type="text" className="form-control" id="customerPONumber" />
+                            <input type="text" className="form-control" id="customerPONumber"
+                            onChange = {(e) => {
+                                setCustomerPONumber(e.target.value)
+                            }}/>
                         </div>
                     </div>
 
@@ -517,7 +692,10 @@ const Order = () => {
                         <label htmlFor="creditChecked" className="col-sm-2 col-form-label">Credit Checked?</label>
                         <div className="input-group input-group-sm col-sm-2 pl-5">
                             <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" className="custom-control-input" id="creditChecked" />
+                                <input type="checkbox" className="custom-control-input" id="creditChecked"
+                                onChange = {(e) => {
+                                    setCreditChecked(e.target.value)
+                                }}/>
                                 <label htmlFor="creditChecked" className="custom-control-label"></label>
                             </div>
                         </div>
@@ -526,21 +704,30 @@ const Order = () => {
                     <div className="form-row">
                         <label htmlFor="daysTurn" className="col-sm-2 col-form-label">Days Turn</label>
                         <div className="input-group input-group-sm mb-3 col-sm-10">
-                            <input type="text" className="form-control" id="daysTurn" />
+                            <input type="text" className="form-control" id="daysTurn"
+                            onChange = {(e) => {
+                                setDaysTurn(e.target.value)
+                            }}/>
                         </div>
                     </div>
 
                     <div className="form-row">
                         <label htmlFor="dateCodePrinting" className="col-sm-2 col-form-label">Date Code Printing</label>
                         <div className="input-group input-group-sm mb-3 col-sm-3">
-                            <input type="date" className="form-control" name="dateCodePrinting" id="dateCodePrinting" />
+                            <input type="date" className="form-control" name="dateCodePrinting" id="dateCodePrinting"
+                            onChange = {(e) => {
+                                setDateCodePrinting(e.target.value)
+                            }}/>
                         </div>
                     </div>
 
                     <div className="form-row">
                         <label htmlFor="assemblyBy" className="col-sm-2 col-form-label">Assembly By</label>
                         <div className="input-group input-group-sm mb-3 col-sm-3">
-                            <select className="form-control" name="assemblyBy" id="assemblyBy">
+                            <select className="form-control" name="assemblyBy" id="assemblyBy"
+                            onChange = {(e) => {
+                                setAssemblyBy(e.target.value)
+                            }}>
                                 <option defaultValue="0">Select Value</option>
                                 <option value="1">Option 1</option>
                                 <option value="2">Option 2</option>
@@ -552,7 +739,10 @@ const Order = () => {
                     <div className="form-row">
                         <label htmlFor="discManufacturedBy" className="col-sm-2 col-form-label">Disc Manufactured By</label>
                         <div className="input-group input-group-sm mb-3 col-sm-3">
-                            <select className="form-control" name="discManufacturedBy" id="discManufacturedBy">
+                            <select className="form-control" name="discManufacturedBy" id="discManufacturedBy"
+                            onChange = {(e) => {
+                                setDiscManufacturedBy(e.target.value)
+                            }}>
                                 <option defaultValue="0">Select Value</option>
                                 <option value="1">Option 1</option>
                                 <option value="2">Option 2</option>
@@ -564,7 +754,10 @@ const Order = () => {
                     <div className="form-row">
                         <label htmlFor="CDBrand" className="col-sm-2 col-form-label">CD-R / DVD-R Brand</label>
                         <div className="input-group input-group-sm mb-3 col-sm-3">
-                            <select className="form-control" name="CDBrand" id="CDBrand">
+                            <select className="form-control" name="CDBrand" id="CDBrand"
+                            onChange = {(e) => {
+                                setCDBrand(e.target.value)
+                            }}>
                                 <option defaultValue="0">Select Value</option>
                                 <option value="1">Option 1</option>
                                 <option value="2">Option 2</option>
@@ -576,7 +769,10 @@ const Order = () => {
                     <div className="form-row">
                         <label htmlFor="discProvidedBy" className="col-sm-2 col-form-label">Disc Provided By</label>
                         <div className="input-group input-group-sm mb-3 col-sm-3">
-                            <select className="form-control" name="discProvidedBy" id="discProvidedBy">
+                            <select className="form-control" name="discProvidedBy" id="discProvidedBy"
+                            onChange = {(e) => {
+                                setDiscProvidedBy(e.target.value)
+                            }}>
                                 <option defaultValue="0">Select Value</option>
                                 <option value="1">Option 1</option>
                                 <option value="2">Option 2</option>
@@ -588,52 +784,74 @@ const Order = () => {
                     <div className="form-row">
                         <label htmlFor="customerProvidedMaterial" className="col-sm-2 col-form-label">Customer Provided Material</label>
                         <div className="input-group input-group-sm mb-3 col-sm-10">
-                            <textarea rows="4" cols="50" className="form-control" name="customerProvidedMaterial" id="custom-area" />
+                            <textarea rows="4" cols="50" className="form-control" name="customerProvidedMaterial" id="customerProvidedMaterial"
+                            onChange = {(e) => {
+                                setCustomerProvidedMaterial(e.target.value)
+                            }}/>
                         </div>
                     </div>
 
                     <div className="form-row">
                         <label htmlFor="customerMaterialETA" className="col-sm-2 col-form-label">Customer Material ETA</label>
                         <div className="input-group input-group-sm mb-3 col-sm-3">
-                             <input type="date" className="form-control" name="customerMaterialETA" id="customerMaterialETA" />
+                             <input type="date" className="form-control" name="customerMaterialETA" id="customerMaterialETA"
+                             onChange = {(e) => {
+                                setCustomerMaterialETA(e.target.value)
+                            }}/>
                         </div>
                     </div>
 
                     <div className="form-row">
                         <label htmlFor="customerNotes" className="col-sm-2 col-form-label">Customer Notes</label>
                         <div className="input-group input-group-sm mb-3 col-sm-10">
-                            <textarea rows="4" cols="50" className="form-control" name="customerNotes" id="custom-area" />
+                            <textarea rows="4" cols="50" className="form-control" name="customerNotes" id="customerNotes"
+                            onChange = {(e) => {
+                                setCustomerNotes(e.target.value)
+                            }}/>
                         </div>
                     </div>
 
                     <div className="form-row">
                         <label htmlFor="vendorNotes" className="col-sm-2 col-form-label">Vendor Notes</label>
                         <div className="input-group input-group-sm mb-3 col-sm-10">
-                            <textarea rows="4" cols="50" className="form-control" name="vendorNotes" id="custom-area" />
+                            <textarea rows="4" cols="50" className="form-control" name="vendorNotes" id="vendorNotes"
+                            onChange = {(e) => {
+                                setVendorNotes(e.target.value)
+                            }}/>
                         </div>
                     </div>
 
                     <div className="form-row">
                         <label htmlFor="orderNotes" className="col-sm-2 col-form-label">Order Notes</label>
                         <div className="input-group input-group-sm mb-3 col-sm-10">
-                            <textarea rows="4" cols="50" className="form-control" name="orderNotes" id="custom-area" />
+                            <textarea rows="4" cols="50" className="form-control" name="orderNotes" id="orderNotes"
+                            onChange = {(e) => {
+                                setOrderNotes(e.target.value)
+                            }}/>
                         </div>
                     </div>
 
                     <div className="form-row">
                         <label htmlFor="orderStatus" className="col-sm-2 col-form-label">Order Status</label>
                         <div className="input-group input-group-sm mb-3 col-sm-3">
-                            <select className="form-control" name="orderStatus" id="orderStatus">
+                            <select className="form-control" name="orderStatus" id="orderStatus"
+                            onChange = {(e) => {
+                                setOrderStatus(e.target.value)
+                            }}>
                                 <option defaultValue="0">Submitted</option>
-                                <option value="1">Yes</option>
-                                <option value="2">No</option>
+                                <option value="Entered">Entered</option>
+                                <option value="Partial Shipped">Partial Shipped</option>
+                                <option value="Complete Shipped">Complete Shipped</option>
+                                <option value="Invoiced">Invoiced</option>
+                                <option value="On Hold">On Hold</option>
+                                <option value="Canceled">Canceled</option>
                             </select>
                         </div>
                     </div>
                 </div>
 
                 <div className="submit p-3">
-                    <button type="submit" id="add-product" className="btn btn-success">Submit</button>
+                    <button onClick = {submit} type="submit" id="add-product" className="btn btn-success">Submit</button>
                 </div>
 
             </form>
