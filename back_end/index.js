@@ -122,6 +122,34 @@ app.post("/insertOrder", (req, res) => {
     /*------------------------------------------ Order Page ------------------------------------------*/
 });
 
+app.post("/api/insert-product", (req, res) => {
+    const oldId = req.body.old_abs_id;
+    const customerId = req.body.customer_id;
+    const productCategory = req.body.product_category;
+    const oemId = req.body.oem_product_id;
+    const productTitle = req.body.product_title;
+    const productDesc = req.body.product_desc;
+    const productRepl = req.body.product_repl;
+    const masterFormat = req.body.master_format;
+    const masterReceived = req.body.master_received;
+    const masterLabel = req.body.master_label;
+    const masterCapacity = req.body.master_capacity;
+    const masterLoc = req.body.master_loc;
+    const filmsLoc = req.body.films_loc;
+    const dateCodePosition = req.body.date_code_position;
+    const innerHub = req.body.inner_hub;
+    const innerHubPosition = req.body.inner_hub_position;
+    const colorNotes = req.body.color_notes;
+    const packagingNotes = req.body.packaging_notes;
+    const productNotes = req.body.product_notes;
+    const productStatus = req.body.product_status;
+    
+    const sqlInsert = "INSERT INTO product_table (old_abs_id, customer_id, product_category, oem_product_id, product_title, product_desc, product_repl, master_format, master_received, master_label, master_capacity, master_loc, films_loc, date_code_position, inner_hub, inner_hub_position, color_notes, packaging_notes, product_notes, product_status) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    db.query(sqlInsert, [oldId, customerId, productCategory, oemId, productTitle, productDesc, productRepl, masterFormat, masterReceived, masterLabel, masterCapacity, masterLoc, filmsLoc, dateCodePosition, innerHub, innerHubPosition, colorNotes, packagingNotes, productNotes, productStatus], (err, result) => {
+        console.log(result);
+    });
+});
+
 app.listen(3001, () =>{
     console.log("running on port 3001");
 });
