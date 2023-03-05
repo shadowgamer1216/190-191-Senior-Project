@@ -23,8 +23,9 @@ create table contact_table (
   fax varchar(15) default NULL,
   email varchar(128) default NULL,
   notes mediumtext,
-  PRIMARY KEY  (contact_id),
-  FOREIGN KEY (company) REFERENCES company_table(company_name)
+  PRIMARY KEY  (contact_id)
+  #PRIMARY KEY  (contact_id),
+  #FOREIGN KEY (company) REFERENCES company_table(company_name)
 );
 
 DROP TABLE IF EXISTS location_table;
