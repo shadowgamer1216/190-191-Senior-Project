@@ -2,8 +2,8 @@ create schema 191_database; /* schema for entire DB */
 
 create table contact_table (
   contact_id mediumint NOT NULL auto_increment,
-  customer_id varchar(8) NOT NULL default '',
-  company varchar(128) NOT NULL default '',
+  customer_id varchar(8) NOT NULL,
+  company varchar(128) NOT NULL,
   fname varchar(64) default NULL,
   lname varchar(64) default NULL,
   contact_type varchar(64) default NULL,
@@ -22,9 +22,8 @@ create table contact_table (
   fax varchar(15) default NULL,
   email varchar(128) default NULL,
   notes mediumtext,
-  PRIMARY KEY  (contact_id)
-  #PRIMARY KEY  (contact_id),
-  #FOREIGN KEY (company) REFERENCES company_table(company_name)
+  PRIMARY KEY  (contact_id),
+  FOREIGN KEY (company) REFERENCES company_table(company_name)
 );
 
 DROP TABLE IF EXISTS location_table;
@@ -252,7 +251,6 @@ create table shipment_info_table(
 );
 
 create table company_table(
-  ID int (11) NOT NULL auto_increment,
 	company_ID varchar (8) NOT NULL default '',
 	company_Name varchar (128) default NULL,
   addr1 varchar (64) default NULL,
@@ -275,5 +273,5 @@ create table company_table(
 	OEM char (1) default NULL,
   other_class varchar (60) default NULL,
   notes TEXT,
-  PRIMARY KEY (ID)
+  PRIMARY KEY (company_Name)
 );
