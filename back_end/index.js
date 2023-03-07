@@ -163,8 +163,25 @@ app.post("api/insertLocation" , (req, res) =>{
     db.query(sqlInsert, [location_id, location_type, item_id, qty, item_owner, physical_location, notes], (err, result) => {
         console.log(result);
     });
-})
+});
 
+app.post("api/insertItem" , (req, res) =>{
+    const customer_id = req.body.item_id;
+    const item_id = req.body.item_id;
+    const mfr_pn = req.body.mfr_pn;
+    const description = req.body.description;
+    const carrier = req.body.carrier;
+    const quantity = req.body.quantity;
+    const disposition = req.body.disposition;
+    const signed_for_by = req.body.signed_for_by;
+    const date_in = req.body.date_in;
+    const date_complete = req.body.date_complete;
+
+    const sqlInsert = "INSERT INTO item_check_in_table (customer_id, item_id, mfr_pn, description, carrier, quantity, disposition, signed_for_by, date_in, date_complete) VALUES (?,?,?,?,?,?,?,?,?,?)";
+    db.query(sqlInsert, [customer_id, item_id, mfr_pn, description, carrier, quantity, disposition, signed_for_by, date_in, date_complete], (err, result) => {
+        console.log(result);
+    });
+});
 app.listen(3001, () =>{
     console.log("running on port 3001");
 });
