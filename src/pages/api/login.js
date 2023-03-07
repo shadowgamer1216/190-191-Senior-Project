@@ -2,6 +2,7 @@ import passport from 'passport'
 import nextConnect from 'next-connect'
 import { localStrategy } from '../../lib/password-local'
 import { setLoginSession } from '../../lib/auth'
+import cors from 'cors'
 
 const authenticate = (method, req, res) =>
   new Promise((resolve, reject) => {
@@ -17,6 +18,7 @@ const authenticate = (method, req, res) =>
 passport.use(localStrategy)
 
 export default nextConnect()
+  .use(cors())
   .use(passport.initialize())
   .post(async (req, res) => {
     try {
@@ -33,7 +35,7 @@ export default nextConnect()
 
       res.status(200).send({ done: true })
     } catch (error) {
-      console.error("I am the error " + error) //This is giving me "empty password"
+      console.error("I am the error " + error) 
       res.status(401).send(error.message)
     }
   })
