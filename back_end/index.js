@@ -150,6 +150,21 @@ app.post("/api/insert-product", (req, res) => {
     });
 });
 
+app.post("api/insertLocation" , (req, res) =>{
+    const location_id = req.body.location_id;
+    const location_type = req.body.location_type;
+    const item_id = req.body.item_id;
+    const qty = req.body.qty;
+    const item_owner = req.body.item_owner;
+    const physical_location = req.body.physical_location;
+    const notes = req.body.notes;
+
+    const sqlInsert = "INSERT INTO location_table (location_id, location_type, item_id, qty, item_owner, physical_location, notes) VALUES (?,?,?,?,?,?,?)";
+    db.query(sqlInsert, [location_id, location_type, item_id, qty, item_owner, physical_location, notes], (err, result) => {
+        console.log(result);
+    });
+})
+
 app.listen(3001, () =>{
     console.log("running on port 3001");
 });

@@ -42,8 +42,6 @@ create table location_table(
 	KEY location_id (location_id),
 	KEY item_id (item_id)
 );
-INSERT INTO location_table(id, location_id, item_id, physical_location, location_type, item_owner, notes, qty)
-VALUES();
 
 DROP TABLE IF EXISTS item_check_in_table;
 create table item_check_in_table(
@@ -60,8 +58,6 @@ create table item_check_in_table(
 	date_complete DATETIME DEFAULT NULL,
 	PRIMARY KEY (id)
 );
-INSERT INTO item_check_in_table (id, customer_id, item_id, mfr_pn, item_description, quantity, carrier, signed_for_by, disposition, date_in, date_complete)
-VALUES();
 
 create table component_table (
 	customer_id TEXT PRIMARY KEY NOT NULL,

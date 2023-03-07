@@ -17,9 +17,9 @@ const ItemCheckIn = () => {
     const [date_complete, setDateComplete] = useState("");
 
     const submit = () => {
-        Axios.post("http://localhost:3001/api/insert", {customer_id: customer_id, item_id: item_id, mfr_pn: mfr_pn, description: description, carrier: carrier, quantity: quantity, disposition: disposition, signed_for_by: signed_for_by, date_in: date_in, date_complete: date_complete})
+        Axios.post("http://localhost:3001/api/insertItem", {customer_id: customer_id, item_id: item_id, mfr_pn: mfr_pn, description: description, carrier: carrier, quantity: quantity, disposition: disposition, signed_for_by: signed_for_by, date_in: date_in, date_complete: date_complete})
         .then(()=> {
-            alert('inserted');
+            alert('inserted item');
         })
     };
 
