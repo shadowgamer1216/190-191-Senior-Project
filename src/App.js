@@ -13,7 +13,7 @@ import {
 import HomePage from './HomePage';
 import ProductPage from './product';
 import ContactPage from './contact';
-import ComponentsPage from './components';
+import ComponentsPage from './component';
 import LocationPage from './location';
 import OrderPage from './order';
 import CompanyPage from './company';
@@ -37,7 +37,7 @@ function App() {
         <Route path = '/login' element = {<Login/>} />
         <Route path = "/product" element = {<ProductPage/>} />    
         <Route path = "/contact" element = {<ContactPage/>} />
-        <Route path = "/components" element = {<ComponentsPage/>} />
+        <Route path = "/component" element = {<ComponentPage/>} />
         <Route path = "/contact" element = {<ContactPage/>} /> 
         <Route path = "/location" element = {<LocationPage/>} />
         <Route path = "/order" element = {<OrderPage/>} />

@@ -182,6 +182,32 @@ app.post("api/insertItem" , (req, res) =>{
         console.log(result);
     });
 });
+
+app.post("api/insertComponent", (req, res) =>{
+    const customer_id = req.body.customer_id;
+    const component_type = req.body.component_type;
+    const oem_pn = req.body.oem_pn;
+    const description_1 = req.body.description_1;
+    const description_2 = req.body.description_2;
+    const description_3 = req.body.description_3;
+    const description_4 = req.body.description_4;
+    const description_5 = req.body.description_5;
+    const size = req.body.size;
+    const supplier_brand_id = req.body.supplier_brand_id;
+    const color = req.body.color;
+    const notes = req.body.notes;
+    const owned_by = req.body.owned_by;
+    const uom = req.body.uom;
+    const component_status = req.body.component_status;
+    const packaging_component = req.body.packaging_component;
+    const item_locaiton = req.body.item_locaiton;
+
+    const sqlInsert = "INSERT INTO component_table (customer_id, component_type, oem_pn, description_1, description_2, description_3, description_4, description_5, size, supplier_brand_id, color, notes, owned_by, uom, component_status, packaging_component, item_location) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    db.query(sqlInsert, [customer_id, component_type, oem_pn, description_1, description_2, description_3, description_4, description_5, size, supplier_brand_id, color, notes, owned_by, uom, component_status, packaging_component, item_locaiton], (err, result) => {
+        console.log(result);
+    });
+});
+
 app.listen(3001, () =>{
     console.log("running on port 3001");
 });
