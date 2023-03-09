@@ -60,23 +60,24 @@ create table item_check_in_table(
 );
 
 create table component_table (
-	customer_id TEXT PRIMARY KEY NOT NULL,
-	component_type TEXT,
-	oem_pn INT,
-	description_1 TEXT,
-	description_2 TEXT,
-	description_3 TEXT,
-	description_4 TEXT,
-	description_5 TEXT,
-	size TEXT,
-	supplier_brand_id TEXT,
-	color TEXT,
+	customer_id VARCHAR(8) NOT NULL,
+	component_type VARCHAR(25) NOT NULL,
+	oem_pn VARCHAR(50) DEFAULT NULL,
+	description_1 VARCHAR(255) DEFAULT NULL,
+	description_2 VARCHAR(255) DEFAULT NULL,
+	description_3 VARCHAR(255) DEFAULT NULL,
+	description_4 VARCHAR(255) DEFAULT NULL,
+	description_5 VARCHAR(255) DEFAULT NULL,
+	size VARCHAR(25) DEFAULT NULL,
+	supplier_brand_id VARCHAR(25) DEFAULT NULL,
+	color VARCHAR(25) DEFAULT NULL,
 	notes TEXT,
-	owned_by TEXT,
-	uom TEXT,
-	component_status TEXT,
+	owned_by VARCHAR(25) DEFAULT NULL,
+	uom VARCHAR(25) DEFAULT NULL,
+	component_status VARCHAR(50) DEFAULT NULL,
 	packaging_component BIT,
-	item_location TEXT
+	item_location VARCHAR(25) DEFAULT NULL,
+  PRIMARY KEY (customer_id)
 );
 
 DROP TABLE IF EXISTS product_table;

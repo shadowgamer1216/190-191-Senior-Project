@@ -26,7 +26,7 @@ function HomePage() {
         </div>
 
         <div class='block2'>
-          <Link to = "Components">
+          <Link to = "Component">
             <button type="Add Component" id="Add Component" class="HomePageButton">Add Component</button>
           </Link>
           <Link to = "Contact">

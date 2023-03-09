@@ -13,7 +13,7 @@ import {
 import HomePage from './HomePage';
 import ProductPage from './product';
 import ContactPage from './contact';
-import ComponentsPage from './component';
+import ComponentPage from './component';
 import LocationPage from './location';
 import OrderPage from './order';
 import CompanyPage from './company';
