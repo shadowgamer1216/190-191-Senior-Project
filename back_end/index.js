@@ -150,7 +150,7 @@ app.post("/api/insert-product", (req, res) => {
     });
 });
 
-app.post("api/insertLocation" , (req, res) =>{
+app.post("/api/insertLocation" , (req, res) =>{
     const location_id = req.body.location_id;
     const location_type = req.body.location_type;
     const item_id = req.body.item_id;
@@ -165,8 +165,8 @@ app.post("api/insertLocation" , (req, res) =>{
     });
 });
 
-app.post("api/insertItem" , (req, res) =>{
-    const customer_id = req.body.item_id;
+app.post("/api/insertItem" , (req, res) =>{
+    const customer_id = req.body.customer_id;
     const item_id = req.body.item_id;
     const mfr_pn = req.body.mfr_pn;
     const description = req.body.description;
