@@ -114,9 +114,10 @@ const ItemCheckIn = () => {
                                     setDisposition(e.target.value)
                                 }}>
                                     <option selected value="">Select Value</option>
-                                    <option value="1">X1_TBD</option>
-                                    <option value="2">X2_TBD</option>
-                                    <option value="3">X3_TBD</option>
+                                    <option value="Recieving">Recieving</option>
+                                    <option value="Delivered to Production">Delivered to Production</option>
+                                    <option value="Inventory">Inventory</option>
+                                    <option value="Rep Notified">Rep Notified</option>
                                 </select>
                             </div>
                         </div>
@@ -149,8 +150,8 @@ const ItemCheckIn = () => {
                         </div>
                     </div>
 
-                    <div className="submit">
-                        <button type="submit" id="add-product" className="btn btn-success m-2">Submit</button>
+                    <div className="submit p-3">
+                        <button onClick = {submit} type="submit" id="add-item" className="btn btn-success m-2">Submit</button>
                     </div>
                 </form>
 
