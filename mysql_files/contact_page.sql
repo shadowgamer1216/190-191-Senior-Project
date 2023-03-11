@@ -215,33 +215,38 @@ create table order_table (
     PRIMARY KEY (product_id)
 );
 
+DROP TABLE IF EXISTS shipping_table;
 create table shipping_table(
-	customer_id INT PRIMARY KEY NOT NULL,
-	company_name TEXT,
-	contact_name TEXT, 
-	add1 TEXT,
-	add2 TEXT,
-	city TEXT,
-	country_state TEXT,
-	zip INT,
-	province TEXT,
-	country TEXT,
-	phone TEXT,
-	fax TEXT
+	customer_id varchar(8) NOT NULL,
+	company_name varchar(20),
+	contact_name varchar(50), 
+	add1 varchar(50),
+	add2 varchar(50) default NULL,
+	city varchar(50),
+	country_state varchar(2),
+	zip INT(5),
+	province varchar(50) default NULL,
+	country varchar(50),
+	phone INT(10),
+	fax INT(10) default NULL,
+  	email varchar(50),
+  	PRIMARY KEY (customer_id)
 );
 
 create table shipment_info_table(
-	fedex TEXT,
-	ups TEXT,
-	courier_willcall TEXT,
-	other_ship_method TEXT,
-	payment_type TEXT,
-	account_number TEXT,
+	fedex varchar(10) default NULL,
+	ups varchar(10) default NULL,
+	courier_willcall varchar(10) default NULL,
+  abs varchar(10) default NULL,
+	other_ship_method varchar(10) default NULL,
+	payment_type varchar(10),
+	account_number varchar(50),
 	request_ship_date DATE,
 	request_ship_time DATETIME,
 	arrival_ship_date DATE,
 	arrival_ship_time DATETIME,
-	fob TEXT,
+  saturday_deliv INT(2),
+	fob varchar(50) default null,
 	notes TEXT
 );
 
