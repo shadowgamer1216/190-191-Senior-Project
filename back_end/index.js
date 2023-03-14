@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 const db = mysql.createPool({
     user: "root",
     host: "localhost",
-    password: "password",
+    password: "Tofoo101!",
     database: "absolutemedia",
 });
 
@@ -123,7 +123,7 @@ app.post("/insertOrder", (req, res) => {
     /*------------------------------------------ Order Page ------------------------------------------*/
 });
 
-app.post("/api/insert-product", (req, res) => {
+app.post("/api/insertProduct", (req, res) => {
     const oldId = req.body.old_abs_id;
     const customerId = req.body.customer_id;
     const productCategory = req.body.product_category;
@@ -137,16 +137,39 @@ app.post("/api/insert-product", (req, res) => {
     const masterCapacity = req.body.master_capacity;
     const masterLoc = req.body.master_loc;
     const filmsLoc = req.body.films_loc;
+    const dateCodeRequired = req.body.date_code_required;
     const dateCodePosition = req.body.date_code_position;
     const innerHub = req.body.inner_hub;
     const innerHubPosition = req.body.inner_hub_position;
+    const floodCoat = req.body.floodcoat;
+    const rimagePrint = req.body.rimage_print;
+    const colorOne = req.body.color_1;
+    const colorTwo = req.body.color_2;
+    const colorThree = req.body.color_3;
+    const colorFour = req.body.color_4;
+    const colorFive = req.body.color_5;
+    const colorSix = req.body.color_6;
+    const colorSeven = req.body.color_7;
+    const colorEight = req.body.color_8;
     const colorNotes = req.body.color_notes;
+    const componentOne = req.body.component_1;
+    const componentTwo = req.body.component_2;
+    const componentThree = req.body.component_3;
+    const componentFour = req.body.component_4;
+    const componentFive = req.body.component_5;
+    const componentSix = req.body.component_6;
+    const componentSeven = req.body.component_7;
+    const componentEight = req.body.component_8;
+    const componentNine = req.body.component_9;
+    const componentTen = req.body.component_10;
+    const componentEleven = req.body.component_11;
+    const componentTwelve = req.body.component_12;
     const packagingNotes = req.body.packaging_notes;
     const productNotes = req.body.product_notes;
     const productStatus = req.body.product_status;
-    
-    const sqlInsert = "INSERT INTO product_table (old_abs_id, customer_id, product_category, oem_product_id, product_title, product_desc, product_repl, master_format, master_received, master_label, master_capacity, master_loc, films_loc, date_code_position, inner_hub, inner_hub_position, color_notes, packaging_notes, product_notes, product_status) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-    db.query(sqlInsert, [oldId, customerId, productCategory, oemId, productTitle, productDesc, productRepl, masterFormat, masterReceived, masterLabel, masterCapacity, masterLoc, filmsLoc, dateCodePosition, innerHub, innerHubPosition, colorNotes, packagingNotes, productNotes, productStatus], (err, result) => {
+
+    const sqlInsert = "INSERT INTO product_table (old_abs_id, customer_id, product_category, oem_product_id, product_title, product_desc, product_repl, master_format, master_received, master_label, master_capacity, master_loc, films_loc, date_code_required, date_code_position, inner_hub, inner_hub_position, floodcoat, rimage_print, color_1, color_2, color_3, color_4, color_5, color_6, color_7, color_8, color_notes, component_1, component_2, component_3, component_4, component_5, component_6, component_7, component_8, component_9, component_10, component_11, component_12, packaging_notes, product_notes, product_status) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    db.query(sqlInsert, [oldId, customerId, productCategory, oemId, productTitle, productDesc, productRepl, masterFormat, masterReceived, masterLabel, masterCapacity, masterLoc, filmsLoc, dateCodeRequired, dateCodePosition, innerHub, innerHubPosition, floodCoat, rimagePrint, colorOne, colorTwo, colorThree, colorFour, colorFive, colorSix, colorSeven, colorEight, colorNotes, componentOne, componentTwo, componentThree, componentFour, componentFive, componentSix, componentSeven, componentEight, componentNine, componentTen, componentEleven, componentTwelve, packagingNotes, productNotes, productStatus], (err, result) => {
         console.log(result);
     });
 });
