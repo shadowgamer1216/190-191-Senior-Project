@@ -43,6 +43,16 @@ create table location_table(
 	KEY item_id (item_id)
 );
 
+DROP TABLE IF EXISTS location_history;
+create table location_history(
+  id INT NOT NULL AUTO_INCREMENT,
+  location_id VARCHAR(20) NOT NULL DEFAULT '',
+  item_id INT NOT NULL DEFAULT '0',
+  qty INT NOT NULL DEFAULT '0',
+  date_added DATE NOT NULL DEFAULT (CURRENT_DATE),
+  KEY id (id)
+);
+
 DROP TABLE IF EXISTS item_check_in_table;
 create table item_check_in_table(
 	id INT NOT NULL auto_increment,

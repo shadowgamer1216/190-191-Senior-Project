@@ -214,6 +214,29 @@ app.post("/api/insertLocation" , (req, res) =>{
     });
 });
 
+app.get("/api/getLocationHistory", (req, res) =>{
+    const location_id = req.body.location_id;
+    const item_id = req.body.item_id;
+    const qty = req.body.qty;
+    //const date = req.body.date;
+
+    db.query("SELECT location_id, item_id, qty, date_added FROM location_history", (err, result) =>{
+        if (err) throw err;
+        res.send(result);
+    });
+});
+
+app.post("/api/insertLocationHistory", (req, res) =>{
+    const location_id = req.body.location_id;
+    const item_id = req.body.item_id;
+    const qty = req.body.qty;
+
+    const sqlInsert = "INSERT INTO location_history (location_id, item_id, qty) VALUES (?,?,?)";
+    db.query(sqlInsert, [location_id, item_id, qty], (err, result) =>{
+        console.log(result);
+    });
+});
+
 app.post("/api/insertItem" , (req, res) =>{
     const customer_id = req.body.customer_id;
     const item_id = req.body.item_id;
