@@ -59,19 +59,20 @@ create table item_check_in_table(
 	PRIMARY KEY (id)
 );
 
+DROP TABLE IF EXISTS component_table;
 create table component_table (
-	customer_id VARCHAR(8) DEFAULT NULL,
+	customer_id VARCHAR(25) NOT NULL DEFAULT '',
 	component_type VARCHAR(25) DEFAULT NULL,
 	oem_pn VARCHAR(50) DEFAULT NULL,
-	description TEXT,
+	component_description TEXT,
 	size VARCHAR(25) DEFAULT NULL,
 	supplier_brand_id VARCHAR(25) DEFAULT NULL,
 	color VARCHAR(25) DEFAULT NULL,
 	notes TEXT,
 	uom VARCHAR(25) DEFAULT NULL,
 	component_status VARCHAR(25) DEFAULT NULL,
-  #owned_by CHAR(3) DEFAULT NULL,
-	#packaging_component CHAR(3) DEFAULT NULL,
+  owned_by INT DEFAULT NULL,
+	packaging_component INT DEFAULT NULL,
   PRIMARY KEY (customer_id)
 );
 

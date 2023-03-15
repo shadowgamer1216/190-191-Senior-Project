@@ -6,18 +6,18 @@ import Axios from "axios";
 
 const Component = () => {
     const navigate = useNavigate();
-    const[customer_id, setCustomerID] = useState ("");
-    const[component_type, setComponent_Type] = useState ("");
-    const[oem_pn, setOEM_PN] = useState ("");
-    const[description, setDescription] = useState ("");
-    const[size, setSize] = useState ("");
-    const[supplier_brand_id, setSupplier_Brand_ID] = useState ("");
-    const[color, setColor] = useState ("");
-    const[notes, setNotes] = useState ("");
-    const[owned_by, setOwned_By] = useState ("");
-    const[uom, setUOM] = useState ("");
-    const[component_status, setComponent_Status] = useState ("");
-    const[packaging_component, setPackaging_Component] = useState ("");
+    const[customer_id, setCustomerID] = useState("");
+    const[component_type, setComponent_Type] = useState(null);
+    const[oem_pn, setOEM_PN] = useState(null);
+    const[component_description, setComponent_Description] = useState(null);
+    const[size, setSize] = useState(null);
+    const[supplier_brand_id, setSupplier_Brand_ID] = useState(null);
+    const[color, setColor] = useState(null);
+    const[notes, setNotes] = useState(null);
+    const[uom, setUOM] = useState(null);
+    const[component_status, setComponent_Status] = useState(null);
+    const[owned_by, setOwned_By] = useState(0);
+    const[packaging_component, setPackaging_Component] = useState(0);
     //const[item_location, setItem_Location] = useState ("");
 
 
@@ -27,19 +27,23 @@ const Component = () => {
             customer_id: customer_id, 
             component_type: component_type, 
             oem_pn: oem_pn, 
-            description: description,  
+            component_description: component_description,  
             size: size, 
             supplier_brand_id: supplier_brand_id, 
             color: color, notes: notes, 
-            owned_by: owned_by, 
             uom: uom, 
-            component_status: component_status, 
-            packaging_component: packaging_component, 
+            component_status: component_status,
+            owned_by: owned_by,  
+            packaging_component: packaging_component 
             //item_location: item_location
-        })
-        .then(()=> {
+        }).then(()=> {
             alert('inserted component');
         })
+        // }).then((result) => {
+        //     console.log(result.data);
+        // }).catch(err => {
+        //     console.log(err);
+        // });
     };
 
     return (
@@ -78,7 +82,7 @@ const Component = () => {
                             <div className="input-group input-group-sm mb-3 col-sm-10">
                                 <input type="text" className="form-control" id="CID" onChange={(e) => {
                                     setCustomerID(e.target.value)
-                                }}/>
+                                }} required />
                             </div>
                         </div>
 
@@ -107,10 +111,10 @@ const Component = () => {
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="description" className="col-sm-2 col-form-label">Description</label>
+                            <label htmlFor="component_description" className="col-sm-2 col-form-label">Description</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <textarea rows="4" cols="50" className="form-control" name="description" id="custom-area" onChange={(e) => {
-                                    setDescription(e.target.value)
+                                <textarea rows="4" cols="50" className="form-control" name="component_description" id="custom-area" onChange={(e) => {
+                                    setComponent_Description(e.target.value)
                                  }} />
                             </div>
                         </div>
@@ -187,24 +191,24 @@ const Component = () => {
                         <div className="form-row">
                             <div className="input-group input-group-sm col-sm-3 pl-5">
                                 <div className="form-group custom-control custom-checkbox">
-                                    <input type="checkbox" className="custom-control-input" id="ownedbycheck" onChange={(e) => {
-                                        setOwned_By(e.target.value)
-                                    }}/>
+                                    <input onChange={(prev) => setOwned_By(prev => !prev)} checked = {owned_by} type="checkbox" className="custom-control-input" id="ownedbycheck" />
                                     <label htmlFor="ownedbycheck" className="custom-control-label">Owned By Individual Company?</label>
                                 </div>
                             </div>
                    
                             <div className="input-group input-group-sm col-sm-3 pl-5">
                                 <div className="form-group custom-control custom-checkbox">
-                                    <input type="checkbox" className="custom-control-input" id="packagingcomponent" onChange={(e) => {
-                                        setPackaging_Component(e.target.value)
-                                    }}/>
+                                    <input onChange={(prev) => setPackaging_Component(prev => !prev)} checked = {packaging_component}type="checkbox" className="custom-control-input" id="packagingcomponent" />
                                     <label htmlFor="packagingcomponent" className="custom-control-label">Packaging Component</label>
                                 </div>
                             </div>
                         </div>
-
                     </div>
+
+                    <div className="submit p-3">
+                        <button onClick = {submit} type="submit" id="add-contact" className="btn btn-success">Submit</button>
+                    </div>
+                    
                 </form>
 
                 <form>                       
@@ -231,6 +235,7 @@ const Component = () => {
                             </tbody>
                         </table>
                     </div>
+
                 </form>
 
                 <div className="product-location m-3 p-3">
@@ -246,9 +251,7 @@ const Component = () => {
                     </div>
                 </div>
 
-                <div className="submit p-3">
-                    <button onClick = {submit} type="submit" id="add-contact" className="btn btn-success">Submit</button>
-                </div>
+               
 
                 <button className="btn btn-outline-dark" onClick={() => navigate(-1)}>Home</button>
 

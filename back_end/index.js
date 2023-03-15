@@ -232,24 +232,24 @@ app.post("/api/insertItem" , (req, res) =>{
     });
 });
 
-app.post("api/insertComponent", (req, res) =>{
+app.post("/api/insertComponent", (req, res) =>{
     /*------------------------------------------ Component Page ------------------------------------------*/
     const customer_id = req.body.customer_id;
     const component_type = req.body.component_type;
     const oem_pn = req.body.oem_pn;
-    const description = req.body.description;
+    const component_description = req.body.component_description;
     const size = req.body.size;
     const supplier_brand_id = req.body.supplier_brand_id;
     const color = req.body.color;
     const notes = req.body.notes;
-    const owned_by = req.body.owned_by;
     const uom = req.body.uom;
     const component_status = req.body.component_status;
+    const owned_by = req.body.owned_by;
     const packaging_component = req.body.packaging_component;
-    const item_locaiton = req.body.item_locaiton;
+    //const item_locaiton = req.body.item_locaiton;
 
-    const sqlInsert = "INSERT INTO component_table (customer_id, component_type, oem_pn, description_1, description_2, description_3, description_4, description_5, size, supplier_brand_id, color, notes, owned_by, uom, component_status, packaging_component, item_location) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-    db.query(sqlInsert, [customer_id, component_type, oem_pn, description, size, supplier_brand_id, color, notes, owned_by, uom, component_status, packaging_component, item_locaiton], (err, result) => {
+    const sqlInsert = "INSERT INTO component_table (customer_id, component_type, oem_pn, component_description, size, supplier_brand_id, color, notes, uom, component_status, owned_by, packaging_component) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+    db.query(sqlInsert, [customer_id, component_type, oem_pn, component_description, size, supplier_brand_id, color, notes, uom, component_status, owned_by, packaging_component], (err, result) => {
         console.log(result);
     });
     /*------------------------------------------ Component Page ------------------------------------------*/
