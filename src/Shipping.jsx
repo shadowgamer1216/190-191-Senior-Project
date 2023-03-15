@@ -1,9 +1,73 @@
 import React from "react";
 import './App.css'
 import { Link, useNavigate } from "react-router-dom"
+import { useState } from "react";
+import Axios from "axios";
 
 const Shipping = () => {
   const navigate = useNavigate();
+
+  const[company_name, setCompany_name] = useState(null);
+  const[contact_name, setContact_name] = useState(null);
+  const[add1, setAdd1] = useState(null);
+  const[add2, setAdd2] = useState(null);
+  const[city, setCity] = useState(null);
+  const[state, setState] = useState(null);
+  const[zip, setZip] = useState(null);
+  const[province, setProvince] = useState(null);
+  const[country, setCountry] = useState(null);
+  const[phone, setPhone] = useState(null);
+  const[fax, setFax] = useState(null);
+  const[email, setEmail] = useState(null);
+  const[fedex, setFedex] = useState(null);
+  const[ups, setUps] = useState(null);
+  const[courier_willcall, setCourier_willcall] = useState(null);
+  const[abs, setAbs] = useState(null);
+  const[other_ship_method, setOther_ship_method] = useState(null);
+  const[payment_type, setPayment_type] = useState(null);
+  const[account_number, setAccount_number] = useState(null);
+  const[request_ship_date, setRequested_ship_date] = useState(null);
+  const[request_ship_time, setRequested_ship_time] = useState(null);
+  const[arrival_ship_date, setArrival_ship_date] = useState(null);
+  const[arrival_ship_time, setArrival_ship_time] = useState(null);
+  const[fob, setFob] = useState(null);
+  const[notes, setNotes] = useState(null);
+
+  const submit = () => {
+    Axios.post("http://localhost:3001/api/insertShipping",
+    {
+      company_name: company_name,
+      contact_name: contact_name,
+      add1: add1,
+      add2: add2,
+      city: city,
+      state: state,
+      zip: zip,
+      province: province,
+      country: country,
+      phone: phone,
+      fax: fax,
+      email: email,
+      fedex: fedex,
+      ups: ups,
+      courier_willcall: courier_willcall,
+      abs: abs,
+      other_ship_method: other_ship_method,
+      payment_type: payment_type,
+      account_number: account_number,
+      request_ship_date: request_ship_date,
+      request_ship_time: request_ship_time,
+      arrival_ship_date: arrival_ship_date,
+      arrival_ship_time: arrival_ship_time,
+      fob: fob,
+      notes: notes
+    }).then((result) => {
+      console.log(result.data);
+    }).catch(err => {
+      console.log(err);
+    })
+  }
+
   return (
     <div className="product-page"> 
       <nav className="navbar navbar-expand-lg navbar-dark bg-maroon">
@@ -67,15 +131,15 @@ const Shipping = () => {
             <div className ="form-row">
               <label htmlFor="companyName" className="col-sm-2 col-form-label">Company Name</label>
               <div className ="input-group input-group-sm mb-3 col-sm-10">
-                <input type="text" className="form-control" 
-                  name="company_Name" placeholder="If 'None', please enter N/A."required></input>
+                <input onChange={(e) => setCompany_name(e.target.value)} className="form-control" 
+                  id="company_name" placeholder="If 'None', please enter N/A."required></input>
               </div>
             </div>
 
             <div className ="form-row">
               <label htmlFor="con-name" className="col-sm-2 col-form-label">Contact Name</label>
               <div className ="input-group input-group-sm mb-3 col-sm-10">
-                <input type="text" className="form-control"
+                <input onChange={(e) => setContact_name(e.target.value)}className="form-control"
                   name="contact_name" required/>
               </div>
             </div>
@@ -83,7 +147,7 @@ const Shipping = () => {
             <div className ="form-row">
               <label htmlFor="add1" className="col-sm-2 col-form-label">Address 1</label>
               <div className ="input-group input-group-sm mb-3 col-sm-10">
-                <input type="text" className="form-control"
+                <input onChange={(e) => setAdd1(e.target.value)} className="form-control"
                   name="add1" required/>
               </div>
             </div>
@@ -91,8 +155,8 @@ const Shipping = () => {
             <div className ="form-row">
               <label htmlFor="add2" className="col-sm-2 col-form-label">Address 2</label>
               <div className ="input-group input-group-sm mb-3 col-sm-10">
-                <input type="text" className="form-control"
-                  name="add2" placeholder="If 'None, Please enter N/A." required/>
+                <input onChange={(e) => setAdd2(e.target.value)} className="form-control"
+                  name="add2" placeholder="If 'None', Please enter N/A." required/>
               </div>
             </div>
 
@@ -100,12 +164,12 @@ const Shipping = () => {
               <label htmlFor="csz" className="col-sm-2 col-form-label">City | State | Zip</label>
               
               <div className ="input-group input-group-sm mb-3 col-sm-6">
-                <input type="text" className="form-control"
+                <input onChange={(e) => setCity(e.target.value)} className="form-control"
                   name="city" required/>
               </div>
               
               <div className="input-group inout-group-sm mb-3 col-sm-2">
-                <select className="form-control" name="country_state" required>
+                <select onChange={(e) => setState(e.target.value)} className="form-control" name="country_state" required>
                   <option value="" selected="selected">Select a State</option>
                   <option value="AL">Alabama</option>
                   <option value="AK">Alaska</option>
@@ -162,7 +226,7 @@ const Shipping = () => {
               </div>
 
               <div className ="input-group input-group-sm mb-3 col-sm-2">
-                <input type="text" className="form-control"
+                <input onChange={(e) => setZip(e.target.value)} className="form-control"
                   name="zip" required/>
               </div>
             </div>
@@ -170,15 +234,15 @@ const Shipping = () => {
             <div className ="form-row">
               <label htmlFor="province" className="col-sm-2 col-form-label">Province</label>
               <div className ="input-group input-group-sm mb-3 col-sm-10">
-                <input type="text" className="form-control"
-                  name="province" placeholder="If 'None, Please enter N/A." required/>
+                <input onChange={(e) => setProvince(e.target.value)} className="form-control"
+                  name="province" placeholder="If 'None', Please enter N/A." required/>
               </div>
             </div>
 
             <div className ="form-row">
               <label htmlFor="country" className="col-sm-2 col-form-label">Country</label>
               <div className ="input-group input-group-sm mb-3 col-sm-10">
-                <input type="text" className="form-control"
+                <input onChange={(e) => setCountry(e.target.value)} className="form-control"
                   name="country" required/>
               </div>
             </div>
@@ -186,7 +250,7 @@ const Shipping = () => {
             <div className ="form-row">
               <label htmlFor="phone" className="col-sm-2 col-form-label">Phone</label>
               <div className ="input-group input-group-sm mb-3 col-sm-10">
-                <input type="text" className="form-control"
+                <input phone className="form-control"
                 name="phone" required/>
               </div>
             </div>
@@ -194,15 +258,15 @@ const Shipping = () => {
             <div className ="form-row">
               <label htmlFor="fax" className="col-sm-2 col-form-label">Fax</label>
               <div className ="input-group input-group-sm mb-3 col-sm-10">
-                <input type="text" className="form-control"
-                  name="fax" placeholder="If 'None, Please enter N/A." required/>
+                <input onChange={(e) => setFax(e.target.value)} className="form-control"
+                  name="fax" placeholder="If 'None', Please enter N/A." required/>
               </div>
             </div>
 
             <div className ="form-row">
               <label htmlFor="email" className="col-sm-2 col-form-label">Email</label>
               <div className ="input-group input-group-sm mb-3 col-sm-10">
-                <input type="text" className="form-control"
+                <input onChange={(e) => setEmail(e.target.value)} className="form-control"
                   name="email" required/>
               </div>
             </div>
@@ -217,9 +281,24 @@ const Shipping = () => {
             <div className ="form-row">
               <label htmlFor="fedex" className="col-sm-2 col-form-label">Fed Ex</label>
               <div className="input-group input-group-sm mb-3 col-sm-3">
-                <select className="form-control" name="fedex" id="fedex" required>
+                <select onChange={(e) => setFedex(e.target.value)} className="form-control" name="fedex" id="fedex" required>
                   <option value="option" selected="selected">Select Option</option>
                   <option value="none">None</option>
+                  <option value="air-freight">Air Freight</option>
+                  <option value="custom-critical-freight">Cusom Critical Freight</option>
+                  <option value="express-2day">Express 2 Day</option>
+                  <option value="express-2dayam">Express 2 day AM</option>
+                  <option value="express-saver">Express Saver</option>
+                  <option value="first-overnight">First Overnight</option>
+                  <option value="ground">Ground</option>
+                  <option value="home">Home</option>
+                  <option value="international-first">International First</option>
+                  <option value="international-economy">International Economy</option>
+                  <option value="international-priority">International Priority</option>
+                  <option value="priority-overnight">Priority Overnight</option>
+                  <option value="standard-overnight">Standard Overnight</option>
+                  <option value="truck-freight-economy">Truck Freight Economy</option>
+                  <option value="truck-freight-priority">Truck Freight Economy</option>
                 </select>
               </div>
             </div>
@@ -227,9 +306,20 @@ const Shipping = () => {
             <div className ="form-row">
               <label htmlFor="ups" className="col-sm-2 col-form-label">UPS</label>
               <div className="input-group input-group-sm mb-3 col-sm-3">
-                <select className="form-control" name="ups" id="ups"required>
+                <select onChange={(e) => setUps(e.target.value)} className="form-control" name="ups" id="ups"required>
                   <option value="option" selected="selected">Select Option</option>
                   <option value="none">None</option>
+                  <option value="2day-air">2 Day Air</option>
+                  <option value="2day-airam">2 Day Air AM</option>
+                  <option value="3day-select">3 Day Select</option>
+                  <option value="ground">Ground</option>
+                  <option value="nextday-air">Next Day Air</option>
+                  <option value="nextday-air-early">Next Day Air Early</option>
+                  <option value="nextday-air-saver">Next Day Air Saver</option>
+                  <option value="overnight-priority">Overnight Priority</option>
+                  <option value="worldwide-expedited"> Worldwide Expedited</option>
+                  <option value="worldwide-saver">Worldwide Saver</option>
+                  <option value="worldwide-Express-plus">Worldwide Express Plus</option>
                 </select>
               </div>
             </div>
@@ -237,9 +327,11 @@ const Shipping = () => {
             <div className ="form-row">
               <label htmlFor="c-w" className="col-sm-2 col-form-label">Courier/Will Call</label>
               <div className="input-group input-group-sm mb-3 col-sm-3">
-                <select className="form-control" name="courier_willcall" id="c-w"required>
+                <select onChange={(e) => setCourier_willcall(e.target.value)} className="form-control" name="courier_willcall" id="c-w"required>
                   <option value="option" selected="selected">Select Option</option>
                   <option value="none">None</option>
+                  <option value="courier">Courier</option>
+                  <option value="willcall">Will Call</option>
                 </select>
               </div>
             </div>
@@ -247,9 +339,10 @@ const Shipping = () => {
             <div className ="form-row">
               <label htmlFor="abs" className="col-sm-2 col-form-label">ABS Van</label>
               <div className="input-group input-group-sm mb-3 col-sm-3">
-                <select className="form-control" name="abs" id="abs"required>
+                <select onChange={(e) => setAbs(e.target.value)} className="form-control" name="abs" id="abs"required>
                   <option value="option" selected="selected">Select Option</option>
                   <option value="none">None</option>
+                  <option value="abs-van">ABS Van</option>
                 </select>
               </div>
             </div>
@@ -257,15 +350,15 @@ const Shipping = () => {
             <div className ="form-row">
               <label htmlFor="other-ship" className="col-sm-2 col-form-label">Other Ship Method</label>
               <div className ="input-group input-group-sm mb-3 col-sm-10">
-                <input type="text" className="form-control"
-                  name="other_ship_method" placeholder="If 'None, Please enter N/A." required/>
+                <input onChange={(e) => setOther_ship_method(e.target.value)} className="form-control"
+                  name="other_ship_method" placeholder="If 'None', Please enter N/A." required/>
               </div>
             </div>
 
             <div className ="form-row">
               <label htmlFor="pay-type" className="col-sm-2 col-form-label">Payment Type</label>
               <div className="input-group input-group-sm mb-3 col-sm-3">
-                <select className="form-control" name="payment_type" id="pay-type" placeholder="If 'None, Please enter N/A." required>
+                <select onChange={(e) => setPayment_type(e.target.value)} className="form-control" name="payment_type" id="pay-type" placeholder="If 'None, Please enter N/A." required>
                   <option value="option" selected="selected">Select Option</option>
                   <option value="credit">Credit</option>
                   <option value="debit">Debit</option>
@@ -276,7 +369,7 @@ const Shipping = () => {
             <div className ="form-row">
               <label htmlFor="acc-num" className="col-sm-2 col-form-label">Account Number</label>
               <div className ="input-group input-group-sm mb-3 col-sm-10" required>
-                <input type="text" className="form-control"
+                <input onChange={(e) => setAccount_number(e.target.value)} className="form-control"
                   name="account_number" />
               </div>
             </div>
@@ -284,12 +377,12 @@ const Shipping = () => {
             <div className ="form-row">
               <label htmlFor="ship-date" className="col-sm-2 col-form-label">Requested Ship Date/Time</label>
               <div className ="input-group input-group-sm mb-3 col-sm-2">
-                <input type="text" className="form-control"
+                <input onChange={(e) => setRequested_ship_date(e.target.value)} className="form-control"
                   name="request_ship_date" required/>
               </div>
 
               <div className="input-group input-group-sm mb-3 col-sm-2">
-                <select className="form-control" name="request_ship_time" id="ship-time" required>
+                <select onChange={(e) => setRequested_ship_time(e.target.value)} className="form-control" name="request_ship_time" id="ship-time" required>
                   <option value="option" selected="selected">Select Time</option>
                 </select>
               </div>
@@ -298,12 +391,12 @@ const Shipping = () => {
             <div className ="form-row">
               <label htmlFor="arr-date" className="col-sm-2 col-form-label">Requested Arrival Date/Time</label>
               <div className ="input-group input-group-sm mb-3 col-sm-2">
-                <input type="text" className="form-control"
+                <input onChange={(e) => setArrival_ship_date(e.target.value)} className="form-control"
                   name="arrival_ship_date" required/>
               </div>
 
               <div className="input-group input-group-sm mb-3 col-sm-2">
-                <select className="form-control" name="arrival_ship_time" id="arrival-time" required>
+                <select onChange={(e) => setArrival_ship_time(e.target.value)}className="form-control" name="arrival_ship_time" id="arrival-time" required>
                   <option value="option" selected="selected">Select Time</option>
                 </select>
               </div>
@@ -319,7 +412,7 @@ const Shipping = () => {
             <div className ="form-row">
               <label htmlFor="fob" className="col-sm-2 col-form-label">FOB</label>
               <div className="input-group input-group-sm mb-3 col-sm-3">
-                <select className="form-control" name="fob" id="fob" required>
+                <select onChange={(e) => setFob(e.target.value)}className="form-control" name="fob" id="fob" required>
                   <option value="option" selected="selected">Point of Shipment</option>
                   <option value="none">None</option>
                 </select>
@@ -329,7 +422,7 @@ const Shipping = () => {
             <div className="form-row">
               <label htmlFor="notes" className="col-sm-2 col-form-label">Notes</label>
               <div className="input-group input-group-sm mb-3 col-sm-10">
-                <textarea rows="4" cols="50" className="form-control" name="notes" id="custom-area" />
+                <textarea onChange={(e) => setNotes(e.target.value)} rows="4" cols="50" className="form-control" name="notes" id="custom-area" />
               </div>
             </div>
           </div>
