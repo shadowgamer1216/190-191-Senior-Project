@@ -8,33 +8,68 @@ import Axios from "axios";
 const Product = () => {
     const navigate = useNavigate();
 
-    const [old_abs_id, setOldID] = useState(0);
-    const [customer_id, setCustomerID] = useState('');
-    const [product_category, setCategory] = useState('');
-    const [oem_product_id, setOemID] = useState('');
-    const [product_title, setTitle] = useState('');
-    const [product_desc, setDesc] = useState('');
-    const [product_repl, setRepl] = useState('');
-    const [master_format, setMasterFormat] = useState('');
-    const [master_received, setMasterReceived] = useState('');
-    const [master_label, setMasterLabel] = useState('');
-    const [master_capacity, setMasterCapacity] = useState('');
-    const [master_loc, setMasterLoc] = useState('');
-    const [films_loc, setFilmsLoc] = useState('');
-    const [date_code_required, setDateRequired] = useState('');
-    const [date_code_position, setDatePosition] = useState('');
-    const [inner_hub, setInnerHub] = useState('');
-    const [inner_hub_position, setInnerPos] = useState('');
-    const [floodcoat, setFloodcoat] = useState('');
-    const [rimage_print, setRimPrint] = useState('');
-    const [color_notes, setColorNotes] = useState('');
-    const [packaging_notes, setPackNotes] = useState('');
-    const [product_notes, setProductNotes] = useState('');
-    const [product_status, setProductStatus] = useState('');
+    const [old_abs_id, setOldID] = useState(null);
+    const [customer_id, setCustomerID] = useState(null);
+    const [product_category, setCategory] = useState(null);
+    const [oem_product_id, setOemID] = useState(null);
+    const [product_title, setTitle] = useState(null);
+    const [product_desc, setDesc] = useState(null);
+    const [product_repl, setRepl] = useState(null);
+    const [master_format, setMasterFormat] = useState(null);
+    const [master_received, setMasterReceived] = useState(null);
+    const [master_label, setMasterLabel] = useState(null);
+    const [master_capacity, setMasterCapacity] = useState(null);
+    const [master_loc, setMasterLoc] = useState(null);
+    const [films_loc, setFilmsLoc] = useState(null);
+    const [date_code_required, setDateRequired] = useState(0);
+    const [date_code_position, setDatePosition] = useState(null);
+    const [inner_hub, setInnerHub] = useState(null);
+    const [inner_hub_position, setInnerPos] = useState(null);
+    const [floodcoat, setFloodcoat] = useState(0);
+    const [rimage_print, setRimPrint] = useState(0);
+    const [color_1, setColor1] = useState(null);
+    const [color_2, setColor2] = useState(null);
+    const [color_3, setColor3] = useState(null);
+    const [color_4, setColor4] = useState(null);
+    const [color_5, setColor5] = useState(null);
+    const [color_6, setColor6] = useState(null);
+    const [color_7, setColor7] = useState(null);
+    const [color_8, setColor8] = useState(null);
+    // const [colorList, setColorList] = useState([{ color: "" }]);     //work in-progress functions for dynamic list fields
+    // const handleColorChange = (e, index) => {
+    //     const { name, value } = e.target;
+    //     const list = [...colorList];
+    //     list[index][name] = value;
+    //     setColorList(list);
+    // };
+    // const handleColorRemove = (index) => {
+    //     const list = [...colorList];
+    //     list.splice(index, 1);
+    //     setColorList(list);
+    // };
+    // const handleColorAdd = () => {
+    //     setColorList([...colorList, { color: "" }]);
+    // };
+    const [color_notes, setColorNotes] = useState(null);
+    const [component_1, setComponent1] = useState(null);
+    const [component_2, setComponent2] = useState(null);
+    const [component_3, setComponent3] = useState(null);
+    const [component_4, setComponent4] = useState(null);
+    const [component_5, setComponent5] = useState(null);
+    const [component_6, setComponent6] = useState(null);
+    const [component_7, setComponent7] = useState(null);
+    const [component_8, setComponent8] = useState(null);
+    const [component_9, setComponent9] = useState(null);
+    const [component_10, setComponent10] = useState(null);
+    const [component_11, setComponent11] = useState(null);
+    const [component_12, setComponent12] = useState(null);
+    const [packaging_notes, setPackNotes] = useState(null);
+    const [product_notes, setProductNotes] = useState(null);
+    const [product_status, setProductStatus] = useState(null);
     
 
     const submit = () => {
-        Axios.post("http://localhost:3001/api/insert-product", 
+        Axios.post("http://localhost:3001/api/insertProduct", 
         {
             old_abs_id: old_abs_id,
             customer_id: customer_id,
@@ -49,125 +84,45 @@ const Product = () => {
             master_capacity: master_capacity,
             master_loc: master_loc,
             films_loc: films_loc,
-            //date_code_required: date_code_required,
+            date_code_required: date_code_required,
             date_code_position: date_code_position,
             inner_hub: inner_hub,
             inner_hub_position: inner_hub_position,
-            //floodcoat: floodcoat,
-            //rimage_print: rimage_print,
+            floodcoat: floodcoat,
+            rimage_print: rimage_print,
+            color_1: color_1,
+            color_2: color_2,
+            color_3: color_3,
+            color_4: color_4,
+            color_5: color_5,
+            color_6: color_6,
+            color_7: color_7,
+            color_8: color_8,
             color_notes: color_notes,
+            component_1: component_1,
+            component_2: component_2,
+            component_3: component_3,
+            component_4: component_4,
+            component_5: component_5,
+            component_6: component_6,
+            component_7: component_7,
+            component_8: component_8,
+            component_9: component_9,
+            component_10: component_10,
+            component_11: component_11,
+            component_12: component_12,
             packaging_notes: packaging_notes,
             product_notes: product_notes,
             product_status: product_status
             
-        })
-        .then(()=> {
-            alert('inserted product');
+        }).then((result) => {
+            console.log(result.data);
+        }).catch(err => {
+            console.log(err);
         });
+        
     };
 
-    function AddColor() {
-        const [inputFields, setInputFields] = useState([{ color: "" }])
-        const addField = () => {
-            let newField = { color: "" }
-            setInputFields([...inputFields, newField])
-        }
-        const removeField = (index) => {
-            let data = [...inputFields];
-            data.splice(index, 1);
-            setInputFields(data);
-        }
-    
-        return (
-            <div className="product-colors">
-                <div className="form-row">
-                    <div className="input-group input-group-sm mb-3 col-sm">
-                        {inputFields.length < 8 ? <button type="button" id="color_add" className="btn btn-outline-primary btn-sm" onClick={addField}>Add Color</button>:
-                        <button disabled type="button" className="btn btn-secondary btn-sm">Add Color</button>}
-                    </div>
-                </div>
-    
-                {inputFields.map((input, index) => {
-                    return (
-                        <>
-                            <div className="form-row">
-                                <label className="col-sm-2 col-form-label">Color #{index + 1}</label>
-                                <div className="input-group input-group-sm mb-3 col-sm-9">
-                                    <input
-                                        key={index}
-                                        className="form-control field"
-                                        type="text"
-                                        id={`color_${index + 1}`}
-                                    />
-                                </div>
-                                <div className="input-group input-group-sm mb-3 col-sm-1">
-                                    <button
-                                        type="button"
-                                        id="color_remove"
-                                        className="btn btn-outline-danger btn-sm"
-                                        onClick={removeField}
-                                    >X</button>
-                                </div>
-                            </div>
-                        </>
-                    );
-                })}
-                
-            </div>
-        );
-    }
-    function AddComponent() {
-        const [inputFields, setInputFields] = useState([
-            { component: "" }
-        ])
-        const addField = () => {
-            let newField = { component: "" }
-            setInputFields([...inputFields, newField])
-        }
-        const removeField = (index) => {
-            let data = [...inputFields];
-            data.splice(index, 1)
-            setInputFields(data)
-        }
-    
-        return (
-            <div className="product-components">
-                <div className="form-row">
-                    <div className="input-group input-group-sm mb-3 col-sm-10">
-                        {inputFields.length < 12 ? <button type="button" id="component-add" className="btn btn-outline-primary btn-sm" onClick={addField}>Add Component</button>:
-                        <button disabled type="button" className="btn btn-secondary btn-sm">Add Component</button>}
-                    </div>
-                </div>
-                {inputFields.map((input, index) => {
-                    return (
-                        <>
-                            <div className="form-row">
-                                <label className="col-sm-2 col-form-label">Component #{index + 1}</label>
-                                <div className="input-group input-group-sm mb-3 col-sm-9">
-                                    <input
-                                        key={index}
-                                        className="form-control field"
-                                        type="text"
-                                        id={`color_${index + 1}`}
-                                    />
-                                </div>
-                                <div className="input-group input-group-sm mb-3 col-sm-1">
-                                    <button
-                                        type="button"
-                                        id="component-remove"
-                                        className="btn btn-outline-danger btn-sm"
-                                        onClick={removeField}
-                                    >X</button>
-                                </div>
-                            </div>
-                        </>
-                    );
-                })}
-            </div>
-        );
-    }
-
-    
     
     return (
         <div className="page">
@@ -201,29 +156,29 @@ const Product = () => {
 
                         <div className="form-row">
                             <label htmlFor="product_id" className="col-sm-2 col-form-label">ABS Product P/N</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
+                            <div className="input-group input-group-sm mb-3 col-sm-9">
                                 <input readOnly type="text" className="form-control" id="product_id"/>
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="old_abs_id" className="col-sm-2 col-form-label">Old ABS P/N</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
+                            <div className="input-group input-group-sm mb-3 col-sm-9">
                                 <input onChange={(e) => {setOldID(e.target.value)}} type="text" className="form-control" id="old_abs_id" />
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="customer" className="col-sm-2 col-form-label">Customer</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
+                            <div className="input-group input-group-sm mb-3 col-sm-9">
                                 <input type="text" readOnly className="form-control" id="customer" />
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="customer_id" className="col-sm-2 col-form-label">Customer ID</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input onChange={(e) => setCustomerID(e.target.value)} type="text" className="form-control" id="customer_id" placeholder="ABSO" />
+                            <div className="input-group input-group-sm mb-3 col-sm-9">
+                                <input onChange={(e) => setCustomerID(e.target.value)} minlength="4" maxlength="4" required type="text" className="form-control" id="customer_id" placeholder="ABSO" />
                             </div>
                         </div>
 
@@ -232,30 +187,40 @@ const Product = () => {
                             <div className="input-group input-group-sm mb-3 col-sm-3">
                                 <select onChange={(e) => setCategory(e.target.value)} className="form-control" id="product_category">
                                     <option defaultValue="0">Select Category</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
+                                    <option value="cdr">CD-R</option>
+                                    <option value="mdr">MD-R</option>
+                                    <option value="bcr">BC-R</option>
+                                    <option value="cdrom">CD-ROM</option>
+                                    <option value="mdrom">MD-ROM</option>
+                                    <option value="dvd">DVD</option>
+                                    <option value="dvdr">DVD-R</option>
+                                    <option value="dvd5">DVD-5</option>
+                                    <option value="dvd9">DVD-9</option>
+                                    <option value="diskette">Diskette</option>
+                                    <option value="tape">Tape</option>
+                                    <option value="other">Other</option>
+
                                 </select>
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="oem_product_id" className="col-sm-2 col-form-label">OEM Product P/N</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
+                            <div className="input-group input-group-sm mb-3 col-sm-9">
                                 <input onChange={(e) => setOemID(e.target.value)} type="text" className="form-control" id="oem_product_id" />
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="product_title" className="col-sm-2 col-form-label">Title</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
+                            <div className="input-group input-group-sm mb-3 col-sm-9">
                                 <input onChange={(e) => setTitle(e.target.value)} type="text" className="form-control" id="product_title" />
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="product_desc" className="col-sm-2 col-form-label">Description</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
+                            <div className="input-group input-group-sm mb-3 col-sm-9">
                                 <textarea onChange={(e) => setDesc(e.target.value)} rows="4" cols="50" className="form-control" id="product_desc" />
                             </div>
                         </div>
@@ -293,14 +258,14 @@ const Product = () => {
 
                         <div className="form-row">
                             <label htmlFor="master_label" className="col-sm-2 col-form-label">Master Label</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
+                            <div className="input-group input-group-sm mb-3 col-sm-9">
                                 <input onChange={(e) => setMasterLabel(e.target.value)} type="text" className="form-control" id="master_label" />
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="master_capacity" className="col-sm-2 col-form-label">Master Capacity</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
+                            <div className="input-group input-group-sm mb-3 col-sm-9">
                                 <input onChange={(e) => setMasterCapacity(e.target.value)} type="text" className="form-control" id="master_capacity" />
                             </div>
                         </div>
@@ -332,7 +297,7 @@ const Product = () => {
                         <div className="form-row">
                             <div className="input-group input-group-sm col-sm-3 pl-5">
                                 <div className="form-group custom-control custom-checkbox">
-                                    <input onChange={(e) => setDateRequired(e.target.value)} type="checkbox" className="custom-control-input" id="date_code_required" />
+                                    <input onChange={(prev) => setDateRequired(prev => !prev)} checked={date_code_required} type="checkbox" className="custom-control-input" id="date_code_required" />
                                     <label htmlFor="date_code_required" className="custom-control-label">Date Code Required?</label>
                                 </div>
                             </div>
@@ -340,21 +305,21 @@ const Product = () => {
 
                         <div className="form-row">
                             <label htmlFor="date_code_position" className="col-sm-2 col-form-label">Date Code Position</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
+                            <div className="input-group input-group-sm mb-3 col-sm-9">
                                 <input onChange={(e) => setDatePosition(e.target.value)} type="text" className="form-control" id="date_code_position" />
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="inner_hub" className="col-sm-2 col-form-label">Inner Hub</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
+                            <div className="input-group input-group-sm mb-3 col-sm-9">
                                 <input onChange={(e) => setInnerHub(e.target.value)} type="text" className="form-control" id="inner_hub" />
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="inner_hub_position" className="col-sm-2 col-form-label">Inner Hub Position</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
+                            <div className="input-group input-group-sm mb-3 col-sm-9">
                                 <input onChange={(e) => setInnerPos(e.target.value)} type="text" className="form-control" id="inner_hub_position" />
                             </div>
                         </div>
@@ -368,24 +333,112 @@ const Product = () => {
                         <div className="form-row">
                             <div className="input-group input-group-sm col-sm-3 pl-5">
                                 <div className="form-group custom-control custom-checkbox">
-                                    <input onChange={(e) => setFloodcoat(e.target.value)} type="checkbox" className="custom-control-input" id="floodcoat" />
+                                    <input onChange={(prev) => setFloodcoat(prev => !prev)} checked={floodcoat} type="checkbox" className="custom-control-input" id="floodcoat" />
                                     <label htmlFor="floodcoat" className="custom-control-label">Floodcoat?</label>
                                 </div>
                             </div>
 
                             <div className="input-group input-group-sm col-sm-3 pl-5">
                                 <div className="form-group custom-control custom-checkbox">
-                                    <input onChange={(e) => setRimPrint(e.target.value)} type="checkbox" className="custom-control-input" id="rimage_print" />
+                                    <input onChange={(prev) => setRimPrint(prev => !prev)} checked={rimage_print} type="checkbox" className="custom-control-input" id="rimage_print" />
                                     <label htmlFor="rimage_print" className="custom-control-label">Rimage Print?</label>
                                 </div>
                             </div>
                         </div>
 
-                        <AddColor></AddColor>
+                        <div className="product-colors">
+                            <div className="form-row">
+                                <div className="input-group input-group-sm mb-3 col-sm">
+                                    {/*{.length < 8 ? <button type="button" id="color_add" className="btn btn-outline-primary btn-sm" onClick={addField}>Add Color</button>:
+                                    <button disabled type="button" className="btn btn-secondary btn-sm">Add Color</button>}**/}
+                                </div>
+                            </div>
+        
+                            <div className="form-row">
+                                <label className="col-sm-2 col-form-label">Color #1</label>
+                                <div className="input-group input-group-sm mb-3 col-sm-8">
+                                    <input onChange={(e) => setColor1(e.target.value)} className="form-control field" type="text" id="color_1"/>
+                                </div>
+                                <div className="input-group input-group-sm mb-3 col-sm-2">
+                                    <button type="button" id="color_remove" className="btn btn-outline-danger btn-sm">Remove</button>
+                                </div>
+                            </div>
+
+                            <div className="form-row">
+                                <label className="col-sm-2 col-form-label">Color #2</label>
+                                <div className="input-group input-group-sm mb-3 col-sm-8">
+                                    <input onChange={(e) => setColor2(e.target.value)} className="form-control field" type="text" id="color_2"/>
+                                </div>
+                                <div className="input-group input-group-sm mb-3 col-sm-2">
+                                    <button type="button" id="color_remove" className="btn btn-outline-danger btn-sm">Remove</button>
+                                </div>
+                            </div>
+
+                            <div className="form-row">
+                                <label className="col-sm-2 col-form-label">Color #3</label>
+                                <div className="input-group input-group-sm mb-3 col-sm-8">
+                                    <input onChange={(e) => setColor3(e.target.value)} className="form-control field" type="text" id="color_3"/>
+                                </div>
+                                <div className="input-group input-group-sm mb-3 col-sm-2">
+                                    <button type="button" id="color_remove" className="btn btn-outline-danger btn-sm">Remove</button>
+                                </div>
+                            </div>
+
+                            <div className="form-row">
+                                <label className="col-sm-2 col-form-label">Color #4</label>
+                                <div className="input-group input-group-sm mb-3 col-sm-8">
+                                    <input onChange={(e) => setColor4(e.target.value)} className="form-control field" type="text" id="color_4"/>
+                                </div>
+                                <div className="input-group input-group-sm mb-3 col-sm-2">
+                                    <button type="button" id="color_remove" className="btn btn-outline-danger btn-sm">Remove</button>
+                                </div>
+                            </div>
+
+                            <div className="form-row">
+                                <label className="col-sm-2 col-form-label">Color #5</label>
+                                <div className="input-group input-group-sm mb-3 col-sm-8">
+                                    <input onChange={(e) => setColor5(e.target.value)} className="form-control field" type="text" id="color_5"/>
+                                </div>
+                                <div className="input-group input-group-sm mb-3 col-sm-2">
+                                    <button type="button" id="color_remove" className="btn btn-outline-danger btn-sm">Remove</button>
+                                </div>
+                            </div>
+
+                            <div className="form-row">
+                                <label className="col-sm-2 col-form-label">Color #6</label>
+                                <div className="input-group input-group-sm mb-3 col-sm-8">
+                                    <input onChange={(e) => setColor6(e.target.value)} className="form-control field" type="text" id="color_6"/>
+                                </div>
+                                <div className="input-group input-group-sm mb-3 col-sm-2">
+                                    <button type="button" id="color_remove" className="btn btn-outline-danger btn-sm">Remove</button>
+                                </div>
+                            </div>
+
+                            <div className="form-row">
+                                <label className="col-sm-2 col-form-label">Color #7</label>
+                                <div className="input-group input-group-sm mb-3 col-sm-8">
+                                    <input onChange={(e) => setColor7(e.target.value)} className="form-control field" type="text" id="color_7"/>
+                                </div>
+                                <div className="input-group input-group-sm mb-3 col-sm-2">
+                                    <button type="button" id="color_remove" className="btn btn-outline-danger btn-sm">Remove</button>
+                                </div>
+                            </div>
+
+                            <div className="form-row">
+                                <label className="col-sm-2 col-form-label">Color #8</label>
+                                <div className="input-group input-group-sm mb-3 col-sm-8">
+                                    <input onChange={(e) => setColor8(e.target.value)} className="form-control field" type="text" id="color_8"/>
+                                </div>
+                                <div className="input-group input-group-sm mb-3 col-sm-2">
+                                    <button type="button" id="color_remove" className="btn btn-outline-danger btn-sm">Remove</button>
+                                </div>
+                            </div>
+
+                        </div>
 
                         <div className="form-row">
                             <label htmlFor="color_notes" className="col-sm-2 col-form-label">Color Notes</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
+                            <div className="input-group input-group-sm mb-3 col-sm-9">
                                 <textarea onChange={(e) => setColorNotes(e.target.value)} rows="4" cols="50" className="form-control" id="color_notes" />
                             </div>
                         </div>
@@ -395,19 +448,144 @@ const Product = () => {
                         <div className="section-headers">
                             <h5>Components Info</h5>
                         </div>
+                        
+                        <div className="form-row">
+                            <div className="input-group input-group-sm mb-3 col-sm-9">
+                                {/*inputFields.length < 12 ? <button type="button" id="component-add" className="btn btn-outline-primary btn-sm" onClick={addField}>Add Component</button>:
+                                <button disabled type="button" className="btn btn-secondary btn-sm">Add Component</button>*/}
+                            </div>
+                        </div>
+                        
+                        <div className="form-row">
+                            <label className="col-sm-2 col-form-label">Component #1</label>
+                            <div className="input-group input-group-sm mb-3 col-sm-8">
+                                <input onChange={(e) => setComponent1(e.target.value)} className="form-control field" type="text" id="component_1"/>
+                            </div>
+                            <div className="input-group input-group-sm mb-3 col-sm-2">
+                                <button type="button" id="component-remove" className="btn btn-outline-danger btn-sm">Remove</button>
+                            </div>
+                        </div>
+                        
+                        <div className="form-row">
+                            <label className="col-sm-2 col-form-label">Component #2</label>
+                            <div className="input-group input-group-sm mb-3 col-sm-8">
+                                <input onChange={(e) => setComponent2(e.target.value)} className="form-control field" type="text" id="component_2"/>
+                            </div>
+                            <div className="input-group input-group-sm mb-3 col-sm-2">
+                                <button type="button" id="component-remove" className="btn btn-outline-danger btn-sm">Remove</button>
+                            </div>
+                        </div>
 
-                        <AddComponent></AddComponent>
+                        <div className="form-row">
+                            <label className="col-sm-2 col-form-label">Component #3</label>
+                            <div className="input-group input-group-sm mb-3 col-sm-8">
+                                <input onChange={(e) => setComponent3(e.target.value)} className="form-control field" type="text" id="component_3"/>
+                            </div>
+                            <div className="input-group input-group-sm mb-3 col-sm-2">
+                                <button type="button" id="component-remove" className="btn btn-outline-danger btn-sm">Remove</button>
+                            </div>
+                        </div>
+
+                        <div className="form-row">
+                            <label className="col-sm-2 col-form-label">Component #4</label>
+                            <div className="input-group input-group-sm mb-3 col-sm-8">
+                                <input onChange={(e) => setComponent4(e.target.value)} className="form-control field" type="text" id="component_4"/>
+                            </div>
+                            <div className="input-group input-group-sm mb-3 col-sm-2">
+                                <button type="button" id="component-remove" className="btn btn-outline-danger btn-sm">Remove</button>
+                            </div>
+                        </div>
+
+                        <div className="form-row">
+                            <label className="col-sm-2 col-form-label">Component #5</label>
+                            <div className="input-group input-group-sm mb-3 col-sm-8">
+                                <input onChange={(e) => setComponent5(e.target.value)} className="form-control field" type="text" id="component_5"/>
+                            </div>
+                            <div className="input-group input-group-sm mb-3 col-sm-2">
+                                <button type="button" id="component-remove" className="btn btn-outline-danger btn-sm">Remove</button>
+                            </div>
+                        </div>
+
+                        <div className="form-row">
+                            <label className="col-sm-2 col-form-label">Component #6</label>
+                            <div className="input-group input-group-sm mb-3 col-sm-8">
+                                <input onChange={(e) => setComponent6(e.target.value)} className="form-control field" type="text" id="component_6"/>
+                            </div>
+                            <div className="input-group input-group-sm mb-3 col-sm-2">
+                                <button type="button" id="component-remove" className="btn btn-outline-danger btn-sm">Remove</button>
+                            </div>
+                        </div>
+
+                        <div className="form-row">
+                            <label className="col-sm-2 col-form-label">Component #7</label>
+                            <div className="input-group input-group-sm mb-3 col-sm-8">
+                                <input onChange={(e) => setComponent7(e.target.value)} className="form-control field" type="text" id="component_7"/>
+                            </div>
+                            <div className="input-group input-group-sm mb-3 col-sm-2">
+                                <button type="button" id="component-remove" className="btn btn-outline-danger btn-sm">Remove</button>
+                            </div>
+                        </div>
+
+                        <div className="form-row">
+                            <label className="col-sm-2 col-form-label">Component #8</label>
+                            <div className="input-group input-group-sm mb-3 col-sm-8">
+                                <input onChange={(e) => setComponent8(e.target.value)} className="form-control field" type="text" id="component_8"/>
+                            </div>
+                            <div className="input-group input-group-sm mb-3 col-sm-2">
+                                <button type="button" id="component-remove" className="btn btn-outline-danger btn-sm">Remove</button>
+                            </div>
+                        </div>
+
+                        <div className="form-row">
+                            <label className="col-sm-2 col-form-label">Component #9</label>
+                            <div className="input-group input-group-sm mb-3 col-sm-8">
+                                <input onChange={(e) => setComponent9(e.target.value)} className="form-control field" type="text" id="component_9"/>
+                            </div>
+                            <div className="input-group input-group-sm mb-3 col-sm-2">
+                                <button type="button" id="component-remove" className="btn btn-outline-danger btn-sm">Remove</button>
+                            </div>
+                        </div>
+
+                        <div className="form-row">
+                            <label className="col-sm-2 col-form-label">Component #10</label>
+                            <div className="input-group input-group-sm mb-3 col-sm-8">
+                                <input onChange={(e) => setComponent10(e.target.value)} className="form-control field" type="text" id="component_10"/>
+                            </div>
+                            <div className="input-group input-group-sm mb-3 col-sm-2">
+                                <button type="button" id="component-remove" className="btn btn-outline-danger btn-sm">Remove</button>
+                            </div>
+                        </div>
+
+                        <div className="form-row">
+                            <label className="col-sm-2 col-form-label">Component #11</label>
+                            <div className="input-group input-group-sm mb-3 col-sm-8">
+                                <input onChange={(e) => setComponent11(e.target.value)} className="form-control field" type="text" id="component_11"/>
+                            </div>
+                            <div className="input-group input-group-sm mb-3 col-sm-2">
+                                <button type="button" id="component-remove" className="btn btn-outline-danger btn-sm">Remove</button>
+                            </div>
+                        </div>
+
+                        <div className="form-row">
+                            <label className="col-sm-2 col-form-label">Component #12</label>
+                            <div className="input-group input-group-sm mb-3 col-sm-8">
+                                <input onChange={(e) => setComponent12(e.target.value)} className="form-control field" type="text" id="component_12"/>
+                            </div>
+                            <div className="input-group input-group-sm mb-3 col-sm-2">
+                                <button type="button" id="component-remove" className="btn btn-outline-danger btn-sm">Remove</button>
+                            </div>
+                        </div>
 
                         <div className="form-row">
                             <label htmlFor="packaging_notes" className="col-sm-2 col-form-label">Packaging Notes</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
+                            <div className="input-group input-group-sm mb-3 col-sm-9">
                                 <textarea onChange={(e) => setPackNotes(e.target.value)} rows="4" cols="50" className="form-control" id="packaging_notes" />
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="product_notes" className="col-sm-2 col-form-label">Product Notes</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
+                            <div className="input-group input-group-sm mb-3 col-sm-9">
                                 <textarea onChange={(e) => setProductNotes(e.target.value)} rows="4" cols="50" className="form-control" id="product_notes" />
                             </div>
                         </div>
@@ -417,7 +595,7 @@ const Product = () => {
                             <div className="input-group input-group-sm mb-3 col-sm-2">
                                 <select onChange={(e) => setProductStatus(e.target.value)} className="form-control" id="product_status">
                                     <option defaultValue="0">Select Status</option>
-                                    <option value="cur">Current</option>
+                                    <option value="current">Current</option>
                                     <option value="new">New</option>
                                 </select>
                             </div>
@@ -467,7 +645,5 @@ const Product = () => {
         </div>
     );
 };
-
-
 
 export default Product;

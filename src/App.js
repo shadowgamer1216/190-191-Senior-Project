@@ -21,6 +21,8 @@ import ItemCheckInPage from './itemCheckIn';
 import Shipping from './Shipping';
 import Login from './login';
 import useToken from './useToken';
+import Search from './search';
+import SearchCompany from './searchcompany';
 
 
 function App() {
@@ -44,6 +46,9 @@ function App() {
         <Route path = "/company" element = {<CompanyPage/>} />
         <Route path = "/itemCheckIn" element = {<ItemCheckInPage/>} />
         <Route path = "/shipping" element = {<Shipping/>} />
+        <Route path = "/search" element = {<Search/>} />
+        <Route path = "search/searchcompany" element = {<SearchCompany/>} />
+
      
       </Routes>
     
