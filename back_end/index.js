@@ -47,8 +47,7 @@ app.post("/api/insert", (req, res)=> {
     });
 });
 
-app.post("/insertOrder", (req, res) => {
-        /*------------------------------------------ Order Page ------------------------------------------*/
+app.post("/api/insertOrder", (req, res) => {
     //go to back_end directory in terminal and type 'node index.js'
     const salesPerson = req.body.salesPerson;
     const requestor = req.body.requestor;
@@ -62,7 +61,7 @@ app.post("/insertOrder", (req, res) => {
     const customQuantity = req.body.customQuantity;
     const customUnitPrice = req.body.customUnitPrice;
     const customTotalPrice = req.body.customTotalPrice;
-
+    
     // Billing Information
     const assemblyChargesQuantity = req.body.assemblyChargesQuantity;
     const assemblyChargesUnitPrice = req.body.assemblyChargesUnitPrice;
@@ -79,12 +78,12 @@ app.post("/insertOrder", (req, res) => {
     const tax = req.body.tax;
     const freightCharges = req.body.freightCharges;
     const priceTotal = req.body.priceTotal;
-
+    
     // Invoice Information
     const invoiceDate = req.body.invoiceDate;
     const invoiceDatePaid = req.body.invoiceDatePaid;
     const invoiceNotes = req.body.invoiceNotes;
-
+    
     // Job Information
     const ABSOrder = req.body.ABSOrder;
     const customerOrder = req.body.customerOrder;
@@ -103,24 +102,50 @@ app.post("/insertOrder", (req, res) => {
     const vendorNotes = req.body.vendorNotes;
     const orderNotes = req.body.orderNotes;
     const orderStatus = req.body.orderStatus;
-
+    
     db.query(
-        "INSERT INTO order_table (salesperson, requestor, customer_contact, \
-                                  factory_order_quantity, custom_quantity, custom_unit_price, custom_total_price, \
-                                  assembly_charges_quantity, assembly_charges_unit_price, assembly_charges_total_price, date_code_printing_charges_quantity, date_code_printing_charges_unit_price, date_code_printing_charges_total_price, date_code_setup_charge, number_of_screens, art_manipulation, sub_total, tax_rate, tax, freight_charges, order_price_total, \
+        "INSERT INTO order_table (salesperson, requestor, customer_contact, re_order, \
+                                  factory_order_quantity, custom_invoice, custom_packing_slip, custom_quantity, custom_unit_price, custom_total_price, \
+                                  assembly_charges_quantity, assembly_charges_unit_price, assembly_charges_total_price, date_code_printing_charges_quantity, date_code_printing_charges_unit_price, date_code_printing_charges_total_price, date_code_setup_charge, number_of_screens, art_manipulation, sub_total, taxable, tax_rate, tax, freight_charges, order_price_total, \
                                   invoice_date, invoice_date_paid, invoice_notes, \
-                                  abs_sales_order_date, customer_order_date, customer_po_date, customer_po_number, days_turn, date_code_printing, assembly_by, disc_manufactured_by, cd_dvd_brand, disc_provided_by, customer_provided_material, customer_material_eta, customer_notes, vendor_notes, order_notes, order_status) \
-                                  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
-        [salesPerson, requestor, customerContact,
-            factoryOrderQuantity, customQuantity, customUnitPrice, customTotalPrice,
-            assemblyChargesQuantity, assemblyChargesUnitPrice, assemblyChargesTotalPrice, printingChargesQuantity, printingChargesUnitPrice, printingChargesTotalPrice, setupCharge, numberOfScreens, screensPrice, subTotal, taxRate, tax, freightCharges, priceTotal,
+                                  abs_sales_order_date, customer_order_date, customer_po_date, customer_po_number, credit_checked, days_turn, date_code_printing, assembly_by, disc_manufactured_by, cd_dvd_brand, disc_provided_by, customer_provided_material, customer_material_eta, customer_notes, vendor_notes, order_notes, order_status) \
+                                  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+        [salesPerson, requestor, customerContact, reOrder,
+            factoryOrderQuantity, customInvoice, customPackingSlip, customQuantity, customUnitPrice, customTotalPrice,
+            assemblyChargesQuantity, assemblyChargesUnitPrice, assemblyChargesTotalPrice, printingChargesQuantity, printingChargesUnitPrice, printingChargesTotalPrice, setupCharge, numberOfScreens, screensPrice, subTotal, taxable, taxRate, tax, freightCharges, priceTotal,
             invoiceDate, invoiceDatePaid, invoiceNotes,
-            ABSOrder, customerOrder, customerPODate, customerPONumber, daysTurn, dateCodePrinting, assemblyBy, discManufacturedBy, CDBrand, discProvidedBy, customerProvidedMaterial, customerMaterialETA, customerNotes, vendorNotes, orderNotes, orderStatus]
+            ABSOrder, customerOrder, customerPODate, customerPONumber, creditChecked, daysTurn, dateCodePrinting, assemblyBy, discManufacturedBy, CDBrand, discProvidedBy, customerProvidedMaterial, customerMaterialETA, customerNotes, vendorNotes, orderNotes, orderStatus]
             , (err, result) => {
                 console.log(result);
         }
     );
-    /*------------------------------------------ Order Page ------------------------------------------*/
+});
+
+//Get information from the product table
+app.get("/api/getProductInfo", (req, res) => {
+    const productID = req.body.productID;
+   db.query("SELECT * FROM product_table", (err, result) => {
+       if (err) {
+           console.log(err);
+       }
+       else {
+           res.send(result);
+       }
+   });
+});
+
+//Get information from the contact table
+app.get("/api/getContactInfo", (req, res) => {
+     const customerID = req.body.customerID;
+    // const phone = req.body.phone;
+    db.query("SELECT * FROM contact_table WHERE customer_id = ?", [customerID], (err, result) => {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            res.send(result);
+        }
+    });
 });
 
 app.post("/api/insertProduct", (req, res) => {

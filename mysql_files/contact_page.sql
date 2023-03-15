@@ -127,31 +127,17 @@ CREATE TABLE product_table (
 
 DROP TABLE IF EXISTS order_table;
 create table order_table (
-	-- Billing Information (Contact's Information)
-    #company_name VARCHAR(128) DEFAULT NULL,
-    #contact VARCHAR(64) DEFAULT NULL,
-    #phone VARCHAR(15) DEFAULT NULL,
-    #address1 VARCHAR(64) DEFAULT NULL,
-    #address2 VARCHAR(64) DEFAULT NULL,
-    #city VARCHAR(64) DEFAULT NULL,
-    #state VARCHAR(4) DEFAULT NULL,
-    #zip VARCHAR(16) DEFAULT NULL,
-    -- Product Information
 	product_id INT NOT NULL AUTO_INCREMENT,
-    #product_category VARCHAR(64) DEFAULT NULL,
-    #OEM_product_id VARCHAR(64) DEFAULT NULL,
-    #product_title VARCHAR(256) DEFAULT NULL,
-    #number_of_colors CHAR(2) DEFAULT NULL,
+    contact_id INT DEFAULT NULL,
+    -- Product Information
     salesperson VARCHAR(64) DEFAULT NULL,
     requestor VARCHAR(64) DEFAULT NULL,
     customer_contact VARCHAR(64) DEFAULT NULL,
-    #re_order BOOL DEFAULT NULL,
+    re_order BOOL DEFAULT NULL,
     -- Custom Product
-    #product_title VARCHAR(256) DEFAULT NULL,
-    #product_id INT(25) DEFAULT NULL,
     factory_order_quantity INT DEFAULT NULL,
-    #custom_invoice BOOL DEFAULT NULL,
-    #custom_packing_slip BOOL DEFAULT NULL,
+    custom_invoice BOOL DEFAULT NULL,
+    custom_packing_slip BOOL DEFAULT NULL,
     custom_quantity INT DEFAULT NULL,
     custom_unit_price FLOAT DEFAULT NULL,
     custom_total_price FLOAT DEFAULT NULL,
@@ -180,7 +166,7 @@ create table order_table (
     number_of_screens INT DEFAULT NULL,
     art_manipulation FLOAT DEFAULT NULL,
     sub_total FLOAT DEFAULT NULL,
-    #taxable BOOL DEFAULT NULL,
+    taxable BOOL DEFAULT NULL,
     tax_rate FLOAT DEFAULT NULL,
     tax FLOAT DEFAULT NULL,
     freight_charges FLOAT DEFAULT NULL,
@@ -194,7 +180,7 @@ create table order_table (
     customer_order_date VARCHAR(64) DEFAULT NULL,
     customer_po_date VARCHAR(64) DEFAULT NULL,
     customer_po_number INT DEFAULT NULL,
-    #credit_checked BOOL DEFAULT NULL,
+    credit_checked BOOL DEFAULT NULL,
     days_turn INT DEFAULT NULL,
     date_code_printing VARCHAR(64) DEFAULT NULL,
     assembly_by VARCHAR(128) DEFAULT NULL,
@@ -208,6 +194,7 @@ create table order_table (
     order_notes TEXT DEFAULT NULL,
     order_status VARCHAR(128) DEFAULT NULL,
     PRIMARY KEY (product_id)
+    #PRIMARY KEY(contact_id)
 );
 
 DROP TABLE IF EXISTS shipping_table;
