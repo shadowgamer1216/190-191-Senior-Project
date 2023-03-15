@@ -200,7 +200,6 @@ create table order_table (
 
 DROP TABLE IF EXISTS shipping_table;
 create table shipping_table(
-	customer_id varchar(8) NOT NULL,
 	company_name varchar(20),
 	contact_name varchar(50), 
 	add1 varchar(50),
@@ -212,15 +211,11 @@ create table shipping_table(
 	country varchar(50),
 	phone INT(10),
 	fax INT(10) default NULL,
-  	email varchar(50),
-  	PRIMARY KEY (customer_id)
-);
-
-create table shipment_info_table(
+ 	email varchar(50),
 	fedex varchar(10) default NULL,
 	ups varchar(10) default NULL,
 	courier_willcall varchar(10) default NULL,
-  abs varchar(10) default NULL,
+  	abs varchar(10) default NULL,
 	other_ship_method varchar(10) default NULL,
 	payment_type varchar(10),
 	account_number varchar(50),
@@ -228,7 +223,6 @@ create table shipment_info_table(
 	request_ship_time DATETIME,
 	arrival_ship_date DATE,
 	arrival_ship_time DATETIME,
-  saturday_deliv INT(2),
 	fob varchar(50) default null,
 	notes TEXT
 );
