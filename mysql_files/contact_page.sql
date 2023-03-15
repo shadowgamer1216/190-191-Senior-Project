@@ -30,11 +30,11 @@ create table contact_table (
 
 DROP TABLE IF EXISTS location_table;
 create table location_table(
-	id int(11) NOT NULL auto_increment,
+	id INT NOT NULL auto_increment,
 	location_id VARCHAR(64) NOT NULL DEFAULT '', 
-	location_type VARCHAR(64) NOT NULL DEFAULT '',
-	item_id INT(11) DEFAULT NULL,
-	qty INT(11) DEFAULT '0',
+	location_type VARCHAR(64) DEFAULT NULL,
+	item_id INT DEFAULT NULL,
+	qty INT DEFAULT '0',
 	item_owner VARCHAR(64) DEFAULT NULL,
 	physical_location VARCHAR(64) DEFAULT NULL,
 	notes TEXT,
@@ -45,11 +45,11 @@ create table location_table(
 
 DROP TABLE IF EXISTS item_check_in_table;
 create table item_check_in_table(
-	id INT(11) NOT NULL auto_increment,
+	id INT NOT NULL auto_increment,
 	customer_id VARCHAR(4) DEFAULT NULL,
 	item_id VARCHAR(25) DEFAULT NULL, 
 	mfr_pn VARCHAR(25) DEFAULT NULL,
-	item_description VARCHAR(100) DEFAULT NULL,
+	description VARCHAR(100) DEFAULT NULL,
 	carrier VARCHAR(50) DEFAULT NULL,
 	quantity VARCHAR(25) DEFAULT NULL,
 	disposition VARCHAR(100) DEFAULT NULL,

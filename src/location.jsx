@@ -6,12 +6,12 @@ import Axios from "axios";
 const Location = () => {
     const navigate = useNavigate()
     const [location_id, setLocationID] = useState("");
-    const [location_type, setLocationType] = useState("");
-    const [item_id, setItemID] = useState("");
-    const [qty, setQty] = useState("");
-    const [item_owner, setItemOwner] = useState("");
-    const [physical_location, setPhysicalLocation] = useState("");
-    const [notes, setNotes] = useState("");
+    const [location_type, setLocationType] = useState(null);
+    const [item_id, setItemID] = useState(null);
+    const [qty, setQty] = useState(0);
+    const [item_owner, setItemOwner] = useState(null);
+    const [physical_location, setPhysicalLocation] = useState(null);
+    const [notes, setNotes] = useState(null);
     
     const submit = () => {
         Axios.post("http://localhost:3001/api/insertLocation", {location_id: location_id, location_type: location_type, item_id: item_id, qty: qty, item_owner: item_owner, physical_location: physical_location, notes: notes})
@@ -52,9 +52,10 @@ const Location = () => {
                         <div className="form-row">
                             <label htmlFor="location-id" className="col-sm-2 col-form-label">Location ID</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="location-id" onChange={(e) =>{
+                                <input type="number" className="form-control" id="location-id" onChange={(e) =>{
                                     setLocationID(e.target.value)
-                                }}/>
+                                }} required />
+                                
                             </div>
                         </div>
 
@@ -76,7 +77,7 @@ const Location = () => {
                         <div className="form-row">
                             <label htmlFor="item-id" className="col-sm-2 col-form-label">Item ID</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="item-id" onChange={(e) =>{
+                                <input type="number" className="form-control" id="item-id" onChange={(e) =>{
                                     setItemID(e.target.value)
                                 }}/>
                             </div>
@@ -85,7 +86,7 @@ const Location = () => {
                         <div className="form-row">
                             <label htmlFor="qty" className="col-sm-2 col-form-label">Qty</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="qty" onChange={(e) =>{
+                                <input type="number" className="form-control" id="qty" onChange={(e) =>{
                                     setQty(e.target.value)
                                 }}/>
                             </div>

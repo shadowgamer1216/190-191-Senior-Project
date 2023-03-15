@@ -5,16 +5,16 @@ import Axios from "axios";
 
 const ItemCheckIn = () => {
     const navigate = useNavigate();
-    const [customer_id, setCustomerID] = useState("");
-    const [item_id, setItemID] = useState("");
-    const [mfr_pn, setMfrPn] = useState("");
-    const [description, setDescription] = useState("");
-    const [carrier, setCarrier] = useState("");
-    const [quantity, setQuantity] = useState("");
-    const [disposition, setDisposition] = useState("");
-    const [signed_for_by, setSignedForBy] = useState("");
-    const [date_in, setDateIn] = useState("");
-    const [date_complete, setDateComplete] = useState("");
+    const [customer_id, setCustomerID] = useState(null);
+    const [item_id, setItemID] = useState(null);
+    const [mfr_pn, setMfrPn] = useState(null);
+    const [description, setDescription] = useState(null);
+    const [carrier, setCarrier] = useState(null);
+    const [quantity, setQuantity] = useState(null);
+    const [disposition, setDisposition] = useState(null);
+    const [signed_for_by, setSignedForBy] = useState(null);
+    const [date_in, setDateIn] = useState(null);
+    const [date_complete, setDateComplete] = useState(null);
 
     const submit = () => {
         Axios.post("http://localhost:3001/api/insertItem", {customer_id: customer_id, item_id: item_id, mfr_pn: mfr_pn, description: description, carrier: carrier, quantity: quantity, disposition: disposition, signed_for_by: signed_for_by, date_in: date_in, date_complete: date_complete})
@@ -58,7 +58,7 @@ const ItemCheckIn = () => {
                             <div className="input-group input-group-sm mb-3 col-sm-10">
                                 <input type="text" className="form-control" id="customer-id" onChange={(e) =>{
                                     setCustomerID(e.target.value)
-                                }}/>
+                                }} maxLength = "4" required/>
                             </div>
                         </div>
 
@@ -134,7 +134,7 @@ const ItemCheckIn = () => {
                         <div className="form-row">
                             <label htmlFor="date-in" className="col-sm-2 col-form-label">Date In</label>
                             <div className="input-group input-group-sm mb-3 col-sm-3">
-                                <input type="date" className="form-control" name="date-in" id="date-in" onChange={(e) =>{
+                                <input type="datetime-local" className="form-control" name="date-in" id="date-in" onChange={(e) =>{
                                     setDateIn(e.target.value)
                                 }}/>
                             </div>
@@ -143,7 +143,7 @@ const ItemCheckIn = () => {
                         <div className="form-row">
                             <label htmlFor="date-completed" className="col-sm-2 col-form-label">Date Completed</label>
                             <div className="input-group input-group-sm mb-3 col-sm-3">
-                                <input type="date" className="form-control" name="date-completed" id="date-completed" onChange={(e) =>{
+                                <input type="datetime-local" className="form-control" name="date-complete" id="date-complete" onChange={(e) =>{
                                     setDateComplete(e.target.value)
                                 }}/>
                             </div>

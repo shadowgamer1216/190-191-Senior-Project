@@ -183,8 +183,8 @@ app.post("/api/insertLocation" , (req, res) =>{
     const physical_location = req.body.physical_location;
     const notes = req.body.notes;
 
-    const sqlInsert = "INSERT INTO location_table (location_id, location_type, item_id, qty, item_owner, physical_location, notes) VALUES (?,?,?,?,?,?,?)";
-    db.query(sqlInsert, [location_id, location_type, item_id, qty, item_owner, physical_location, notes], (err, result) => {
+    const sqlInsert = "INSERT INTO location_table (location_id, item_id, physical_location, location_type, item_owner, notes, qty) VALUES (?,?,?,?,?,?,?)";
+    db.query(sqlInsert, [location_id, item_id, physical_location, location_type, item_owner, notes, qty], (err, result) => {
         console.log(result);
     });
 });
@@ -201,8 +201,8 @@ app.post("/api/insertItem" , (req, res) =>{
     const date_in = req.body.date_in;
     const date_complete = req.body.date_complete;
 
-    const sqlInsert = "INSERT INTO item_check_in_table (customer_id, item_id, mfr_pn, description, carrier, quantity, disposition, signed_for_by, date_in, date_complete) VALUES (?,?,?,?,?,?,?,?,?,?)";
-    db.query(sqlInsert, [customer_id, item_id, mfr_pn, description, carrier, quantity, disposition, signed_for_by, date_in, date_complete], (err, result) => {
+    const sqlInsert = "INSERT INTO item_check_in_table (customer_id, item_id, mfr_pn, description, quantity, carrier, signed_for_by, disposition, date_in, date_complete) VALUES (?,?,?,?,?,?,?,?,?,?)";
+    db.query(sqlInsert, [customer_id, item_id, mfr_pn, description, quantity, carrier, signed_for_by, disposition, date_in, date_complete], (err, result) => {
         console.log(result);
     });
 });
