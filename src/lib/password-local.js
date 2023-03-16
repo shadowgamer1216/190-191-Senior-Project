@@ -7,7 +7,7 @@ export const localStrategy = new Local.Strategy(function (
   done
 ) {
  
-
+if (username != undefined){
   const user = findUser({ username })
     .then((user) => {
 
@@ -24,4 +24,5 @@ export const localStrategy = new Local.Strategy(function (
 
       done(error)
     })
+  }
 })

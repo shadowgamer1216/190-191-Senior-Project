@@ -18,7 +18,7 @@ var db = {};
 const sequelize = new Sequelize(
     'absolutemedia',
     'root',
-    'password1!',
+    'password',
      {
        host: 'localhost',
        dialect: 'mysql'
@@ -98,6 +98,7 @@ export async function createUser({ username, password }) {
 
 // Here you should lookup for the user in your DB
 export async function findUser({ username }) {
+  console.log("Username: ", username);
   const users = await User.findAll({ where: { username: username } });
   return users;
 }

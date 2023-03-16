@@ -27,6 +27,8 @@ const Contact = () => {
     const [fax, setFax] = useState("");
     const [email, setEmail] = useState("");
     const [notes, setNotes] = useState("");
+    const [isLoggedIn, setIsLoggedIn] = useState(false); // add this line
+
 
 
     const submit = () => {
@@ -35,6 +37,12 @@ const Contact = () => {
             alert('inserted');
         })
     };
+
+    const handleLogout = () => {
+        // add the logout functionality here
+        setIsLoggedIn(false);
+        navigate("/");
+      };
     return (
         <div className="page">
             <nav className="navbar navbar-expand-lg navbar-dark bg-maroon">
@@ -51,7 +59,9 @@ const Contact = () => {
                     </div>
                 </div>
 
-                <button className="btn btn-outline-light">Sign In</button>
+                <button className="btn btn-outline-light" onClick={handleLogout}>
+            Logout
+          </button>
             </nav>
 
             <div className="container p-5">

@@ -1,4 +1,4 @@
-import { useUser } from '../lib/hooks'
+/*import { useUser } from '../lib/hooks'
 import Layout from '../components/layout'
 
 const Home = () => {
@@ -42,4 +42,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Home*/

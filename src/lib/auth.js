@@ -31,3 +31,13 @@ export async function getLoginSession(req) {
 
   return session
 }
+
+export async function getUser(req) {
+  const session = await getLoginSession(req);
+
+  if (session) {
+    return { user: session.user };
+  } else {
+    return { user: null };
+  }
+}

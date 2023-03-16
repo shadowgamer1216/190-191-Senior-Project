@@ -13,6 +13,7 @@ const Location = () => {
     const [physical_location, setPhysicalLocation] = useState("");
     const [notes, setNotes] = useState("");
     
+    
     const submit = () => {
         Axios.post("http://localhost:3001/api/insert", {location_id: location_id, location_type: location_type, item_id: item_id, qty: qty, item_owner: item_owner, physical_location: physical_location, notes: notes})
         .then(()=> {
