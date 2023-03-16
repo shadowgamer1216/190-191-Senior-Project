@@ -63,6 +63,7 @@ DROP TABLE IF EXISTS component_table;
 create table component_table (
 	customer_id VARCHAR(25) NOT NULL DEFAULT '',
 	component_type VARCHAR(25) DEFAULT NULL,
+  #other_value VARCHAR(25) DEFAULT NULL,
 	oem_pn VARCHAR(50) DEFAULT NULL,
 	component_description TEXT,
 	size VARCHAR(25) DEFAULT NULL,

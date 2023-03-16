@@ -8,6 +8,7 @@ const Component = () => {
     const navigate = useNavigate();
     const[customer_id, setCustomerID] = useState("");
     const[component_type, setComponent_Type] = useState(null);
+    //const[other_value, setOther_Value] = useState(null);
     const[oem_pn, setOEM_PN] = useState(null);
     const[component_description, setComponent_Description] = useState(null);
     const[size, setSize] = useState(null);
@@ -25,7 +26,8 @@ const Component = () => {
         Axios.post("http://localhost:3001/api/insertComponent", 
         {
             customer_id: customer_id, 
-            component_type: component_type, 
+            component_type: component_type,
+            //other_value: other_value, 
             oem_pn: oem_pn, 
             component_description: component_description,  
             size: size, 
@@ -82,7 +84,7 @@ const Component = () => {
                             <div className="input-group input-group-sm mb-3 col-sm-10">
                                 <input type="text" className="form-control" id="CID" onChange={(e) => {
                                     setCustomerID(e.target.value)
-                                }} required />
+                                }} minlength="4" maxlength="4" required />
                             </div>
                         </div>
 
@@ -91,15 +93,34 @@ const Component = () => {
                             <div className="input-group input-group-sm mb-3 col-sm-3">
                                 <select className="form-control" name="componenttype" id="componenttype" onChange={(e) => {
                                     setComponent_Type(e.target.value)
-                                }}>
+                                }} required >
                                     <option selected value="">Select Value</option>
-                                    <option value="Assembly"> Assembly</option>
-                                    <option value="Bag"> Bag</option>
-                                    <option value="Blu-ray"> Blue-ray</option>
-                                    <option value="CD"> CD</option>
+                                    <option value="Assembly">Assembly</option>
+                                    <option value="Bag">Bag</option>
+                                    <option value="Blu-ray">Blu-ray</option>
+                                    <option value="CD">CD</option>
+                                    <option value="Component">Component</option>
+                                    <option value="Document">Document</option>
+                                    <option value="DVD">DVD</option>
+                                    <option value="Enclosure">Enclosure</option>
+                                    <option value="Envelope">Envelope</option>
+                                    <option value="Insert">Insert</option>
+                                    <option value="Label">Label</option>
+                                    <option value="Promotional Item">Promotional Item</option>
+                                    <option value="USB">USB</option>
+                                    <option value="Other">Other</option>
                                 </select>
                             </div>
                         </div>
+                        
+                        {/* <div className="form-row">
+                            <label htmlFor="other_value" className="col-sm-2 col-form-label">Other Value</label>
+                            <div className="input-group input-group-sm mb-3 col-sm-3">
+                                <input type="text" className="form-control" id= "other_value" onChange={(e) => {
+                                    setOther_Value(e.target.value)
+                                }} required />
+                            </div>
+                        </div> */}
 
                         <div className="form-row">
                             <label htmlFor="oem" className="col-sm-2 col-form-label">OEM P/N</label>
@@ -130,15 +151,10 @@ const Component = () => {
 
                         <div className="form-row">
                             <label htmlFor="supplier" className="col-sm-2 col-form-label">Supplier/Brand</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-3">
-                                <select className="form-control" name="supplier" id="supplier" onChange={(e) => {
+                            <div className="input-group input-group-sm mb-3 col-sm-10">
+                                <input type="text" className="form-control" name="supplier" id="supplier" onChange={(e) => {
                                     setSupplier_Brand_ID(e.target.value)
-                                 }}>
-                                    <option selected value="">Select Value</option>
-                                    <option value="TBD"> TBD</option>
-                                    <option value="TBD"> TBD</option>
-                                    <option value="TBD"> TBD</option>
-                                </select>
+                                 }} />
                             </div>
                         </div>
 
@@ -162,15 +178,10 @@ const Component = () => {
 
                         <div className="form-row">
                             <label htmlFor="uom" className="col-sm-2 col-form-label">Unit of Measure</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-3">
-                                <select className="form-control" name="uom" id="uom" onChange={(e) => {
+                            <div className="input-group input-group-sm mb-3 col-sm-10">
+                                <input type= "text" className="form-control" name="uom" id="uom" onChange={(e) => {
                                     setUOM(e.target.value)
-                                 }}>
-                                    <option selected value="">Select Value</option>
-                                    <option value="TBD"> TBD</option>
-                                    <option value="TBD"> TBD</option>
-                                    <option value="TBD"> TBD</option>
-                                </select>
+                                 }} />
                             </div>
                         </div>
 
@@ -180,7 +191,7 @@ const Component = () => {
                             <div className="input-group input-group-sm mb-3 col-sm-3">
                                 <select className="form-control" name="status" id="status" onChange={(e) => {
                                     setComponent_Status(e.target.value)
-                                 }}>
+                                 }} required >
                                     <option selected value="">Select Value</option>
                                     <option value="Active"> Active</option>
                                     <option value="Inactive"> Inactive</option>
