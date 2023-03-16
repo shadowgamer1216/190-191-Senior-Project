@@ -231,7 +231,7 @@ const Shipping = () => {
               </div>
 
               <div className ="input-group input-group-sm mb-3 col-sm-2">
-                <input onChange={(e) => setZip(e.target.value)} className="form-control"
+                <input type="text" inputmode="numeric" onChange={(e) => setZip(e.target.value)} className="form-control"
                   name="zip" required/>
               </div>
             </div>
@@ -486,7 +486,7 @@ const Shipping = () => {
           </div>
 
           <div className="Add/Cancel">
-            <button type="dd" id="add-company" className="btn btn-success m-2">Add</button>
+            <button onClick = {submit} type="dd" id="add-company" className="btn btn-success m-2">Add</button>
             <button type="Cancel" id="Cancel-company" className="btn btn-success m-2">Cancel</button>
           </div>
 
