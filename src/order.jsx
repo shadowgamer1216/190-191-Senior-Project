@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { useState, useMemo } from "react";
 import Axios from 'axios';
 
-const Order = () => {
+const Order = ({ handleLogout }) => {
     const navigate = useNavigate();
     const [salesPerson, setSalesPerson] = useState("");
     const [requestor, setRequestor] = useState("");
@@ -349,7 +349,7 @@ const Order = () => {
                     </div>
                 </div>
 
-                <button className="btn btn-outline-light">Sign In</button>
+                <button className="btn btn-outline-light" onClick={handleLogout}>Logout</button>
             </nav>
 
             <div className="container p-5">

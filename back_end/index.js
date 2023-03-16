@@ -310,8 +310,6 @@ app.post("/api/insertShipping", (req, res) =>{
     db.query(sqlInsert, [company_name, contact_name, add1, add2, city, country_state, zip, province, country, phone, fax, email, fedex, ups, courier_willcall, abs, other_ship_method, payment_type, account_number, request_ship_date, request_ship_time, arrival_ship_date, arrival_ship_time, fob, notes], (err, result) => {
         console.log(result);
     })
-
-    constant
 });
 
 app.listen(3001, () =>{

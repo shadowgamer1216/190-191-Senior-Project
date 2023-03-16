@@ -5,7 +5,7 @@ import { useState } from "react";
 import Axios from "axios";
 
 
-const Product = () => {
+const Product = ({ handleLogout }) => {
     const navigate = useNavigate();
 
     const [old_abs_id, setOldID] = useState(null);
@@ -140,7 +140,7 @@ const Product = () => {
                     </div>
                 </div>
 
-                <button className="btn btn-outline-light">Sign In</button>
+                <button className="btn btn-outline-light" onClick={handleLogout}>Logout</button>
             </nav>
 
             <div className="container p-5">
