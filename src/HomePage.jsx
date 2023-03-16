@@ -22,11 +22,10 @@ function HomePage() {
           <Link to = "Shipping">
             <button type="button" id="Add Shipping" class="HomePageButton">Add Shipping</button>
           </Link>
-          
         </div>
 
         <div class='block2'>
-          <Link to = "Components">
+          <Link to = "Component">
             <button type="Add Component" id="Add Component" class="HomePageButton">Add Component</button>
           </Link>
           <Link to = "Contact">
@@ -60,6 +59,13 @@ function HomePage() {
             <button type="View" id="View" class="InactiveHomePageButton">View</button>
           {/*</Link>*/}
         </div>
+
+        <div class="block6">
+          <Link to = "Search">
+              <button type="Search" id="Search" class="HomePageButton" >Search</button>
+          </Link>
+        </div>
+
     </div>
   );
 }

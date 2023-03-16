@@ -19,7 +19,6 @@ const Shipping = () => {
             <Link className="nav-link">Settings</Link>
           </div>
         </div>
-        <button className="btn btn-outline-light">Sign In</button> 
       </nav>
 
       <div className="container p-5">
@@ -27,7 +26,10 @@ const Shipping = () => {
           <h2>ADD SHIPPING</h2>
         </div>
  
-        <form>
+        <script defer ="shippingvalid.js"></script>
+        <div id="error"></div>
+
+        <form id="shipping_form">
           <div className ="list-address pt-3">
             <div className="section-headers">
                 <h5>List of Shipping Addresses For</h5>
@@ -46,7 +48,7 @@ const Shipping = () => {
             </div>
             <div className="input-group input-group-sm mb-3 col-sm-12">
               <input type="text" className="form-control" 
-                id="search-dir" placeholder="No Records"></input>
+                id="search-dir" placeholder="No Records" readOnly></input>
             </div>
           </div>
 
@@ -63,10 +65,10 @@ const Shipping = () => {
             </div>
 
             <div className ="form-row">
-              <label htmlFor="cname" className="col-sm-2 col-form-label">Company Name</label>
+              <label htmlFor="companyName" className="col-sm-2 col-form-label">Company Name</label>
               <div className ="input-group input-group-sm mb-3 col-sm-10">
-                <input type="text" className="form-control"
-                  id="cname" />
+                <input type="text" className="form-control" 
+                  name="company_Name" placeholder="If 'None', please enter N/A."required></input>
               </div>
             </div>
 
@@ -74,7 +76,7 @@ const Shipping = () => {
               <label htmlFor="con-name" className="col-sm-2 col-form-label">Contact Name</label>
               <div className ="input-group input-group-sm mb-3 col-sm-10">
                 <input type="text" className="form-control"
-                  id="con-name" />
+                  name="contact_name" required/>
               </div>
             </div>
 
@@ -82,7 +84,7 @@ const Shipping = () => {
               <label htmlFor="add1" className="col-sm-2 col-form-label">Address 1</label>
               <div className ="input-group input-group-sm mb-3 col-sm-10">
                 <input type="text" className="form-control"
-                  id="add1" />
+                  name="add1" required/>
               </div>
             </div>
 
@@ -90,7 +92,7 @@ const Shipping = () => {
               <label htmlFor="add2" className="col-sm-2 col-form-label">Address 2</label>
               <div className ="input-group input-group-sm mb-3 col-sm-10">
                 <input type="text" className="form-control"
-                  id="add2" />
+                  name="add2" placeholder="If 'None, Please enter N/A." required/>
               </div>
             </div>
 
@@ -99,11 +101,11 @@ const Shipping = () => {
               
               <div className ="input-group input-group-sm mb-3 col-sm-6">
                 <input type="text" className="form-control"
-                  id="city" />
+                  name="city" required/>
               </div>
               
               <div className="input-group inout-group-sm mb-3 col-sm-2">
-                <select className="form-control" name="state" id="state">
+                <select className="form-control" name="country_state" required>
                   <option value="" selected="selected">Select a State</option>
                   <option value="AL">Alabama</option>
                   <option value="AK">Alaska</option>
@@ -161,7 +163,7 @@ const Shipping = () => {
 
               <div className ="input-group input-group-sm mb-3 col-sm-2">
                 <input type="text" className="form-control"
-                  id="zip" />
+                  name="zip" required/>
               </div>
             </div>
 
@@ -169,7 +171,7 @@ const Shipping = () => {
               <label htmlFor="province" className="col-sm-2 col-form-label">Province</label>
               <div className ="input-group input-group-sm mb-3 col-sm-10">
                 <input type="text" className="form-control"
-                  id="province" />
+                  name="province" placeholder="If 'None, Please enter N/A." required/>
               </div>
             </div>
 
@@ -177,7 +179,7 @@ const Shipping = () => {
               <label htmlFor="country" className="col-sm-2 col-form-label">Country</label>
               <div className ="input-group input-group-sm mb-3 col-sm-10">
                 <input type="text" className="form-control"
-                  id="country" />
+                  name="country" required/>
               </div>
             </div>
 
@@ -185,7 +187,7 @@ const Shipping = () => {
               <label htmlFor="phone" className="col-sm-2 col-form-label">Phone</label>
               <div className ="input-group input-group-sm mb-3 col-sm-10">
                 <input type="text" className="form-control"
-                  id="phone" />
+                name="phone" required/>
               </div>
             </div>
 
@@ -193,7 +195,7 @@ const Shipping = () => {
               <label htmlFor="fax" className="col-sm-2 col-form-label">Fax</label>
               <div className ="input-group input-group-sm mb-3 col-sm-10">
                 <input type="text" className="form-control"
-                  id="fax" />
+                  name="fax" placeholder="If 'None, Please enter N/A." required/>
               </div>
             </div>
 
@@ -201,7 +203,7 @@ const Shipping = () => {
               <label htmlFor="email" className="col-sm-2 col-form-label">Email</label>
               <div className ="input-group input-group-sm mb-3 col-sm-10">
                 <input type="text" className="form-control"
-                  id="email" />
+                  name="email" required/>
               </div>
             </div>
 
@@ -215,7 +217,7 @@ const Shipping = () => {
             <div className ="form-row">
               <label htmlFor="fedex" className="col-sm-2 col-form-label">Fed Ex</label>
               <div className="input-group input-group-sm mb-3 col-sm-3">
-                <select className="form-control" name="fedex" id="fedex">
+                <select className="form-control" name="fedex" id="fedex" required>
                   <option value="option" selected="selected">Select Option</option>
                   <option value="none">None</option>
                 </select>
@@ -225,7 +227,7 @@ const Shipping = () => {
             <div className ="form-row">
               <label htmlFor="ups" className="col-sm-2 col-form-label">UPS</label>
               <div className="input-group input-group-sm mb-3 col-sm-3">
-                <select className="form-control" name="ups" id="ups">
+                <select className="form-control" name="ups" id="ups"required>
                   <option value="option" selected="selected">Select Option</option>
                   <option value="none">None</option>
                 </select>
@@ -235,7 +237,7 @@ const Shipping = () => {
             <div className ="form-row">
               <label htmlFor="c-w" className="col-sm-2 col-form-label">Courier/Will Call</label>
               <div className="input-group input-group-sm mb-3 col-sm-3">
-                <select className="form-control" name="c-w" id="c-w">
+                <select className="form-control" name="courier_willcall" id="c-w"required>
                   <option value="option" selected="selected">Select Option</option>
                   <option value="none">None</option>
                 </select>
@@ -245,7 +247,7 @@ const Shipping = () => {
             <div className ="form-row">
               <label htmlFor="abs" className="col-sm-2 col-form-label">ABS Van</label>
               <div className="input-group input-group-sm mb-3 col-sm-3">
-                <select className="form-control" name="abs" id="abs">
+                <select className="form-control" name="abs" id="abs"required>
                   <option value="option" selected="selected">Select Option</option>
                   <option value="none">None</option>
                 </select>
@@ -256,14 +258,14 @@ const Shipping = () => {
               <label htmlFor="other-ship" className="col-sm-2 col-form-label">Other Ship Method</label>
               <div className ="input-group input-group-sm mb-3 col-sm-10">
                 <input type="text" className="form-control"
-                  id="other-ship" />
+                  name="other_ship_method" placeholder="If 'None, Please enter N/A." required/>
               </div>
             </div>
 
             <div className ="form-row">
               <label htmlFor="pay-type" className="col-sm-2 col-form-label">Payment Type</label>
               <div className="input-group input-group-sm mb-3 col-sm-3">
-                <select className="form-control" name="pay-type" id="pay-type">
+                <select className="form-control" name="payment_type" id="pay-type" placeholder="If 'None, Please enter N/A." required>
                   <option value="option" selected="selected">Select Option</option>
                   <option value="credit">Credit</option>
                   <option value="debit">Debit</option>
@@ -273,9 +275,9 @@ const Shipping = () => {
 
             <div className ="form-row">
               <label htmlFor="acc-num" className="col-sm-2 col-form-label">Account Number</label>
-              <div className ="input-group input-group-sm mb-3 col-sm-10">
+              <div className ="input-group input-group-sm mb-3 col-sm-10" required>
                 <input type="text" className="form-control"
-                  id="acc-num" />
+                  name="account_number" />
               </div>
             </div>
 
@@ -283,11 +285,11 @@ const Shipping = () => {
               <label htmlFor="ship-date" className="col-sm-2 col-form-label">Requested Ship Date/Time</label>
               <div className ="input-group input-group-sm mb-3 col-sm-2">
                 <input type="text" className="form-control"
-                  id="ship-date" />
+                  name="request_ship_date" required/>
               </div>
 
               <div className="input-group input-group-sm mb-3 col-sm-2">
-                <select className="form-control" name="ship-date" id="ship-date">
+                <select className="form-control" name="request_ship_time" id="ship-time" required>
                   <option value="option" selected="selected">Select Time</option>
                 </select>
               </div>
@@ -297,18 +299,18 @@ const Shipping = () => {
               <label htmlFor="arr-date" className="col-sm-2 col-form-label">Requested Arrival Date/Time</label>
               <div className ="input-group input-group-sm mb-3 col-sm-2">
                 <input type="text" className="form-control"
-                  id="arr-date" />
+                  name="arrival_ship_date" required/>
               </div>
 
               <div className="input-group input-group-sm mb-3 col-sm-2">
-                <select className="form-control" name="ship-date" id="ship-date">
+                <select className="form-control" name="arrival_ship_time" id="arrival-time" required>
                   <option value="option" selected="selected">Select Time</option>
                 </select>
               </div>
 
               <div className="input-group input-group-sm col-sm-3 pl-5">
                 <div className="form-group custom-control custom-checkbox">
-                  <input type="checkbox" className="custom-control-input" id="customerCheck" />
+                  <input type="checkbox" className="custom-control-input" name="saturday_deliv" />
                   <label htmlFor="saturday" className="custom-control-label">Saturday?</label>
                 </div>
               </div>
@@ -317,7 +319,7 @@ const Shipping = () => {
             <div className ="form-row">
               <label htmlFor="fob" className="col-sm-2 col-form-label">FOB</label>
               <div className="input-group input-group-sm mb-3 col-sm-3">
-                <select className="form-control" name="fob" id="fob">
+                <select className="form-control" name="fob" id="fob" required>
                   <option value="option" selected="selected">Point of Shipment</option>
                   <option value="none">None</option>
                 </select>
@@ -346,25 +348,25 @@ const Shipping = () => {
             <div className="form-row">
               <div className="input-group input-group-sm mb-3 col-sm-3">
                 <input type="text" className="form-control" 
-                  id="search-dir"></input>
+                  id="search-dir" readOnly></input>
               </div>
               <div className="input-group input-group-sm mb-3 col-sm-3">
                 <input type="text" className="form-control" 
-                  id="search-dir"></input>
+                  id="search-dir" readOnly></input>
               </div>
               <div className="input-group input-group-sm mb-3 col-sm-3">
                 <input type="text" className="form-control" 
-                  id="search-dir"></input>
+                  id="search-dir" readOnly></input>
               </div>
               <div className="input-group input-group-sm mb-3 col-sm-3">
                 <input type="text" className="form-control" 
-                  id="search-dir"></input>
+                  id="search-dir" readOnly></input>
               </div>
             </div>
           </div>
 
           <div className="Add/Cancel">
-            <button type="Add" id="add-company" className="btn btn-success m-2">Add</button>
+            <button type="dd" id="add-company" className="btn btn-success m-2">Add</button>
             <button type="Cancel" id="Cancel-company" className="btn btn-success m-2">Cancel</button>
           </div>
 
@@ -390,3 +392,4 @@ const Shipping = () => {
   )
 }
 export default Shipping;
+

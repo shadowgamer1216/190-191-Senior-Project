@@ -13,6 +13,8 @@ export async function setLoginSession(res, session) {
   const token = await Iron.seal(obj, TOKEN_SECRET, Iron.defaults)
   console.log("session res " + res.status)
 
+
+
   setTokenCookie(res, token)
 }
 
@@ -30,14 +32,4 @@ export async function getLoginSession(req) {
   }
 
   return session
-}
-
-export async function getUser(req) {
-  const session = await getLoginSession(req);
-
-  if (session) {
-    return { user: session.user };
-  } else {
-    return { user: null };
-  }
 }

@@ -15,9 +15,9 @@ const Location = () => {
     
     
     const submit = () => {
-        Axios.post("http://localhost:3001/api/insert", {location_id: location_id, location_type: location_type, item_id: item_id, qty: qty, item_owner: item_owner, physical_location: physical_location, notes: notes})
+        Axios.post("http://localhost:3001/api/insertLocation", {location_id: location_id, location_type: location_type, item_id: item_id, qty: qty, item_owner: item_owner, physical_location: physical_location, notes: notes})
         .then(()=> {
-            alert('inserted');
+            alert('inserted location');
         })
     };
     return (
@@ -66,9 +66,10 @@ const Location = () => {
                                     setLocationType(e.target.value)
                                 }}>
                                     <option selected value="">Select Value</option>
-                                    <option value="1">X1_TBD</option>
-                                    <option value="2">X2_TBD</option>
-                                    <option value="3">X3_TBD</option>
+                                    <option value="Multiple Boxes">Multiple Boxes</option>
+                                    <option value="Single Box">Single Box</option>
+                                    <option value="Pallet">Pallet</option>
+                                    <option value="Envelope">Envelope</option>
                                 </select>
                             </div>
                         </div>
@@ -98,9 +99,8 @@ const Location = () => {
                                     setItemOwner(e.target.value)
                                 }}>
                                     <option selected value="">Select Value</option>
-                                    <option value="1">X1_TBD</option>
-                                    <option value="2">X2_TBD</option>
-                                    <option value="3">X3_TBD</option>
+                                    <option value="ABS">ABS</option>
+                                    <option value="Customer">Customer</option>
                                 </select>
                             </div>
                         </div>
@@ -112,9 +112,8 @@ const Location = () => {
                                     setPhysicalLocation(e.target.value)
                                 }}>
                                     <option selected value="">Select Value</option>
-                                    <option value="1">X1_TBD</option>
-                                    <option value="2">X2_TBD</option>
-                                    <option value="3">X3_TBD</option>
+                                    <option value="ABS">ABS</option>
+                                    <option value="Customer">Customer</option>
                                 </select>
                             </div>
                         </div>
@@ -130,8 +129,8 @@ const Location = () => {
 
                     </div>
 
-                    <div className="submit">
-                        <button type="submit" id="add-product" className="btn btn-success">Submit</button>
+                    <div className="submit p-3">
+                        <button onClick = {submit} type="submit" id="add-location" className="btn btn-success">Submit</button>
                     </div>
 
                 </form>

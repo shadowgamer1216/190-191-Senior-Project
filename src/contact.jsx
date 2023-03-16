@@ -327,7 +327,7 @@ const Contact = () => {
 
                 </form>
 
-                <button className="btn btn-outline-dark" onClick={() => navigate(-1)}>Home</button>
+                <button className="btn btn-outline-dark" onClick={() => navigate("../")}>Home</button>
 
 
             </div>

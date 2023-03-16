@@ -17,9 +17,9 @@ const ItemCheckIn = () => {
     const [date_complete, setDateComplete] = useState("");
 
     const submit = () => {
-        Axios.post("http://localhost:3001/api/insert", {customer_id: customer_id, item_id: item_id, mfr_pn: mfr_pn, description: description, carrier: carrier, quantity: quantity, disposition: disposition, signed_for_by: signed_for_by, date_in: date_in, date_complete: date_complete})
+        Axios.post("http://localhost:3001/api/insertItem", {customer_id: customer_id, item_id: item_id, mfr_pn: mfr_pn, description: description, carrier: carrier, quantity: quantity, disposition: disposition, signed_for_by: signed_for_by, date_in: date_in, date_complete: date_complete})
         .then(()=> {
-            alert('inserted');
+            alert('inserted item');
         })
     };
 
@@ -114,9 +114,10 @@ const ItemCheckIn = () => {
                                     setDisposition(e.target.value)
                                 }}>
                                     <option selected value="">Select Value</option>
-                                    <option value="1">X1_TBD</option>
-                                    <option value="2">X2_TBD</option>
-                                    <option value="3">X3_TBD</option>
+                                    <option value="Recieving">Recieving</option>
+                                    <option value="Delivered to Production">Delivered to Production</option>
+                                    <option value="Inventory">Inventory</option>
+                                    <option value="Rep Notified">Rep Notified</option>
                                 </select>
                             </div>
                         </div>
@@ -149,8 +150,8 @@ const ItemCheckIn = () => {
                         </div>
                     </div>
 
-                    <div className="submit">
-                        <button type="submit" id="add-product" className="btn btn-success m-2">Submit</button>
+                    <div className="submit p-3">
+                        <button onClick = {submit} type="submit" id="add-item" className="btn btn-success m-2">Submit</button>
                     </div>
                 </form>
 
