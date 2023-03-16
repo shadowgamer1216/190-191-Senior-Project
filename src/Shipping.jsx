@@ -98,22 +98,27 @@ const Shipping = () => {
             <div className="section-headers">
                 <h5>List of Shipping Addresses For</h5>
             </div>
-
-            <div className="form-row-address">
-              <label htmlFor="edit-add" className="col-md-1 col-form-label"><u>Edit</u></label>
-              <label htmlFor="cname-add" className="col-md-1 col-form-label"><u>Company</u></label>
-              <label htmlFor="cont-add" className="col-md-1 col-form-label"><u>Contact</u></label>
-              <label htmlFor="a1-add" className="col-md-1 col-form-label"><u>Address</u></label>
-              <label htmlFor="city-add" className="col-md-1 col-form-label"><u>City</u></label>
-              <label htmlFor="state-add" className="col-md-1 col-form-label"><u>State</u></label>
-              <label htmlFor="shipdate-add" className="col-md-2 col-form-label"><u>Ship Date</u></label>
-              <label htmlFor="shiparriv-add" className="col-md-2 col-form-label"><u>Arrival Date</u></label>
-              <label htmlFor="shipvia-add" className="col-md-2 col-form-label"><u>Ship Via</u></label>
-            </div>
-            <div className="input-group input-group-sm mb-3 col-sm-12">
-              <input type="text" className="form-control" 
-                id="search-dir" placeholder="No Records" readOnly></input>
-            </div>
+            <table class="table">
+              <thead class = "thead-light">
+                <tr>
+                  <th scope="col">Edit</th>
+                  <th scope="col">Company</th>
+                  <th scope="col">Contact</th>
+                  <th scope="col">Address</th>
+                  <th scope="col">City</th>
+                  <th scope="col">State</th>
+                  <th scope="col">Ship Date</th>
+                  <th scope="col">Arrival Date</th>
+                  <th scope="col">Ship Via</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>No Records</td>
+                </tr>
+              </tbody>
+            </table>
+            
           </div>
 
           <div className ="customer-info pt-3">
@@ -376,28 +381,50 @@ const Shipping = () => {
 
             <div className ="form-row">
               <label htmlFor="ship-date" className="col-sm-2 col-form-label">Requested Ship Date/Time</label>
-              <div className ="input-group input-group-sm mb-3 col-sm-2">
-                <input onChange={(e) => setRequested_ship_date(e.target.value)} className="form-control"
+              <div className ="input-group input-group-sm mb-3 col-sm-3">
+                <input type="datetime-local" className="form-control" onChange={(e) => setRequested_ship_date(e.target.value)}
                   name="request_ship_date" required/>
               </div>
 
-              <div className="input-group input-group-sm mb-3 col-sm-2">
+              <div className="input-group input-group-sm mb-3 col-sm-3">
                 <select onChange={(e) => setRequested_ship_time(e.target.value)} className="form-control" name="request_ship_time" id="ship-time" required>
                   <option value="option" selected="selected">Select Time</option>
+                  <option value="9am">9:00am</option>
+                  <option value="10am">10:00am</option>
+                  <option value="11am">11:00am</option>
+                  <option value="12pm">12:00pm</option>
+                  <option value="1pm">1:00pm</option>
+                  <option value="2pm">3:00pm</option>
+                  <option value="3pm">3:00m</option>
+                  <option value="4pm">4:00pm</option>
+                  <option value="5pm">5:00pm</option>
+                  <option value="6pm">6:00pm</option>
+                  <option value="7pm">7:00pm</option>
                 </select>
               </div>
             </div>
 
             <div className ="form-row">
               <label htmlFor="arr-date" className="col-sm-2 col-form-label">Requested Arrival Date/Time</label>
-              <div className ="input-group input-group-sm mb-3 col-sm-2">
-                <input onChange={(e) => setArrival_ship_date(e.target.value)} className="form-control"
+              <div className ="input-group input-group-sm mb-3 col-sm-3">
+                <input type="datetime-local" className="form-control" onChange={(e) => setArrival_ship_date(e.target.value)}
                   name="arrival_ship_date" required/>
               </div>
 
-              <div className="input-group input-group-sm mb-3 col-sm-2">
+              <div className="input-group input-group-sm mb-3 col-sm-3">
                 <select onChange={(e) => setArrival_ship_time(e.target.value)}className="form-control" name="arrival_ship_time" id="arrival-time" required>
                   <option value="option" selected="selected">Select Time</option>
+                  <option value="9am">9:00am</option>
+                  <option value="10am">10:00am</option>
+                  <option value="11am">11:00am</option>
+                  <option value="12pm">12:00pm</option>
+                  <option value="1pm">1:00pm</option>
+                  <option value="2pm">3:00pm</option>
+                  <option value="3pm">3:00m</option>
+                  <option value="4pm">4:00pm</option>
+                  <option value="5pm">5:00pm</option>
+                  <option value="6pm">6:00pm</option>
+                  <option value="7pm">7:00pm</option>
                 </select>
               </div>
 
@@ -485,4 +512,3 @@ const Shipping = () => {
   )
 }
 export default Shipping;
-
