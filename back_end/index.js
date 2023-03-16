@@ -16,7 +16,7 @@ const db = mysql.createPool({
     database: "absolutemedia",
 });
 
-app.post("/api/insert", (req, res)=> {
+app.post("/api/insertContact", (req, res)=> {
     const customer_id = req.body.customer_id;
     const company = req.body.company; //testing company
     const fname = req.body.fname;
@@ -42,7 +42,7 @@ app.post("/api/insert", (req, res)=> {
     const sqlInsert = "INSERT INTO contact_table (customer_id, company, fname, lname, contact_type, title, dept, add_1, add_2, city, state_in_country, zip, country, phone, extension, fax, email, cell_phone_number, third_party_company, notes) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     db.query(sqlInsert, [customer_id, company, fname, lname, contact_type, title, dept, add_1, add_2, city, state_in_country, zip, country, phone, extension, fax, email, cell_phone_number, third_party_compnay, notes], (err, result)=>{
-        console.log(result);
+        console.log(err);
     
     });
 });
