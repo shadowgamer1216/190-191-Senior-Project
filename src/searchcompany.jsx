@@ -7,6 +7,7 @@ import Axios from "axios";
 
 const SearchCompany = () => {
     const navigate = useNavigate();
+    const [info, setCompanyInfo] = useState([]);
 
     const submit = () => {
         //Axios.post("http://localhost:3001/api/insert", {})
@@ -14,6 +15,12 @@ const SearchCompany = () => {
             //alert('inserted');
         //})
     };
+
+    useEffect(() => {
+        Axios.get("http://localhost:3001/api/getCompanyInfo").then((response) =>{
+            setCompanyInfo(response.info);
+        });
+    }, []);
 
     return (
         <div class='page'>
@@ -68,6 +75,43 @@ const SearchCompany = () => {
                         <button className="btn btn-outline-dark" onClick={() => navigate("/")}>Home</button>
                     </div>
                 </form>
+
+                <div className="product-info pt-3">
+                        <div className="section-headers">
+                            <h5>List of Companies</h5>
+                        </div>
+
+                        <table id="customerInfo" class="table table-striped table-bordered table-sm" cellspacing="0"
+  width="100%">
+                        <thead class="thead-light">
+                                    <tr>
+                                        <th scope ="col"> ID </th>
+                                        <th scope ="col"> Name </th>
+                                        <th scope ="col"> Customer </th>
+                                        <th scope ="col"> OEM </th>
+                                        <th scope ="col"> Vendor </th>
+                                        <th scope ="col"> Other </th>
+                                        <th scope ="col"> Salesperson </th>
+                                        <th scope ="col"> Add1 </th>
+                                        <th scope ="col"> Add2 </th>
+                                        <th scope ="col"> City </th>
+                                        <th scope ="col"> State </th>
+                                        <th scope ="col"> Country </th>
+                                        <th scope ="col"> Zip </th>
+                                        <th scope ="col"> Phone </th>
+                                        <th scope ="col"> Extension </th>
+                                        <th scope ="col"> Fax </th>
+                                        <th scope ="col"> Email </th>
+                                        <th scope ="col"> Web Addr </th>
+                                        <th scope ="col"> Tax ID </th>
+                                        <th scope ="col"> Credit Checked </th>
+                                        <th scope ="col"> Other Class </th>
+                                        <th scope ="col"> Notes </th>
+                                    </tr>
+                                </thead>
+                        </table>
+                </div>
+                       
             </div>
 
             <footer className="footer">
