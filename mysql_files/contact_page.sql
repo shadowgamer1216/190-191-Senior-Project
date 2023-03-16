@@ -259,5 +259,5 @@ create table company_table(
 	OEM char (1) default NULL,
   other_class varchar (60) default NULL,
   notes TEXT,
-  PRIMARY KEY (company_Name)
+  PRIMARY KEY (company_ID)
 );
