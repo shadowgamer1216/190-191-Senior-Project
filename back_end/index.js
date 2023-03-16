@@ -236,7 +236,6 @@ app.post("/api/insertComponent", (req, res) =>{
     /*------------------------------------------ Component Page ------------------------------------------*/
     const customer_id = req.body.customer_id;
     const component_type = req.body.component_type;
-    //const other_value = req.body.other_value;
     const oem_pn = req.body.oem_pn;
     const component_description = req.body.component_description;
     const size = req.body.size;
