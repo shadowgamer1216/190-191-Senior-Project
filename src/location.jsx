@@ -3,7 +3,7 @@ import './App.css'
 import { Link, useNavigate } from "react-router-dom"
 import Axios from "axios";
 
-const Location = () => {
+const Location = ({ handleLogout }) => {
     const navigate = useNavigate()
     const [location_id, setLocationID] = useState("");
     const [location_type, setLocationType] = useState(null);
@@ -19,7 +19,6 @@ const Location = () => {
         Axios.post("http://localhost:3001/api/insertLocation", {location_id: location_id, location_type: location_type, item_id: item_id, qty: qty, item_owner: item_owner, physical_location: physical_location, notes: notes})
         .then(()=> {
             alert('inserted location');
-        });
         Axios.post("http://localhost:3001/api/insertLocationHistory",{location_id: location_id, item_id: item_id, qty: qty, date: date})
         .then(()=>{
             alert('inserted location history');
@@ -48,7 +47,7 @@ const Location = () => {
                     </div>
                 </div>
 
-                <button className="btn btn-outline-light">Sign In</button>
+                <button className="btn btn-outline-light" onClick={handleLogout}>Logout</button>
             </nav>
 
             <div className="container p-5">

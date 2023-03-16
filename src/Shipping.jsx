@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { useState } from "react";
 import Axios from "axios";
 
-const Shipping = () => {
+const Shipping = ({ handleLogout }) => {
   const navigate = useNavigate();
 
   const[company_name, setCompany_name] = useState(null);
