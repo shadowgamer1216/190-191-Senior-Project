@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import './App.css'
 import { Link, useNavigate } from "react-router-dom"
 import Axios from "axios";
@@ -6,20 +6,31 @@ import Axios from "axios";
 const Location = ({ handleLogout }) => {
     const navigate = useNavigate()
     const [location_id, setLocationID] = useState("");
-    const [location_type, setLocationType] = useState("");
-    const [item_id, setItemID] = useState("");
-    const [qty, setQty] = useState("");
-    const [item_owner, setItemOwner] = useState("");
-    const [physical_location, setPhysicalLocation] = useState("");
-    const [notes, setNotes] = useState("");
-    
-    
+    const [location_type, setLocationType] = useState(null);
+    const [item_id, setItemID] = useState(null);
+    const [qty, setQty] = useState(0);
+    const [item_owner, setItemOwner] = useState(null);
+    const [physical_location, setPhysicalLocation] = useState(null);
+    const [notes, setNotes] = useState(null);
+    const [data, setData] = useState([]);
+    const date = new Date();
+
     const submit = () => {
         Axios.post("http://localhost:3001/api/insertLocation", {location_id: location_id, location_type: location_type, item_id: item_id, qty: qty, item_owner: item_owner, physical_location: physical_location, notes: notes})
         .then(()=> {
             alert('inserted location');
-        })
+        Axios.post("http://localhost:3001/api/insertLocationHistory",{location_id: location_id, item_id: item_id, qty: qty, date: date})
+        .then(()=>{
+            alert('inserted location history');
+        });
     };
+
+    useEffect(() => {
+        Axios.get("http://localhost:3001/api/getLocationHistory").then((response) =>{
+            setData(response.data);
+        });
+    }, []);
+
     return (
         <div className="page">
             <nav className="navbar navbar-expand-lg navbar-dark bg-maroon">
@@ -53,9 +64,10 @@ const Location = ({ handleLogout }) => {
                         <div className="form-row">
                             <label htmlFor="location-id" className="col-sm-2 col-form-label">Location ID</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="location-id" onChange={(e) =>{
+                                <input type="number" className="form-control" id="location-id" onChange={(e) =>{
                                     setLocationID(e.target.value)
-                                }}/>
+                                }} required />
+                                
                             </div>
                         </div>
 
@@ -77,7 +89,7 @@ const Location = ({ handleLogout }) => {
                         <div className="form-row">
                             <label htmlFor="item-id" className="col-sm-2 col-form-label">Item ID</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="item-id" onChange={(e) =>{
+                                <input type="number" className="form-control" id="item-id" onChange={(e) =>{
                                     setItemID(e.target.value)
                                 }}/>
                             </div>
@@ -86,7 +98,7 @@ const Location = ({ handleLogout }) => {
                         <div className="form-row">
                             <label htmlFor="qty" className="col-sm-2 col-form-label">Qty</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="qty" onChange={(e) =>{
+                                <input type="number" className="form-control" id="qty" onChange={(e) =>{
                                     setQty(e.target.value)
                                 }}/>
                             </div>
@@ -140,7 +152,7 @@ const Location = ({ handleLogout }) => {
                         <div className="section-headers">
                             <h5>Location History</h5>
                         </div>
-                        
+                        {data.length > 0 && (
                         <table class="table">
                                 <thead class="thead-light">
                                     <tr>
@@ -150,11 +162,16 @@ const Location = ({ handleLogout }) => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>No records</td>
+                                   {data.map((row) => (
+                                    <tr key={row.location_id}>
+                                        <td>{row.item_id}</td>
+                                        <td>{row.qty}</td>
+                                        <td>{row.date_added.slice(0,10)}</td>
                                     </tr>
+                                   ))}
                                 </tbody>
                         </table>
+                        )}
                     </div>
                 </form>
 
