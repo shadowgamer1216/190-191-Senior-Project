@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import './App.css'
 import { Link, useNavigate } from "react-router-dom"
 import Axios from "axios";
 
-const Location = ({ handleLogout }) => {
+const Location = () => {
     const navigate = useNavigate()
     const [location_id, setLocationID] = useState("");
     const [location_type, setLocationType] = useState(null);
@@ -12,25 +12,13 @@ const Location = ({ handleLogout }) => {
     const [item_owner, setItemOwner] = useState(null);
     const [physical_location, setPhysicalLocation] = useState(null);
     const [notes, setNotes] = useState(null);
-    const [data, setData] = useState([]);
-    const date = new Date();
-
+    
     const submit = () => {
         Axios.post("http://localhost:3001/api/insertLocation", {location_id: location_id, location_type: location_type, item_id: item_id, qty: qty, item_owner: item_owner, physical_location: physical_location, notes: notes})
         .then(()=> {
             alert('inserted location');
-        Axios.post("http://localhost:3001/api/insertLocationHistory",{location_id: location_id, item_id: item_id, qty: qty, date: date})
-        .then(()=>{
-            alert('inserted location history');
-        });
+        })
     };
-
-    useEffect(() => {
-        Axios.get("http://localhost:3001/api/getLocationHistory").then((response) =>{
-            setData(response.data);
-        });
-    }, []);
-
     return (
         <div className="page">
             <nav className="navbar navbar-expand-lg navbar-dark bg-maroon">
@@ -47,7 +35,7 @@ const Location = ({ handleLogout }) => {
                     </div>
                 </div>
 
-                <button className="btn btn-outline-light" onClick={handleLogout}>Logout</button>
+                <button className="btn btn-outline-light">Sign In</button>
             </nav>
 
             <div className="container p-5">
@@ -152,7 +140,7 @@ const Location = ({ handleLogout }) => {
                         <div className="section-headers">
                             <h5>Location History</h5>
                         </div>
-                        {data.length > 0 && (
+                        
                         <table class="table">
                                 <thead class="thead-light">
                                     <tr>
@@ -162,16 +150,11 @@ const Location = ({ handleLogout }) => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                   {data.map((row) => (
-                                    <tr key={row.location_id}>
-                                        <td>{row.item_id}</td>
-                                        <td>{row.qty}</td>
-                                        <td>{row.date_added.slice(0,10)}</td>
+                                    <tr>
+                                        <td>No records</td>
                                     </tr>
-                                   ))}
                                 </tbody>
                         </table>
-                        )}
                     </div>
                 </form>
 

@@ -214,29 +214,6 @@ app.post("/api/insertLocation" , (req, res) =>{
     });
 });
 
-app.get("/api/getLocationHistory", (req, res) =>{
-    const location_id = req.body.location_id;
-    const item_id = req.body.item_id;
-    const qty = req.body.qty;
-    //const date = req.body.date;
-
-    db.query("SELECT location_id, item_id, qty, date_added FROM location_history", (err, result) =>{
-        if (err) throw err;
-        res.send(result);
-    });
-});
-
-app.post("/api/insertLocationHistory", (req, res) =>{
-    const location_id = req.body.location_id;
-    const item_id = req.body.item_id;
-    const qty = req.body.qty;
-
-    const sqlInsert = "INSERT INTO location_history (location_id, item_id, qty) VALUES (?,?,?)";
-    db.query(sqlInsert, [location_id, item_id, qty], (err, result) =>{
-        console.log(result);
-    });
-});
-
 app.post("/api/insertItem" , (req, res) =>{
     const customer_id = req.body.customer_id;
     const item_id = req.body.item_id;
@@ -279,75 +256,6 @@ app.post("/api/insertComponent", (req, res) =>{
     /*------------------------------------------ Component Page ------------------------------------------*/
 });
 
-//Shipping Page
-app.post("/api/insertShipping", (req, res) =>{
-    const company_name = req.body.company_name;
-    const contact_name = req.body.contact_name;
-    const add1 = req.body.add1;
-    const add2 = req.body.add2;
-    const city = req.body.city;
-    const country_state = req.body.state;
-    const zip = req.body.zip;
-    const province = req.body.province;
-    const country = req.body.country;
-    const phone = req.body.phone;
-    const fax = req.body.fax;
-    const email = req.body.email;
-    const fedex = req.body.fax;
-    const ups = req.body.ups;
-    const courier_willcall = req.body.courier_willcall;
-    const abs = req.body.abs;
-    const other_ship_method = req.body.other_ship_method;
-    const payment_type = req.body.payment_type;
-    const account_number = req.body.account_number;
-    const request_ship_date = req.body.request_ship_date;
-    const request_ship_time = req.body.request_ship_time;
-    const arrival_ship_date = req.body.arrival_ship_date;
-    const arrival_ship_time = req.body.arrival_ship_time;
-    const fob = req.body.fob;
-    const notes = req.body.notes;
-
-    const sqlInsert =  "INSERT INTO shipping_table (company_name, contact_name, add1, add2, city, country_state, zip, province, country, phone, fax, email, fedex, ups, courier_willcall, abs, other_ship_method, payment_type, account_number, request_ship_date, request_ship_time, arrival_ship_date, arrival_ship_time, fob, notes) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-    db.query(sqlInsert, [company_name, contact_name, add1, add2, city, country_state, zip, province, country, phone, fax, email, fedex, ups, courier_willcall, abs, other_ship_method, payment_type, account_number, request_ship_date, request_ship_time, arrival_ship_date, arrival_ship_time, fob, notes], (err, result) => {
-        console.log(result);
-    })
-});
-
 app.listen(3001, () =>{
     console.log("running on port 3001");
 });
-
-
-//--------------------Company page----------------------
-app.post("/api/insertCompany" , (req, res) =>{
-
-
-    const company_ID = req.body.company_id;
-    const company_Name  = req.body.company_name;
-    const addr1 = req.body.addr1;
-    const addr2 = req.body.addr2;
-    const city = req.body.city;
-    const state = req.body.state;
-    const country = req.body.country;
-    const zip = req.body.zip;
-    const Salesperson = req.body.Salesperson;
-    const phone = req.body.phone;
-    const Extension = req.body.extension;
-    const fax = req.body.fax;
-    const email = req.body.email;
-    const Web_addr = req.body.Web_addr;
-    const Tax_ID = req.body.Tax_ID;
-    const credit_checked = req.body.credit_checked;
-    const status = req.body.status;
-    const customer = req.body.customer;
-    const vendor = req.body.vendor;
-    const OEM = req.body.OEM;
-    const other_class = req.body.other_class;
-    const notes = req.body.notes;
-
-    const sqlInsert = "INSERT INTO company_table (company_ID, company_Name, addr1, addr2, city, state, country, zip, Salesperson, phone, Extension, fax, email, Web_addr, Tax_ID, credit_checked, status, customer, vendor, OEM, other_class, notes) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-    db.query(sqlInsert, [company_ID, company_Name, addr1, addr2, city, state, country, zip, Salesperson, phone, Extension, fax, email, Web_addr, Tax_ID, credit_checked, status, customer, vendor, OEM, other_class, notes], (err, result) => {
-        console.log(result);
-    });
-});
-//----------------end of Company page------------------

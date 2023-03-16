@@ -3,7 +3,7 @@ import './App.css'
 import { Link, useNavigate } from "react-router-dom"
 import Axios from "axios";
 
-const ItemCheckIn = ({ handleLogout }) => {
+const ItemCheckIn = () => {
     const navigate = useNavigate();
     const [customer_id, setCustomerID] = useState(null);
     const [item_id, setItemID] = useState(null);
@@ -39,7 +39,7 @@ const ItemCheckIn = ({ handleLogout }) => {
                     </div>
                 </div>
 
-                <button className="btn btn-outline-light" onClick={handleLogout}>Logout</button>
+                <button className="btn btn-outline-light">Sign In</button>
             </nav>
 
             <div className="container p-5">
