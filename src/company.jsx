@@ -291,7 +291,8 @@ const Company = ({ handleLogout }) => {
                         <div className="form-row">
                             <div className="input-group input-group-sm col-sm-3 pl-5">
                                 <div className="form-group custom-control custom-checkbox">
-                                    <input onChange={(prev) => setCreditChecked(prev => !prev)} checked={credit_checked} type="checkbox" className="custom-control-input" id="creditCheck"/>
+                                    <input type="checkbox" className="custom-control-input" id="creditCheck" onChange={(e) =>{
+                                    setCreditChecked(e.target.value)}}/>
                                     <label htmlFor="creditCheck" className="custom-control-label">Credit Checked?</label>
                                 </div>
                             </div>
@@ -299,21 +300,24 @@ const Company = ({ handleLogout }) => {
 
                             <div className="input-group input-group-sm col-sm-3 pl-5">
                                 <div className="form-group custom-control custom-checkbox">
-                                    <input  onChange={(prev) => setCustomer(prev => !prev)} checked={customer} type="checkbox" className="custom-control-input" id="customerCheck"/>
+                                    <input type="checkbox" className="custom-control-input" id="customerCheck" onChange={(e) =>{
+                                    setCustomer(e.target.value)}}/>
                                     <label htmlFor="customerCheck" className="custom-control-label">Customer?</label>
                                 </div>
                             </div>
 
                             <div className="input-group input-group-sm col-sm-3 pl-5">
                                 <div className="form-group custom-control custom-checkbox">
-                                    <input  onChange={(prev) => setVendor(prev => !prev)} checked={vendor} type="checkbox" className="custom-control-input" id="vendorCheck"/>
+                                    <input type="checkbox" className="custom-control-input" id="vendorCheck" onChange={(e) =>{
+                                    setVendor(e.target.value)}}/>
                                     <label htmlFor="vendorCheck" className="custom-control-label">Vendor?</label>
                                 </div>
                             </div>
 
                             <div className="input-group input-group-sm col-sm-3 pl-5">
                                 <div className="form-group custom-control custom-checkbox">
-                                    <input  onChange={(prev) => setOEM(prev => !prev)} checked={OEM}  type="checkbox" className="custom-control-input" id="OEMCheck"/>
+                                    <input type="checkbox" className="custom-control-input" id="OEMCheck" onChange={(e) =>{
+                                    setOEM(e.target.value)}}/>
                                     <label htmlFor="OEMCheck" className="custom-control-label">OEM?</label>
                                 </div>
                             </div>
