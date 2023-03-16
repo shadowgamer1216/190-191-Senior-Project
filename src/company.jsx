@@ -2,7 +2,7 @@ import React from "react";
 import './App.css'
 import { Link, useNavigate } from "react-router-dom"
 
-const Company = () => {
+const Company = ({ handleLogout }) => {
     const navigate = useNavigate();
     return (
         <div className="page">
@@ -20,7 +20,7 @@ const Company = () => {
                     </div>
                 </div>
 
-                <button className="btn btn-outline-light">Sign In</button>
+                <button className="btn btn-outline-light" onClick={handleLogout}>Logout</button>
             </nav>
 
 

@@ -2,7 +2,7 @@ import React from "react";
 import './App.css'
 import { Link, useNavigate } from "react-router-dom"
 
-const Shipping = () => {
+const Shipping = ({ handleLogout }) => {
   const navigate = useNavigate();
   return (
     <div className="product-page"> 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate as navigate } from 'react-router-dom';
 import HomePage from './HomePage';
 import ProductPage from './product';
 import ContactPage from './contact';
@@ -24,21 +24,23 @@ function App() {
 
   const handleLogout = () => {
     setIsLoggedIn(false);
+    navigate('/');
+  
   };
 
   return (
     <div className="App">
       {isLoggedIn ? (
           <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/product" element={<ProductPage />} />
-            <Route path="/contact" element={<ContactPage />} />
-            <Route path="/component" element={<ComponentPage />} />
-            <Route path="/location" element={<LocationPage />} />
-            <Route path="/order" element={<OrderPage />} />
-            <Route path="/company" element={<CompanyPage />} />
-            <Route path="/itemCheckIn" element={<ItemCheckInPage />} />
-            <Route path="/shipping" element={<Shipping />} />
+            <Route path="/" element={<HomePage handleLogout={handleLogout} />} />
+            <Route path="/product" element={<ProductPage handleLogout={handleLogout}/>} />
+            <Route path="/contact" element={<ContactPage handleLogout={handleLogout}/>} />
+            <Route path="/component" element={<ComponentPage handleLogout={handleLogout}/>} />
+            <Route path="/location" element={<LocationPage handleLogout={handleLogout}/>} />
+            <Route path="/order" element={<OrderPage handleLogout={handleLogout}/>} />
+            <Route path="/company" element={<CompanyPage handleLogout={handleLogout}/>} />
+            <Route path="/itemCheckIn" element={<ItemCheckInPage handleLogout={handleLogout}/>} />
+            <Route path="/shipping" element={<Shipping handleLogout={handleLogout}/>} />
         <Route path = "/search" element = {<Search/>} />
         <Route path = "search/searchcompany" element = {<SearchCompany/>} />
 
