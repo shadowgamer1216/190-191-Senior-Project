@@ -1,7 +1,7 @@
 import React from "react";
 import './App.css'
 import { Link, useNavigate } from "react-router-dom"
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Axios from 'axios';
 
 const Order = () => {
@@ -9,15 +9,15 @@ const Order = () => {
     const [salesPerson, setSalesPerson] = useState("");
     const [requestor, setRequestor] = useState("");
     const [customerContact, setCustomerContact] = useState("");
-    const [reOrder, setReOrder] = useState("");
+    const [reOrder, setReOrder] = useState(false);
 
     // Custom Product
     const [factoryOrderQuantity, setFactoryOrderQuantity] = useState(0);
-    const [customInvoice, setCustomInvoice] = useState("");
-    const [customPackingSlip, setCustomPackingSlip] = useState("");
+    const [customInvoice, setCustomInvoice] = useState(false);
+    const [customPackingSlip, setCustomPackingSlip] = useState(false);
     const [customQuantity, setCustomQuantity] = useState(0);
     const [customUnitPrice, setCustomUnitPrice] = useState(0);
-    const [customTotalPrice, setCustomTotalPrice] = useState(0);
+    const [customTotalPrice, setCustomTotalPrice] = useState(customQuantity * customUnitPrice);
 
     // Non-Inventory Line Items
     // Inventory Items
@@ -33,7 +33,7 @@ const Order = () => {
     const [numberOfScreens, setNumberOfScreens] = useState(0);
     const [screensPrice, setScreensPrice] = useState(0);
     const [subTotal, setSubTotal] = useState(0);
-    const [taxable, setTaxable] = useState(0);
+    const [taxable, setTaxable] = useState(false);
     const [taxRate, setTaxRate] = useState(0);
     const [tax, setTax] = useState(0);
     const [freightCharges, setFreightCharges] = useState(0);
@@ -49,7 +49,7 @@ const Order = () => {
     const [customerOrder, setCustomerOrder] = useState("");
     const [customerPODate, setCustomerPODate] = useState("");
     const [customerPONumber, setCustomerPONumber] = useState(0);
-    const [creditChecked, setCreditChecked] = useState("");
+    const [creditChecked, setCreditChecked] = useState(false);
     const [daysTurn, setDaysTurn] = useState(0);
     const [dateCodePrinting, setDateCodePrinting] = useState("");
     const [assemblyBy, setAssemblyBy] = useState("");
@@ -61,10 +61,32 @@ const Order = () => {
     const [customerNotes, setCustomerNotes] = useState("");
     const [vendorNotes, setVendorNotes] = useState("");
     const [orderNotes, setOrderNotes] = useState("");
-    const [orderStatus, setOrderStatus] = useState("");
+    const [orderStatus, setOrderStatus] = useState("Submitted");
+
+    const [productList, setProductList] = useState([]);
+    const [productID, setProductID] = useState(0);
+
+    const [contactList, setContactList] = useState([]);
+    const [customerID, setCustomerID] = useState("");
+
+    const CalculateTotal = ({customQuantity, customUnitPrice, customTotalPrice, setCustomTotalPrice}) => {
+        //const [customTotalPrice, setCustomTotalPrice] = useState(customQuantity * customUnitPrice);
+        setCustomTotalPrice(customQuantity * customUnitPrice)
+        return (
+            <div className="order">
+                <div className="form-row">
+                    <label className="col-sm-2.5 col-form-label">Total Price $</label>
+                    <div className="input-group input-group-sm mb-3 col-sm-5">
+                        <input type="number" readOnly defaultValue={customTotalPrice} className="form-control" id="customTotalPrice"
+                        />
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     const submit = () => {
-        Axios.post("http://localhost:3001/insertOrder", {
+        Axios.post("http://localhost:3001/api/insertOrder", {
             salesPerson: salesPerson,
             requestor: requestor,
             customerContact: customerContact,
@@ -122,6 +144,18 @@ const Order = () => {
             console.log("Success");
         })
     };
+
+    const getProduct = useMemo(() => {
+        Axios.get("http://localhost:3001/api/getProductInfo", {productID: productID}).then((response) => {
+            setProductList(response.data);
+        });
+    }, [productID]);
+
+    const getContact = useMemo(() => {
+        Axios.get("http://localhost:3001/api/getContactInfo", {customerID: customerID}).then((response) => {
+            setContactList(response.data);
+        });
+    }, [customerID]);
 
     function AddNonItem() {
         const [inputFields, setInputFields] = useState([
@@ -328,6 +362,99 @@ const Order = () => {
                     <div className="section-headers">
                         <h5>ABSO - Absolute Media, Inc.</h5>
                     </div>
+                    
+                    <div className="form-row">
+                        <label className="col-sm-6 col-form-label"><b><u>Billing Information</u></b></label>    {/* Contact Page*/}
+                        <label className="col-sm-6 col-form-label"><b><u>Product Information</u></b></label>    {/* Product Page*/}
+                    </div>
+
+                    <div className="form-row">
+                        <label className="col-sm-2 col-form-label"><b>Customer ID:</b></label>
+                        <div className="input-group input-group-sm mb-2 col-sm-2">
+                            <input type="text" className="form-control" id="name"
+                            onChange = {(e) => {
+                                setCustomerID(e.target.value)
+                            }}/>
+                        </div>
+                        <div>
+                            <button onClick={getContact} className="btn btn-outline-dark">Get Information</button>
+                        </div>
+                        <label className="col-sm-2 col-form-label"><b>Product ID:</b></label>
+                        <div className="input-group input-group-sm mb-2 col-sm-2">
+                            <input type="number" className="form-control" id="productID" 
+                            onChange = {(e) => {
+                                setProductID(e.target.value)
+                            }}/>
+                        </div>
+                        <div>
+                            <button onClick={getProduct} className="btn btn-outline-dark">Get Information</button>
+                        </div>
+                    </div>
+
+                    <div className="form-row">
+                        <label className="col-sm-6 col-form-label"><b>Company:</b></label>
+                            {contactList.map((val, key) => {
+                                return <div> {val.company} </div>
+                            })}
+                        <label className="col-sm-2 col-form-label"><b>Product Category:</b></label>
+                            {productList.map((val, key) => {
+                                return <div> {val.product_category} </div>
+                            })}
+                    </div>
+
+                    <div className="form-row">
+                        <label className="col-sm-6 col-form-label"><b>Phone:</b></label>
+                            {contactList.map((val, key) => {
+                                return <div> {val.phone} </div>
+                            })}
+                        <label className="col-sm-2 col-form-label"><b>OEM Product ID:</b></label>
+                            {productList.map((val, key) => {
+                                return <div> {val.oem_product_id} </div>
+                            })}
+                    </div>
+
+                    <div className="form-row">
+                        <label className="col-sm-6 col-form-label"><b>Address 1:</b></label>
+                            {contactList.map((val, key) => {
+                                return <div> {val.add_1} </div>
+                            })}
+                        <label className="col-sm-2 col-form-label"><b>Product Title:</b></label>
+                            {productList.map((val, key) => {
+                                return <div> {val.product_title} </div>
+                            })}
+                    </div>
+
+                    <div className="form-row">
+                        <label className="col-sm-6 col-form-label"><b>Address 2:</b></label>
+                            {contactList.map((val, key) => {
+                                return <div> {val.add_2} </div>
+                            })}
+                        <label className="col-sm-6 col-form-label"><b>Number of Colors:</b></label>
+                            {/* {productList.map((val, key) => {
+                                return <div> {val.product_category} </div>
+                            })} */}
+                    </div>
+
+                    <div className="form-row">
+                        <label className="col-sm-2 col-form-label"><b>City:</b></label>
+                            {contactList.map((val, key) => {
+                                return <div> {val.city} </div>
+                            })}
+                    </div>
+
+                    <div className="form-row">
+                        <label className="col-sm-2 col-form-label"><b>State:</b></label>
+                            {contactList.map((val, key) => {
+                                return <div> {val.state} </div>
+                            })}
+                    </div>
+
+                    <div className="form-row">
+                        <label className="col-sm-2 col-form-label"><b>Zip:</b></label>
+                            {contactList.map((val, key) => {
+                                return <div> {val.zip} </div>
+                            })}
+                    </div>
 
                     <div className="form-row">
                         <label htmlFor="salesPerson" className="col-sm-2 col-form-label">SalesPerson</label>
@@ -363,11 +490,12 @@ const Order = () => {
                         <label htmlFor="reOrder" className="col-sm-2 col-form-label">Re-Order?</label>
                         <div className="input-group input-group-sm col-sm-2 pl-5">
                             <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" className="custom-control-input" id="reOrder"
-                                onChange = {(e) => {
-                                    setReOrder(e.target.value)
+                                <input type="checkbox" checked={reOrder} className="custom-control-input" id="reOrder"
+                                onChange = {() =>  {
+                                    setReOrder((prev) => !prev) 
                                 }}/>
                                 <label htmlFor="reOrder" className="custom-control-label"></label>
+                                {reOrder ? "Selected" : "Unchecked"}
                             </div>
                         </div>
                     </div>
@@ -380,23 +508,23 @@ const Order = () => {
                     </div>
 
                     <div className="form-row">
-                        <label htmlFor="productTitle" className="col-sm-2 col-form-label">Product Title</label>
-                        <div className="input-group input-group-sm mb-3 col-sm-10">
-                            <input type="text" readOnly className="form-control" id="productTitle" />
-                        </div>
+                        <label htmlFor="productTitle" className="col-sm-2 col-form-label"><b>Product Title:</b></label>
+                            {productList.map((val, key) => {
+                                return <div> {val.product_title} </div>
+                            })}
                     </div>
 
                     <div className="form-row">
-                        <label htmlFor="productID" className="col-sm-2 col-form-label">Product ID</label>
-                        <div className="input-group input-group-sm mb-3 col-sm-10">
-                            <input type="text" readOnly className="form-control" id="productID" />
-                        </div>
+                        <label htmlFor="productID" className="col-sm-2 col-form-label"><b>Product ID:</b></label>
+                            {productList.map((val, key) => {
+                                return <div> {val.product_id} </div>
+                            })}
                     </div>
 
                     <div className="form-row">
                         <label htmlFor="factoryOrderQuantity" className="col-sm-2 col-form-label">Factory Order Quantity</label>
                         <div className="input-group input-group-sm mb-3 col-sm-10">
-                            <input type="text" className="form-control" id="factoryOrderQuantity"
+                            <input type="number" className="form-control" id="factoryOrderQuantity"
                             onChange = {(e) => {
                                 setFactoryOrderQuantity(e.target.value)
                             }}/>
@@ -404,51 +532,41 @@ const Order = () => {
                     </div>
 
                     <div className="form-row">
-                        <label className="col-sm-2.75 col-form-label">Invoice</label>
+                        <label className="col-sm-2.5 col-form-label">Invoice</label>
                         <div className="input-group input-group-sm mb-3 col-sm-1">
                             <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" className="custom-control-input" id="customInvoice"
-                                onChange = {(e) => {
-                                    setCustomInvoice(e.target.value)
-                                }}/>
+                                <input type="checkbox" checked={customInvoice} className="custom-control-input" id="customInvoice"
+                                onChange = {() => setCustomInvoice((prev) => !prev) }/>
                                 <label htmlFor="customInvoice" className="custom-control-label"></label>
                             </div>
                         </div>
 
-                        <label className="col-sm-2.75 col-form-label">Packing Slip</label>
+                        <label className="col-sm-2.5 col-form-label">Packing Slip</label>
                         <div className="input-group input-group-sm mb-3 col-sm-1">
                             <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" className="custom-control-input" id="CustomPackingSlip"
-                                onChange = {(e) => {
-                                    setCustomPackingSlip(e.target.value)
-                                }}/>
+                                <input type="checkbox" checked ={customPackingSlip} className="custom-control-input" id="CustomPackingSlip"
+                                onChange = {() => setCustomPackingSlip((prev) => !prev)} />
                                 <label htmlFor="CustomPackingSlip" className="custom-control-label"></label>
                             </div>
                         </div>
 
-                        <label className="col-sm-2.75 col-form-label">Quantity</label>
+                        <label className="col-sm-2.5 col-form-label">Quantity</label>
                         <div className="input-group input-group-sm mb-3 col-sm-1">
-                            <input type="text" className="form-control" id="customQuantity"
+                            <input type="number" className="form-control" id="customQuantity"
                             onChange = {(e) => {
-                                setCustomQuantity(e.target.value)
+                                setCustomQuantity(+e.target.value)
                             }}/>
                         </div>
 
-                        <label className="col-sm-2.75 col-form-label">Unit Price $</label>
+                        <label className="col-sm-2.5 col-form-label">Unit Price $</label>
                         <div className="input-group input-group-sm mb-3 col-sm-1">
-                            <input type="text" className="form-control" id="customUnitPrice"
+                            <input type="number" className="form-control" id="customUnitPrice"
                             onChange = {(e) => {
-                                setCustomUnitPrice(e.target.value)
+                                setCustomUnitPrice(+e.target.value)
                             }}/>
                         </div>
 
-                        <label className="col-sm-2.75 col-form-label">Total Price $</label>
-                        <div className="input-group input-group-sm mb-3 col-sm-1">
-                            <input type="text" readOnly className="form-control" id="customTotalPrice"
-                            onChange = {(e) => {
-                                setCustomTotalPrice(e.target.value)
-                            }}/>
-                         </div>
+                        <CalculateTotal customQuantity={customQuantity} customUnitPrice={customUnitPrice} customTotalPrice={customTotalPrice} setCustomTotalPrice={setCustomTotalPrice}/>
                     </div>
                 </div>
 
@@ -476,17 +594,17 @@ const Order = () => {
                     <div className="form-row">
                         <label htmlFor="assemblyCharges" className="col-sm-2 col-form-label">Assembly Charges</label>
                         <div className="input-group input-group-sm mb-3 col-sm-10">
-                            <input type="text" className="form-control" id="assemblyChargesQuantity"
+                            <input type="number" className="form-control" id="assemblyChargesQuantity" placeholder="Quantity"
                             onChange = {(e) => {
                                 setAssemblyChargesQuantity(e.target.value)
                             }}/>
-                            $
-                            <input type="text" className="form-control" id="assemblyChargesUnitPrice" 
+                            
+                            <input type="number" className="form-control" id="assemblyChargesUnitPrice" placeholder="Unit Price $"
                             onChange = {(e) => {
                                 setAssemblyChargesUnitPrice(e.target.value)
                             }}/>
-                            $
-                            <input type="text" readOnly className="form-control" id="assemblyChargesTotalPrice"
+                            
+                            <input type="number" readOnly className="form-control" id="assemblyChargesTotalPrice" placeholder="Total Price $"
                             onChange = {(e) => {
                                 setAssemblyChargesTotalPrice(e.target.value)
                             }}/>
@@ -496,17 +614,17 @@ const Order = () => {
                     <div className="form-row">
                         <label htmlFor="printingCharges" className="col-sm-2 col-form-label">Date Code Printing Charges</label>
                         <div className="input-group input-group-sm mb-3 col-sm-10">
-                            <input type="text" className="form-control" id="printingChargesQuantity"
+                            <input type="number" className="form-control" id="printingChargesQuantity" placeholder="Quantity"
                             onChange = {(e) => {
                                 setPrintingChargesQuantity(e.target.value)
                             }}/>
-                            $
-                            <input type="text" className="form-control" id="printingChargesUnitPrice"
+                            
+                            <input type="number" className="form-control" id="printingChargesUnitPrice" placeholder="Unit Price $"
                             onChange = {(e) => {
                                 setPrintingChargesUnitPrice(e.target.value)
                             }}/>
-                            $
-                            <input type="text" readOnly className="form-control" id="printingChargesTotalPrice"
+                            
+                            <input type="number" readOnly className="form-control" id="printingChargesTotalPrice" placeholder="Total Price $"
                             onChange = {(e) => {
                                 setPrintingChargesTotalPrice(e.target.value)
                             }}/>
@@ -516,8 +634,8 @@ const Order = () => {
                     <div className="form-row">
                         <label htmlFor="setupCharge" className="col-sm-2 col-form-label">Date Code Setup Charge</label>
                         <div className="input-group input-group-sm mb-3 col-sm-10">
-                            $
-                            <input type="text" className="form-control" id="setupCharge"
+                            
+                            <input type="number" className="form-control" id="setupCharge" placeholder="$"
                             onChange = {(e) => {
                                 setSetupCharge(e.target.value)
                             }}/>
@@ -527,15 +645,15 @@ const Order = () => {
                     <div className="form-row">
                         <label htmlFor="numberofScreens" className="col-sm-2 col-form-label">Art Manipulation / Film Charges for Screens</label>
                         <div className="input-group input-group-sm mb-3 col-sm-5">
-                            Number of Screens
-                            <input type="text" className="form-control" id="numberOfScreens"
+
+                            <input type="number" className="form-control" id="numberOfScreens" placeholder="Number of Screens"
                             onChange = {(e) => {
                                 setNumberOfScreens(e.target.value)
                             }}/>
                         </div>
                         <div className="input-group input-group-sm mb-3 col-sm-5">
-                            $
-                            <input type="text" className="form-control" id="screensPrice"
+                            
+                            <input type="number" className="form-control" id="screensPrice" placeholder="$"
                             onChange = {(e) => {
                                 setScreensPrice(e.target.value)
                             }}/>
@@ -545,8 +663,8 @@ const Order = () => {
                     <div className="form-row">
                         <label htmlFor="subTotal" className="col-sm-2 col-form-label">Sub Total</label>
                         <div className="input-group input-group-sm mb-3 col-sm-10">
-                            $
-                            <input type="text" className="form-control" id="subTotal"
+                            
+                            <input type="number" className="form-control" id="subTotal" placeholder="$"
                             onChange = {(e) => {
                                 setSubTotal(e.target.value)
                             }}/>
@@ -557,16 +675,14 @@ const Order = () => {
                         <label htmlFor="taxable" className="col-sm-2 col-form-label">Taxable?</label>
                         <div className="input-group input-group-sm col-sm-2 pl-5">
                             <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" className="custom-control-input" id="taxRate"
-                                onChange = {(e) => {
-                                    setTaxable(e.target.value)
-                                }}/>
+                                <input type="checkbox" checked={taxable} className="custom-control-input" id="taxRate"
+                                onChange = {() => setTaxable((prev) => !prev)} />
                                 <label htmlFor="taxRate" className="custom-control-label">Tax Rate?</label>
                             </div>
                         </div>
 
                         <div className="input-group input-group-sm mb-3 col-sm-8">
-                            <input type="text" className="form-control" id="taxable"
+                            <input type="number" className="form-control" id="taxable"
                             onChange = {(e) => {
                                 setTaxRate(e.target.value)
                             }}/>
@@ -576,8 +692,8 @@ const Order = () => {
                     <div className="form-row">
                         <label htmlFor="tax" className="col-sm-2 col-form-label">Tax</label>
                         <div className="input-group input-group-sm mb-3 col-sm-10">
-                            $
-                            <input type="text" className="form-control" id="tax"
+                            
+                            <input type="number" className="form-control" id="tax" placeholder="$"
                             onChange = {(e) => {
                                 setTax(e.target.value)
                             }}/>
@@ -587,8 +703,8 @@ const Order = () => {
                     <div className="form-row">
                         <label htmlFor="freightCharges" className="col-sm-2 col-form-label">Freight Charges</label>
                         <div className="input-group input-group-sm mb-3 col-sm-10">
-                            $
-                            <input type="text" className="form-control" id="freightCharges"
+                            
+                            <input type="number" className="form-control" id="freightCharges" placeholder="$"
                             onChange = {(e) => {
                                 setFreightCharges(e.target.value)
                             }}/>
@@ -598,8 +714,8 @@ const Order = () => {
                     <div className="form-row">
                         <label htmlFor="priceTotal" className="col-sm-2 col-form-label">Order Price Total</label>
                         <div className="input-group input-group-sm mb-3 col-sm-10">
-                            $
-                            <input type="text" className="form-control" id="priceTotal"
+                            
+                            <input type="text" className="form-control" id="priceTotal" placeholder="$"
                             onChange = {(e) => {
                                 setPriceTotal(e.target.value)
                             }}/>
@@ -692,10 +808,8 @@ const Order = () => {
                         <label htmlFor="creditChecked" className="col-sm-2 col-form-label">Credit Checked?</label>
                         <div className="input-group input-group-sm col-sm-2 pl-5">
                             <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" className="custom-control-input" id="creditChecked"
-                                onChange = {(e) => {
-                                    setCreditChecked(e.target.value)
-                                }}/>
+                                <input type="checkbox" checked={creditChecked} className="custom-control-input" id="creditChecked"
+                                onChange = {() => setCreditChecked((prev) => !prev)} />
                                 <label htmlFor="creditChecked" className="custom-control-label"></label>
                             </div>
                         </div>
@@ -838,20 +952,20 @@ const Order = () => {
                             onChange = {(e) => {
                                 setOrderStatus(e.target.value)
                             }}>
-                                <option defaultValue="0">Submitted</option>
+                                <option defaultValue="Submitted">Submitted</option>
                                 <option value="Entered">Entered</option>
                                 <option value="Partial Shipped">Partial Shipped</option>
                                 <option value="Complete Shipped">Complete Shipped</option>
                                 <option value="Invoiced">Invoiced</option>
                                 <option value="On Hold">On Hold</option>
-                                <option value="Canceled">Canceled</option>
+                                <option value="Cancelled">Cancelled</option>
                             </select>
                         </div>
                     </div>
                 </div>
 
                 <div className="submit p-3">
-                    <button onClick = {submit} type="submit" id="add-product" className="btn btn-success">Submit</button>
+                    <button onClick = {submit} type="submit" id="add-order" className="btn btn-success">Submit</button>
                 </div>
 
             </form>

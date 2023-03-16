@@ -6,23 +6,19 @@ import Axios from "axios";
 
 const Component = () => {
     const navigate = useNavigate();
-    const[customer_id, setCustomerID] = useState ("");
-    const[component_type, setComponent_Type] = useState ("");
-    const[oem_pn, setOEM_PN] = useState ("");
-    const[description_1, setDescription_1] = useState ("");
-    const[description_2, setDescription_2] = useState ("");
-    const[description_3, setDescription_3] = useState ("");
-    const[description_4, setDescription_4] = useState ("");
-    const[description_5, setDescription_5] = useState ("");
-    const[size, setSize] = useState ("");
-    const[supplier_brand_id, setSupplier_Brand_ID] = useState ("");
-    const[color, setColor] = useState ("");
-    const[notes, setNotes] = useState ("");
-    const[owned_by, setOwned_By] = useState ("");
-    const[uom, setUOM] = useState ("");
-    const[component_status, setComponent_Status] = useState ("");
-    const[packaging_component, setPackaging_Component] = useState ("");
-    const[item_location, setItem_Location] = useState ("");
+    const[customer_id, setCustomerID] = useState("");
+    const[component_type, setComponent_Type] = useState(null);
+    const[oem_pn, setOEM_PN] = useState(null);
+    const[component_description, setComponent_Description] = useState(null);
+    const[size, setSize] = useState(null);
+    const[supplier_brand_id, setSupplier_Brand_ID] = useState(null);
+    const[color, setColor] = useState(null);
+    const[notes, setNotes] = useState(null);
+    const[uom, setUOM] = useState(null);
+    const[component_status, setComponent_Status] = useState(null);
+    const[owned_by, setOwned_By] = useState(0);
+    const[packaging_component, setPackaging_Component] = useState(0);
+    //const[item_location, setItem_Location] = useState ("");
 
 
     const submit = () => {
@@ -31,23 +27,23 @@ const Component = () => {
             customer_id: customer_id, 
             component_type: component_type, 
             oem_pn: oem_pn, 
-            description_1: description_1, 
-            description_2: description_2, 
-            description_3: description_3, 
-            description_4: description_4, 
-            description_5: description_5, 
+            component_description: component_description,  
             size: size, 
             supplier_brand_id: supplier_brand_id, 
             color: color, notes: notes, 
-            owned_by: owned_by, 
             uom: uom, 
-            component_status: component_status, 
-            packaging_component: packaging_component, 
-            item_location: item_location
-        })
-        .then(()=> {
+            component_status: component_status,
+            owned_by: owned_by,  
+            packaging_component: packaging_component 
+            //item_location: item_location
+        }).then(()=> {
             alert('inserted component');
         })
+        // }).then((result) => {
+        //     console.log(result.data);
+        // }).catch(err => {
+        //     console.log(err);
+        // });
     };
 
     return (
@@ -86,7 +82,7 @@ const Component = () => {
                             <div className="input-group input-group-sm mb-3 col-sm-10">
                                 <input type="text" className="form-control" id="CID" onChange={(e) => {
                                     setCustomerID(e.target.value)
-                                }}/>
+                                }} required />
                             </div>
                         </div>
 
@@ -97,10 +93,10 @@ const Component = () => {
                                     setComponent_Type(e.target.value)
                                 }}>
                                     <option selected value="">Select Value</option>
-                                    <option value="Blank Disc/Tape"> Blank Disc/Tape</option>
-                                    <option value="Enclosure"> Enclosure</option>
-                                    <option value="Insert"> Insert</option>
-                                    <option value="Items"> Items</option>
+                                    <option value="Assembly"> Assembly</option>
+                                    <option value="Bag"> Bag</option>
+                                    <option value="Blu-ray"> Blue-ray</option>
+                                    <option value="CD"> CD</option>
                                 </select>
                             </div>
                         </div>
@@ -115,47 +111,11 @@ const Component = () => {
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="desription1" className="col-sm-2 col-form-label">Description 1</label>
+                            <label htmlFor="component_description" className="col-sm-2 col-form-label">Description</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="description1" onChange={(e) => {
-                                    setDescription_1(e.target.value)
-                                }}/>
-                            </div>
-                        </div>
-
-                        <div className="form-row">
-                            <label htmlFor="desription2" className="col-sm-2 col-form-label">Description 2</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="description2" onChange={(e) => {
-                                    setDescription_2(e.target.value)
-                                }}/>
-                            </div>
-                        </div>
-
-                        <div className="form-row">
-                            <label htmlFor="desription3" className="col-sm-2 col-form-label">Description 3</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="description3" onChange={(e) => {
-                                    setDescription_3(e.target.value)
+                                <textarea rows="4" cols="50" className="form-control" name="component_description" id="custom-area" onChange={(e) => {
+                                    setComponent_Description(e.target.value)
                                  }} />
-                            </div>
-                        </div>
-
-                        <div className="form-row">
-                            <label htmlFor="desription4" className="col-sm-2 col-form-label">Description 4</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="description4" onChange={(e) => {
-                                    setDescription_4(e.target.value)
-                                 }} />
-                            </div>
-                        </div>
-
-                        <div className="form-row">
-                            <label htmlFor="desription5" className="col-sm-2 col-form-label">Description 5</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="description5" onChange={(e) => {
-                                    setDescription_5(e.target.value)
-                                 }}/>
                             </div>
                         </div>
 
@@ -222,8 +182,8 @@ const Component = () => {
                                     setComponent_Status(e.target.value)
                                  }}>
                                     <option selected value="">Select Value</option>
-                                    <option value="new"> New</option>
-                                    <option value="TBD"> TBD</option>
+                                    <option value="Active"> Active</option>
+                                    <option value="Inactive"> Inactive</option>
                                 </select>
                             </div>
                         </div>
@@ -231,74 +191,67 @@ const Component = () => {
                         <div className="form-row">
                             <div className="input-group input-group-sm col-sm-3 pl-5">
                                 <div className="form-group custom-control custom-checkbox">
-                                    <input type="checkbox" className="custom-control-input" id="ownedbycheck" onChange={(e) => {
-                                        setOwned_By(e.target.value)
-                                    }}/>
+                                    <input onChange={(prev) => setOwned_By(prev => !prev)} checked = {owned_by} type="checkbox" className="custom-control-input" id="ownedbycheck" />
                                     <label htmlFor="ownedbycheck" className="custom-control-label">Owned By Individual Company?</label>
                                 </div>
                             </div>
                    
                             <div className="input-group input-group-sm col-sm-3 pl-5">
                                 <div className="form-group custom-control custom-checkbox">
-                                    <input type="checkbox" className="custom-control-input" id="packagingcomponent" onChange={(e) => {
-                                        setPackaging_Component(e.target.value)
-                                    }}/>
+                                    <input onChange={(prev) => setPackaging_Component(prev => !prev)} checked = {packaging_component}type="checkbox" className="custom-control-input" id="packagingcomponent" />
                                     <label htmlFor="packagingcomponent" className="custom-control-label">Packaging Component</label>
                                 </div>
                             </div>
                         </div>
-
                     </div>
 
-                    <div className="company-info pt-3">
+                    <div className="submit p-3">
+                        <button onClick = {submit} type="submit" id="add-contact" className="btn btn-success">Submit</button>
+                    </div>
+                    
+                </form>
+
+                <form>                       
+                    <div className="component-info pt-3">
                         <div className="section-headers">
                             <h5>List of Inventory Locations</h5>
                         </div>
 
-                        <div className="order-information">
-                            <table className="table table-sm table-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Item ID</th>
-                                        <th scope="col">Location ID</th>
-                                        <th scope="col">Type</th>
-                                        <th scope="col">Physical Location</th>
-                                        <th scope="col">Quantity on Loc</th>
-                                        <th scope="col">Add to Location</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row"></th>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div className="product-location m-3 p-3">
-                            <label htmlFor="add-location" className="col-form-label-sm">Add a location for this Item</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-4">
-                                <select className="form-control form-control-sm" name="add-location" id="add-location">
-                                    <option defaultValue="0">Select Location</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                </select>
-                                <button type="submit" id="add-location" className="btn btn-info btn-sm ml-3">Add Location</button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div className="submit p-3">
-                        <button onClick = {submit} type="submit" id="add-contact" className="btn btn-success">Submit</button>
+                        <table class="table">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">Item ID</th>
+                                    <th scope="col">Location ID</th>
+                                    <th scope="col">Type</th>
+                                    <th scope="col">Physical Location</th>
+                                    <th scope="col">Qty on Loc</th>
+                                    <th scope="col">Add to Loc</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>No records</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
 
                 </form>
+
+                <div className="product-location m-3 p-3">
+                    <label htmlFor="add_location" className="col-form-label-sm">Add a location for this Component</label>
+                    <div className="input-group input-group-sm mb-3 col-sm-4">
+                        <select className="form-control form-control-sm" id="add_location">
+                            <option defaultValue="0">Select Location</option>
+                            <option value="1">Option 1</option>
+                            <option value="2">Option 2</option>
+                            <option value="3">Option 3</option>
+                        </select>
+                        <button type="submit" id="add_location" className="btn btn-info btn-sm ml-3">Add Location</button>
+                    </div>
+                </div>
+
+               
 
                 <button className="btn btn-outline-dark" onClick={() => navigate(-1)}>Home</button>
 

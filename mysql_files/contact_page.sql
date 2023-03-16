@@ -30,11 +30,11 @@ create table contact_table (
 
 DROP TABLE IF EXISTS location_table;
 create table location_table(
-	id int(11) NOT NULL auto_increment,
+	id INT NOT NULL auto_increment,
 	location_id VARCHAR(64) NOT NULL DEFAULT '', 
-	location_type VARCHAR(64) NOT NULL DEFAULT '',
-	item_id INT(11) DEFAULT NULL,
-	qty INT(11) DEFAULT '0',
+	location_type VARCHAR(64) DEFAULT NULL,
+	item_id INT DEFAULT NULL,
+	qty INT DEFAULT '0',
 	item_owner VARCHAR(64) DEFAULT NULL,
 	physical_location VARCHAR(64) DEFAULT NULL,
 	notes TEXT,
@@ -43,13 +43,23 @@ create table location_table(
 	KEY item_id (item_id)
 );
 
+DROP TABLE IF EXISTS location_history;
+create table location_history(
+  id INT NOT NULL AUTO_INCREMENT,
+  location_id VARCHAR(20) NOT NULL DEFAULT '',
+  item_id INT NOT NULL DEFAULT '0',
+  qty INT NOT NULL DEFAULT '0',
+  date_added DATE NOT NULL DEFAULT (CURRENT_DATE),
+  KEY id (id)
+);
+
 DROP TABLE IF EXISTS item_check_in_table;
 create table item_check_in_table(
-	id INT(11) NOT NULL auto_increment,
+	id INT NOT NULL auto_increment,
 	customer_id VARCHAR(4) DEFAULT NULL,
 	item_id VARCHAR(25) DEFAULT NULL, 
 	mfr_pn VARCHAR(25) DEFAULT NULL,
-	item_description VARCHAR(100) DEFAULT NULL,
+	description VARCHAR(100) DEFAULT NULL,
 	carrier VARCHAR(50) DEFAULT NULL,
 	quantity VARCHAR(25) DEFAULT NULL,
 	disposition VARCHAR(100) DEFAULT NULL,
@@ -59,24 +69,20 @@ create table item_check_in_table(
 	PRIMARY KEY (id)
 );
 
+DROP TABLE IF EXISTS component_table;
 create table component_table (
-	customer_id VARCHAR(8) NOT NULL,
-	component_type VARCHAR(25) NOT NULL,
+	customer_id VARCHAR(25) NOT NULL DEFAULT '',
+	component_type VARCHAR(25) DEFAULT NULL,
 	oem_pn VARCHAR(50) DEFAULT NULL,
-	description_1 VARCHAR(255) DEFAULT NULL,
-	description_2 VARCHAR(255) DEFAULT NULL,
-	description_3 VARCHAR(255) DEFAULT NULL,
-	description_4 VARCHAR(255) DEFAULT NULL,
-	description_5 VARCHAR(255) DEFAULT NULL,
+	component_description TEXT,
 	size VARCHAR(25) DEFAULT NULL,
 	supplier_brand_id VARCHAR(25) DEFAULT NULL,
 	color VARCHAR(25) DEFAULT NULL,
 	notes TEXT,
-	owned_by VARCHAR(25) DEFAULT NULL,
 	uom VARCHAR(25) DEFAULT NULL,
-	component_status VARCHAR(50) DEFAULT NULL,
-	packaging_component BIT,
-	item_location VARCHAR(25) DEFAULT NULL,
+	component_status VARCHAR(25) DEFAULT NULL,
+  owned_by INT DEFAULT NULL,
+	packaging_component INT DEFAULT NULL,
   PRIMARY KEY (customer_id)
 );
 
@@ -132,31 +138,17 @@ CREATE TABLE product_table (
 
 DROP TABLE IF EXISTS order_table;
 create table order_table (
-	-- Billing Information (Contact's Information)
-    #company_name VARCHAR(128) DEFAULT NULL,
-    #contact VARCHAR(64) DEFAULT NULL,
-    #phone VARCHAR(15) DEFAULT NULL,
-    #address1 VARCHAR(64) DEFAULT NULL,
-    #address2 VARCHAR(64) DEFAULT NULL,
-    #city VARCHAR(64) DEFAULT NULL,
-    #state VARCHAR(4) DEFAULT NULL,
-    #zip VARCHAR(16) DEFAULT NULL,
-    -- Product Information
 	product_id INT NOT NULL AUTO_INCREMENT,
-    #product_category VARCHAR(64) DEFAULT NULL,
-    #OEM_product_id VARCHAR(64) DEFAULT NULL,
-    #product_title VARCHAR(256) DEFAULT NULL,
-    #number_of_colors CHAR(2) DEFAULT NULL,
+    contact_id INT DEFAULT NULL,
+    -- Product Information
     salesperson VARCHAR(64) DEFAULT NULL,
     requestor VARCHAR(64) DEFAULT NULL,
     customer_contact VARCHAR(64) DEFAULT NULL,
-    #re_order BOOL DEFAULT NULL,
+    re_order BOOL DEFAULT NULL,
     -- Custom Product
-    #product_title VARCHAR(256) DEFAULT NULL,
-    #product_id INT(25) DEFAULT NULL,
     factory_order_quantity INT DEFAULT NULL,
-    #custom_invoice BOOL DEFAULT NULL,
-    #custom_packing_slip BOOL DEFAULT NULL,
+    custom_invoice BOOL DEFAULT NULL,
+    custom_packing_slip BOOL DEFAULT NULL,
     custom_quantity INT DEFAULT NULL,
     custom_unit_price FLOAT DEFAULT NULL,
     custom_total_price FLOAT DEFAULT NULL,
@@ -185,7 +177,7 @@ create table order_table (
     number_of_screens INT DEFAULT NULL,
     art_manipulation FLOAT DEFAULT NULL,
     sub_total FLOAT DEFAULT NULL,
-    #taxable BOOL DEFAULT NULL,
+    taxable BOOL DEFAULT NULL,
     tax_rate FLOAT DEFAULT NULL,
     tax FLOAT DEFAULT NULL,
     freight_charges FLOAT DEFAULT NULL,
@@ -199,7 +191,7 @@ create table order_table (
     customer_order_date VARCHAR(64) DEFAULT NULL,
     customer_po_date VARCHAR(64) DEFAULT NULL,
     customer_po_number INT DEFAULT NULL,
-    #credit_checked BOOL DEFAULT NULL,
+    credit_checked BOOL DEFAULT NULL,
     days_turn INT DEFAULT NULL,
     date_code_printing VARCHAR(64) DEFAULT NULL,
     assembly_by VARCHAR(128) DEFAULT NULL,
@@ -213,11 +205,11 @@ create table order_table (
     order_notes TEXT DEFAULT NULL,
     order_status VARCHAR(128) DEFAULT NULL,
     PRIMARY KEY (product_id)
+    #PRIMARY KEY(contact_id)
 );
 
 DROP TABLE IF EXISTS shipping_table;
 create table shipping_table(
-	customer_id varchar(8) NOT NULL,
 	company_name varchar(20),
 	contact_name varchar(50), 
 	add1 varchar(50),
@@ -229,15 +221,11 @@ create table shipping_table(
 	country varchar(50),
 	phone INT(10),
 	fax INT(10) default NULL,
-  	email varchar(50),
-  	PRIMARY KEY (customer_id)
-);
-
-create table shipment_info_table(
+ 	email varchar(50),
 	fedex varchar(10) default NULL,
 	ups varchar(10) default NULL,
 	courier_willcall varchar(10) default NULL,
-  abs varchar(10) default NULL,
+  	abs varchar(10) default NULL,
 	other_ship_method varchar(10) default NULL,
 	payment_type varchar(10),
 	account_number varchar(50),
@@ -245,7 +233,6 @@ create table shipment_info_table(
 	request_ship_time DATETIME,
 	arrival_ship_date DATE,
 	arrival_ship_time DATETIME,
-  saturday_deliv INT(2),
 	fob varchar(50) default null,
 	notes TEXT
 );
