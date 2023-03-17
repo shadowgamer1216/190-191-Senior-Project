@@ -3,16 +3,19 @@ import {useState, useEffect} from "react";
 import './App.css'
 import { Link, useNavigate } from "react-router-dom"
 import Axios from "axios";
+import app from "./App";
 
 
 const SearchCompany = () => {
     const navigate = useNavigate();
-
+    const [info, getInfo] = useState([]);
+    
     const submit = () => {
-        //Axios.post("http://localhost:3001/api/insert", {})
-        //.then(()=> {
-            //alert('inserted');
-        //})
+        Axios.post("http://localhost:3001/api/searchCompany", {})
+        .then(()=> {
+            app.get("/api/searchCompany?")
+            .then(response => this.getInfo({info: response.data.total}));
+        })
     };
 
     return (
@@ -68,6 +71,33 @@ const SearchCompany = () => {
                         <button className="btn btn-outline-dark" onClick={() => navigate("/")}>Home</button>
                     </div>
                 </form>
+
+                <div className="product-info pt-3">
+                        <div className="section-headers">
+                            <h5>List of Companies</h5>
+                        </div>
+                        
+                        <table class="table">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th scope ="col"> ID </th>
+                                        <th scope ="col"> Contact Name </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td> No records </td>
+                                        {info.map((row) => (
+                                            <tr key={row.customer_id}>
+                                            <td>{row.customer_id}</td>
+                                            <td>{row.company}</td>
+                                        </tr>
+                                   ))}
+                                    </tr>
+                                </tbody>
+                        </table>
+                    </div>
+
             </div>
 
             <footer className="footer">
@@ -92,5 +122,6 @@ const SearchCompany = () => {
 
     );
 };
+
 
 export default SearchCompany;
