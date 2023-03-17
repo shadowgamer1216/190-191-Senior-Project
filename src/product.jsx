@@ -187,18 +187,18 @@ const Product = () => {
                             <div className="input-group input-group-sm mb-3 col-sm-3">
                                 <select onChange={(e) => setCategory(e.target.value)} className="form-control" id="product_category">
                                     <option defaultValue="0">Select Category</option>
-                                    <option value="cdr">CD-R</option>
-                                    <option value="mdr">MD-R</option>
-                                    <option value="bcr">BC-R</option>
-                                    <option value="cdrom">CD-ROM</option>
-                                    <option value="mdrom">MD-ROM</option>
-                                    <option value="dvd">DVD</option>
-                                    <option value="dvdr">DVD-R</option>
-                                    <option value="dvd5">DVD-5</option>
-                                    <option value="dvd9">DVD-9</option>
-                                    <option value="diskette">Diskette</option>
-                                    <option value="tape">Tape</option>
-                                    <option value="other">Other</option>
+                                    <option value="CD-R">CD-R</option>
+                                    <option value="MD-R">MD-R</option>
+                                    <option value="BC-R">BC-R</option>
+                                    <option value="CD-ROM">CD-ROM</option>
+                                    <option value="MD-ROM">MD-ROM</option>
+                                    <option value="DVD">DVD</option>
+                                    <option value="DVD-R">DVD-R</option>
+                                    <option value="DVD-5">DVD-5</option>
+                                    <option value="DVD-9">DVD-9</option>
+                                    <option value="Diskette">Diskette</option>
+                                    <option value="Tape">Tape</option>
+                                    <option value="Other">Other</option>
 
                                 </select>
                             </div>
@@ -230,9 +230,13 @@ const Product = () => {
                             <div className="input-group input-group-sm mb-3 col-sm-3">
                                 <select onChange={(e) => setRepl(e.target.value)} className="form-control" id="product_repl">
                                     <option defaultValue="0">Select Type</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
+                                    <option value="Replicated">Replicated</option>
+                                    <option value="Non-Recorded">Non-Recorded</option>
+                                    <option value="Replicated Only">Replicated Only</option>
+                                    <option value="First Article">First Article</option>
+                                    <option value="Pre-Replicated">Pre-Replicated</option>
+                                    <option value="Pre-Duplicated">Pre-Duplicated</option>
+                                    <option value="Pre-Duped by Cus">Pre-Duped by Cus</option>
                                 </select>
                             </div>
                         </div>
@@ -242,9 +246,15 @@ const Product = () => {
                             <div className="input-group input-group-sm mb-3 col-sm-3">
                                 <select onChange={(e) => setMasterFormat(e.target.value)} className="form-control" id="master_format">
                                     <option defaultValue="0">Select Format</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
+                                    <option value="CD-R">CD-R</option>
+                                    <option value="CD-ROM">CD-ROM</option>
+                                    <option value="DVD-R">DVD-R</option>
+                                    <option value="VHS">VHS</option>
+                                    <option value="DLT Tape">DLT Tape</option>
+                                    <option value="Diskette">Diskette</option>
+                                    <option value="FTP Site">FTP Site</option>
+                                    <option value="USB">USB</option>
+                                    <option value="Email">Email</option>
                                 </select>
                             </div>
                         </div>
@@ -275,9 +285,12 @@ const Product = () => {
                             <div className="input-group input-group-sm mb-3 col-sm-3">
                                 <select onChange={(e) => setMasterLoc(e.target.value)} className="form-control" id="master_location">
                                     <option defaultValue="0">Select Location</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
+                                    <option value="Vendor">Vendor</option>
+                                    <option value="Docket">Docket</option>
+                                    <option value="Absolute">Absolute</option>
+                                    <option value="Master CDR Location">Master CDR Location</option>
+                                    <option value="TS">TS</option>
+                                    <option value="W.S.">W.S.</option>
                                 </select>
                             </div>
                         </div>
@@ -287,9 +300,15 @@ const Product = () => {
                             <div className="input-group input-group-sm mb-3 col-sm-3">
                                 <select onChange={(e) => setFilmsLoc(e.target.value)} className="form-control" id="films_location">
                                     <option defaultValue="0">Select Location</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
+                                    <option value="Vendor">Vendor</option>
+                                    <option value="Docket">Docket</option>
+                                    <option value="Absolute">Absolute</option>
+                                    <option value="Films Location">Films Location</option>
+                                    <option value="W.S.">W.S.</option>
+                                    <option value="Use Film from KECU-5926">Use Film from KECU-5926</option>
+                                    <option value="Docket WIND-6707">Docket WIND-6707</option>
+                                    <option value="GRIC-6999">GRIC-6999</option>
+                                    <option value="In Docket">In Docket</option>
                                 </select>
                             </div>
                         </div>
@@ -595,8 +614,8 @@ const Product = () => {
                             <div className="input-group input-group-sm mb-3 col-sm-2">
                                 <select onChange={(e) => setProductStatus(e.target.value)} className="form-control" id="product_status">
                                     <option defaultValue="0">Select Status</option>
-                                    <option value="current">Current</option>
-                                    <option value="new">New</option>
+                                    <option value="Current">Current</option>
+                                    <option value="New">New</option>
                                 </select>
                             </div>
                         </div>
