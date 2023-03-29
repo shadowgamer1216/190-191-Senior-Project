@@ -28,24 +28,13 @@ const Contact = () => {
     const [email, setEmail] = useState("");
     const [notes, setNotes] = useState("");
 
-    const [showTextBox, setShowTextBox] = useState(false);
 
     const submit = () => {
-        Axios.post("http://localhost:3001/api/insertContact", {customer_id: customer_id, company: company, fname: fname, lname: lname, contact_type: contact_type, title: title, dept:dept, add_1: add_1, add_2: add_2, city: city, state_in_country: state_in_country, zip: zip, country: country, phone:phone, extension: extension, cell_phone_number: cell_phone_number, third_party_company:third_party_company, fax:fax, email:email, notes:notes})
+        Axios.post("http://localhost:3001/api/insert", {customer_id: customer_id, company: company, fname: fname, lname: lname, contact_type: contact_type, title: title, dept:dept, add_1: add_1, add_2: add_2, city: city, state_in_country: state_in_country, zip: zip, country: country, phone:phone, extension: extension, cell_phone_number: cell_phone_number, third_party_company:third_party_company, fax:fax, email:email, notes:notes})
         .then(()=> {
             alert('inserted');
         })
     };
-
-    const handleDropDown = (e) => {
-        if (e.target.value == "Other") {
-            setShowTextBox(true);
-        } else {
-            setShowTextBox(false);
-        }
-        setContactType(e.target.value);
-    }
-
     return (
         <div className="page">
             <nav className="navbar navbar-expand-lg navbar-dark bg-maroon">
@@ -79,7 +68,7 @@ const Contact = () => {
                         <div className="form-row">
                             <label htmlFor="customer-id" className="col-sm-2 col-form-label">Customer ID</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="customer-id" required onChange={(e) =>{
+                                <input type="text" className="form-control" id="customer-id" onChange={(e) =>{
                                     setCustomerID(e.target.value)
                                 }}/>
                             </div>
@@ -116,25 +105,16 @@ const Contact = () => {
                             <label htmlFor="contact-type" className="col-sm-2 col-form-label">Contact Type</label>
                             <div className="input-group input-group-sm mb-3 col-sm-3">
                                {/* <select className="form-control" name="contact-type" id="contact-type"> */ }
-                              {/*  <select className="form-control" name="contact-type" id="contact-type" onChange={(e) =>{
+                                <select className="form-control" name="contact-type" id="contact-type" onChange={(e) =>{
                                     setContactType(e.target.value)
-                                }}> */}
-                                    <select className="form-control" name="contact-type" id="contact-type" onChange={handleDropDown}>
+                                }}>
                                     <option defaultValue="Not Selected">Value</option>
                                     <option value="Shipping">Shipping</option>
                                     <option value="Billing">Billing</option>
                                     <option value="Contact">Contact</option>
                                     <option value="Other">Other</option>
                                 </select>
-                                {showTextBox && (
-                                <div className="form-row">
-                                    <label htmlFor="other-contact" className="col-sm-2 col-form-label"> Please specify:</label>
-                                    <input type="text" className= "form-control" id="other-contact" onChange={(e) => {
-                                        setContactType(e.target.value)
-                                    }} />
-                                </div>
-                                )}
-                                </div>
+                            </div>
                         </div>
 
                         <div className="form-row">
@@ -249,7 +229,7 @@ const Contact = () => {
                         <div className="form-row">
                             <label htmlFor="zip" className="col-sm-2 col-form-label">Zip</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="number" className="form-control" id="zip" onChange={(e) =>{
+                                <input type="text" className="form-control" id="zip" onChange={(e) =>{
                                     setZip(e.target.value)
                                 }}/> 
                             </div>
