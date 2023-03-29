@@ -43,6 +43,16 @@ create table location_table(
 	KEY item_id (item_id)
 );
 
+DROP TABLE IF EXISTS location_history;
+create table location_history(
+  id INT NOT NULL AUTO_INCREMENT,
+  location_id VARCHAR(20) NOT NULL DEFAULT '',
+  item_id INT NOT NULL DEFAULT '0',
+  qty INT NOT NULL DEFAULT '0',
+  date_added DATE NOT NULL DEFAULT (CURRENT_DATE),
+  KEY id (id)
+);
+
 DROP TABLE IF EXISTS item_check_in_table;
 create table item_check_in_table(
 	id INT NOT NULL auto_increment,
@@ -200,23 +210,18 @@ create table order_table (
 
 DROP TABLE IF EXISTS shipping_table;
 create table shipping_table(
-	customer_id varchar(8) NOT NULL,
-	company_name varchar(20),
-	contact_name varchar(50), 
-	add1 varchar(50),
+	company_name varchar(128) NOT NULL,
+	contact_name varchar(50) NOT NULL, 
+	add1 varchar(50) NOT NULL,
 	add2 varchar(50) default NULL,
-	city varchar(50),
-	country_state varchar(2),
-	zip INT(5),
+	city varchar(50) NOT NULL,
+	country_state varchar(15)NOT NULL,
+	zip INT NOT NULL,
 	province varchar(50) default NULL,
-	country varchar(50),
-	phone INT(10),
-	fax INT(10) default NULL,
-  	email varchar(50),
-  	PRIMARY KEY (customer_id)
-);
-
-create table shipment_info_table(
+	country varchar(50) NOT NULL,
+	phone INT NOT NULL,
+	fax varchar(20) default NULL,
+ 	email varchar(50) NOT NULL,
 	fedex varchar(10) default NULL,
 	ups varchar(10) default NULL,
 	courier_willcall varchar(10) default NULL,
@@ -225,10 +230,9 @@ create table shipment_info_table(
 	payment_type varchar(10),
 	account_number varchar(50),
 	request_ship_date DATE,
-	request_ship_time DATETIME,
+	request_ship_time VARCHAR(15),
 	arrival_ship_date DATE,
-	arrival_ship_time DATETIME,
-  saturday_deliv INT(2),
+	arrival_ship_time VARCAHR(15),
 	fob varchar(50) default null,
 	notes TEXT
 );
