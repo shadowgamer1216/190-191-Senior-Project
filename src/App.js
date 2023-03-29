@@ -23,7 +23,6 @@ import Login from './login';
 import useToken from './useToken';
 import Search from './search';
 import SearchCompany from './searchcompany';
-import SearchContact from './searchcontact';
 
 
 function App() {
@@ -49,7 +48,6 @@ function App() {
         <Route path = "/shipping" element = {<Shipping/>} />
         <Route path = "/search" element = {<Search/>} />
         <Route path = "search/searchcompany" element = {<SearchCompany/>} />
-        <Route path = "search/searchcontact" element = {<SearchContact/>} />
 
      
       </Routes>
