@@ -225,7 +225,7 @@ create table shipping_table(
 	fedex varchar(10) default NULL,
 	ups varchar(10) default NULL,
 	courier_willcall varchar(10) default NULL,
-  abs varchar(10) default NULL,
+  	abs varchar(10) default NULL,
 	other_ship_method varchar(10) default NULL,
 	payment_type varchar(10),
 	account_number varchar(50),
@@ -235,7 +235,6 @@ create table shipping_table(
 	arrival_ship_time VARCAHR(15),
 	fob varchar(50) default null,
 	notes TEXT
-);
 
 create table company_table(
 	company_ID varchar (8) NOT NULL default '',

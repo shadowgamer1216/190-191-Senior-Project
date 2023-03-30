@@ -315,3 +315,38 @@ app.post("/api/insertShipping", (req, res) =>{
 app.listen(3001, () =>{
     console.log("running on port 3001");
 });
+
+
+//--------------------Company page----------------------
+app.post("/api/insertCompany" , (req, res) =>{
+
+
+    const company_ID = req.body.company_id;
+    const company_Name  = req.body.company_name;
+    const addr1 = req.body.addr1;
+    const addr2 = req.body.addr2;
+    const city = req.body.city;
+    const state = req.body.state;
+    const country = req.body.country;
+    const zip = req.body.zip;
+    const Salesperson = req.body.Salesperson;
+    const phone = req.body.phone;
+    const Extension = req.body.extension;
+    const fax = req.body.fax;
+    const email = req.body.email;
+    const Web_addr = req.body.Web_addr;
+    const Tax_ID = req.body.Tax_ID;
+    const credit_checked = req.body.credit_checked;
+    const status = req.body.status;
+    const customer = req.body.customer;
+    const vendor = req.body.vendor;
+    const OEM = req.body.OEM;
+    const other_class = req.body.other_class;
+    const notes = req.body.notes;
+
+    const sqlInsert = "INSERT INTO company_table (company_ID, company_Name, addr1, addr2, city, state, country, zip, Salesperson, phone, Extension, fax, email, Web_addr, Tax_ID, credit_checked, status, customer, vendor, OEM, other_class, notes) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    db.query(sqlInsert, [company_ID, company_Name, addr1, addr2, city, state, country, zip, Salesperson, phone, Extension, fax, email, Web_addr, Tax_ID, credit_checked, status, customer, vendor, OEM, other_class, notes], (err, result) => {
+        console.log(result);
+    });
+});
+//----------------end of Company page------------------

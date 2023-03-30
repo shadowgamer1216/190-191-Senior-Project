@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { useState } from "react";
 import Axios from "axios";
 
-const Component = () => {
+const Component = ({ handleLogout }) => {
     const navigate = useNavigate();
     const[customer_id, setCustomerID] = useState("");
     const[component_type, setComponent_Type] = useState(null);
@@ -62,7 +62,7 @@ const Component = () => {
                     </div>
                 </div>
 
-                <button className="btn btn-outline-light" onClick={() => navigate("/login")}>Sign In</button>
+                <button className="btn btn-outline-light" onClick={handleLogout}>Logout</button>
             </nav>
 
 

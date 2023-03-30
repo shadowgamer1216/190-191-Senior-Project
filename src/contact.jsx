@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom"
 import Axios from "axios";
 
 
-const Contact = () => {
+const Contact = ({ handleLogout }) => {
     const navigate = useNavigate();
     const [customer_id, setCustomerID] = useState("");
     const [company, setCompany] = useState(""); //testing company
@@ -27,6 +27,8 @@ const Contact = () => {
     const [fax, setFax] = useState("");
     const [email, setEmail] = useState("");
     const [notes, setNotes] = useState("");
+    const [isLoggedIn, setIsLoggedIn] = useState(false); // add this line
+
 
 
     const submit = () => {
@@ -51,7 +53,8 @@ const Contact = () => {
                     </div>
                 </div>
 
-                <button className="btn btn-outline-light">Sign In</button>
+                <button className="btn btn-outline-light" onClick={handleLogout}>Logout</button>
+
             </nav>
 
             <div className="container p-5">
