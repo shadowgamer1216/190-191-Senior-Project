@@ -15,6 +15,30 @@ const Location = () => {
     const [data, setData] = useState([]);
     const date = new Date();
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 5;
+    const totalPages = Math.ceil(data.length / itemsPerPage);
+
+    const handleFirstPage = () => {
+        setCurrentPage(1);
+    };
+
+    const handlePrevPage = () => {
+        setCurrentPage((prevPage) => prevPage - 1);
+    };
+
+    const handleNextPage = () => {
+        setCurrentPage((prevPage) => prevPage + 1);
+    };
+
+    const handleLastPage = () => {
+        setCurrentPage(totalPages);
+    };
+
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const currentData = data.slice(startIndex, endIndex);
+
     const submit = () => {
         Axios.post("http://localhost:3001/api/insertLocation", {location_id: location_id, location_type: location_type, item_id: item_id, qty: qty, item_owner: item_owner, physical_location: physical_location, notes: notes})
         .then(()=> {
@@ -153,25 +177,36 @@ const Location = () => {
                         <div className="section-headers">
                             <h5>Location History</h5>
                         </div>
-                        {data.length > 0 && (
-                        <table class="table">
-                                <thead class="thead-light">
-                                    <tr>
-                                        <th scope ="col">Item ID</th>
-                                        <th scope ="col">Qty</th>
-                                        <th scope ="col">Date Added</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                   {data.map((row) => (
-                                    <tr key={row.location_id}>
-                                        <td>{row.item_id}</td>
-                                        <td>{row.qty}</td>
-                                        <td>{row.date_added.slice(0,10)}</td>
-                                    </tr>
-                                   ))}
-                                </tbody>
-                        </table>
+                        {currentData.length > 0 && (
+                            <>
+                                <table class="table">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope ="col">Item ID</th>
+                                            <th scope ="col">Qty</th>
+                                            <th scope ="col">Date Added</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {currentData.map((row) => (
+                                            <tr key={row.location_id}>
+                                                <td>{row.item_id}</td>
+                                                <td>{row.qty}</td>
+                                                <td>{row.date_added.slice(0,10)}</td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                                <div className="pagination">
+                                    <button onClick={handleFirstPage} disabled={currentPage === 1}>First</button>
+                                    <button onClick={handlePrevPage} disabled={currentPage === 1}>Prev</button>
+                                    <span>
+                                        Page {currentPage} of {totalPages}
+                                    </span>
+                                    <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
+                                    <button onClick={handleLastPage} disabled={currentPage === totalPages}>Last</button>
+                                </div>
+                            </>
                         )}
                     </div>
                 </form>

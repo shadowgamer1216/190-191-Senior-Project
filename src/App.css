@@ -280,3 +280,9 @@ Link.nav-link {
   margin-top: -2px;
 
 }
+
+.pagination{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
