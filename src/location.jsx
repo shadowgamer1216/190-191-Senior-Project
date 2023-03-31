@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import React, { useEffect, useState } from "react";
 import './App.css'
 import { Link, useNavigate } from "react-router-dom"
 import Axios from "axios";
@@ -41,9 +40,10 @@ const Location = ({ handleLogout }) => {
     const currentData = data.slice(startIndex, endIndex);
 
     const submit = () => {
-        /*Axios.post("http://localhost:3001/api/insertLocation", {location_id: location_id, location_type: location_type, item_id: item_id, qty: qty, item_owner: item_owner, physical_location: physical_location, notes: notes})
+        Axios.post("http://localhost:3001/api/insertLocation", {location_id: location_id, location_type: location_type, item_id: item_id, qty: qty, item_owner: item_owner, physical_location: physical_location, notes: notes})
         .then(()=> {
             alert('inserted location');
+        });
         Axios.post("http://localhost:3001/api/insertLocationHistory",{location_id: location_id, item_id: item_id, qty: qty, date: date})
         .then(()=>{
             alert('inserted location history');
