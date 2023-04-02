@@ -16,9 +16,14 @@ const db = mysql.createPool({
     database: "absolutemedia",
 });
 
+app.listen(3004, () =>{
+    console.log("running on port 3004");
+});
+
+// COMPANY PAGE - POST API =>
 app.post("/api/insert", (req, res)=> {
     const customer_id = req.body.customer_id;
-    const company = req.body.company; //testing company
+    const company = req.body.company;
     const fname = req.body.fname;
     const lname = req.body.lname;
     const contact_type = req.body.contact_type;
@@ -47,6 +52,7 @@ app.post("/api/insert", (req, res)=> {
     });
 });
 
+// ORDER PAGE - POST API =>
 app.post("/api/insertOrder", (req, res) => {
     //go to back_end directory in terminal and type 'node index.js'
     const salesPerson = req.body.salesPerson;
@@ -105,11 +111,11 @@ app.post("/api/insertOrder", (req, res) => {
     
     db.query(
         "INSERT INTO order_table (salesperson, requestor, customer_contact, re_order, \
-                                  factory_order_quantity, custom_invoice, custom_packing_slip, custom_quantity, custom_unit_price, custom_total_price, \
-                                  assembly_charges_quantity, assembly_charges_unit_price, assembly_charges_total_price, date_code_printing_charges_quantity, date_code_printing_charges_unit_price, date_code_printing_charges_total_price, date_code_setup_charge, number_of_screens, art_manipulation, sub_total, taxable, tax_rate, tax, freight_charges, order_price_total, \
-                                  invoice_date, invoice_date_paid, invoice_notes, \
-                                  abs_sales_order_date, customer_order_date, customer_po_date, customer_po_number, credit_checked, days_turn, date_code_printing, assembly_by, disc_manufactured_by, cd_dvd_brand, disc_provided_by, customer_provided_material, customer_material_eta, customer_notes, vendor_notes, order_notes, order_status) \
-                                  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+        factory_order_quantity, custom_invoice, custom_packing_slip, custom_quantity, custom_unit_price, custom_total_price, \
+        assembly_charges_quantity, assembly_charges_unit_price, assembly_charges_total_price, date_code_printing_charges_quantity, date_code_printing_charges_unit_price, date_code_printing_charges_total_price, date_code_setup_charge, number_of_screens, art_manipulation, sub_total, taxable, tax_rate, tax, freight_charges, order_price_total, \
+        invoice_date, invoice_date_paid, invoice_notes, \
+        abs_sales_order_date, customer_order_date, customer_po_date, customer_po_number, credit_checked, days_turn, date_code_printing, assembly_by, disc_manufactured_by, cd_dvd_brand, disc_provided_by, customer_provided_material, customer_material_eta, customer_notes, vendor_notes, order_notes, order_status) \
+        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
         [salesPerson, requestor, customerContact, reOrder,
             factoryOrderQuantity, customInvoice, customPackingSlip, customQuantity, customUnitPrice, customTotalPrice,
             assemblyChargesQuantity, assemblyChargesUnitPrice, assemblyChargesTotalPrice, printingChargesQuantity, printingChargesUnitPrice, printingChargesTotalPrice, setupCharge, numberOfScreens, screensPrice, subTotal, taxable, taxRate, tax, freightCharges, priceTotal,
@@ -121,20 +127,20 @@ app.post("/api/insertOrder", (req, res) => {
     );
 });
 
-//Get information from the product table
+// PRODUCT TABLE INFO - GET API <=
 app.get("/api/getProductInfo", (req, res) => {
     const productID = req.body.productID;
-   db.query("SELECT * FROM product_table", (err, result) => {
+    db.query("SELECT * FROM product_table", (err, result) => {
        if (err) {
            console.log(err);
        }
        else {
            res.send(result);
        }
-   });
+    });
 });
 
-//Get information from the contact table
+// CONTACT TABLE INFO - GET API <=
 app.get("/api/getContactInfo", (req, res) => {
      const customerID = req.body.customerID;
     // const phone = req.body.phone;
@@ -148,6 +154,7 @@ app.get("/api/getContactInfo", (req, res) => {
     });
 });
 
+// PRODUCT PAGE - POST API =>
 app.post("/api/insertProduct", (req, res) => {
     const oldId = req.body.old_abs_id;
     const customerId = req.body.customer_id;
@@ -168,37 +175,28 @@ app.post("/api/insertProduct", (req, res) => {
     const innerHubPosition = req.body.inner_hub_position;
     const floodCoat = req.body.floodcoat;
     const rimagePrint = req.body.rimage_print;
-    const colorOne = req.body.color_1;
-    const colorTwo = req.body.color_2;
-    const colorThree = req.body.color_3;
-    const colorFour = req.body.color_4;
-    const colorFive = req.body.color_5;
-    const colorSix = req.body.color_6;
-    const colorSeven = req.body.color_7;
-    const colorEight = req.body.color_8;
+    var colors = [null, null, null, null, null, null, null, null];
+    for(let i=0; i<req.body.numOfColors; i++) 
+    {
+        colors[i] = req.body.colorList[i].color;
+    }
     const colorNotes = req.body.color_notes;
-    const componentOne = req.body.component_1;
-    const componentTwo = req.body.component_2;
-    const componentThree = req.body.component_3;
-    const componentFour = req.body.component_4;
-    const componentFive = req.body.component_5;
-    const componentSix = req.body.component_6;
-    const componentSeven = req.body.component_7;
-    const componentEight = req.body.component_8;
-    const componentNine = req.body.component_9;
-    const componentTen = req.body.component_10;
-    const componentEleven = req.body.component_11;
-    const componentTwelve = req.body.component_12;
+    var components = [null, null, null, null, null, null, null, null, null, null, null, null];
+    for(let i=0; i<req.body.numOfComponents; i++) 
+    {
+        components[i] = req.body.componentList[i].component;
+    }
     const packagingNotes = req.body.packaging_notes;
     const productNotes = req.body.product_notes;
     const productStatus = req.body.product_status;
 
     const sqlInsert = "INSERT INTO product_table (old_abs_id, customer_id, product_category, oem_product_id, product_title, product_desc, product_repl, master_format, master_received, master_label, master_capacity, master_loc, films_loc, date_code_required, date_code_position, inner_hub, inner_hub_position, floodcoat, rimage_print, color_1, color_2, color_3, color_4, color_5, color_6, color_7, color_8, color_notes, component_1, component_2, component_3, component_4, component_5, component_6, component_7, component_8, component_9, component_10, component_11, component_12, packaging_notes, product_notes, product_status) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-    db.query(sqlInsert, [oldId, customerId, productCategory, oemId, productTitle, productDesc, productRepl, masterFormat, masterReceived, masterLabel, masterCapacity, masterLoc, filmsLoc, dateCodeRequired, dateCodePosition, innerHub, innerHubPosition, floodCoat, rimagePrint, colorOne, colorTwo, colorThree, colorFour, colorFive, colorSix, colorSeven, colorEight, colorNotes, componentOne, componentTwo, componentThree, componentFour, componentFive, componentSix, componentSeven, componentEight, componentNine, componentTen, componentEleven, componentTwelve, packagingNotes, productNotes, productStatus], (err, result) => {
+    db.query(sqlInsert, [oldId, customerId, productCategory, oemId, productTitle, productDesc, productRepl, masterFormat, masterReceived, masterLabel, masterCapacity, masterLoc, filmsLoc, dateCodeRequired, dateCodePosition, innerHub, innerHubPosition, floodCoat, rimagePrint, colors[0], colors[1], colors[2], colors[3], colors[4], colors[5], colors[6], colors[7], colorNotes, components[0], components[1], components[2], components[3], components[4], components[5], components[6], components[7], components[8], components[9], components[10], components[11], packagingNotes, productNotes, productStatus], (err, result) => {
         console.log(result);
     });
 });
 
+// LOCATION PAGE - POST API =>
 app.post("/api/insertLocation" , (req, res) =>{
     const location_id = req.body.location_id;
     const location_type = req.body.location_type;
@@ -214,6 +212,7 @@ app.post("/api/insertLocation" , (req, res) =>{
     });
 });
 
+// LOCATION TABLE - GET API <=
 app.get("/api/getLocationHistory", (req, res) =>{
     const location_id = req.body.location_id;
     const item_id = req.body.item_id;
@@ -226,6 +225,7 @@ app.get("/api/getLocationHistory", (req, res) =>{
     });
 });
 
+// LOCATION PAGE - POST API =>
 app.post("/api/insertLocationHistory", (req, res) =>{
     const location_id = req.body.location_id;
     const item_id = req.body.item_id;
@@ -237,6 +237,7 @@ app.post("/api/insertLocationHistory", (req, res) =>{
     });
 });
 
+// ITEM CHECKIN TABLE PAGE - POST API =>
 app.post("/api/insertItem" , (req, res) =>{
     const customer_id = req.body.customer_id;
     const item_id = req.body.item_id;
@@ -255,8 +256,8 @@ app.post("/api/insertItem" , (req, res) =>{
     });
 });
 
+// COMPONENT PAGE - POST API =>
 app.post("/api/insertComponent", (req, res) =>{
-    /*------------------------------------------ Component Page ------------------------------------------*/
     const customer_id = req.body.customer_id;
     const component_type = req.body.component_type;
     const oem_pn = req.body.oem_pn;
@@ -275,10 +276,9 @@ app.post("/api/insertComponent", (req, res) =>{
     db.query(sqlInsert, [customer_id, component_type, oem_pn, component_description, size, supplier_brand_id, color, notes, uom, component_status, owned_by, packaging_component], (err, result) => {
         console.log(result);
     });
-    /*------------------------------------------ Component Page ------------------------------------------*/
 });
 
-//Shipping Page
+// SHIPPING PAGE - POST API =>
 app.post("/api/insertShipping", (req, res) =>{
     const company_name = req.body.company_name;
     const contact_name = req.body.contact_name;
@@ -312,15 +312,8 @@ app.post("/api/insertShipping", (req, res) =>{
     })
 });
 
-app.listen(3001, () =>{
-    console.log("running on port 3001");
-});
-
-
-//--------------------Company page----------------------
+// COMPANY PAGE - POST API =>
 app.post("/api/insertCompany" , (req, res) =>{
-
-
     const company_ID = req.body.company_id;
     const company_Name  = req.body.company_name;
     const addr1 = req.body.addr1;
@@ -349,4 +342,3 @@ app.post("/api/insertCompany" , (req, res) =>{
         console.log(result);
     });
 });
-//----------------end of Company page------------------
