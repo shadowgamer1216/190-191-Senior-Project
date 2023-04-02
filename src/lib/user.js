@@ -55,7 +55,7 @@ const sequelize = new Sequelize(
             type: Sequelize.STRING
         },
         salt: {
-          type: Sequelize.UUID,
+          type: Sequelize.STRING,
           allowNull: false
           
       }

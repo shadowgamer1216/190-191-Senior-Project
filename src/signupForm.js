@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { useNavigate as navigate } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 
 import './App.css';
 
 const SignupForm = () => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -72,7 +73,8 @@ const SignupForm = () => {
         </div>
 
         <button className="signup-button" type="submit">Sign up</button>
-        <button className="cancel-button" onClick={() => navigate('/')}>Cancel</button>
+        <button className="cancel-button" onClick={(e) => {e.preventDefault(); navigate('/');}}>Cancel</button>
+
 
         {errorMsg && <p>{errorMsg}</p>}
       </form>

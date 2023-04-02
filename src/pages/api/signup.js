@@ -1,4 +1,4 @@
-import { createUser } from '../../lib/user'
+import { createUser, findUser } from '../../lib/user'
 
 export default async function signup(req, res) {
   // Allow requests from any origin
@@ -13,7 +13,18 @@ export default async function signup(req, res) {
     return
   }
 
+  const { username, password } = req.body;
+
   try {
+    const existingUser = await findUser({ username });
+    if (existingUser.length > 0) {
+      return res.status(409).json({ message: 'Username already exists' });
+    }
+    if (username.length === 0) {
+      return res.status(409).json({ message: 'Username cannot be blank' });
+    }
+
+  
     await createUser(req.body)
     res.status(200).send({ done: true })
   } catch (error) {
@@ -21,3 +32,5 @@ export default async function signup(req, res) {
     res.status(500).end(error.message)
   }
 }
+
+
