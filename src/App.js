@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route, useNavigate as navigate } from 'react-router-dom';
+import { Routes, Route, useNavigate} from 'react-router-dom';
 import HomePage from './HomePage';
 import ProductPage from './product';
 import ContactPage from './contact';
@@ -17,15 +17,16 @@ import SearchCompany from './searchcompany';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
+
 
   const handleLogin = () => {
     setIsLoggedIn(true);
   };
 
   const handleLogout = () => {
-    setIsLoggedIn(false);
     navigate('/');
-  
+    setIsLoggedIn(false)
   };
 
   return (

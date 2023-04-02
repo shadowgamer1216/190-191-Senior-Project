@@ -37,7 +37,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "dev": "concurrently \"npm run nextdev\" \"npm run start\"",
-    "nextdev": "next dev -p 3002",
+    "nextdev": "next dev -p 3004",
     "nextbuild": "next build",
     "nextstart": "next start"
   },
