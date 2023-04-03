@@ -13,7 +13,7 @@ export default async function signup(req, res) {
     return
   }
 
-  const { username, password } = req.body;
+  const { username, password, viewOnly } = req.body;
 
   try {
     const existingUser = await findUser({ username });
@@ -24,8 +24,8 @@ export default async function signup(req, res) {
       return res.status(409).json({ message: 'Username cannot be blank' });
     }
 
-  
-    await createUser(req.body)
+  console.log("viewOnly", req.body)
+    await createUser({username, password, viewOnly})
     res.status(200).send({ done: true })
   } catch (error) {
     console.error(error)

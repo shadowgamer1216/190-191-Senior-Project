@@ -295,7 +295,32 @@ input {
   display: inline-block;
   font-size: 18px;
   border-radius: 10px;
+}
+.signup-button2{
+  background-color: white; 
+  color: #000000;
+  border: 2px solid blue;
+  padding: 10px 28px;
+  text-align: center;
+  text-decoration-color: #000000;
+  display: inline-block;
+  font-size: 18px;
+  border-radius: 10px;
+  margin-right: 10px;
 
+}
+
+.cancel-button{
+  background-color: white; 
+  color: #000000;
+  border: 2px solid red;
+  padding: 10px 28px;
+  text-align: center;
+  text-decoration-color: #000000;
+  display: inline-block;
+  font-size: 18px;
+  border-radius: 10px;
+  margin-left: 10px;
 }
 .signup-button:hover{
   background-color: darkgray; 
@@ -346,19 +371,7 @@ input {
 
 }
 
-.cancel-button{
-  background-color: white; 
-  color: #000000;
-  border: 2px solid red;
-  padding: 10px 28px;
-  text-align: center;
-  text-decoration-color: #000000;
-  display: inline-block;
-  font-size: 18px;
-  border-radius: 10px;
-  margin-top: 20px;
 
-}
 .cancel-button:hover{
   background-color: darkgray; 
   color: white;
@@ -368,8 +381,34 @@ input {
   transform: translateY(4px);
 }
 
+.signup-button-container {
+  display: flex;
+  justify-content: space-between;
+}
 
 
+
+.checkbox {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+}
+
+.checkbox:before {
+  content: "";
+  width: 0.65em;
+  height: 0.65em;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em var(--form-control-color);
+}
+
+.checkbox:before {
+  transform: scale(1);
+}
 
 
 
@@ -378,3 +417,27 @@ input {
   justify-content: center;
   margin-bottom: 30px;
 }
+
+
+
+/* Style the checkbox container */
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  margin-right: 15px;
+}
+
+/* Style the checkbox */
+.checkbox-container input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+/* Style the label for the checkbox */
+.checkbox-container label {
+  cursor: pointer;
+  font-size: 14px;
+}
+
+
+
+

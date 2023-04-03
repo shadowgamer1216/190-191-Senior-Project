@@ -8,6 +8,7 @@ const SignupForm = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+
   const [errorMsg, setErrorMsg] = useState('');
 
   const handleSubmit = async (e) => {
@@ -24,11 +25,11 @@ const SignupForm = () => {
       const res = await fetch('http://localhost:3004/api/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ username, password, viewOnly: document.getElementById('viewOnly').checked }),
       });
       if (res.status === 200) {
         // Redirect to login page after successful signup
-        window.location.href = '/';
+        navigate('/');
       } else {
         throw new Error(await res.text());
       }
@@ -63,6 +64,7 @@ const SignupForm = () => {
         </div>
           <label htmlFor="confirm-password">Confirm Password</label>
           <div>
+            
 
           <input
             type="password"
@@ -72,8 +74,19 @@ const SignupForm = () => {
           />
         </div>
 
-        <button className="signup-button" type="submit">Sign up</button>
+        
+      <div className="checkbox-container">
+      <input type="checkbox" id="viewOnly" name="viewOnly" value="true" />
+      </div>
+      <label htmlFor="viewOnly">View Only</label>
+
+        
+
+
+        <div className="signup-button-container">
+        <button className="signup-button2" type="submit">Sign up</button>
         <button className="cancel-button" onClick={(e) => {e.preventDefault(); navigate('/');}}>Cancel</button>
+        </div>
 
 
         {errorMsg && <p>{errorMsg}</p>}

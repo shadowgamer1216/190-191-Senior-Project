@@ -57,8 +57,11 @@ const sequelize = new Sequelize(
         salt: {
           type: Sequelize.STRING,
           allowNull: false
-          
-      }
+        },
+        viewOnly: {
+          type: Sequelize.BOOLEAN,
+          defaultValue: false
+        }
 
     });
 
@@ -76,7 +79,7 @@ const sequelize = new Sequelize(
 
 //const users = [user]
 
-export async function createUser({ username, password }) {
+export async function createUser({ username, password, viewOnly }) {
   // Here you should create the user and save the salt and hashed password (some dbs may have
   // authentication methods that will do it for you so you don't have to worry about it):
   const salt = crypto.randomBytes(16).toString('hex')
@@ -88,6 +91,7 @@ export async function createUser({ username, password }) {
     username,
     hash,
     salt,
+    viewOnly
   });
 
   // This is an in memory store for users, there is no data persistence without a proper DB
