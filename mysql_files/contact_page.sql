@@ -152,20 +152,6 @@ create table order_table (
     custom_quantity INT DEFAULT NULL,
     custom_unit_price FLOAT DEFAULT NULL,
     custom_total_price FLOAT DEFAULT NULL,
-    -- Non-Inventory Line Items
-    #non_inventory_line_item VARCHAR(256) DEFAULT NULL,
-    #non_inventory_invoice BOOL DEFAULT NULL,
-    #non_inventory_packing_slip BOOL DEFAULT NULL,
-    #non_inventory_quantity INT(2) DEFAULT NULL,
-    #non_inventory_unit_price FLOAT(7,2) DEFAULT NULL,
-    #non_inventory_total_price FLOAT(7,2) DEFAULT NULL,
-    -- Inventory Items
-    #inventory_item VARCHAR(256) DEFAULT NULL,
-    #inventory_invoice BOOL DEFAULT NULL,
-    #inventory_packing_slip BOOL DEFAULT NULL,
-    #inventory_quantity INT(2) DEFAULT NULL,
-    #inventory_unit_price FLOAT(7,2) DEFAULT NULL,
-    #inventory_total_price FLOAT(7,2) DEFAULT NULL,
     -- Billing Information
     assembly_charges_quantity INT DEFAULT NULL,
     assembly_charges_unit_price FLOAT DEFAULT NULL,
@@ -204,8 +190,76 @@ create table order_table (
     vendor_notes TEXT DEFAULT NULL,
     order_notes TEXT DEFAULT NULL,
     order_status VARCHAR(128) DEFAULT NULL,
-    PRIMARY KEY (product_id)
-    #PRIMARY KEY(contact_id)
+    PRIMARY KEY (product_id),
+    KEY(contact_id)
+);
+
+DROP TABLE IF EXISTS order_nonItem;
+create table order_nonItem (
+	product_id INT NOT NULL AUTO_INCREMENT,
+	non_inventory_line_item1 VARCHAR(256) DEFAULT NULL,
+    non_inventory_invoice1 BOOL DEFAULT NULL,
+    non_inventory_packing_slip1 BOOL DEFAULT NULL,
+    non_inventory_quantity1 INT DEFAULT NULL,
+    non_inventory_unit_price1 FLOAT DEFAULT NULL,
+    non_inventory_total_price1 FLOAT DEFAULT NULL,
+    non_inventory_line_item2 VARCHAR(256) DEFAULT NULL,
+    non_inventory_invoice2 BOOL DEFAULT NULL,
+    non_inventory_packing_slip2 BOOL DEFAULT NULL,
+    non_inventory_quantity2 INT DEFAULT NULL,
+    non_inventory_unit_price2 FLOAT DEFAULT NULL,
+    non_inventory_total_price2 FLOAT DEFAULT NULL,
+    non_inventory_line_item3 VARCHAR(256) DEFAULT NULL,
+    non_inventory_invoice3 BOOL DEFAULT NULL,
+    non_inventory_packing_slip3 BOOL DEFAULT NULL,
+    non_inventory_quantity3 INT DEFAULT NULL,
+    non_inventory_unit_price3 FLOAT DEFAULT NULL,
+    non_inventory_total_price3 FLOAT DEFAULT NULL,
+    non_inventory_line_item4 VARCHAR(256) DEFAULT NULL,
+    non_inventory_invoice4 BOOL DEFAULT NULL,
+    non_inventory_packing_slip4 BOOL DEFAULT NULL,
+    non_inventory_quantity4 INT DEFAULT NULL,
+    non_inventory_unit_price4 FLOAT DEFAULT NULL,
+    non_inventory_total_price4 FLOAT DEFAULT NULL,
+    non_inventory_line_item5 VARCHAR(256) DEFAULT NULL,
+    non_inventory_invoice5 BOOL DEFAULT NULL,
+    non_inventory_packing_slip5 BOOL DEFAULT NULL,
+    non_inventory_quantity5 INT DEFAULT NULL,
+    non_inventory_unit_price5 FLOAT DEFAULT NULL,
+    non_inventory_total_price5 FLOAT DEFAULT NULL,
+    non_inventory_line_item6 VARCHAR(256) DEFAULT NULL,
+    non_inventory_invoice6 BOOL DEFAULT NULL,
+    non_inventory_packing_slip6 BOOL DEFAULT NULL,
+    non_inventory_quantity6 INT DEFAULT NULL,
+    non_inventory_unit_price6 FLOAT DEFAULT NULL,
+    non_inventory_total_price6 FLOAT DEFAULT NULL,
+    PRIMARY KEY (product_id),
+    KEY (contact_key)
+);
+
+DROP TABLE IF EXISTS order_item;
+create table order_item (
+	product_id INT NOT NULL AUTO_INCREMENT,
+	inventory_item1 VARCHAR(256) DEFAULT NULL,
+    inventory_invoice1 BOOL DEFAULT NULL,
+    inventory_packing_slip1 BOOL DEFAULT NULL,
+    inventory_quantity1 INT DEFAULT NULL,
+    inventory_unit_price1 FLOAT DEFAULT NULL,
+    inventory_total_price1 FLOAT DEFAULT NULL,
+    inventory_item2 VARCHAR(256) DEFAULT NULL,
+    inventory_invoice2 BOOL DEFAULT NULL,
+    inventory_packing_slip2 BOOL DEFAULT NULL,
+    inventory_quantity2 INT DEFAULT NULL,
+    inventory_unit_price2 FLOAT DEFAULT NULL,
+    inventory_total_price2 FLOAT DEFAULT NULL,
+    inventory_item3 VARCHAR(256) DEFAULT NULL,
+    inventory_invoice3 BOOL DEFAULT NULL,
+    inventory_packing_slip3 BOOL DEFAULT NULL,
+    inventory_quantity3 INT DEFAULT NULL,
+    inventory_unit_price3 FLOAT DEFAULT NULL,
+    inventory_total_price3 FLOAT DEFAULT NULL,
+    PRIMARY KEY (product_id),
+    KEY (contact_id)
 );
 
 DROP TABLE IF EXISTS shipping_table;

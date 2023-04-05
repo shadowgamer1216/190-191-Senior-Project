@@ -16,6 +16,12 @@ const db = mysql.createPool({
     database: "absolutemedia",
 });
 
+// PORT LISTEN
+app.listen(3004, () =>{
+    console.log("Running on port 3004");
+});
+
+// COMPANY PAGE - POST API =>
 app.post("/api/insert", (req, res)=> {
     const customer_id = req.body.customer_id;
     const company = req.body.company; //testing company
@@ -47,6 +53,7 @@ app.post("/api/insert", (req, res)=> {
     });
 });
 
+// ORDER PAGE - POST API =>
 app.post("/api/insertOrder", (req, res) => {
     //go to back_end directory in terminal and type 'node index.js'
     const salesPerson = req.body.salesPerson;
@@ -62,6 +69,64 @@ app.post("/api/insertOrder", (req, res) => {
     const customUnitPrice = req.body.customUnitPrice;
     const customTotalPrice = req.body.customTotalPrice;
     
+    // Non-Inventory Items
+    const nonItem1 = req.body.nonItem1;
+    const nonItemInvoice1 = req.body.nonItemInvoice1;
+    const nonItemPackingSlip1 = req.body.nonItemPackingSlip1;
+    const nonItemQuantity1 = req.body.nonItemQuantity1;
+    const nonItemUnitPrice1 = req.body.nonItemUnitPrice1;
+    const nonItemTotalPrice1 = req.bodynonItemTotalPrice1;
+    const nonItem2 = req.body.nonItem2;
+    const nonItemInvoice2 = req.body.nonItemInvoice2;
+    const nonItemPackingSlip2 = req.body.nonItemPackingSlip2;
+    const nonItemQuantity2 = req.body.nonItemQuantity2;
+    const nonItemUnitPrice2 = req.body.nonItemUnitPrice2;
+    const nonItemTotalPrice2 = req.body.nonItemTotalPrice2;
+    const nonItem3 = req.body.nonItem3;
+    const nonItemInvoice3 = req.body.nonItemInvoice3;
+    const nonItemPackingSlip3 = req.body.nonItemPackingSlip3;
+    const nonItemQuantity3 = req.body.nonItemQuantity3;
+    const nonItemUnitPrice3 = req.body.nonItemUnitPrice3;
+    const nonItemTotalPrice3 = req.body.nonItemTotalPrice3;
+    const nonItem4 = req.body.nonItem4;
+    const nonItemInvoice4 = req.body.nonItemInvoice4;
+    const nonItemPackingSlip4 = req.body.nonItemPackingSlip4;
+    const nonItemQuantity4 = req.body.nonItemQuantity4;
+    const nonItemUnitPrice4 = req.body.nonItemUnitPrice4;
+    const nonItemTotalPrice4 = req.body.nonItemTotalPrice4;
+    const nonItem5 = req.body.nonItem5;
+    const nonItemInvoice5 = req.body.nonItemInvoice5;
+    const nonItemPackingSlip5 = req.body.nonItemPackingSlip5;
+    const nonItemQuantity5 = req.body.nonItemQuantity5;
+    const nonItemUnitPrice5 = req.body.nonItemUnitPrice5;
+    const nonItemTotalPrice5 = req.body.nonItemTotalPrice5;
+    const nonItem6 = req.body.nonItem6;
+    const nonItemInvoice6 = req.body.nonItemInvoice6;
+    const nonItemPackingSlip6 = req.body.nonItemPackingSlip6;
+    const nonItemQuantity6 = req.body.nonItemQuantity6;
+    const nonItemUnitPrice6 = req.body.nonItemUnitPrice6;
+    const nonItemTotalPrice6 = req.body.nonItemTotalPrice6;
+
+    // Inventory Items
+    const item1 = req.body.item1;
+    const itemInvoice1 = req.body.itemInvoice1;
+    const itemPackingSlip1 = req.body.itemPackingSlip1;
+    const itemQuantity1 = req.body.itemQuantity1;
+    const itemUnitPrice1 = req.body.itemUnitPrice1;
+    const itemTotalPrice1 = req.body.itemTotalPrice1;
+    const item2 = req.body.item2;
+    const itemInvoice2 = req.body.itemInvoice2;
+    const itemPackingSlip2 = req.body.itemPackingSlip2;
+    const itemQuantity2 = req.body.itemQuantity2;
+    const itemUnitPrice2 = req.body.itemUnitPrice2;
+    const itemTotalPrice2 = req.body.itemTotalPrice2;
+    const item3 = req.body.item3;
+    const itemInvoice3 = req.body.itemInvoice3;
+    const itemPackingSlip3 = req.body.itemPackingSlip3;
+    const itemQuantity3 = req.body.itemQuantity3;
+    const itemUnitPrice3 = req.body.itemUnitPrice3;
+    const itemTotalPrice3 = req.body.itemTotalPrice3;
+
     // Billing Information
     const assemblyChargesQuantity = req.body.assemblyChargesQuantity;
     const assemblyChargesUnitPrice = req.body.assemblyChargesUnitPrice;
@@ -119,35 +184,65 @@ app.post("/api/insertOrder", (req, res) => {
                 console.log(result);
         }
     );
+
+    // Non-Inventory Items
+    db.query(
+        "INSERT INTO order_nonItem (non_inventory_line_item1, non_inventory_invoice1, non_inventory_packing_slip1, non_inventory_quantity1, non_inventory_unit_price1, non_inventory_total_price1, \
+                                             non_inventory_line_item2, non_inventory_invoice2, non_inventory_packing_slip2, non_inventory_quantity2, non_inventory_unit_price2, non_inventory_total_price2, \
+                                             non_inventory_line_item3, non_inventory_invoice3, non_inventory_packing_slip3, non_inventory_quantity3, non_inventory_unit_price3, non_inventory_total_price3, \
+                                             non_inventory_line_item4, non_inventory_invoice4, non_inventory_packing_slip4, non_inventory_quantity4, non_inventory_unit_price4, non_inventory_total_price4, \
+                                             non_inventory_line_item5, non_inventory_invoice5, non_inventory_packing_slip5, non_inventory_quantity5, non_inventory_unit_price5, non_inventory_total_price5, \
+                                             non_inventory_line_item6, non_inventory_invoice6, non_inventory_packing_slip6, non_inventory_quantity6, non_inventory_unit_price6, non_inventory_total_price6) \
+                                             VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+        [nonItem1, nonItemInvoice1, nonItemPackingSlip1, nonItemQuantity1, nonItemUnitPrice1, nonItemTotalPrice1,
+            nonItem2, nonItemInvoice2, nonItemPackingSlip2, nonItemQuantity2, nonItemUnitPrice2, nonItemTotalPrice2,
+            nonItem3, nonItemInvoice3, nonItemPackingSlip3, nonItemQuantity3, nonItemUnitPrice3, nonItemTotalPrice3,
+            nonItem4, nonItemInvoice4, nonItemPackingSlip4, nonItemQuantity4, nonItemUnitPrice4, nonItemTotalPrice4,
+            nonItem5, nonItemInvoice5, nonItemPackingSlip5, nonItemQuantity5, nonItemUnitPrice5, nonItemTotalPrice5,
+            nonItem6, nonItemInvoice6, nonItemPackingSlip6, nonItemQuantity6, nonItemUnitPrice6, nonItemTotalPrice6]
+            , (err, result) => {
+                console.log(result);
+        }
+    );
+
+    // Inventory Items
+    db.query(
+        "INSERT INTO order_item (inventory_item1, inventory_invoice1, inventory_packing_slip1, inventory_quantity1, inventory_unit_price1, inventory_total_price1, \
+                                             inventory_item2, inventory_invoice2, inventory_packing_slip2, inventory_quantity2, inventory_unit_price2, inventory_total_price2, \
+                                             inventory_item3, inventory_invoice3, inventory_packing_slip3, inventory_quantity3, inventory_unit_price3, inventory_total_price3) \
+                                             VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+        [item1, itemInvoice1, itemPackingSlip1, itemQuantity1, itemUnitPrice1, itemTotalPrice1,
+            item2, itemInvoice2, itemPackingSlip2, itemQuantity2, itemUnitPrice2, itemTotalPrice2,
+            item3, itemInvoice3, itemPackingSlip3, itemQuantity3, itemUnitPrice3, itemTotalPrice3]
+            , (err, result) => {
+                console.log(result);
+        }
+    );
 });
 
-//Get information from the product table
+// PRODUCT TABLE INFO - GET API <=
 app.get("/api/getProductInfo", (req, res) => {
-    const productID = req.body.productID;
-   db.query("SELECT * FROM product_table", (err, result) => {
-       if (err) {
-           console.log(err);
-       }
-       else {
-           res.send(result);
-       }
-   });
-});
-
-//Get information from the contact table
-app.get("/api/getContactInfo", (req, res) => {
-     const customerID = req.body.customerID;
-    // const phone = req.body.phone;
-    db.query("SELECT * FROM contact_table WHERE customer_id = ?", [customerID], (err, result) => {
-        if (err) {
-            console.log(err);
-        }
-        else {
-            res.send(result);
-        }
+    db.query ("SELECT product_id, product_category, oem_product_id, product_title FROM product_table", (err, result) =>{
+        if (err) throw err;
+        res.send(result);
     });
 });
 
+// // CONTACT TABLE INFO - GET API <=
+// app.get("/api/getContactInfo", (req, res) => {
+//      const customerID = req.body.customerID;
+//     // const phone = req.body.phone;
+//     db.query("SELECT * FROM contact_table WHERE customer_id = ?", [customerID], (err, result) => {
+//         if (err) {
+//             console.log(err);
+//         }
+//         else {
+//             res.send(result);
+//         }
+//     });
+// });
+
+// PRODUCT PAGE - POST API =>
 app.post("/api/insertProduct", (req, res) => {
     const oldId = req.body.old_abs_id;
     const customerId = req.body.customer_id;
@@ -168,37 +263,28 @@ app.post("/api/insertProduct", (req, res) => {
     const innerHubPosition = req.body.inner_hub_position;
     const floodCoat = req.body.floodcoat;
     const rimagePrint = req.body.rimage_print;
-    const colorOne = req.body.color_1;
-    const colorTwo = req.body.color_2;
-    const colorThree = req.body.color_3;
-    const colorFour = req.body.color_4;
-    const colorFive = req.body.color_5;
-    const colorSix = req.body.color_6;
-    const colorSeven = req.body.color_7;
-    const colorEight = req.body.color_8;
+    var colors = [null, null, null, null, null, null, null, null];
+    for(let i=0; i<req.body.numOfColors; i++) 
+    {
+        colors[i] = req.body.colorList[i].color;
+    }
     const colorNotes = req.body.color_notes;
-    const componentOne = req.body.component_1;
-    const componentTwo = req.body.component_2;
-    const componentThree = req.body.component_3;
-    const componentFour = req.body.component_4;
-    const componentFive = req.body.component_5;
-    const componentSix = req.body.component_6;
-    const componentSeven = req.body.component_7;
-    const componentEight = req.body.component_8;
-    const componentNine = req.body.component_9;
-    const componentTen = req.body.component_10;
-    const componentEleven = req.body.component_11;
-    const componentTwelve = req.body.component_12;
+    var components = [null, null, null, null, null, null, null, null, null, null, null, null];
+    for(let i=0; i<req.body.numOfComponents; i++) 
+    {
+        components[i] = req.body.componentList[i].component;
+    }
     const packagingNotes = req.body.packaging_notes;
     const productNotes = req.body.product_notes;
     const productStatus = req.body.product_status;
 
     const sqlInsert = "INSERT INTO product_table (old_abs_id, customer_id, product_category, oem_product_id, product_title, product_desc, product_repl, master_format, master_received, master_label, master_capacity, master_loc, films_loc, date_code_required, date_code_position, inner_hub, inner_hub_position, floodcoat, rimage_print, color_1, color_2, color_3, color_4, color_5, color_6, color_7, color_8, color_notes, component_1, component_2, component_3, component_4, component_5, component_6, component_7, component_8, component_9, component_10, component_11, component_12, packaging_notes, product_notes, product_status) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-    db.query(sqlInsert, [oldId, customerId, productCategory, oemId, productTitle, productDesc, productRepl, masterFormat, masterReceived, masterLabel, masterCapacity, masterLoc, filmsLoc, dateCodeRequired, dateCodePosition, innerHub, innerHubPosition, floodCoat, rimagePrint, colorOne, colorTwo, colorThree, colorFour, colorFive, colorSix, colorSeven, colorEight, colorNotes, componentOne, componentTwo, componentThree, componentFour, componentFive, componentSix, componentSeven, componentEight, componentNine, componentTen, componentEleven, componentTwelve, packagingNotes, productNotes, productStatus], (err, result) => {
+    db.query(sqlInsert, [oldId, customerId, productCategory, oemId, productTitle, productDesc, productRepl, masterFormat, masterReceived, masterLabel, masterCapacity, masterLoc, filmsLoc, dateCodeRequired, dateCodePosition, innerHub, innerHubPosition, floodCoat, rimagePrint, colors[0], colors[1], colors[2], colors[3], colors[4], colors[5], colors[6], colors[7], colorNotes, components[0], components[1], components[2], components[3], components[4], components[5], components[6], components[7], components[8], components[9], components[10], components[11], packagingNotes, productNotes, productStatus], (err, result) => {
         console.log(result);
     });
 });
 
+// LOCATION PAGE - POST API =>
 app.post("/api/insertLocation" , (req, res) =>{
     const location_id = req.body.location_id;
     const location_type = req.body.location_type;
@@ -214,6 +300,7 @@ app.post("/api/insertLocation" , (req, res) =>{
     });
 });
 
+// LOCATION TABLE - GET API <=
 app.get("/api/getLocationHistory", (req, res) =>{
     const location_id = req.body.location_id;
     const item_id = req.body.item_id;
@@ -226,6 +313,7 @@ app.get("/api/getLocationHistory", (req, res) =>{
     });
 });
 
+// LOCATION PAGE - POST API =>
 app.post("/api/insertLocationHistory", (req, res) =>{
     const location_id = req.body.location_id;
     const item_id = req.body.item_id;
@@ -237,6 +325,7 @@ app.post("/api/insertLocationHistory", (req, res) =>{
     });
 });
 
+// ITEM CHECKIN TABLE PAGE - POST API =>
 app.post("/api/insertItem" , (req, res) =>{
     const customer_id = req.body.customer_id;
     const item_id = req.body.item_id;
@@ -255,6 +344,7 @@ app.post("/api/insertItem" , (req, res) =>{
     });
 });
 
+// COMPONENT PAGE - POST API =>
 app.post("/api/insertComponent", (req, res) =>{
     /*------------------------------------------ Component Page ------------------------------------------*/
     const customer_id = req.body.customer_id;
@@ -278,7 +368,7 @@ app.post("/api/insertComponent", (req, res) =>{
     /*------------------------------------------ Component Page ------------------------------------------*/
 });
 
-//Shipping Page
+// SHIPPING PAGE - POST API =>
 app.post("/api/insertShipping", (req, res) =>{
     const company_name = req.body.company_name;
     const contact_name = req.body.contact_name;
@@ -312,11 +402,7 @@ app.post("/api/insertShipping", (req, res) =>{
     })
 });
 
-app.listen(3001, () =>{
-    console.log("running on port 3001");
-});
-
-
+// COMPANY PAGE - POST API =>
 //--------------------Company page----------------------
 app.post("/api/insertCompany" , (req, res) =>{
 
