@@ -26,7 +26,7 @@ export default async function signup(req, res) {
 
   console.log("viewOnly", req.body)
     await createUser({username, password, viewOnly})
-    res.status(200).send({ done: true })
+    res.status(200).json({ done: true, viewOnly: viewOnly });
   } catch (error) {
     console.error(error)
     res.status(500).end(error.message)

@@ -2,11 +2,13 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './App.css';
 
+
 const LoginForm = ({ handleLogin }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   let navigate = useNavigate();
+  
 
   const routeChange = () => {
     let path = '/signup';
@@ -27,13 +29,17 @@ const LoginForm = ({ handleLogin }) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
       });
+      const data = await res.json();
 
       if (res.ok) {
-        handleLogin();
+        
+        handleLogin(data.sessionView);
+        //handleLogin(true);
       } else {
         const errorText = await res.text();
         setErrorMsg(errorText);
       }
+
     } catch (error) {
       console.error('An unexpected error occurred:', error);
       setErrorMsg(error.message);
@@ -76,4 +82,3 @@ const LoginForm = ({ handleLogin }) => {
 };
 
 export default LoginForm;
-

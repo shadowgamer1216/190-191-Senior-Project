@@ -27,15 +27,14 @@
         const user = await authenticate('local', req, res)
         // session is the payload to save in the token, it may contain basic info about the user
         const session = {...user}; 
-        console.log("session user: " + session[0].username)
-        console.log("session view: " + session[0].viewOnly)
-
-
+        
+        console.log("session user: " + session[0].viewOnly)
         console.log("res " + res.statusCode)
   
         await setLoginSession(res, session)
+        const sessionView = session[0].viewOnly
   
-        res.status(200).send({ done: true })
+        res.status(200).send({ done: true, sessionView })
       } catch (error) {
         console.error(error) 
         res.status(401).send(error.message)

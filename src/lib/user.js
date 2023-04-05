@@ -1,5 +1,4 @@
 import crypto from 'crypto'
-import { v4 as uuidv4 } from 'uuid'
 
 const bodyParser = require("body-parser")
 const express = require("express");
@@ -30,10 +29,6 @@ const sequelize = new Sequelize(
     console.error('Unable to connect to the database: ', error);
  });
 
-/**
- * User methods. The example doesn't contain a DB, but for real applications you must use a
- * db here, such as MongoDB, Fauna, SQL, etc.
- */
 
     var User = sequelize.define('user', {
 

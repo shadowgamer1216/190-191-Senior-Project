@@ -14,12 +14,15 @@ import SignupForm from './signupForm';
 import { useState } from 'react';
 import Search from './search';
 import SearchCompany from './searchcompany';
+import ViewOnlyHome from './ViewOnlyHome';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isViewOnly, setIsViewOnly] = useState(false);
 
-  const handleLogin = () => {
+  const handleLogin = (viewOnly) => {
     setIsLoggedIn(true);
+    setIsViewOnly(viewOnly);
   };
 
   const handleLogout = () => {
@@ -30,30 +33,35 @@ function App() {
 
   return (
     <div className="App">
-      {isLoggedIn ? (
-          <Routes>
-            <Route path="/" element={<HomePage handleLogout={handleLogout} />} />
-            <Route path="/product" element={<ProductPage handleLogout={handleLogout}/>} />
-            <Route path="/contact" element={<ContactPage handleLogout={handleLogout}/>} />
-            <Route path="/component" element={<ComponentPage handleLogout={handleLogout}/>} />
-            <Route path="/location" element={<LocationPage handleLogout={handleLogout}/>} />
-            <Route path="/order" element={<OrderPage handleLogout={handleLogout}/>} />
-            <Route path="/company" element={<CompanyPage handleLogout={handleLogout}/>} />
-            <Route path="/itemCheckIn" element={<ItemCheckInPage handleLogout={handleLogout}/>} />
-            <Route path="/shipping" element={<Shipping handleLogout={handleLogout}/>} />
-        <Route path = "/search" element = {<Search/>} />
-        <Route path = "search/searchcompany" element = {<SearchCompany/>} />
-
-          </Routes>
+      {isLoggedIn && !isViewOnly ? (
+        <Routes>
+          <Route path="/" element={<HomePage handleLogout={handleLogout} />} />
+          <Route path="/product" element={<ProductPage handleLogout={handleLogout}/>} />
+          <Route path="/contact" element={<ContactPage handleLogout={handleLogout}/>} />
+          <Route path="/component" element={<ComponentPage handleLogout={handleLogout}/>} />
+          <Route path="/location" element={<LocationPage handleLogout={handleLogout}/>} />
+          <Route path="/order" element={<OrderPage handleLogout={handleLogout}/>} />
+          <Route path="/company" element={<CompanyPage handleLogout={handleLogout}/>} />
+          <Route path="/itemCheckIn" element={<ItemCheckInPage handleLogout={handleLogout}/>} />
+          <Route path="/shipping" element={<Shipping handleLogout={handleLogout}/>} />
+          <Route path="/search" element={<Search />} />
+          <Route path="/search/searchcompany" element={<SearchCompany />} />
+        </Routes>
+      ) : isLoggedIn && isViewOnly ? (
+        <Routes>
+          <Route path="/" element={<ViewOnlyHome handleLogout={handleLogout} />} />
+          <Route path="/search" element={<Search />} />
+          <Route path="/search/searchcompany" element={<SearchCompany />} />
+        </Routes>
       ) : (
-
-<Routes>
+        <Routes>
           <Route path="/" element={<LoginForm handleLogin={handleLogin} />} />
           <Route path="/signup" element={<SignupForm />} />
         </Routes>
-        )}
+      )}
     </div>
   );
+
 }
 
 export default App;
