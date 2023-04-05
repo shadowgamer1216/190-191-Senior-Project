@@ -71,7 +71,7 @@ const Product = ({ handleLogout }) => {
     
 
     const submit = () => {
-        Axios.post("http://localhost:3004/api/insertProduct", 
+        Axios.post("http://localhost:3001/api/insertProduct", 
         {
             old_abs_id: old_abs_id,
             customer_id: customer_id,
@@ -171,8 +171,8 @@ const Product = ({ handleLogout }) => {
                         <div className="form-row">
                             <label htmlFor="product_category" className="col-md-3 col-form-label">Category</label>
                             <div className="input-group input-group-sm mb-3 col-md-3">
-                                <select onChange={(e) => setCategory(e.target.value)} className="form-control" id="product_category">
-                                    <option defaultValue="0">Select Category</option>
+                                <select onChange={(e) => setCategory(e.target.value)} className="form-control" id="product_category" required>
+                                    <option value="">Select Category</option>
                                     <option value="CD-R">CD-R</option>
                                     <option value="MD-R">MD-R</option>
                                     <option value="BC-R">BC-R</option>
@@ -202,7 +202,7 @@ const Product = ({ handleLogout }) => {
                         <div className="form-row">
                             <label htmlFor="product_title" className="col-md-3 col-form-label">Title</label>
                             <div className="input-group input-group-sm mb-3 col-md-8">
-                                <input onChange={(e) => setTitle(e.target.value)} type="text" className="form-control" id="product_title" />
+                                <input onChange={(e) => setTitle(e.target.value)} type="text" className="form-control" id="product_title" required/>
                             </div>
                         </div>
 
@@ -217,7 +217,7 @@ const Product = ({ handleLogout }) => {
                             <label htmlFor="product_repl" className="col-md-3 col-form-label">Replication</label>
                             <div className="input-group input-group-sm mb-3 col-md-3">
                                 <select onChange={(e) => setRepl(e.target.value)} className="form-control" id="product_repl">
-                                    <option defaultValue="0">Select Type</option>
+                                    <option value="">Select Type</option>
                                     <option value="Replicated">Replicated</option>
                                     <option value="Non-Recorded">Non-Recorded</option>
                                     <option value="Replicated Only">Replicated Only</option>
@@ -233,7 +233,7 @@ const Product = ({ handleLogout }) => {
                             <label htmlFor="master_format" className="col-md-3 col-form-label">Master Format</label>
                             <div className="input-group input-group-sm mb-3 col-md-3">
                                 <select onChange={(e) => setMasterFormat(e.target.value)} className="form-control" id="master_format">
-                                    <option defaultValue="0">Select Format</option>
+                                    <option value="">Select Format</option>
                                     <option value="CD-R">CD-R</option>
                                     <option value="CD-ROM">CD-ROM</option>
                                     <option value="DVD-R">DVD-R</option>
@@ -272,7 +272,7 @@ const Product = ({ handleLogout }) => {
                             <label htmlFor="master_location" className="col-md-3 col-form-label">Master Location</label>
                             <div className="input-group input-group-sm mb-3 col-md-3">
                                 <select onChange={(e) => setMasterLoc(e.target.value)} className="form-control" id="master_location">
-                                    <option defaultValue="0">Select Location</option>
+                                    <option value="">Select Location</option>
                                     <option value="Vendor">Vendor</option>
                                     <option value="Docket">Docket</option>
                                     <option value="Absolute">Absolute</option>
@@ -287,7 +287,7 @@ const Product = ({ handleLogout }) => {
                             <label htmlFor="films_location" className="col-md-3 col-form-label">Films Location</label>
                             <div className="input-group input-group-sm mb-3 col-md-3">
                                 <select onChange={(e) => setFilmsLoc(e.target.value)} className="form-control" id="films_location">
-                                    <option defaultValue="0">Select Location</option>
+                                    <option value="">Select Location</option>
                                     <option value="Vendor">Vendor</option>
                                     <option value="Docket">Docket</option>
                                     <option value="Absolute">Absolute</option>
@@ -457,8 +457,8 @@ const Product = ({ handleLogout }) => {
                         <div className="form-row">
                             <label htmlFor="product_status" className="col-md-3 col-form-label">Product Status</label>
                             <div className="input-group input-group-sm mb-3 col-md-3">
-                                <select onChange={(e) => setProductStatus(e.target.value)} className="form-control" id="product_status">
-                                    <option defaultValue="0">Select Status</option>
+                                <select onChange={(e) => setProductStatus(e.target.value)} className="form-control" id="product_status" required>
+                                    <option value="">Select Status</option>
                                     <option value="Current">Current</option>
                                     <option value="New">New</option>
                                 </select>
@@ -468,7 +468,7 @@ const Product = ({ handleLogout }) => {
 
                     <br></br>
                     <div className="submit">
-                        <button onSubmit={submit} type="submit" id="add_product" className="btn btn-success">Submit</button>
+                        <button onClick={submit} type="submit" id="add_product" className="btn btn-success">Submit</button>
                     </div>
 
                 </form>
@@ -478,7 +478,7 @@ const Product = ({ handleLogout }) => {
                     <label htmlFor="add_location" className="col-form-label-sm">Choose New Location for this Product</label>
                     <div className="input-group input-group-sm mb-3 col-md-6">
                         <select className="form-control form-control-sm" id="add_location">
-                            <option defaultValue="0">Select Location</option>
+                            <option value="">Select Location</option>
                             <option value="1">Option 1</option>
                             <option value="2">Option 2</option>
                             <option value="3">Option 3</option>
