@@ -263,23 +263,28 @@ app.post("/api/insertProduct", (req, res) => {
     const innerHubPosition = req.body.inner_hub_position;
     const floodCoat = req.body.floodcoat;
     const rimagePrint = req.body.rimage_print;
+    var colorCount = 0;
     var colors = [null, null, null, null, null, null, null, null];
     for(let i=0; i<req.body.numOfColors; i++) 
     {
         colors[i] = req.body.colorList[i].color;
+        colorCount = i;
     }
+    if(colors[0] !== "") { colorCount += 1; }
+    if(colors[0] === "") { colors[0] = null }
     const colorNotes = req.body.color_notes;
     var components = [null, null, null, null, null, null, null, null, null, null, null, null];
     for(let i=0; i<req.body.numOfComponents; i++) 
     {
         components[i] = req.body.componentList[i].component;
     }
+    if(components[0] === "") { components[0] = null }
     const packagingNotes = req.body.packaging_notes;
     const productNotes = req.body.product_notes;
     const productStatus = req.body.product_status;
 
-    const sqlInsert = "INSERT INTO product_table (old_abs_id, customer_id, product_category, oem_product_id, product_title, product_desc, product_repl, master_format, master_received, master_label, master_capacity, master_loc, films_loc, date_code_required, date_code_position, inner_hub, inner_hub_position, floodcoat, rimage_print, color_1, color_2, color_3, color_4, color_5, color_6, color_7, color_8, color_notes, component_1, component_2, component_3, component_4, component_5, component_6, component_7, component_8, component_9, component_10, component_11, component_12, packaging_notes, product_notes, product_status) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-    db.query(sqlInsert, [oldId, customerId, productCategory, oemId, productTitle, productDesc, productRepl, masterFormat, masterReceived, masterLabel, masterCapacity, masterLoc, filmsLoc, dateCodeRequired, dateCodePosition, innerHub, innerHubPosition, floodCoat, rimagePrint, colors[0], colors[1], colors[2], colors[3], colors[4], colors[5], colors[6], colors[7], colorNotes, components[0], components[1], components[2], components[3], components[4], components[5], components[6], components[7], components[8], components[9], components[10], components[11], packagingNotes, productNotes, productStatus], (err, result) => {
+    const sqlInsert = "INSERT INTO product_table (old_abs_id, customer_id, product_category, oem_product_id, product_title, product_desc, product_repl, master_format, master_received, master_label, master_capacity, master_loc, films_loc, date_code_required, date_code_position, inner_hub, inner_hub_position, floodcoat, rimage_print, num_colors, color_1, color_2, color_3, color_4, color_5, color_6, color_7, color_8, color_notes, component_1, component_2, component_3, component_4, component_5, component_6, component_7, component_8, component_9, component_10, component_11, component_12, packaging_notes, product_notes, product_status) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    db.query(sqlInsert, [oldId, customerId, productCategory, oemId, productTitle, productDesc, productRepl, masterFormat, masterReceived, masterLabel, masterCapacity, masterLoc, filmsLoc, dateCodeRequired, dateCodePosition, innerHub, innerHubPosition, floodCoat, rimagePrint, colorCount, colors[0], colors[1], colors[2], colors[3], colors[4], colors[5], colors[6], colors[7], colorNotes, components[0], components[1], components[2], components[3], components[4], components[5], components[6], components[7], components[8], components[9], components[10], components[11], packagingNotes, productNotes, productStatus], (err, result) => {
         console.log(result);
     });
 });

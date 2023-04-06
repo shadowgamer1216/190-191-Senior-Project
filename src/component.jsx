@@ -91,7 +91,7 @@ const Component = ({ handleLogout }) => {
                             <div className="input-group input-group-sm mb-3 col-sm-3">
                                 <select className="form-control" name="componenttype" id="componenttype" onChange={(e) => {
                                     setComponent_Type(e.target.value)
-                                }}>
+                                }} required >
                                     <option selected value="">Select Value</option>
                                     <option value="Assembly"> Assembly</option>
                                     <option value="Bag"> Bag</option>
@@ -106,7 +106,7 @@ const Component = ({ handleLogout }) => {
                             <div className="input-group input-group-sm mb-3 col-sm-10">
                                 <input type="text" className="form-control" id="oem" onChange={(e) => {
                                     setOEM_PN(e.target.value)
-                                }}/>
+                                }} required />
                             </div>
                         </div>
 
@@ -115,7 +115,7 @@ const Component = ({ handleLogout }) => {
                             <div className="input-group input-group-sm mb-3 col-sm-10">
                                 <textarea rows="4" cols="50" className="form-control" name="component_description" id="custom-area" onChange={(e) => {
                                     setComponent_Description(e.target.value)
-                                 }} />
+                                 }} required />
                             </div>
                         </div>
 
@@ -124,21 +124,16 @@ const Component = ({ handleLogout }) => {
                             <div className="input-group input-group-sm mb-3 col-sm-10">
                                 <input type="text" className="form-control" id="size" onChange={(e) => {
                                     setSize(e.target.value)
-                                 }}/>
+                                 }} required />
                             </div>
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="supplier" className="col-sm-2 col-form-label">Supplier/Brand</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-3">
-                                <select className="form-control" name="supplier" id="supplier" onChange={(e) => {
-                                    setSupplier_Brand_ID(e.target.value)
-                                 }}>
-                                    <option selected value="">Select Value</option>
-                                    <option value="TBD"> TBD</option>
-                                    <option value="TBD"> TBD</option>
-                                    <option value="TBD"> TBD</option>
-                                </select>
+                            <label htmlFor="supplier/brand" className="col-sm-2 col-form-label">Supplier/Brand</label>
+                            <div className="input-group input-group-sm mb-3 col-sm-10">
+                                <input type="text" className="form-control" id="supplier/brand" onChange={(e) => {
+                                    setSize(e.target.value)
+                                 }} required />
                             </div>
                         </div>
 
@@ -147,7 +142,7 @@ const Component = ({ handleLogout }) => {
                             <div className="input-group input-group-sm mb-3 col-sm-10">
                                 <input type="text" className="form-control" id="color" onChange={(e) => {
                                     setColor(e.target.value)
-                                 }} />
+                                 }} required />
                             </div>
                         </div>
 
@@ -156,31 +151,23 @@ const Component = ({ handleLogout }) => {
                             <div className="input-group input-group-sm mb-3 col-sm-10">
                                 <textarea rows="4" cols="50" className="form-control" name="notes" id="custom-area" onChange={(e) => {
                                     setNotes(e.target.value)
-                                 }} />
+                                 }} required />
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="uom" className="col-sm-2 col-form-label">Unit of Measure</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-3">
-                                <select className="form-control" name="uom" id="uom" onChange={(e) => {
-                                    setUOM(e.target.value)
-                                 }}>
-                                    <option selected value="">Select Value</option>
-                                    <option value="TBD"> TBD</option>
-                                    <option value="TBD"> TBD</option>
-                                    <option value="TBD"> TBD</option>
-                                </select>
+                            <div className="input-group input-group-sm mb-3 col-sm-10">
+                                <input type="text" className="form-control" id="uom" onChange={(e) => {
+                                    setSize(e.target.value)
+                                 }} required />
                             </div>
                         </div>
-
 
                         <div className="form-row">
                             <label htmlFor="status" className="col-sm-2 col-form-label">Status</label>
                             <div className="input-group input-group-sm mb-3 col-sm-3">
-                                <select className="form-control" name="status" id="status" onChange={(e) => {
-                                    setComponent_Status(e.target.value)
-                                 }}>
+                                <select onChange={(e) => {setComponent_Status(e.target.value)}} className="form-control" id= "status" required >
                                     <option selected value="">Select Value</option>
                                     <option value="Active"> Active</option>
                                     <option value="Inactive"> Inactive</option>
@@ -189,16 +176,16 @@ const Component = ({ handleLogout }) => {
                         </div>
                         
                         <div className="form-row">
-                            <div className="input-group input-group-sm col-sm-3 pl-5">
+                            <div className="input-group input-group-sm col-md-3">
                                 <div className="form-group custom-control custom-checkbox">
-                                    <input onChange={(prev) => setOwned_By(prev => !prev)} checked = {owned_by} type="checkbox" className="custom-control-input" id="ownedbycheck" />
-                                    <label htmlFor="ownedbycheck" className="custom-control-label">Owned By Individual Company?</label>
+                                    <input onChange={(prev) => setOwned_By(prev => !prev)} checked={owned_by} type="checkbox" className="custom-control-input" id="owned_by" />
+                                    <label htmlFor="owned_by" className="custom-control-label">Owned By Individual Company?</label>
                                 </div>
                             </div>
-                   
-                            <div className="input-group input-group-sm col-sm-3 pl-5">
+
+                            <div className="input-group input-group-sm col-md-3">
                                 <div className="form-group custom-control custom-checkbox">
-                                    <input onChange={(prev) => setPackaging_Component(prev => !prev)} checked = {packaging_component}type="checkbox" className="custom-control-input" id="packagingcomponent" />
+                                    <input onChange={(prev) => setPackaging_Component(prev => !prev)} checked={packaging_component} type="checkbox" className="custom-control-input" id="packagingcomponent" />
                                     <label htmlFor="packagingcomponent" className="custom-control-label">Packaging Component</label>
                                 </div>
                             </div>
@@ -225,7 +212,6 @@ const Component = ({ handleLogout }) => {
                                     <th scope="col">Type</th>
                                     <th scope="col">Physical Location</th>
                                     <th scope="col">Qty on Loc</th>
-                                    <th scope="col">Add to Loc</th>
                                 </tr>
                             </thead>
                             <tbody>
