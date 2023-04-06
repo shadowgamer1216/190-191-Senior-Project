@@ -411,9 +411,8 @@ app.post("/api/insertShipping", (req, res) =>{
 //--------------------Company page----------------------
 app.post("/api/insertCompany" , (req, res) =>{
 
-
-    const company_ID = req.body.company_id;
-    const company_Name  = req.body.company_name;
+    const company_ID = req.body.company_ID;
+    const company_Name  = req.body.company_Name;
     const addr1 = req.body.addr1;
     const addr2 = req.body.addr2;
     const city = req.body.city;
@@ -422,7 +421,7 @@ app.post("/api/insertCompany" , (req, res) =>{
     const zip = req.body.zip;
     const Salesperson = req.body.Salesperson;
     const phone = req.body.phone;
-    const Extension = req.body.extension;
+    const Extension = req.body.Extension;
     const fax = req.body.fax;
     const email = req.body.email;
     const Web_addr = req.body.Web_addr;
@@ -435,9 +434,10 @@ app.post("/api/insertCompany" , (req, res) =>{
     const other_class = req.body.other_class;
     const notes = req.body.notes;
 
-    const sqlInsert = "INSERT INTO company_table (company_ID, company_Name, addr1, addr2, city, state, country, zip, Salesperson, phone, Extension, fax, email, Web_addr, Tax_ID, credit_checked, status, customer, vendor, OEM, other_class, notes) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-    db.query(sqlInsert, [company_ID, company_Name, addr1, addr2, city, state, country, zip, Salesperson, phone, Extension, fax, email, Web_addr, Tax_ID, credit_checked, status, customer, vendor, OEM, other_class, notes], (err, result) => {
-        console.log(result);
-    });
+
+     const sqlInsert = "INSERT INTO company_table (company_ID, company_Name, addr1, addr2, city, state, country, zip, Salesperson, phone, Extension, fax, email, Web_addr, Tax_ID, credit_checked, status, customer, vendor, OEM, other_class, notes) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+     db.query(sqlInsert, [company_ID, company_Name, addr1, addr2, city, state, country, zip, Salesperson, phone, Extension, fax, email, Web_addr, Tax_ID, credit_checked, status, customer, vendor, OEM, other_class, notes], (err, result) => {
+         console.log(result);
+     });
 });
 //----------------end of Company page------------------

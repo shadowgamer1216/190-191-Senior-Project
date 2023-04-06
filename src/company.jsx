@@ -72,7 +72,7 @@ const Company = ({ handleLogout }) => {
                             <div className="input-group input-group-sm mb-3 col-sm-10">
                                 <input type="text" className="form-control" id="CID" onChange={(e) =>{
                                     setCompanyID(e.target.value)
-                                }} maxLength = "8" required/>
+                                }} maxLength = "8"/>
                             </div>
                         </div>
 
@@ -291,8 +291,7 @@ const Company = ({ handleLogout }) => {
                         <div className="form-row">
                             <div className="input-group input-group-sm col-sm-3 pl-5">
                                 <div className="form-group custom-control custom-checkbox">
-                                    <input type="checkbox" className="custom-control-input" id="creditCheck" onChange={(e) =>{
-                                    setCreditChecked(e.target.value)}}/>
+                                    <input onChange={(prev) => setCreditChecked(prev => !prev)} checked={credit_checked} type="checkbox" className="custom-control-input" id="creditCheck"/>
                                     <label htmlFor="creditCheck" className="custom-control-label">Credit Checked?</label>
                                 </div>
                             </div>
@@ -300,24 +299,21 @@ const Company = ({ handleLogout }) => {
 
                             <div className="input-group input-group-sm col-sm-3 pl-5">
                                 <div className="form-group custom-control custom-checkbox">
-                                    <input type="checkbox" className="custom-control-input" id="customerCheck" onChange={(e) =>{
-                                    setCustomer(e.target.value)}}/>
+                                    <input  onChange={(prev) => setCustomer(prev => !prev)} checked={customer} type="checkbox" className="custom-control-input" id="customerCheck"/>
                                     <label htmlFor="customerCheck" className="custom-control-label">Customer?</label>
                                 </div>
                             </div>
 
                             <div className="input-group input-group-sm col-sm-3 pl-5">
                                 <div className="form-group custom-control custom-checkbox">
-                                    <input type="checkbox" className="custom-control-input" id="vendorCheck" onChange={(e) =>{
-                                    setVendor(e.target.value)}}/>
+                                    <input  onChange={(prev) => setVendor(prev => !prev)} checked={vendor} type="checkbox" className="custom-control-input" id="vendorCheck"/>
                                     <label htmlFor="vendorCheck" className="custom-control-label">Vendor?</label>
                                 </div>
                             </div>
 
                             <div className="input-group input-group-sm col-sm-3 pl-5">
                                 <div className="form-group custom-control custom-checkbox">
-                                    <input type="checkbox" className="custom-control-input" id="OEMCheck" onChange={(e) =>{
-                                    setOEM(e.target.value)}}/>
+                                    <input  onChange={(prev) => setOEM(prev => !prev)} checked={OEM}  type="checkbox" className="custom-control-input" id="OEMCheck"/>
                                     <label htmlFor="OEMCheck" className="custom-control-label">OEM?</label>
                                 </div>
                             </div>
@@ -367,7 +363,9 @@ const Company = ({ handleLogout }) => {
             </footer>
 
         </div>
-    )// country might need to be changed to a dropdown menu, not sure
-    //status might have something else in the dropbox, it is not shown
+    )
+
 }
 export default Company;
+
+

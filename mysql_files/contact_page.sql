@@ -290,6 +290,7 @@ create table shipping_table(
 	fob varchar(50) default null,
 	notes TEXT
 
+
 create table company_table(
 	company_ID varchar (8) NOT NULL default '',
 	company_Name varchar (128) default NULL,
@@ -313,5 +314,6 @@ create table company_table(
 	OEM char (1) default NULL,
   other_class varchar (60) default NULL,
   notes TEXT,
-  PRIMARY KEY (company_Name)
+  PRIMARY KEY (company_ID)
 );
+
