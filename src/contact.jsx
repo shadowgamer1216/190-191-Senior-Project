@@ -8,7 +8,7 @@ import Axios from "axios";
 const Contact = ({ handleLogout }) => {
     const navigate = useNavigate();
     const [customer_id, setCustomerID] = useState("");
-    const [company, setCompany] = useState(""); //testing company
+    const [company, setCompany] = useState("");
     const [fname, setFname] = useState(""); 
     const [lname, setLname] = useState(""); 
     const [contact_type, setContactType] = useState("");
@@ -32,7 +32,7 @@ const Contact = ({ handleLogout }) => {
 
 
     const submit = () => {
-        Axios.post("http://localhost:3001/api/insert", {customer_id: customer_id, company: company, fname: fname, lname: lname, contact_type: contact_type, title: title, dept:dept, add_1: add_1, add_2: add_2, city: city, state_in_country: state_in_country, zip: zip, country: country, phone:phone, extension: extension, cell_phone_number: cell_phone_number, third_party_company:third_party_company, fax:fax, email:email, notes:notes})
+        Axios.post("http://localhost:3001/api/insertContact", {customer_id: customer_id, company: company, fname: fname, lname: lname, contact_type: contact_type, title: title, dept:dept, add_1: add_1, add_2: add_2, city: city, state_in_country: state_in_country, zip: zip, country: country, phone:phone, extension: extension, cell_phone_number: cell_phone_number, third_party_company:third_party_company, fax:fax, email:email, notes:notes})
         .then(()=> {
             alert('inserted');
         })

@@ -14,6 +14,7 @@ import SignupForm from './signupForm';
 import { useState } from 'react';
 import Search from './search';
 import SearchCompany from './searchcompany';
+import SearchContact from './searchContact';
 import ViewOnlyHome from './ViewOnlyHome';
 
 function App() {
@@ -46,12 +47,14 @@ function App() {
           <Route path="/shipping" element={<Shipping handleLogout={handleLogout}/>} />
           <Route path="/search" element={<Search />} />
           <Route path="/search/searchcompany" element={<SearchCompany />} />
+          <Route path="/search/searchContact" element={<SearchContact />} />
         </Routes>
       ) : isLoggedIn && isViewOnly ? (
         <Routes>
           <Route path="/" element={<ViewOnlyHome handleLogout={handleLogout} />} />
           <Route path="/search" element={<Search />} />
           <Route path="/search/searchcompany" element={<SearchCompany />} />
+          <Route path="/search/searchContact" element={<SearchContact />} />
         </Routes>
       ) : (
         <Routes>

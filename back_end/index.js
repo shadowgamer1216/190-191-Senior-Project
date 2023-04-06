@@ -17,14 +17,14 @@ const db = mysql.createPool({
 });
 
 // PORT LISTEN
-app.listen(3004, () =>{
-    console.log("Running on port 3004");
+app.listen(3001, () =>{
+    console.log("Running on port 3001");
 });
 
-// COMPANY PAGE - POST API =>
-app.post("/api/insert", (req, res)=> {
+// CONTACT PAGE - POST API =>
+app.post("/api/insertContact", (req, res)=> {
     const customer_id = req.body.customer_id;
-    const company = req.body.company; //testing company
+    const company = req.body.company;
     const fname = req.body.fname;
     const lname = req.body.lname;
     const contact_type = req.body.contact_type;
