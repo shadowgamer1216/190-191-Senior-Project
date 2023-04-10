@@ -313,6 +313,6 @@ CREATE TABLE company_table (
     OEM CHAR(1) DEFAULT NULL,
     other_class VARCHAR(60) DEFAULT NULL,
     notes TEXT,
-    PRIMARY KEY (company_Name)
+    PRIMARY KEY (company_ID)
 );
 
