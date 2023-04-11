@@ -17,7 +17,18 @@ const ItemCheckIn = ({ handleLogout }) => {
     const [date_complete, setDateComplete] = useState(null);
 
     const submit = () => {
-        Axios.post("http://localhost:3001/api/insertItem", {customer_id: customer_id, item_id: item_id, mfr_pn: mfr_pn, description: description, carrier: carrier, quantity: quantity, disposition: disposition, signed_for_by: signed_for_by, date_in: date_in, date_complete: date_complete})
+        Axios.post("http://localhost:3001/api/insertItem", {
+            customer_id: customer_id, 
+            item_id: item_id, 
+            mfr_pn: mfr_pn, 
+            description: description, 
+            carrier: carrier, 
+            quantity: quantity, 
+            disposition: disposition, 
+            signed_for_by: signed_for_by, 
+            date_in: date_in, 
+            date_complete: date_complete
+        })
         .then(()=> {
             alert('inserted item');
         })
@@ -58,7 +69,7 @@ const ItemCheckIn = ({ handleLogout }) => {
                             <div className="input-group input-group-sm mb-3 col-sm-10">
                                 <input type="text" className="form-control" id="customer-id" onChange={(e) =>{
                                     setCustomerID(e.target.value)
-                                }} maxLength = "4" required/>
+                                }} minLength = "4" maxLength = "4" required/>
                             </div>
                         </div>
 
@@ -85,7 +96,7 @@ const ItemCheckIn = ({ handleLogout }) => {
                             <div className="input-group input-group-sm mb-3 col-sm-10">
                                 <input type="text" className="form-control" id="description" onChange={(e) =>{
                                     setDescription(e.target.value)
-                                }}/>
+                                }} required/>
                             </div>
                         </div>
 
@@ -103,7 +114,7 @@ const ItemCheckIn = ({ handleLogout }) => {
                             <div className="input-group input-group-sm mb-3 col-sm-10">
                                 <input type="text" className="form-control" id="quantity" onChange={(e) =>{
                                     setQuantity(e.target.value)
-                                }}/>
+                                }} required/>
                             </div>
                         </div>
 

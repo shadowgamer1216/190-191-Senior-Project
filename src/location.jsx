@@ -40,11 +40,24 @@ const Location = ({ handleLogout }) => {
     const currentData = data.slice(startIndex, endIndex);
 
     const submit = () => {
-        Axios.post("http://localhost:3001/api/insertLocation", {location_id: location_id, location_type: location_type, item_id: item_id, qty: qty, item_owner: item_owner, physical_location: physical_location, notes: notes})
+        Axios.post("http://localhost:3001/api/insertLocation", {
+            location_id: location_id, 
+            location_type: location_type, 
+            item_id: item_id, 
+            qty: qty, 
+            item_owner: item_owner, 
+            physical_location: physical_location, 
+            notes: notes
+        })
         .then(()=> {
             alert('inserted location');
         });
-        Axios.post("http://localhost:3001/api/insertLocationHistory",{location_id: location_id, item_id: item_id, qty: qty, date: date})
+        Axios.post("http://localhost:3001/api/insertLocationHistory",{
+            location_id: location_id, 
+            item_id: item_id, 
+            qty: qty, 
+            date: date
+        })
         .then(()=>{
             alert('inserted location history');
         });
@@ -101,7 +114,7 @@ const Location = ({ handleLogout }) => {
                             <div className="input-group input-group-sm mb-3 col-sm-3">
                                 <select className="form-control" name="type" id="type" onChange={(e) =>{
                                     setLocationType(e.target.value)
-                                }}>
+                                }} required>
                                     <option selected value="">Select Value</option>
                                     <option value="Multiple Boxes">Multiple Boxes</option>
                                     <option value="Single Box">Single Box</option>
@@ -147,7 +160,7 @@ const Location = ({ handleLogout }) => {
                             <div className="input-group input-group-sm mb-3 col-sm-3">
                                 <select className="form-control" name="physical-location" id="physical-location" onChange={(e) =>{
                                     setPhysicalLocation(e.target.value)
-                                }}>
+                                }} required>
                                     <option selected value="">Select Value</option>
                                     <option value="ABS">ABS</option>
                                     <option value="Customer">Customer</option>
