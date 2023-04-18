@@ -71,8 +71,9 @@ CREATE TABLE item_check_in_table (
 
 DROP TABLE IF EXISTS component_table;
 CREATE TABLE component_table (
-    customer_id VARCHAR(25) NOT NULL DEFAULT '',
+    component_id VARCHAR(25) NOT NULL DEFAULT '',
     component_type VARCHAR(25) DEFAULT NULL,
+    title TEXT,
     oem_pn VARCHAR(50) DEFAULT NULL,
     component_description TEXT,
     size VARCHAR(25) DEFAULT NULL,
@@ -83,7 +84,7 @@ CREATE TABLE component_table (
     component_status VARCHAR(25) DEFAULT NULL,
     owned_by INT DEFAULT NULL,
     packaging_component INT DEFAULT NULL,
-    PRIMARY KEY (customer_id)
+    PRIMARY KEY (component_id)
 );
 
 DROP TABLE IF EXISTS product_table;

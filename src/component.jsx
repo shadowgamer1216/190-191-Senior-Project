@@ -6,8 +6,9 @@ import Axios from "axios";
 
 const Component = ({ handleLogout }) => {
     const navigate = useNavigate();
-    const[customer_id, setCustomerID] = useState("");
+    const[component_id, setComponentID] = useState("");
     const[component_type, setComponent_Type] = useState(null);
+    const[title, setTitle] = useState(null);
     const[oem_pn, setOEM_PN] = useState(null);
     const[component_description, setComponent_Description] = useState(null);
     const[size, setSize] = useState(null);
@@ -24,8 +25,9 @@ const Component = ({ handleLogout }) => {
     const submit = () => {
         Axios.post("http://localhost:3001/api/insertComponent", 
         {
-            customer_id: customer_id, 
-            component_type: component_type, 
+            component_id: component_id, 
+            component_type: component_type,
+            title: title, 
             oem_pn: oem_pn, 
             component_description: component_description,  
             size: size, 
@@ -78,10 +80,10 @@ const Component = ({ handleLogout }) => {
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="CID" className="col-sm-2 col-form-label">Customer ID</label>
+                            <label htmlFor="CID" className="col-sm-2 col-form-label">Component ID</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
                                 <input type="text" className="form-control" id="CID" onChange={(e) => {
-                                    setCustomerID(e.target.value)
+                                    setComponentID(e.target.value)
                                 }} required />
                             </div>
                         </div>
@@ -98,6 +100,15 @@ const Component = ({ handleLogout }) => {
                                     <option value="Blu-ray"> Blue-ray</option>
                                     <option value="CD"> CD</option>
                                 </select>
+                            </div>
+                        </div>
+
+                        <div className="form-row">
+                            <label htmlFor="title" className="col-sm-2 col-form-label">Title</label>
+                            <div className="input-group input-group-sm mb-3 col-sm-10">
+                                <textarea rows="3" cols="50" className="form-control" name="title" id="custom-area" onChange={(e) => {
+                                    setTitle(e.target.value)
+                                 }} required />
                             </div>
                         </div>
 
@@ -132,7 +143,7 @@ const Component = ({ handleLogout }) => {
                             <label htmlFor="supplier/brand" className="col-sm-2 col-form-label">Supplier/Brand</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
                                 <input type="text" className="form-control" id="supplier/brand" onChange={(e) => {
-                                    setSize(e.target.value)
+                                    setSupplier_Brand_ID(e.target.value)
                                  }} required />
                             </div>
                         </div>
@@ -159,7 +170,7 @@ const Component = ({ handleLogout }) => {
                             <label htmlFor="uom" className="col-sm-2 col-form-label">Unit of Measure</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
                                 <input type="text" className="form-control" id="uom" onChange={(e) => {
-                                    setSize(e.target.value)
+                                    setUOM(e.target.value)
                                  }} required />
                             </div>
                         </div>
@@ -171,6 +182,7 @@ const Component = ({ handleLogout }) => {
                                     <option selected value="">Select Value</option>
                                     <option value="Active"> Active</option>
                                     <option value="Inactive"> Inactive</option>
+                                    <option value="Obsolete"> Obsolete</option>
                                 </select>
                             </div>
                         </div>
