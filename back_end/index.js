@@ -138,7 +138,6 @@ app.post("/api/insertOrder", (req, res) => {
     const numberOfScreens = req.body.numberOfScreens;
     const screensPrice = req.body.screensPrice;
     const subTotal = req.body.subTotal;
-    const taxable = req.body.taxable;
     const taxRate = req.body.taxRate;
     const tax = req.body.tax;
     const freightCharges = req.body.freightCharges;
@@ -157,10 +156,6 @@ app.post("/api/insertOrder", (req, res) => {
     const creditChecked = req.body.creditChecked;
     const daysTurn = req.body.daysTurn;
     const dateCodePrinting = req.body.dateCodePrinting;
-    const assemblyBy = req.body.assemblyBy;
-    const discManufacturedBy = req.body.discManufacturedBy;
-    const CDBrand = req.body.CDBrand;
-    const discProvidedBy = req.body.discProvidedBy;
     const customerProvidedMaterial = req.body.customerProvidedMaterial;
     const customerMaterialETA = req.body.customerMaterialETA;
     const customerNotes = req.body.customerNotes;
@@ -171,15 +166,15 @@ app.post("/api/insertOrder", (req, res) => {
     db.query(
         "INSERT INTO order_table (salesperson, requestor, customer_contact, re_order, \
                                   factory_order_quantity, custom_invoice, custom_packing_slip, custom_quantity, custom_unit_price, custom_total_price, \
-                                  assembly_charges_quantity, assembly_charges_unit_price, assembly_charges_total_price, date_code_printing_charges_quantity, date_code_printing_charges_unit_price, date_code_printing_charges_total_price, date_code_setup_charge, number_of_screens, art_manipulation, sub_total, taxable, tax_rate, tax, freight_charges, order_price_total, \
+                                  assembly_charges_quantity, assembly_charges_unit_price, assembly_charges_total_price, date_code_printing_charges_quantity, date_code_printing_charges_unit_price, date_code_printing_charges_total_price, date_code_setup_charge, number_of_screens, art_manipulation, sub_total, tax_rate, tax, freight_charges, order_price_total, \
                                   invoice_date, invoice_date_paid, invoice_notes, \
-                                  abs_sales_order_date, customer_order_date, customer_po_date, customer_po_number, credit_checked, days_turn, date_code_printing, assembly_by, disc_manufactured_by, cd_dvd_brand, disc_provided_by, customer_provided_material, customer_material_eta, customer_notes, vendor_notes, order_notes, order_status) \
-                                  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                                  abs_sales_order_date, customer_order_date, customer_po_date, customer_po_number, credit_checked, days_turn, date_code_printing, customer_provided_material, customer_material_eta, customer_notes, vendor_notes, order_notes, order_status) \
+                                  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
         [salesPerson, requestor, customerContact, reOrder,
             factoryOrderQuantity, customInvoice, customPackingSlip, customQuantity, customUnitPrice, customTotalPrice,
-            assemblyChargesQuantity, assemblyChargesUnitPrice, assemblyChargesTotalPrice, printingChargesQuantity, printingChargesUnitPrice, printingChargesTotalPrice, setupCharge, numberOfScreens, screensPrice, subTotal, taxable, taxRate, tax, freightCharges, priceTotal,
+            assemblyChargesQuantity, assemblyChargesUnitPrice, assemblyChargesTotalPrice, printingChargesQuantity, printingChargesUnitPrice, printingChargesTotalPrice, setupCharge, numberOfScreens, screensPrice, subTotal, taxRate, tax, freightCharges, priceTotal,
             invoiceDate, invoiceDatePaid, invoiceNotes,
-            ABSOrder, customerOrder, customerPODate, customerPONumber, creditChecked, daysTurn, dateCodePrinting, assemblyBy, discManufacturedBy, CDBrand, discProvidedBy, customerProvidedMaterial, customerMaterialETA, customerNotes, vendorNotes, orderNotes, orderStatus]
+            ABSOrder, customerOrder, customerPODate, customerPONumber, creditChecked, daysTurn, dateCodePrinting, customerProvidedMaterial, customerMaterialETA, customerNotes, vendorNotes, orderNotes, orderStatus]
             , (err, result) => {
                 console.log(result);
         }

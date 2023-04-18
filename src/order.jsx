@@ -6,9 +6,9 @@ import Axios from 'axios';
 
 const Order = ({ handleLogout }) => {
     const navigate = useNavigate();
-    const [salesPerson, setSalesPerson] = useState("");
-    const [requestor, setRequestor] = useState("");
-    const [customerContact, setCustomerContact] = useState("");
+    const [salesPerson, setSalesPerson] = useState(null);
+    const [requestor, setRequestor] = useState(null);
+    const [customerContact, setCustomerContact] = useState(null);
     const [reOrder, setReOrder] = useState(false);
 
     // Custom Product
@@ -20,37 +20,37 @@ const Order = ({ handleLogout }) => {
     const [customTotalPrice, setCustomTotalPrice] = useState(customQuantity * customUnitPrice);
 
     // Non-Inventory Line Items
-    const [nonItem1, setNonItem1] = useState("");
+    const [nonItem1, setNonItem1] = useState(null);
     const [nonItemInvoice1, setNonItemInvoice1] = useState(false);
     const [nonItemPackingSlip1, setNonItemPackingSlip1] = useState(false);
     const [nonItemQuantity1, setNonItemQuantity1] = useState(0);
     const [nonItemUnitPrice1, setNonItemUnitPrice1] = useState(0);
     const [nonItemTotalPrice1, setNonItemTotalPrice1] = useState(nonItemQuantity1 * nonItemUnitPrice1);
-    const [nonItem2, setNonItem2] = useState("");
+    const [nonItem2, setNonItem2] = useState(null);
     const [nonItemInvoice2, setNonItemInvoice2] = useState(false);
     const [nonItemPackingSlip2, setNonItemPackingSlip2] = useState(false);
     const [nonItemQuantity2, setNonItemQuantity2] = useState(0);
     const [nonItemUnitPrice2, setNonItemUnitPrice2] = useState(0);
     const [nonItemTotalPrice2, setNonItemTotalPrice2] = useState(nonItemQuantity2 * nonItemUnitPrice2);
-    const [nonItem3, setNonItem3] = useState("");
+    const [nonItem3, setNonItem3] = useState(null);
     const [nonItemInvoice3, setNonItemInvoice3] = useState(false);
     const [nonItemPackingSlip3, setNonItemPackingSlip3] = useState(false);
     const [nonItemQuantity3, setNonItemQuantity3] = useState(0);
     const [nonItemUnitPrice3, setNonItemUnitPrice3] = useState(0);
     const [nonItemTotalPrice3, setNonItemTotalPrice3] = useState(nonItemQuantity3 * nonItemUnitPrice3);
-    const [nonItem4, setNonItem4] = useState("");
+    const [nonItem4, setNonItem4] = useState(null);
     const [nonItemInvoice4, setNonItemInvoice4] = useState(false);
     const [nonItemPackingSlip4, setNonItemPackingSlip4] = useState(false);
     const [nonItemQuantity4, setNonItemQuantity4] = useState(0);
     const [nonItemUnitPrice4, setNonItemUnitPrice4] = useState(0);
     const [nonItemTotalPrice4, setNonItemTotalPrice4] = useState(nonItemQuantity4 * nonItemUnitPrice4);
-    const [nonItem5, setNonItem5] = useState("");
+    const [nonItem5, setNonItem5] = useState(null);
     const [nonItemInvoice5, setNonItemInvoice5] = useState(false);
     const [nonItemPackingSlip5, setNonItemPackingSlip5] = useState(false);
     const [nonItemQuantity5, setNonItemQuantity5] = useState(0);
     const [nonItemUnitPrice5, setNonItemUnitPrice5] = useState(0);
     const [nonItemTotalPrice5, setNonItemTotalPrice5] = useState(nonItemQuantity5 * nonItemUnitPrice5);
-    const [nonItem6, setNonItem6] = useState("");
+    const [nonItem6, setNonItem6] = useState(null);
     const [nonItemInvoice6, setNonItemInvoice6] = useState(false);
     const [nonItemPackingSlip6, setNonItemPackingSlip6] = useState(false);
     const [nonItemQuantity6, setNonItemQuantity6] = useState(0);
@@ -58,19 +58,19 @@ const Order = ({ handleLogout }) => {
     const [nonItemTotalPrice6, setNonItemTotalPrice6] = useState(nonItemQuantity6 * nonItemUnitPrice6);
 
     // Inventory Items
-    const [item1, setItem1] = useState("");
+    const [item1, setItem1] = useState(null);
     const [itemInvoice1, setItemInvoice1] = useState(false);
     const [itemPackingSlip1, setItemPackingSlip1] = useState(false);
     const [itemQuantity1, setItemQuantity1] = useState(0);
     const [itemUnitPrice1, setItemUnitPrice1] = useState(0);
     const [itemTotalPrice1, setItemTotalPrice1] = useState(itemQuantity1 * itemUnitPrice1);
-    const [item2, setItem2] = useState("");
+    const [item2, setItem2] = useState(null);
     const [itemInvoice2, setItemInvoice2] = useState(false);
     const [itemPackingSlip2, setItemPackingSlip2] = useState(false);
     const [itemQuantity2, setItemQuantity2] = useState(0);
     const [itemUnitPrice2, setItemUnitPrice2] = useState(0);
     const [itemTotalPrice2, setItemTotalPrice2] = useState(itemQuantity2 * itemUnitPrice2);
-    const [item3, setItem3] = useState("");
+    const [item3, setItem3] = useState(null);
     const [itemInvoice3, setItemInvoice3] = useState(false);
     const [itemPackingSlip3, setItemPackingSlip3] = useState(false);
     const [itemQuantity3, setItemQuantity3] = useState(0);
@@ -88,34 +88,34 @@ const Order = ({ handleLogout }) => {
     const [numberOfScreens, setNumberOfScreens] = useState(0);
     const [screensPrice, setScreensPrice] = useState(0);
     const [subTotal, setSubTotal] = useState(0);
-    const [taxable, setTaxable] = useState(false);
+    //const [taxable, setTaxable] = useState(false);
     const [taxRate, setTaxRate] = useState(0);
     const [tax, setTax] = useState(0);
     const [freightCharges, setFreightCharges] = useState(0);
     const [priceTotal, setPriceTotal] = useState(0);
 
     // Invoice Information
-    const [invoiceDate, setInvoiceDate] = useState("");
-    const [invoiceDatePaid, setInvoiceDatePaid] = useState("");
-    const [invoiceNotes, setInvoiceNotes] = useState("");
+    const [invoiceDate, setInvoiceDate] = useState(null);
+    const [invoiceDatePaid, setInvoiceDatePaid] = useState(null);
+    const [invoiceNotes, setInvoiceNotes] = useState(null);
 
     // Job Information
-    const [ABSOrder, setABSOrder] = useState("");
-    const [customerOrder, setCustomerOrder] = useState("");
-    const [customerPODate, setCustomerPODate] = useState("");
+    const [ABSOrder, setABSOrder] = useState(null);
+    const [customerOrder, setCustomerOrder] = useState(null);
+    const [customerPODate, setCustomerPODate] = useState(null);
     const [customerPONumber, setCustomerPONumber] = useState(0);
     const [creditChecked, setCreditChecked] = useState(false);
     const [daysTurn, setDaysTurn] = useState(0);
-    const [dateCodePrinting, setDateCodePrinting] = useState("");
-    const [assemblyBy, setAssemblyBy] = useState("");
-    const [discManufacturedBy, setDiscManufacturedBy] = useState("");
-    const [CDBrand, setCDBrand] = useState("");
-    const [discProvidedBy, setDiscProvidedBy] = useState("");
-    const [customerProvidedMaterial, setCustomerProvidedMaterial] = useState("");
-    const [customerMaterialETA, setCustomerMaterialETA] = useState("");
-    const [customerNotes, setCustomerNotes] = useState("");
-    const [vendorNotes, setVendorNotes] = useState("");
-    const [orderNotes, setOrderNotes] = useState("");
+    const [dateCodePrinting, setDateCodePrinting] = useState(null);
+    // const [assemblyBy, setAssemblyBy] = useState(null);
+    // const [discManufacturedBy, setDiscManufacturedBy] = useState(null);
+    // const [CDBrand, setCDBrand] = useState(null);
+    // const [discProvidedBy, setDiscProvidedBy] = useState(null);
+    const [customerProvidedMaterial, setCustomerProvidedMaterial] = useState(null);
+    const [customerMaterialETA, setCustomerMaterialETA] = useState(null);
+    const [customerNotes, setCustomerNotes] = useState(null);
+    const [vendorNotes, setVendorNotes] = useState(null);
+    const [orderNotes, setOrderNotes] = useState(null);
     const [orderStatus, setOrderStatus] = useState("Submitted");
 
     const [productList, setProductList] = useState([]);
@@ -127,8 +127,9 @@ const Order = ({ handleLogout }) => {
     const [index, setIndex] = useState(1);
 
     const CalculateCustomTotal = ({customQuantity, customUnitPrice, customTotalPrice, setCustomTotalPrice}) => {
-        //const [customTotalPrice, setCustomTotalPrice] = useState(customQuantity * customUnitPrice);
-        setCustomTotalPrice(customQuantity * customUnitPrice)
+        const sum = customQuantity * customUnitPrice;
+        const newSum = Number(sum.toFixed(2));
+        setCustomTotalPrice(newSum)
         return (
             <div className="order">
                 <div className="form-row">
@@ -142,7 +143,9 @@ const Order = ({ handleLogout }) => {
         );
     }
     const CalculateNonItem1 = ({nonItemQuantity1, nonItemUnitPrice1, nonItemTotalPrice1, setNonItemTotalPrice1}) => {
-        setNonItemTotalPrice1(nonItemQuantity1 * nonItemUnitPrice1)
+        const sum = nonItemQuantity1 * nonItemUnitPrice1;
+        const newSum = Number(sum.toFixed(2));
+        setNonItemTotalPrice1(newSum)
         return (
             <div className="order">
                 <div className="form-row">
@@ -156,7 +159,9 @@ const Order = ({ handleLogout }) => {
         );
     }
     const CalculateNonItem2 = ({nonItemQuantity2, nonItemUnitPrice2, nonItemTotalPrice2, setNonItemTotalPrice2}) => {
-        setNonItemTotalPrice2(nonItemQuantity2 * nonItemUnitPrice2)
+        const sum = nonItemQuantity2 * nonItemUnitPrice2;
+        const newSum = Number(sum.toFixed(2));
+        setNonItemTotalPrice2(newSum)
         return (
             <div className="order">
                 <div className="form-row">
@@ -170,7 +175,9 @@ const Order = ({ handleLogout }) => {
         );
     }
     const CalculateNonItem3 = ({nonItemQuantity3, nonItemUnitPrice3, nonItemTotalPrice3, setNonItemTotalPrice3}) => {
-        setNonItemTotalPrice3(nonItemQuantity3 * nonItemUnitPrice3)
+        const sum = nonItemQuantity3 * nonItemUnitPrice3;
+        const newSum = Number(sum.toFixed(2));
+        setNonItemTotalPrice3(newSum)
         return (
             <div className="order">
                 <div className="form-row">
@@ -184,7 +191,9 @@ const Order = ({ handleLogout }) => {
         );
     }
     const CalculateNonItem4 = ({nonItemQuantity4, nonItemUnitPrice4, nonItemTotalPrice4, setNonItemTotalPrice4}) => {
-        setNonItemTotalPrice4(nonItemQuantity4 * nonItemUnitPrice4)
+        const sum = nonItemQuantity4 * nonItemUnitPrice4;
+        const newSum = Number(sum.toFixed(2));
+        setNonItemTotalPrice4(newSum)
         return (
             <div className="order">
                 <div className="form-row">
@@ -198,7 +207,9 @@ const Order = ({ handleLogout }) => {
         );
     }
     const CalculateNonItem5 = ({nonItemQuantity5, nonItemUnitPrice5, nonItemTotalPrice5, setNonItemTotalPrice5}) => {
-        setNonItemTotalPrice5(nonItemQuantity5 * nonItemUnitPrice5)
+        const sum = nonItemQuantity5 * nonItemUnitPrice5;
+        const newSum = Number(sum.toFixed(2));
+        setNonItemTotalPrice5(newSum)
         return (
             <div className="order">
                 <div className="form-row">
@@ -211,9 +222,10 @@ const Order = ({ handleLogout }) => {
             </div>
         );
     }
-
     const CalculateNonItem6 = ({nonItemQuantity6, nonItemUnitPrice6, nonItemTotalPrice6, setNonItemTotalPrice6}) => {
-        setNonItemTotalPrice6(nonItemQuantity6 * nonItemUnitPrice6)
+        const sum = nonItemQuantity6 * nonItemUnitPrice6;
+        const newSum = Number(sum.toFixed(2));
+        setNonItemTotalPrice6(newSum)
         return (
             <div className="order">
                 <div className="form-row">
@@ -227,7 +239,9 @@ const Order = ({ handleLogout }) => {
         );
     }
     const CalculateItem1 = ({itemQuantity1, itemUnitPrice1, itemTotalPrice1, setItemTotalPrice1}) => {
-        setItemTotalPrice1(itemQuantity1 * itemUnitPrice1)
+        const sum = itemQuantity1 * itemUnitPrice1;
+        const newSum = Number(sum.toFixed(2));
+        setItemTotalPrice1(newSum)
         return (
             <div className="order">
                 <div className="form-row">
@@ -241,7 +255,9 @@ const Order = ({ handleLogout }) => {
         );
     }
     const CalculateItem2 = ({itemQuantity2, itemUnitPrice2, itemTotalPrice2, setItemTotalPrice2}) => {
-        setItemTotalPrice2(itemQuantity2 * itemUnitPrice2)
+        const sum = itemQuantity2 * itemUnitPrice2;
+        const newSum = Number(sum.toFixed(2));
+        setItemTotalPrice2(newSum)
         return (
             <div className="order">
                 <div className="form-row">
@@ -255,7 +271,9 @@ const Order = ({ handleLogout }) => {
         );
     }
     const CalculateItem3 = ({itemQuantity3, itemUnitPrice3, itemTotalPrice3, setItemTotalPrice3}) => {
-        setItemTotalPrice3(itemQuantity3 * itemUnitPrice3)
+        const sum = itemQuantity3 * itemUnitPrice3;
+        const newSum = Number(sum.toFixed(2));
+        setItemTotalPrice3(newSum)
         return (
             <div className="order">
                 <div className="form-row">
@@ -269,32 +287,79 @@ const Order = ({ handleLogout }) => {
         );
     }
     const CalculateAssemblyCharges = ({assemblyChargesQuantity, assemblyChargesUnitPrice, assemblyChargesTotalPrice, setAssemblyChargesTotalPrice}) => {
-        setAssemblyChargesTotalPrice(assemblyChargesQuantity * assemblyChargesUnitPrice)
+        const sum = assemblyChargesQuantity * assemblyChargesUnitPrice;
+        const newSum = Number(sum.toFixed(2));
+        setAssemblyChargesTotalPrice(newSum)
         return (
             <div className="order">
                 <div className="form-row">
                     {/* <label className="col-md-2.5 col-form-label">Total Price $</label> */}
                     <div className="input-group input-group-sm mb-3 col-md-12">
-                        <input type="number" readOnly className="form-control" id="assemblyChargesTotalPrice" defaultValue={assemblyChargesTotalPrice} />
+                        <input type="number" readOnly defaultValue={assemblyChargesTotalPrice} className="form-control" id="assemblyChargesTotalPrice" />
                     </div>
                  </div>
             </div>
-        )
+        );
     }
     const CalculatePrintingCharges = ({printingChargesQuantity, printingChargesUnitPrice, printingChargesTotalPrice, setPrintingChargesTotalPrice}) => {
-        setPrintingChargesTotalPrice(printingChargesQuantity * printingChargesUnitPrice)
+        const sum = printingChargesQuantity * printingChargesUnitPrice;
+        const newSum = Number(sum.toFixed(2));
+        setPrintingChargesTotalPrice(newSum)
         return (
             <div className="order">
                 <div className="form-row">
                     {/* <label className="col-md-2.5 col-form-label">Total Price $</label> */}
                     <div className="input-group input-group-sm mb-3 col-md-12">
-                        <input type="number" readOnly className="form-control" id="printingChargesTotalPrice" defaultValue={printingChargesTotalPrice} />
+                        <input type="number" readOnly defaultValue={printingChargesTotalPrice} className="form-control" id="printingChargesTotalPrice" />
                     </div>
                  </div>
             </div>
-        )
+        );
     }
-    
+    const CalculateSubTotal = ({setSubTotal, subTotal, customTotalPrice, nonItemTotalPrice1, nonItemTotalPrice2, nonItemTotalPrice3, nonItemTotalPrice4, nonItemTotalPrice5, nonItemTotalPrice6, itemTotalPrice1, itemTotalPrice2, itemTotalPrice3, assemblyChargesTotalPrice, printingChargesTotalPrice, setupCharge, numberOfScreens, screensPrice}) => {
+        const totalScreens = numberOfScreens * screensPrice;
+        const sum = customTotalPrice + nonItemTotalPrice1 + nonItemTotalPrice2 + nonItemTotalPrice3 + nonItemTotalPrice4 + nonItemTotalPrice5 + nonItemTotalPrice6 + itemTotalPrice1 + itemTotalPrice2 + itemTotalPrice3 + assemblyChargesTotalPrice + printingChargesTotalPrice + setupCharge + totalScreens;
+        const newSum = Number(sum.toFixed(2));
+        setSubTotal(newSum)
+        return (
+            <div className="form-row">
+                <label htmlFor="subTotal" className="col-md-2 col-form-label">Sub Total $</label>
+                <div className="input-group input-group-sm mb-3 col-md-10">
+                    <input type="number" readOnly defaultValue={subTotal} className="form-control" id="subTotal" />
+                </div>
+            </div>
+        );
+    }
+
+    const CalculateTax = ({setTax, tax, taxRate, subTotal}) => {
+        const sum = taxRate * subTotal;
+        const newSum = Number(sum.toFixed(2));
+        setTax(newSum)
+        return (
+            <div className="form-row">
+                <label htmlFor="tax" className="col-md-2 col-form-label">Tax</label>
+                <div className="input-group input-group-sm mb-3 col-md-10">
+                    <input type="number" readOnly defaultValue={tax} className="form-control" id="tax" placeholder="$"/>
+                </div>
+            </div>
+        );
+    }
+
+    const CalculateTotal = ({setPriceTotal, priceTotal, tax, subTotal, freightCharges}) => {
+        const sum =  subTotal + freightCharges + tax;
+        const newSum = Number(sum.toFixed(2));
+        setPriceTotal(newSum)
+        return (
+            <div className="form-row">
+                <label htmlFor="priceTotal" className="col-md-2 col-form-label">Order Price Total $</label>
+                <div className="input-group input-group-sm mb-3 col-md-10">  
+                    <input type="number" readOnly defaultValue={priceTotal} className="form-control" id="priceTotal"/>
+                </div>
+            </div>
+        );
+    }
+
+
     const submit = () => {
         setIndex(index + 1);
 
@@ -382,7 +447,7 @@ const Order = ({ handleLogout }) => {
             screensPrice: screensPrice,
             subTotal: subTotal,
             taxRate: taxRate,
-            taxable: taxable,
+            //taxable: taxable,
             tax: tax,
             freightCharges: freightCharges,
             priceTotal: priceTotal,
@@ -400,10 +465,10 @@ const Order = ({ handleLogout }) => {
             creditChecked: creditChecked,
             daysTurn: daysTurn,
             dateCodePrinting: dateCodePrinting,
-            assemblyBy: assemblyBy,
-            discManufacturedBy: discManufacturedBy,
-            CDBrand: CDBrand,
-            discProvidedBy: discProvidedBy,
+            // assemblyBy: assemblyBy,
+            // discManufacturedBy: discManufacturedBy,
+            // CDBrand: CDBrand,
+            // discProvidedBy: discProvidedBy,
             customerProvidedMaterial: customerProvidedMaterial,
             customerMaterialETA: customerMaterialETA,
             customerNotes: customerNotes,
@@ -1308,7 +1373,7 @@ const Order = ({ handleLogout }) => {
                     </div>
 
                     <div className="form-row">
-                        <label htmlFor="assemblyCharges" className="col-md-2 col-form-label">Assembly Charges</label>
+                        <label htmlFor="assemblyCharges" className="col-md-2 col-form-label">Assembly Charges $</label>
                         <div className="input-group input-group-sm mb-3 col-md-10">
                             <input type="number" className="form-control" id="assemblyChargesQuantity" placeholder="Quantity" pattern="[0-9]*"
                             onChange = {(e) => {
@@ -1322,16 +1387,11 @@ const Order = ({ handleLogout }) => {
                             
                             <CalculateAssemblyCharges assemblyChargesQuantity={assemblyChargesQuantity} assemblyChargesUnitPrice={assemblyChargesUnitPrice}
                                 assemblyChargesTotalPrice={assemblyChargesTotalPrice} setAssemblyChargesTotalPrice={setAssemblyChargesTotalPrice} />
-
-                            {/* <input type="number" readOnly className="form-control" id="assemblyChargesTotalPrice" placeholder="Total Price $"
-                            onChange = {(e) => {
-                                setAssemblyChargesTotalPrice(e.target.value)
-                            }}/> */}
                         </div>
                     </div>
 
                     <div className="form-row">
-                        <label htmlFor="printingCharges" className="col-md-2 col-form-label">Date Code Printing Charges</label>
+                        <label htmlFor="printingCharges" className="col-md-2 col-form-label">Date Code Printing Charges $</label>
                         <div className="input-group input-group-sm mb-3 col-md-10">
                             <input type="number" className="form-control" id="printingChargesQuantity" placeholder="Quantity" pattern="[0-9]*"
                             onChange = {(e) => {
@@ -1345,21 +1405,16 @@ const Order = ({ handleLogout }) => {
                             
                             <CalculatePrintingCharges printingChargesQuantity={printingChargesQuantity} printingChargesUnitPrice={printingChargesUnitPrice}
                                 printingChargesTotalPrice={printingChargesTotalPrice} setPrintingChargesTotalPrice={setPrintingChargesTotalPrice} />
-
-                            {/* <input type="number" readOnly className="form-control" id="printingChargesTotalPrice" placeholder="Total Price $"
-                            onChange = {(e) => {
-                                setPrintingChargesTotalPrice(e.target.value)
-                            }}/> */}
                         </div>
                     </div>
 
                     <div className="form-row">
-                        <label htmlFor="setupCharge" className="col-md-2 col-form-label">Date Code Setup Charge</label>
+                        <label htmlFor="setupCharge" className="col-md-2 col-form-label">Date Code Setup Charge $</label>
                         <div className="input-group input-group-sm mb-3 col-md-10">
                             
-                            <input type="number" className="form-control" id="setupCharge" placeholder="$" step="0.01"
+                            <input type="number" className="form-control" id="setupCharge" step="0.01"
                             onChange = {(e) => {
-                                setSetupCharge(e.target.value)
+                                setSetupCharge(+e.target.value)
                             }}/>
                         </div>
                     </div>
@@ -1375,74 +1430,42 @@ const Order = ({ handleLogout }) => {
                         </div>
                         <div className="input-group input-group-sm mb-3 col-md-5">
                             
-                            <input type="number" className="form-control" id="screensPrice" placeholder="$" step="0.01"
+                            <input type="number" className="form-control" id="screensPrice" step="0.01"
                             onChange = {(e) => {
                                 setScreensPrice(e.target.value)
                             }}/>
                         </div>
                     </div>
+             
+                    <CalculateSubTotal setSubTotal={setSubTotal} subTotal={subTotal} customTotalPrice={customTotalPrice} 
+                        nonItemTotalPrice1={nonItemTotalPrice1} nonItemTotalPrice2={nonItemTotalPrice2} nonItemTotalPrice3={nonItemTotalPrice3} nonItemTotalPrice4={nonItemTotalPrice4} nonItemTotalPrice5={nonItemTotalPrice5} nonItemTotalPrice6={nonItemTotalPrice6} 
+                        itemTotalPrice1={itemTotalPrice1} itemTotalPrice2={itemTotalPrice2} itemTotalPrice3={itemTotalPrice3} 
+                        assemblyChargesTotalPrice={assemblyChargesTotalPrice} printingChargesTotalPrice={printingChargesTotalPrice}
+                        setupCharge={setupCharge} numberOfScreens={numberOfScreens} screensPrice={screensPrice} />
 
                     <div className="form-row">
-                        <label htmlFor="subTotal" className="col-md-2 col-form-label">Sub Total</label>
+                        <label htmlFor="taxable" className="col-md-2 col-form-label">Tax Rate</label>
                         <div className="input-group input-group-sm mb-3 col-md-10">
-                            
-                            <input type="number" className="form-control" id="subTotal" placeholder="$"
-                            onChange = {(e) => {
-                                setSubTotal(e.target.value)
-                            }}/>
-                        </div>
-                    </div>
-
-                    <div className="form-row">
-                        <label htmlFor="taxable" className="col-md-2 col-form-label">Taxable?</label>
-                        <div className="input-group input-group-sm col-md-2 pl-5">
-                            <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" checked={taxable} className="custom-control-input" id="taxRate"
-                                onChange = {() => setTaxable((prev) => !prev)} />
-                                <label htmlFor="taxRate" className="custom-control-label">Tax Rate?</label>
-                            </div>
-                        </div>
-
-                        <div className="input-group input-group-sm mb-3 col-md-8">
-                            <input type="number" className="form-control" id="taxable" step="0.01"
+                            <input type="number" className="form-control" id="taxable" step="0.01" placeholder="If none, type 0"
                             onChange = {(e) => {
                                 setTaxRate(e.target.value)
                             }}/>
                         </div>
                     </div>
+                    
+                    <CalculateTax setTax={setTax} tax={tax} taxRate={taxRate} subTotal={subTotal}/>
 
                     <div className="form-row">
-                        <label htmlFor="tax" className="col-md-2 col-form-label">Tax</label>
+                        <label htmlFor="freightCharges" className="col-md-2 col-form-label">Freight Charges $</label>
                         <div className="input-group input-group-sm mb-3 col-md-10">
-                            
-                            <input type="number" className="form-control" id="tax" placeholder="$" step="0.01"
+                            <input type="number" className="form-control" id="freightCharges" step="0.01"
                             onChange = {(e) => {
-                                setTax(e.target.value)
+                                setFreightCharges(+e.target.value)
                             }}/>
                         </div>
                     </div>
 
-                    <div className="form-row">
-                        <label htmlFor="freightCharges" className="col-md-2 col-form-label">Freight Charges</label>
-                        <div className="input-group input-group-sm mb-3 col-md-10">
-                            
-                            <input type="number" className="form-control" id="freightCharges" placeholder="$" step="0.01"
-                            onChange = {(e) => {
-                                setFreightCharges(e.target.value)
-                            }}/>
-                        </div>
-                    </div>
-
-                    <div className="form-row">
-                        <label htmlFor="priceTotal" className="col-md-2 col-form-label">Order Price Total</label>
-                        <div className="input-group input-group-sm mb-3 col-md-10">
-                            
-                            <input type="number" className="form-control" id="priceTotal" placeholder="$"
-                            onChange = {(e) => {
-                                setPriceTotal(e.target.value)
-                            }}/>
-                        </div>
-                    </div>
+                    <CalculateTotal setPriceTotal={setPriceTotal} priceTotal={priceTotal} tax={tax} subTotal={subTotal} freightCharges={freightCharges} />
                 </div>
 
                 <div className="company-info pt-3">
@@ -1557,7 +1580,7 @@ const Order = ({ handleLogout }) => {
                         </div>
                     </div>
 
-                    <div className="form-row">
+                    {/* <div className="form-row">
                         <label htmlFor="assemblyBy" className="col-md-2 col-form-label">Assembly By</label>
                         <div className="input-group input-group-sm mb-3 col-md-3">
                             <select className="form-control" name="assemblyBy" id="assemblyBy"
@@ -1615,7 +1638,7 @@ const Order = ({ handleLogout }) => {
                                 <option value="3">Option 3</option>
                             </select>
                         </div>
-                    </div>
+                    </div> */}
 
                     <div className="form-row">
                         <label htmlFor="customerProvidedMaterial" className="col-md-2 col-form-label">Customer Provided Material</label>
