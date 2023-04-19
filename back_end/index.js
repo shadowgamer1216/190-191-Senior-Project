@@ -348,6 +348,7 @@ app.post("/api/insertItem" , (req, res) =>{
 app.post("/api/insertComponent", (req, res) =>{
     /*------------------------------------------ Component Page ------------------------------------------*/
     const component_id = req.body.component_id;
+    const customer_id = req.body.customer_id;
     const component_type = req.body.component_type;
     const title = req.body.title;
     const oem_pn = req.body.oem_pn;
@@ -362,8 +363,8 @@ app.post("/api/insertComponent", (req, res) =>{
     const packaging_component = req.body.packaging_component;
     //const item_locaiton = req.body.item_locaiton;
 
-    const sqlInsert = "INSERT INTO component_table (component_id, component_type, title, oem_pn, component_description, size, supplier_brand_id, color, notes, uom, component_status, owned_by, packaging_component) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
-    db.query(sqlInsert, [component_id, component_type, title, oem_pn, component_description, size, supplier_brand_id, color, notes, uom, component_status, owned_by, packaging_component], (err, result) => {
+    const sqlInsert = "INSERT INTO component_table (component_id, customer_id, component_type, title, oem_pn, component_description, size, supplier_brand_id, color, notes, uom, component_status, owned_by, packaging_component) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    db.query(sqlInsert, [component_id, customer_id, component_type, title, oem_pn, component_description, size, supplier_brand_id, color, notes, uom, component_status, owned_by, packaging_component], (err, result) => {
         console.log(result);
     });
     /*------------------------------------------ Component Page ------------------------------------------*/

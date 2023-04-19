@@ -7,6 +7,7 @@ import Axios from "axios";
 const Component = ({ handleLogout }) => {
     const navigate = useNavigate();
     const[component_id, setComponentID] = useState("");
+    const[customer_id, setCustomerID] = useState(null);
     const[component_type, setComponent_Type] = useState(null);
     const[title, setTitle] = useState(null);
     const[oem_pn, setOEM_PN] = useState(null);
@@ -19,13 +20,15 @@ const Component = ({ handleLogout }) => {
     const[component_status, setComponent_Status] = useState(null);
     const[owned_by, setOwned_By] = useState(0);
     const[packaging_component, setPackaging_Component] = useState(0);
-    //const[item_location, setItem_Location] = useState ("");
+    
+    const[textBox, setTextBox] = useState(false);
 
 
     const submit = () => {
         Axios.post("http://localhost:3001/api/insertComponent", 
         {
             component_id: component_id, 
+            customer_id: customer_id,
             component_type: component_type,
             title: title, 
             oem_pn: oem_pn, 
@@ -47,6 +50,15 @@ const Component = ({ handleLogout }) => {
         //     console.log(err);
         // });
     };
+
+    const handleDropDown = (e) => {
+        if (e.target.value == "Other") {
+            setTextBox(true);
+        } else {
+            setTextBox(false);
+        }
+        setComponent_Type(e.target.value);
+    }
 
     return (
         <div className="page">
@@ -80,27 +92,52 @@ const Component = ({ handleLogout }) => {
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="CID" className="col-sm-2 col-form-label">Component ID</label>
+                            <label htmlFor="component_id" className="col-sm-2 col-form-label">Component ID</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="CID" onChange={(e) => {
+                                <input type="text" className="form-control" id="component_id" onChange={(e) => {
                                     setComponentID(e.target.value)
                                 }} required />
                             </div>
                         </div>
 
                         <div className="form-row">
+                            <label htmlFor="customer_id" className="col-sm-2 col-form-label">Customer ID</label>
+                            <div className="input-group input-group-sm mb-3 col-sm-10">
+                                <input type="text" className="form-control" id="customer_id" onChange={(e) => {
+                                    setCustomerID(e.target.value)
+                                }} />
+                            </div>
+                        </div>
+
+                        <div className="form-row">
                             <label htmlFor="componenttype" className="col-sm-2 col-form-label">Component Type</label>
                             <div className="input-group input-group-sm mb-3 col-sm-3">
-                                <select className="form-control" name="componenttype" id="componenttype" onChange={(e) => {
-                                    setComponent_Type(e.target.value)
-                                }} required >
+                                <select className="form-control" name="componenttype" id="componenttype" onChange={handleDropDown} required >
                                     <option selected value="">Select Value</option>
                                     <option value="Assembly"> Assembly</option>
                                     <option value="Bag"> Bag</option>
                                     <option value="Blu-ray"> Blue-ray</option>
                                     <option value="CD"> CD</option>
+                                    <option value="Component"> Component</option>
+                                    <option value="Document"> Document</option>
+                                    <option value="DVD"> DVD</option>
+                                    <option value="Enclosure"> Enclosure</option>
+                                    <option value="Envelope"> Envelope</option>
+                                    <option value="Insert"> Insert</option>
+                                    <option value="Label"> Label</option>
+                                    <option value="Promotional Item"> Promotional Item</option>
+                                    <option value="USB"> USB</option>
+                                    <option value="Other"> Other</option>
                                 </select>
                             </div>
+                                {textBox && (
+                                    <div className="form-row">
+                                        <label htmlFor="other_component_type" className="col-sm-2 col-form-label">Please Specify: </label>
+                                        <div className="input-group input-group-sm mb-3 col-sm-10">
+                                            <input type="text" className="form-control" id="other_component_type" onChange={(e) => {setComponent_Type(e.target.value)}} />
+                                        </div>
+                                    </div>
+                                )} 
                         </div>
 
                         <div className="form-row">
@@ -108,7 +145,7 @@ const Component = ({ handleLogout }) => {
                             <div className="input-group input-group-sm mb-3 col-sm-10">
                                 <textarea rows="3" cols="50" className="form-control" name="title" id="custom-area" onChange={(e) => {
                                     setTitle(e.target.value)
-                                 }} required />
+                                 }} />
                             </div>
                         </div>
 
@@ -117,7 +154,7 @@ const Component = ({ handleLogout }) => {
                             <div className="input-group input-group-sm mb-3 col-sm-10">
                                 <input type="text" className="form-control" id="oem" onChange={(e) => {
                                     setOEM_PN(e.target.value)
-                                }} required />
+                                }} />
                             </div>
                         </div>
 
@@ -135,7 +172,7 @@ const Component = ({ handleLogout }) => {
                             <div className="input-group input-group-sm mb-3 col-sm-10">
                                 <input type="text" className="form-control" id="size" onChange={(e) => {
                                     setSize(e.target.value)
-                                 }} required />
+                                 }} />
                             </div>
                         </div>
 
@@ -144,7 +181,7 @@ const Component = ({ handleLogout }) => {
                             <div className="input-group input-group-sm mb-3 col-sm-10">
                                 <input type="text" className="form-control" id="supplier/brand" onChange={(e) => {
                                     setSupplier_Brand_ID(e.target.value)
-                                 }} required />
+                                 }} />
                             </div>
                         </div>
 
@@ -153,7 +190,7 @@ const Component = ({ handleLogout }) => {
                             <div className="input-group input-group-sm mb-3 col-sm-10">
                                 <input type="text" className="form-control" id="color" onChange={(e) => {
                                     setColor(e.target.value)
-                                 }} required />
+                                 }} />
                             </div>
                         </div>
 
@@ -162,7 +199,7 @@ const Component = ({ handleLogout }) => {
                             <div className="input-group input-group-sm mb-3 col-sm-10">
                                 <textarea rows="4" cols="50" className="form-control" name="notes" id="custom-area" onChange={(e) => {
                                     setNotes(e.target.value)
-                                 }} required />
+                                 }} />
                             </div>
                         </div>
 
@@ -171,14 +208,14 @@ const Component = ({ handleLogout }) => {
                             <div className="input-group input-group-sm mb-3 col-sm-10">
                                 <input type="text" className="form-control" id="uom" onChange={(e) => {
                                     setUOM(e.target.value)
-                                 }} required />
+                                 }} />
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="status" className="col-sm-2 col-form-label">Status</label>
                             <div className="input-group input-group-sm mb-3 col-sm-3">
-                                <select onChange={(e) => {setComponent_Status(e.target.value)}} className="form-control" id= "status" required >
+                                <select onChange={(e) => {setComponent_Status(e.target.value)}} className="form-control" id= "status" >
                                     <option selected value="">Select Value</option>
                                     <option value="Active"> Active</option>
                                     <option value="Inactive"> Inactive</option>
@@ -188,18 +225,14 @@ const Component = ({ handleLogout }) => {
                         </div>
                         
                         <div className="form-row">
-                            <div className="input-group input-group-sm col-md-3">
-                                <div className="form-group custom-control custom-checkbox">
-                                    <input onChange={(prev) => setOwned_By(prev => !prev)} checked={owned_by} type="checkbox" className="custom-control-input" id="owned_by" />
-                                    <label htmlFor="owned_by" className="custom-control-label">Owned By Individual Company?</label>
-                                </div>
+                            <div class="form-check form-check-inline">
+                                <input onChange={(prev) => setOwned_By(prev => !prev)} checked={owned_by} class="form-check-input" type="checkbox" id="owned_by" value="owned_by" />
+                                <label class="form-check-label" for="owned_by">Owned by Individual Company?</label>
                             </div>
 
-                            <div className="input-group input-group-sm col-md-3">
-                                <div className="form-group custom-control custom-checkbox">
-                                    <input onChange={(prev) => setPackaging_Component(prev => !prev)} checked={packaging_component} type="checkbox" className="custom-control-input" id="packagingcomponent" />
-                                    <label htmlFor="packagingcomponent" className="custom-control-label">Packaging Component</label>
-                                </div>
+                            <div class="form-check form-check-inline">
+                                    <input  onChange={(prev) => setPackaging_Component(prev => !prev)} checked={packaging_component} class="form-check-input" type="checkbox" id="packagingcomponent" value="packagingcomponent" />
+                                    <label class="form-check-label" for="packagingcomponent">Packaging Component</label>
                             </div>
                         </div>
                     </div>

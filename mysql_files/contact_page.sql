@@ -71,7 +71,8 @@ CREATE TABLE item_check_in_table (
 
 DROP TABLE IF EXISTS component_table;
 CREATE TABLE component_table (
-    component_id VARCHAR(25) NOT NULL DEFAULT '',
+    component_id INT NOT NULL AUTO_INCREMENT,
+    customer_id VARCHAR(25) DEFAULT NULL,
     component_type VARCHAR(25) DEFAULT NULL,
     title TEXT,
     oem_pn VARCHAR(50) DEFAULT NULL,
