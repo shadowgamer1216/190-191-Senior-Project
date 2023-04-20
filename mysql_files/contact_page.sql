@@ -260,12 +260,12 @@ CREATE TABLE order_item (
 DROP TABLE IF EXISTS shipping_table;
 CREATE TABLE shipping_table (
     company_name VARCHAR(128) NOT NULL,
-    contact_name VARCHAR(50) NOT NULL,
-    add1 VARCHAR(50) NOT NULL,
-    add2 VARCHAR(50) DEFAULT NULL,
-    city VARCHAR(50) NOT NULL,
-    country_state VARCHAR(15) NOT NULL,
-    zip INT NOT NULL,
+    contact_name VARCHAR(60) DEFAULT NULL,
+    add1 VARCHAR(64) DEFAULT NULL,
+    add2 VARCHAR(64) DEFAULT NULL,
+    city VARCHAR(65) DEFAULT NULL,
+    country_state VARCHAR(20) DEFAULT NULL,
+    zip VARCHAR(16) DEFAULT NULL,
     province VARCHAR(50) DEFAULT NULL,
     country VARCHAR(50) NOT NULL,
     phone INT NOT NULL,
