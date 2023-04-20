@@ -20,6 +20,7 @@ const Company = ({ handleLogout }) => {
     const [email, setEmail] = useState(null);
     const [Web_addr, setWebAddr] = useState(null);
     const [Tax_ID, setTaxID] = useState(null);
+    const [Resale, setResale] = useState(null);
     const [credit_checked, setCreditChecked] = useState(null);
     const [status, setStatus] = useState(null);
     const [customer, setCustomer] = useState(null);
@@ -29,7 +30,7 @@ const Company = ({ handleLogout }) => {
     const [notes, setNotes] = useState(null);
     
     const submit = () => {
-        Axios.post("http://localhost:3001/api/insertCompany", {company_ID: company_ID, company_Name: company_Name, addr1: addr1, addr2: addr2, city: city, state: state, country: country, zip: zip, Salesperson: Salesperson, phone: phone, Extension: Extension, fax: fax, email: email, Web_addr: Web_addr, Tax_ID: Tax_ID, credit_checked: credit_checked, status: status, customer: customer, vendor: vendor, OEM: OEM, other_class: other_class, notes: notes})
+        Axios.post("http://localhost:3001/api/insertCompany", {company_ID: company_ID, company_Name: company_Name, addr1: addr1, addr2: addr2, city: city, state: state, country: country, zip: zip, Salesperson: Salesperson, phone: phone, Extension: Extension, fax: fax, email: email, Web_addr: Web_addr, Tax_ID: Tax_ID, Resale: Resale, credit_checked: credit_checked, status: status, customer: customer, vendor: vendor, OEM: OEM, other_class: other_class, notes: notes})
         .then(()=> {
             alert('inserted Company');
         })
@@ -72,7 +73,7 @@ const Company = ({ handleLogout }) => {
                             <div className="input-group input-group-sm mb-3 col-sm-10">
                                 <input type="text" className="form-control" id="CID" onChange={(e) =>{
                                     setCompanyID(e.target.value)
-                                }} maxLength = "8"/>
+                                }} maxLength = "8" required/>
                             </div>
                         </div>
 
@@ -81,7 +82,7 @@ const Company = ({ handleLogout }) => {
                             <div className="input-group input-group-sm mb-3 col-sm-10">
                                 <input type="text" className="form-control" id="CName" onChange={(e) =>{
                                     setCompanyName(e.target.value)
-                                }} maxLength = "128"/>
+                                }} maxLength = "128" required/>
                             </div>
                         </div>
                     </div>
@@ -278,12 +279,23 @@ const Company = ({ handleLogout }) => {
                         </div>
 
                         <div className="form-row">
+                            <label htmlFor="Resale" className="col-sm-2 col-form-label">Resale Certificate</label>
+                            <div className="input-group input-group-sm mb-3 col-sm-10">
+                                <input type="text" className="form-control" id="Resale" onChange={(e) =>{
+                                    setTaxID(e.target.value)
+                                }} maxLength = "64"/>
+                            </div>
+                        </div>
+
+
+                        <div className="form-row">
                             <label htmlFor="Status" className="col-sm-2 col-form-label">Status</label>
                             <div className="input-group input-group-sm mb-3 col-sm-3">
                                 <select className="form-control" name="Status" id="Status" onChange={(e) =>{
                                     setStatus(e.target.value)}}>
                                     <option defaultValue="act">Active</option>
                                     <option value="inAct">Inactive</option>
+                                    <option value="inAct">Obsolete</option>
                                 </select>
                             </div>
                         </div>

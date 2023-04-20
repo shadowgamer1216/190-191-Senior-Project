@@ -423,6 +423,7 @@ app.post("/api/insertCompany" , (req, res) =>{
     const email = req.body.email;
     const Web_addr = req.body.Web_addr;
     const Tax_ID = req.body.Tax_ID;
+    const Resale = req.body.Resale;
     const credit_checked = req.body.credit_checked;
     const status = req.body.status;
     const customer = req.body.customer;
@@ -432,8 +433,8 @@ app.post("/api/insertCompany" , (req, res) =>{
     const notes = req.body.notes;
 
 
-     const sqlInsert = "INSERT INTO company_table (company_ID, company_Name, addr1, addr2, city, state, country, zip, Salesperson, phone, Extension, fax, email, Web_addr, Tax_ID, credit_checked, status, customer, vendor, OEM, other_class, notes) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-     db.query(sqlInsert, [company_ID, company_Name, addr1, addr2, city, state, country, zip, Salesperson, phone, Extension, fax, email, Web_addr, Tax_ID, credit_checked, status, customer, vendor, OEM, other_class, notes], (err, result) => {
+     const sqlInsert = "INSERT INTO company_table (company_ID, company_Name, addr1, addr2, city, state, country, zip, Salesperson, phone, Extension, fax, email, Web_addr, Tax_ID, Resale, credit_checked, status, customer, vendor, OEM, other_class, notes) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+     db.query(sqlInsert, [company_ID, company_Name, addr1, addr2, city, state, country, zip, Salesperson, phone, Extension, fax, email, Web_addr, Tax_ID, Resale, credit_checked, status, customer, vendor, OEM, other_class, notes], (err, result) => {
          console.log(result);
      });
 });
