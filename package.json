@@ -26,6 +26,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.3",
     "react-scripts": "^5.0.1",
+    "react-select": "^5.7.2",
     "sequelize": "^6.29.0",
     "stream-browserify": "^3.0.0",
     "swr": "^2.0.4",

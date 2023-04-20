@@ -237,6 +237,30 @@ app.get("/api/getProductInfo", (req, res) => {
 //     });
 // });
 
+// LATEST PRODUCT ID - GET API <=
+app.get("/api/getLatestProductId", (req, res) => {
+    db.query ("SELECT MAX(product_id) FROM product_table", (err, result) =>{
+        if (err) throw err;
+        res.send(result);
+    });
+});
+
+// COMPANY TABLE INFO - GET API <=
+app.get("/api/getCompanyData", (req, res) => {
+    db.query ("SELECT company_ID, company_Name FROM company_table", (err, result) =>{
+        if (err) throw err;
+        res.send(result);
+    });
+});
+
+// COMPONENT TABLE INFO - GET API <=
+app.get("/api/getComponentData", (req, res) => {
+    db.query ("SELECT component_id, customer_id, title, component_type FROM component_table", (err, result) =>{
+        if (err) throw err;
+        res.send(result);
+    });
+});
+
 // PRODUCT PAGE - POST API =>
 app.post("/api/insertProduct", (req, res) => {
     const oldId = req.body.old_abs_id;
@@ -344,10 +368,17 @@ app.post("/api/insertItem" , (req, res) =>{
     });
 });
 
+// LATEST COMPONENT ID - GET API <=
+app.get("/api/getLatestComponentId", (req, res) => {
+    db.query ("SELECT MAX(component_id) FROM component_table", (err, result) =>{
+        if (err) throw err;
+        res.send(result);
+    });
+});
+
 // COMPONENT PAGE - POST API =>
 app.post("/api/insertComponent", (req, res) =>{
     /*------------------------------------------ Component Page ------------------------------------------*/
-    const component_id = req.body.component_id;
     const customer_id = req.body.customer_id;
     const component_type = req.body.component_type;
     const title = req.body.title;
@@ -363,8 +394,8 @@ app.post("/api/insertComponent", (req, res) =>{
     const packaging_component = req.body.packaging_component;
     //const item_locaiton = req.body.item_locaiton;
 
-    const sqlInsert = "INSERT INTO component_table (component_id, customer_id, component_type, title, oem_pn, component_description, size, supplier_brand_id, color, notes, uom, component_status, owned_by, packaging_component) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-    db.query(sqlInsert, [component_id, customer_id, component_type, title, oem_pn, component_description, size, supplier_brand_id, color, notes, uom, component_status, owned_by, packaging_component], (err, result) => {
+    const sqlInsert = "INSERT INTO component_table (customer_id, component_type, title, oem_pn, component_description, size, supplier_brand_id, color, notes, uom, component_status, owned_by, packaging_component) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    db.query(sqlInsert, [customer_id, component_type, title, oem_pn, component_description, size, supplier_brand_id, color, notes, uom, component_status, owned_by, packaging_component], (err, result) => {
         console.log(result);
     });
     /*------------------------------------------ Component Page ------------------------------------------*/

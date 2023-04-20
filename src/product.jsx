@@ -1,14 +1,14 @@
 import React from "react";
 import './App.css'
 import { Link, useNavigate } from "react-router-dom"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Axios from "axios";
+import Select from "react-select";
 
 
 const Product = ({ handleLogout }) => {
     const navigate = useNavigate();
 
-    //const [product_id, updateProductID] = React.useState([]);
     const [old_abs_id, setOldID] = useState(null);
     const [customer_id, setCustomerID] = useState(null);
     const [product_category, setCategory] = useState(null);
@@ -60,7 +60,7 @@ const Product = ({ handleLogout }) => {
         setNumOfComponents(numOfComponents => numOfComponents - 1);
     };
     const handleComponentChange = (e, index) => {
-        const { name, value } = e.target;
+        const { name, value } = e;
         const list = [...componentList];
         list[index][name] = value;
         setComponentList(list);
@@ -106,8 +106,77 @@ const Product = ({ handleLogout }) => {
         }).catch(err => {
             console.log(err);
         });
-        
     };
+
+    const [latestProductId, setProductId] = useState(null);
+    const nextNewProductId = latestProductId + 1;
+    useEffect(() => {
+        Axios.get('http://localhost:3001/api/getLatestProductId')
+        .then(response => {
+            setProductId(response.data[0]['MAX(product_id)']);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    }, []);
+
+    const [customerOptions, setCustomerOptions] = useState([]);
+    useEffect(() => {
+        Axios.get('http://localhost:3001/api/getCompanyData')
+        .then(response => {
+            const options = response.data.map(option => {
+                return { value: option.company_ID, label: option.company_ID + " — " + option.company_Name };
+            });
+            setCustomerOptions(options);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    }, []);
+
+    const [componentOptions, setComponentOptions] = useState([]);
+    useEffect(() => {
+        Axios.get('http://localhost:3001/api/getComponentData')
+        .then(response => {
+            const options = response.data.map(option => {
+                if(option.customer_id === customer_id) { return { value: option.component_id, label: option.component_id + " — " + option.title + " (" + option.component_type + ")"}; }
+                else { return null; }
+            });
+            const filteredOptions = options.filter(option => option !== null);
+            setComponentOptions(filteredOptions);
+            console.log(filteredOptions);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    }, [customer_id]);
+
+    const customStyle = {
+        control: base => ({
+            ...base,
+            height: 38,
+            minHeight: 38,
+            fontSize: '16px',
+            backgroundColor: '#E2EAFF',
+        }),
+        valueContainer: (base, state) => ({
+            ...base,
+            borderWidth: 1,
+            borderTopLeftRadius: 4,
+            borderBottomLeftRadius: 4,
+            paddingLeft: 10,
+            paddingBottom: 5,
+        }),
+        option: base => ({
+            ...base,
+            fontSize: '14px',
+        }),
+        menuPortal: (base) => ({
+            ...base,
+            zIndex: 9999,
+        })
+    };
+
 
     
     return (
@@ -143,33 +212,30 @@ const Product = ({ handleLogout }) => {
                         <div className="form-row">
                             <label htmlFor="product_id" className="col-3 col-form-label">Product ID</label>
                             <div className="input-group input-group-sm mb-3 col-md-2">
-                                <input tabindex="-1" readOnly type="text" className="form-control" id="product_id" value=""/>
+                                <input tabindex="-1" readOnly type="text" className="form-control" id="product_id" value={nextNewProductId}/>
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="old_abs_id" className="col-3 col-form-label">Old ABS ID</label>
                             <div className="input-group input-group-sm mb-3 col-md-2">
-                                <input onChange={(e) => {setOldID(e.target.value.toUpperCase())}} value={old_abs_id} type="text" className="form-control" id="old_abs_id" />
+                                <input onChange={(e) => setOldID(e.target.value.toUpperCase())} type="text" className="form-control" id="old_abs_id" />
                             </div>
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="customer" className="col-3 col-form-label">Customer</label>
-                            <div className="input-group input-group-sm mb-3 col-md-8">
-                                <input tabindex="-1" readOnly type="text" className="form-control" id="customer" />
+                            <label htmlFor="customer_id" className="col-md-3 col-form-label">Customer ID <span style={{ color: 'red' }}>*</span></label>
+                            <div className="input-group input-group mb-3 col-md-8">
+                                <div className="form-control p-0">
+                                    <Select onChange={(e) => setCustomerID(e.value)} className="react-select" styles={customStyle} value={customerOptions.filter(function(option) {
+                                        return option.value === customer_id;
+                                    })} minLength="4" maxLength="4" id="customer_id" required options={customerOptions}/>
+                                </div>
                             </div>
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="customer_id" className="col-md-3 col-form-label">Customer ID</label>
-                            <div className="input-group input-group-sm mb-3 col-md-2">
-                                <input onChange={(e) => setCustomerID(e.target.value.toUpperCase())} value={customer_id} minLength="4" maxLength="4" required type="text" className="form-control" id="customer_id" placeholder="ABSO" />
-                            </div>
-                        </div>
-
-                        <div className="form-row">
-                            <label htmlFor="product_category" className="col-md-3 col-form-label">Category</label>
+                            <label htmlFor="product_category" className="col-md-3 col-form-label">Category <span style={{ color: 'red' }}>*</span></label>
                             <div className="input-group input-group-sm mb-3 col-md-3">
                                 <select onChange={(e) => setCategory(e.target.value)} className="form-control" id="product_category" required>
                                     <option value="">Select Category</option>
@@ -193,14 +259,14 @@ const Product = ({ handleLogout }) => {
                         <div className="form-row">
                             <label htmlFor="oem_product_id" className="col-md-3 col-form-label">OEM Product ID</label>
                             <div className="input-group input-group-sm mb-3 col-md-2">
-                                <input onChange={(e) => setOemID(e.target.value.toUpperCase())} value={oem_product_id} type="text" className="form-control" id="oem_product_id" />
+                                <input onChange={(e) => setOemID(e.target.value.toUpperCase())} type="text" className="form-control" id="oem_product_id" />
                             </div>
                         </div>
 
                         <br></br>
 
                         <div className="form-row">
-                            <label htmlFor="product_title" className="col-md-3 col-form-label">Title</label>
+                            <label htmlFor="product_title" className="col-md-3 col-form-label">Title <span style={{ color: 'red' }}>*</span></label>
                             <div className="input-group input-group-sm mb-3 col-md-8">
                                 <input onChange={(e) => setTitle(e.target.value)} type="text" className="form-control" id="product_title" required/>
                             </div>
@@ -306,7 +372,7 @@ const Product = ({ handleLogout }) => {
                             
                             <div className="custom-control custom-checkbox col-sm-6 float-sm-left pt-1 mb-2 ml-2">
                                 <input onChange={(prev) => setDateRequired(prev => !prev)} checked={date_code_required} type="checkbox" className="custom-control-input" id="date_code_required" />
-                                <label className="custom-control-label" for="date_code_required"></label>
+                                <label className="custom-control-label" htmlFor="date_code_required"></label>
                             </div>
                                     
                         </div>
@@ -358,16 +424,19 @@ const Product = ({ handleLogout }) => {
                             {colorList.map((singleColor, index) => (
                                 <div key={index} className="colors">
                                     <div className="form-row">
-                                        <div className="input-group input-group-sm col-11 mb-2">
+                                        <div className="input-group input-group col-11 mb-2">
                                             <div className="input-group-prepend">
-                                                <strong><span className="input-group-text">Color #{index + 1}</span></strong>
+                                                {colorList.length > 1 ? 
+                                                <strong><span className="input-group-text">Color #{index + 1}<span style={{ color: 'red' }}>*</span></span></strong> 
+                                                : <strong><span className="input-group-text">Color #{index + 1}  </span></strong>}
                                             </div>
-                                            {colorList.length > 1 ? <input className="form-control field" 
+                                            {colorList.length > 1 ? 
+                                            <input className="form-control field" 
                                             name="color" type="text" id="color" required value={singleColor.color}
-                                            onChange={(e) => handleColorChange(e, index)}/> 
+                                            onChange={(e) => handleColorChange(e, index)} placeholder="Select..."/> 
                                             : <input className="form-control field" 
                                             name="color" type="text" id="color" value={singleColor.color}
-                                            onChange={(e) => handleColorChange(e, index)}/>}
+                                            onChange={(e) => handleColorChange(e, index)} placeholder="Select... (or N/A)"/>}
                                         </div>
                                         <div>
                                             {colorList.length > 1 && 
@@ -404,26 +473,28 @@ const Product = ({ handleLogout }) => {
                             <h5>Components Info</h5>
                         </div>
                         <br></br>
+                        {customer_id !== null ?
                         <div className="dynamic-component-list">
                             {componentList.map((singleComponent, index) => (
                                 <div key={index} className="components">
                                     <div className="form-row">
-                                        <div className="input-group input-group-sm col-11 mb-2">
+                                        <div className="input-group input-group col-11 mb-2">
                                             <div className="input-group-prepend">
-                                                <strong><span className="input-group-text">Component #{index + 1}</span></strong>
+                                                {componentList.length > 1 ? 
+                                                <strong><span className="input-group-text">Component #{index + 1}<span style={{ color: 'red' }}>*</span></span></strong> 
+                                                : <strong><span className="input-group-text">Component #{index + 1}</span></strong>}
                                             </div>
-                                            {componentList.length > 1 ? <input className="form-control field" 
-                                            name="component" type="text" id="component" required value={singleComponent.component}
-                                            onChange={(e) => handleComponentChange(e, index)}/> 
-                                            : <input className="form-control field" 
-                                            name="component" type="text" id="component" value={singleComponent.component}
-                                            onChange={(e) => handleComponentChange(e, index)}/>}
+                                            <div className="form-control p-0">
+                                                {componentList.length > 1 ? 
+                                                <Select onChange={(e) => handleComponentChange(e, index)} value={singleComponent.component} className="react-select" styles={customStyle} id="component" required options={componentOptions} placeholder="Select..."/>
+                                                : 
+                                                <Select onChange={(e) => handleComponentChange(e, index)} value={singleComponent.component} className="react-select" styles={customStyle} id="component" options={componentOptions} placeholder="Select... (or N/A)"/>}
+                                            </div>
                                         </div>
                                         <div>
                                             {componentList.length > 1 && 
                                             ( 
-                                                <button onClick={()=>handleComponentRemove(index)} 
-                                                tabindex="-1" type="button" id="component_remove" 
+                                                <button onClick={()=>handleComponentRemove(index)} tabindex="-1" type="button" id="component_remove" 
                                                 className="btn btn-outline-danger btn-sm">X</button>
                                             )}
                                         </div>
@@ -438,6 +509,17 @@ const Product = ({ handleLogout }) => {
                                 </div>
                             ))}
                         </div>
+                        :   <div className="form-row">
+                                <div className="input-group input-group col-11 mb-2">
+                                    <div className="input-group-prepend">
+                                        <strong><span className="input-group-text">Component #1</span></strong>
+                                    </div>
+                                    <div className="form-control p-0">
+                                        <Select className="react-select" styles={customStyle} id="component" options={componentOptions} placeholder="No options, select a customer..."/>
+                                    </div>
+                                </div>
+                            </div> 
+                        }
 
                         <br></br>
                         <div className="form-row">
@@ -455,7 +537,7 @@ const Product = ({ handleLogout }) => {
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="product_status" className="col-md-3 col-form-label">Product Status</label>
+                            <label htmlFor="product_status" className="col-md-3 col-form-label">Product Status <span style={{ color: 'red' }}>*</span></label>
                             <div className="input-group input-group-sm mb-3 col-md-3">
                                 <select onChange={(e) => setProductStatus(e.target.value)} className="form-control" id="product_status" required>
                                     <option value="">Select Status</option>
@@ -472,9 +554,9 @@ const Product = ({ handleLogout }) => {
                     </div>
 
                 </form>
-                
                 <br></br>
-                <div className="product-location m-3 p-3">
+
+                {/* <div className="product-location m-3 p-3">
                     <label htmlFor="add_location" className="col-form-label-sm">Choose New Location for this Product</label>
                     <div className="input-group input-group-sm mb-3 col-md-6">
                         <select className="form-control form-control-sm" id="add_location">
@@ -485,7 +567,7 @@ const Product = ({ handleLogout }) => {
                         </select>
                         <button type="submit" id="add_location" className="btn btn-info btn-sm ml-3">Change Location</button>
                     </div>
-                </div>
+                </div> */}
 
                 <button className="btn btn-outline-dark" onClick={() => navigate(-1)}>Home</button>
                 <br></br>

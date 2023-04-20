@@ -47,6 +47,10 @@ div.input-group input.form-control, textarea, select {
   background-color: #E2EAFF !important;
 }
 
+.react-select > div {
+  margin: -1px;
+}
+
 textarea {
   min-height: 100px !important;
 }
@@ -55,7 +59,7 @@ input[type="checkbox"] {
   position: relative;
 }
 
-input#product_id {
+input#product_id, #component_id {
   color: red;
 }
 
