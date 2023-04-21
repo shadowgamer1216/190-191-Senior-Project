@@ -58,20 +58,26 @@ const Product = ({ handleLogout }) => {
         list.splice(index, 1);
         setComponentList(list);
         setNumOfComponents(numOfComponents => numOfComponents - 1);
+        console.log(list);
     };
     const handleComponentChange = (e, index) => {
-        const { name, value } = e;
         const list = [...componentList];
-        list[index][name] = value;
+        list[index]["component"] = e.value;
         setComponentList(list);
+        console.log(list);
     };
     const [packaging_notes, setPackNotes] = useState(null);
     const [product_notes, setProductNotes] = useState(null);
     const [product_status, setProductStatus] = useState(null);
     
-
-    const submit = () => {
-        Axios.post("http://localhost:3001/api/insertProduct", 
+    const [submitting, setSubmitting] = useState(false);
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (submitting) {
+            return; // prevent duplicate submission
+        }
+        setSubmitting(true);
+        await Axios.post("http://localhost:3001/api/insertProduct", 
         {
             old_abs_id: old_abs_id,
             customer_id: customer_id,
@@ -100,12 +106,10 @@ const Product = ({ handleLogout }) => {
             packaging_notes: packaging_notes,
             product_notes: product_notes,
             product_status: product_status
-            
-        }).then((result) => {
-            console.log(result.data);
         }).catch(err => {
             console.log(err);
         });
+        setSubmitting(false);
     };
 
     const [latestProductId, setProductId] = useState(null);
@@ -139,12 +143,13 @@ const Product = ({ handleLogout }) => {
         Axios.get('http://localhost:3001/api/getComponentData')
         .then(response => {
             const options = response.data.map(option => {
-                if(option.customer_id === customer_id) { return { value: option.component_id, label: option.component_id + " — " + option.title + " (" + option.component_type + ")"}; }
+                if(option.customer_id === customer_id) { 
+                    return { value: option.component_id, label: option.component_id + " — " + option.title + " (" + option.component_type + ")"}; 
+                }
                 else { return null; }
             });
             const filteredOptions = options.filter(option => option !== null);
             setComponentOptions(filteredOptions);
-            console.log(filteredOptions);
         })
         .catch(error => {
             console.log(error);
@@ -203,7 +208,7 @@ const Product = ({ handleLogout }) => {
                     <h2>ADD PRODUCT</h2>
                 </div>
 
-                <form>
+                <form onSubmit={handleSubmit}>
                     <div className="product-info pt-3">
                         <div className="section-headers">
                             <h5>Product Information</h5>
@@ -212,7 +217,7 @@ const Product = ({ handleLogout }) => {
                         <div className="form-row">
                             <label htmlFor="product_id" className="col-3 col-form-label">Product ID</label>
                             <div className="input-group input-group-sm mb-3 col-md-2">
-                                <input tabindex="-1" readOnly type="text" className="form-control" id="product_id" value={nextNewProductId}/>
+                                <input tabIndex="-1" readOnly type="text" className="form-control" id="product_id" value={nextNewProductId}/>
                             </div>
                         </div>
 
@@ -442,8 +447,8 @@ const Product = ({ handleLogout }) => {
                                             {colorList.length > 1 && 
                                             ( 
                                                 <button onClick={()=>handleColorRemove(index)} 
-                                                tabindex="-1" type="button" id="color_remove" 
-                                                className="btn btn-outline-danger btn-sm">X</button>
+                                                tabIndex="-1" type="button" id="color_remove" 
+                                                className="btn btn-outline-danger btn-sm mt-1">X</button>
                                             )}
                                         </div>
                                     </div>
@@ -486,16 +491,18 @@ const Product = ({ handleLogout }) => {
                                             </div>
                                             <div className="form-control p-0">
                                                 {componentList.length > 1 ? 
-                                                <Select onChange={(e) => handleComponentChange(e, index)} value={singleComponent.component} className="react-select" styles={customStyle} id="component" required options={componentOptions} placeholder="Select..."/>
+                                                <Select key={customer_id} onChange={(e) => handleComponentChange(e, index)} 
+                                                className="react-select" styles={customStyle} id="component" required options={componentOptions} placeholder="Select..."/>
                                                 : 
-                                                <Select onChange={(e) => handleComponentChange(e, index)} value={singleComponent.component} className="react-select" styles={customStyle} id="component" options={componentOptions} placeholder="Select... (or N/A)"/>}
+                                                <Select key={customer_id} onChange={(e) => handleComponentChange(e, index)} 
+                                                className="react-select" styles={customStyle} id="component" options={componentOptions} placeholder="Select... (or N/A)"/>}
                                             </div>
                                         </div>
                                         <div>
                                             {componentList.length > 1 && 
                                             ( 
-                                                <button onClick={()=>handleComponentRemove(index)} tabindex="-1" type="button" id="component_remove" 
-                                                className="btn btn-outline-danger btn-sm">X</button>
+                                                <button onClick={()=>handleComponentRemove(index)} tabIndex="-1" type="button" id="component_remove" 
+                                                className="btn btn-outline-danger btn-sm mt-1">X</button>
                                             )}
                                         </div>
                                     </div>
@@ -550,7 +557,7 @@ const Product = ({ handleLogout }) => {
 
                     <br></br>
                     <div className="submit">
-                        <button onClick={submit} type="submit" id="add_product" className="btn btn-success">Submit</button>
+                        <button type="submit" id="add_product" className="btn btn-success" disabled={submitting}>{submitting ? 'Submitting...' : 'Submit'}</button>
                     </div>
 
                 </form>
