@@ -1,7 +1,7 @@
 import React from "react";
 import './App.css'
 import { Link, useNavigate } from "react-router-dom"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Axios from "axios";
 
 const Component = ({ handleLogout }) => {
@@ -27,7 +27,6 @@ const Component = ({ handleLogout }) => {
     const submit = () => {
         Axios.post("http://localhost:3001/api/insertComponent", 
         {
-            component_id: component_id, 
             customer_id: customer_id,
             component_type: component_type,
             title: title, 
@@ -35,7 +34,8 @@ const Component = ({ handleLogout }) => {
             component_description: component_description,  
             size: size, 
             supplier_brand_id: supplier_brand_id, 
-            color: color, notes: notes, 
+            color: color, 
+            notes: notes, 
             uom: uom, 
             component_status: component_status,
             owned_by: owned_by,  
@@ -59,6 +59,18 @@ const Component = ({ handleLogout }) => {
         }
         setComponent_Type(e.target.value);
     }
+
+    const [latestComponentId, setComponentId] = useState(null);
+    const nextNewComponentId = latestComponentId + 1;
+    useEffect(() => {
+        Axios.get('http://localhost:3001/api/getLatestComponentId')
+        .then(response => {
+            setComponentId(response.data[0]['MAX(component_id)']);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    }, []);
 
     return (
         <div className="page">
@@ -94,9 +106,7 @@ const Component = ({ handleLogout }) => {
                         <div className="form-row">
                             <label htmlFor="component_id" className="col-sm-2 col-form-label">Component ID</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="component_id" onChange={(e) => {
-                                    setComponentID(e.target.value)
-                                }} required />
+                                <input tabindex="-1" readOnly type="text" className="form-control" id="component_id" value={nextNewComponentId}/>
                             </div>
                         </div>
 
@@ -116,7 +126,7 @@ const Component = ({ handleLogout }) => {
                                     <option selected value="">Select Value</option>
                                     <option value="Assembly"> Assembly</option>
                                     <option value="Bag"> Bag</option>
-                                    <option value="Blu-ray"> Blue-ray</option>
+                                    <option value="Blu-ray"> Blu-ray</option>
                                     <option value="CD"> CD</option>
                                     <option value="Component"> Component</option>
                                     <option value="Document"> Document</option>
