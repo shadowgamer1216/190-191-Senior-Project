@@ -107,7 +107,6 @@ const Contact = ({ handleLogout }) => {
                         <div className="form-row">
                             <label htmlFor="contact-type" className="col-sm-2 col-form-label">Contact Type</label>
                             <div className="input-group input-group-sm mb-3 col-sm-3">
-                               {/* <select className="form-control" name="contact-type" id="contact-type"> */ }
                                 <select className="form-control" name="contact-type" id="contact-type" onChange={(e) =>{
                                     setContactType(e.target.value)
                                 }}>

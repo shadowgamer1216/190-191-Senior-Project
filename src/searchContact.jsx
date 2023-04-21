@@ -10,23 +10,43 @@ const SearchContact = () => {
     const navigate = useNavigate();
     const [data, setData] = useState([]);
 
+    const [customer_id, setCustomerID] = useState("");
+    const [company, setCompany] = useState("");
+    const [fname, setFname] = useState(""); 
+    const [lname, setLname] = useState(""); 
+    const [contact_type, setContactType] = useState("");
+    const [title, setTitle] = useState("");
+    const [dept, setDept] = useState("");
+    const [add_1, setAdd_1] = useState("");
+    const [add_2, setAdd_2] = useState("");
+    const [city, setCity] = useState("");
+    const [state_in_country, setState] = useState("");
+    const [zip, setZip] = useState("");
+    const [country, setCountry] = useState("");
+    const [phone, setPhone] = useState("");
+    const [extension, setExtension] = useState("");
+    const [cell_phone_number, setCell] = useState("");
+    const [third_party_company, setThirdParty] = useState("");
+    const [fax, setFax] = useState("");
+    const [email, setEmail] = useState("");
+    const [notes, setNotes] = useState("");
+
     
     const submit = () => {
-        Axios.post("http://localhost:3001/api/searchContact", {})
+        Axios.post("http://localhost:3001/api/searchContact", {customer_id:customer_id, comapny:company})
         .then(()=> {
             alert('searching for contact');
         })
     };
-    
 
     useEffect(() => {
-        async function fetchData() {
-            //const response = await axios.get('/api/searchContact');
-            const response = await axios.get("http://localhost:3001/api/searchContact");
+        Axios.get("http://localhost:3001/api/getSearchContact").then((response) =>{
             setData(response.data);
-        }
-        fetchData();
+        });
     }, []);
+
+    
+
 
     return (
         <div class='page'>
@@ -59,14 +79,16 @@ const SearchContact = () => {
 
                             <label htmlFor="id" className="col-sm-0 col-form-label">Customer ID</label>
                                 <div className="input-group input-group-sm mb-3 col-sm-2">
-                                    <input type="text" className="form-control" id="company-id" onChange={() =>{
-                                    }}/> 
+                                <input type="text" className="form-control" id="customer-id" onChange={(e) =>{
+                                    setCustomerID(e.target.value)
+                                }}/>
                                 </div>
 
                                 <label htmlFor="name" className="col-sm-0 col-form-label">Company</label>
                                 <div className="input-group input-group-sm mb-3 col-sm-3">
-                                    <input type="text" className="form-control" id="company-name" onChange={() =>{
-                                    }}/> 
+                                <input type="text" className="form-control" id="company-id" onChange={(e) =>{
+                                    setCompany(e.target.value)
+                                }}/> 
                                 </div>
 
                         </div>
@@ -81,10 +103,10 @@ const SearchContact = () => {
                                             <th scope ="col">Search Results</th>
                                         </tr>
                                     </thead>
-                                    <h5>No results.</h5>
                                     <tbody>
-                                        {data.map((data) => (
-                                            <tr key={data.contact_name}>
+                                        {data.map((row) => (
+                                            <tr key={data.customer_id}>
+                                                <td>{row.customer_id}</td>
                                             </tr>
                                         ))}
                                     </tbody>

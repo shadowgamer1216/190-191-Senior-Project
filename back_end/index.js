@@ -237,6 +237,54 @@ app.get("/api/getProductInfo", (req, res) => {
 //     });
 // });
 
+app.get("/api/getSearchContact", (req, res) =>{
+    const customer_id = req.body.customer_id;
+    const company = req.body.company;
+
+    if (!company) { //Looking via customer id
+        db.query("SELECT * FROM contact_table WHERE customer_id = ?", [customer_id], (err, result) =>{
+            if (err) throw err;
+            res.send(result);
+        });
+    } else if (!customer_id) { //looking via company name
+        db.query("SELECT * FROM contact_table WHERE company = ?", [company], (err, result) =>{
+            if (err) throw err;
+            res.send(result);
+        });
+    } else if (!company && !customer_id) { //invalid 
+        throw err;
+    } else { //search with both criteria 
+        db.query("SELECT * FROM contact_table WHERE customer_id = ? AND company = ?", [customer_id, company], (err, result) =>{
+            if (err) throw err;
+            res.send(result);
+        });
+    }
+});
+
+app.get("/api/getSearchCompany", (req, res) =>{
+    const company_ID = req.body.company_ID;
+    const company_Name = req.body.company_Name;
+
+    if (!company_Name) { //Looking via comapny id
+        db.query("SELECT * FROM company_table WHERE company_ID = ?", [company_ID], (err, result) =>{
+            if (err) throw err;
+            res.send(result);
+        });
+    } else if (!company_ID) { //looking via company name
+        db.query("SELECT * FROM company_table WHERE company_Name = ?", [company_Name], (err, result) =>{
+            if (err) throw err;
+            res.send(result);
+        });
+    } else if (!company_Name && !company_ID) { //invalid 
+        throw err;
+    } else { //search with both criteria 
+        db.query("SELECT * FROM company_table WHERE company_ID = ? AND company_Name = ?", [company_ID, company_Name], (err, result) =>{
+            if (err) throw err;
+            res.send(result);
+        });
+    }
+});
+
 // PRODUCT PAGE - POST API =>
 app.post("/api/insertProduct", (req, res) => {
     const oldId = req.body.old_abs_id;

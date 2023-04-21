@@ -7,13 +7,22 @@ import Axios from "axios";
 
 const SearchCompany = () => {
     const navigate = useNavigate();
+    const [data, setData] = useState([]);
+    const [company_ID, setCompanyID] = useState(null);
+    const [company_Name, setCompanyName] = useState(null);
 
     const submit = () => {
-        //Axios.post("http://localhost:3001/api/insert", {})
-        //.then(()=> {
-            //alert('inserted');
-        //})
+        Axios.post("http://localhost:3001/api/searchCompany", {company_ID:company_ID, company_Name:company_Name})
+        .then(()=> {
+            alert('searching for company');
+        })
     };
+
+    useEffect(() => {
+        Axios.get("http://localhost:3001/api/getSearchCompany").then((response) =>{
+            setData(response.data);
+        });
+    }, []);
 
     return (
         <div class='page'>
@@ -47,22 +56,37 @@ const SearchCompany = () => {
 
                             <label htmlFor="id" className="col-sm-0 col-form-label">ID</label>
                                 <div className="input-group input-group-sm mb-3 col-sm-2">
-                                    <input type="text" className="form-control" id="company-id" onChange={() =>{
-                                    }}/> 
+                                <input type="text" className="form-control" id="CID" onChange={(e) =>{
+                                    setCompanyID(e.target.value)
+                                }} maxLength = "8"/>
                                 </div>
 
                                 <label htmlFor="name" className="col-sm-0 col-form-label">Name</label>
                                 <div className="input-group input-group-sm mb-3 col-sm-3">
-                                    <input type="text" className="form-control" id="company-name" onChange={() =>{
-                                    }}/> 
+                                <input type="text" className="form-control" id="CName" onChange={(e) =>{
+                                    setCompanyName(e.target.value)
+                                }} maxLength = "128"/>
                                 </div>
 
                         </div>
                     </div>
-                    <div>
-                        <button className="btn btn-outline-dark" onClick={() => navigate("")}>Search</button>
+                    <div class='mb-5'>
+                        <button onClick = {submit} type="submit" id="search-contact" className="btn btn-outline-success">Search</button>
                     </div>
-
+                    <table class="table mt-5">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope ="col">Search Results</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {data.map((row) => (
+                                            <tr key={data.customer_id}>
+                                                <td>{row.customer_id}</td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                    </table>
                     <div>
                         <button className="btn btn-outline-dark" onClick={() => navigate("../Search")}>Back</button>
                         <button className="btn btn-outline-dark" onClick={() => navigate("/")}>Home</button>
