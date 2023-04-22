@@ -45,6 +45,7 @@ const Product = ({ handleLogout }) => {
         const list = [...colorList];
         list[index][name] = value;
         setColorList(list);
+        console.log(list);
     };
     const [color_notes, setColorNotes] = useState(null);
     const [componentList, setComponentList] = useState([{ component: "" }]); 
@@ -52,19 +53,32 @@ const Product = ({ handleLogout }) => {
     const handleComponentAdd = () => {
         setComponentList([...componentList, { component: "" }]);
         setNumOfComponents(numOfComponents => numOfComponents + 1);
+
+        setSelectedComponent([...selectedComponent, { value: "", label: "" }]);
     };
     const handleComponentRemove = (index) => {
         const list = [...componentList];
         list.splice(index, 1);
         setComponentList(list);
         setNumOfComponents(numOfComponents => numOfComponents - 1);
-        console.log(list);
+        //console.log(list);
+
+        const list2 = [...selectedComponent];
+        list2.splice(index, 1);
+        setSelectedComponent(list2);
+        //console.log(list2);
     };
     const handleComponentChange = (e, index) => {
         const list = [...componentList];
         list[index]["component"] = e.value;
         setComponentList(list);
         console.log(list);
+
+        const list2 = [...selectedComponent];
+        list2[index]["value"] = e.value;
+        list2[index]["label"] = e.label;
+        setSelectedComponent(list2);
+        console.log(list2);
     };
     const [packaging_notes, setPackNotes] = useState(null);
     const [product_notes, setProductNotes] = useState(null);
@@ -138,6 +152,7 @@ const Product = ({ handleLogout }) => {
         });
     }, []);
 
+    const [selectedComponent, setSelectedComponent] = useState([{ value: "", label: "" }]);
     const [componentOptions, setComponentOptions] = useState([]);
     useEffect(() => {
         Axios.get('http://localhost:3001/api/getComponentData')
@@ -179,10 +194,32 @@ const Product = ({ handleLogout }) => {
         menuPortal: (base) => ({
             ...base,
             zIndex: 9999,
-        })
+        }),
+        placeholder: (base, state) => ({
+            ...base,
+            overflow: 'hidden',
+        }),
     };
 
-
+    const clearComponentOne = (index) => {
+        setComponentList(prevState => {
+            const resetState = [...prevState];
+            resetState[index] = { component: "" };
+            return resetState;
+        });
+        setSelectedComponent(prevState => {
+            const resetState = [...prevState];
+            resetState[index] = { value: "", label: "" };
+            return resetState;
+        });
+    }
+    const clearColorOne = (index) => {
+        setColorList(prevState => {
+            const resetState = [...prevState];
+            resetState[index] = { color: "" };
+            return resetState;
+        });
+    }
     
     return (
         <div className="page">
@@ -425,11 +462,14 @@ const Product = ({ handleLogout }) => {
                             </div>
                         </div>
 
+                        <div className="form-row">
+                            {colorList.length > 1 ? <h6 className="ml-2">Select a color for all fields added (*): </h6> : <h6 className="ml-2">Select a color or leave it blank (N/A): </h6>}
+                        </div>
                         <div className="dynamic-color-list">
                             {colorList.map((singleColor, index) => (
                                 <div key={index} className="colors">
                                     <div className="form-row">
-                                        <div className="input-group input-group col-11 mb-2">
+                                        <div className="input-group input-group col-10 mb-2">
                                             <div className="input-group-prepend">
                                                 {colorList.length > 1 ? 
                                                 <strong><span className="input-group-text">Color #{index + 1}<span style={{ color: 'red' }}>*</span></span></strong> 
@@ -438,16 +478,21 @@ const Product = ({ handleLogout }) => {
                                             {colorList.length > 1 ? 
                                             <input className="form-control field" 
                                             name="color" type="text" id="color" required value={singleColor.color}
-                                            onChange={(e) => handleColorChange(e, index)} placeholder="Select..."/> 
+                                            onChange={(e) => handleColorChange(e, index)}/> 
                                             : <input className="form-control field" 
                                             name="color" type="text" id="color" value={singleColor.color}
-                                            onChange={(e) => handleColorChange(e, index)} placeholder="Select... (or N/A)"/>}
+                                            onChange={(e) => handleColorChange(e, index)}/>}
                                         </div>
                                         <div>
+                                            {colorList.length > 0 && 
+                                            (
+                                                <button onClick={()=>clearColorOne(index)} type="button" id="color_remove" 
+                                                className="btn btn-outline-dark btn-sm mt-1 mr-1">Clear</button>
+                                            )}
                                             {colorList.length > 1 && 
                                             ( 
                                                 <button onClick={()=>handleColorRemove(index)} 
-                                                tabIndex="-1" type="button" id="color_remove" 
+                                                type="button" id="color_remove" 
                                                 className="btn btn-outline-danger btn-sm mt-1">X</button>
                                             )}
                                         </div>
@@ -478,12 +523,17 @@ const Product = ({ handleLogout }) => {
                             <h5>Components Info</h5>
                         </div>
                         <br></br>
+
+                        <div className="form-row">
+                            {customer_id !== null ? <>{componentList.length > 1 ? <h6 className="ml-2">Select a component for all fields added (*): </h6> : <h6 className="ml-2">Select a component or leave it blank (N/A): </h6>}</> 
+                            : <h6 className="ml-2">Select a customer first, before choosing any component options! </h6>}
+                        </div>
                         {customer_id !== null ?
                         <div className="dynamic-component-list">
                             {componentList.map((singleComponent, index) => (
                                 <div key={index} className="components">
                                     <div className="form-row">
-                                        <div className="input-group input-group col-11 mb-2">
+                                        <div className="input-group input-group col-10 mb-2">
                                             <div className="input-group-prepend">
                                                 {componentList.length > 1 ? 
                                                 <strong><span className="input-group-text">Component #{index + 1}<span style={{ color: 'red' }}>*</span></span></strong> 
@@ -491,17 +541,22 @@ const Product = ({ handleLogout }) => {
                                             </div>
                                             <div className="form-control p-0">
                                                 {componentList.length > 1 ? 
-                                                <Select key={customer_id} onChange={(e) => handleComponentChange(e, index)} 
-                                                className="react-select" styles={customStyle} id="component" required options={componentOptions} placeholder="Select..."/>
+                                                <Select key={`${customer_id}-${index}`} onChange={(e) => handleComponentChange(e, index)} value={selectedComponent[index]}
+                                                className="react-select" styles={customStyle} id="component" required options={componentOptions}/>
                                                 : 
-                                                <Select key={customer_id} onChange={(e) => handleComponentChange(e, index)} 
-                                                className="react-select" styles={customStyle} id="component" options={componentOptions} placeholder="Select... (or N/A)"/>}
+                                                <Select key={`${customer_id}-${index}`} onChange={(e) => handleComponentChange(e, index)} value={selectedComponent[index]}
+                                                className="react-select" styles={customStyle} id="component" options={componentOptions}/>}
                                             </div>
                                         </div>
                                         <div>
+                                            {componentList.length > 0 && 
+                                            (
+                                                <button onClick={()=>clearComponentOne(index)} type="button" id="component_remove" 
+                                                className="btn btn-outline-dark btn-sm mt-1 mr-1">Clear</button>
+                                            )}
                                             {componentList.length > 1 && 
                                             ( 
-                                                <button onClick={()=>handleComponentRemove(index)} tabIndex="-1" type="button" id="component_remove" 
+                                                <button onClick={()=>handleComponentRemove(index)} type="button" id="component_remove" 
                                                 className="btn btn-outline-danger btn-sm mt-1">X</button>
                                             )}
                                         </div>
@@ -517,12 +572,12 @@ const Product = ({ handleLogout }) => {
                             ))}
                         </div>
                         :   <div className="form-row">
-                                <div className="input-group input-group col-11 mb-2">
+                                <div className="input-group input-group col-10 mb-2">
                                     <div className="input-group-prepend">
                                         <strong><span className="input-group-text">Component #1</span></strong>
                                     </div>
                                     <div className="form-control p-0">
-                                        <Select className="react-select" styles={customStyle} id="component" options={componentOptions} placeholder="No options, select a customer..."/>
+                                        <Select className="react-select" styles={customStyle} id="component" options={componentOptions} placeholder="No options..."/>
                                     </div>
                                 </div>
                             </div> 
