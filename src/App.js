@@ -16,6 +16,7 @@ import Search from './search';
 import SearchCompany from './searchcompany';
 import SearchContact from './searchContact';
 import ViewOnlyHome from './ViewOnlyHome';
+import Invoice from './invoice';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -34,8 +35,33 @@ function App() {
 
   return (
     <div className="App">
+     
+        <Routes>
+
+<Route path="/invoice" element={<Invoice />} />
+          <Route path="/" element={<HomePage handleLogout={handleLogout} />} />
+          <Route path="/product" element={<ProductPage handleLogout={handleLogout}/>} />
+          <Route path="/contact" element={<ContactPage handleLogout={handleLogout}/>} />
+          <Route path="/component" element={<ComponentPage handleLogout={handleLogout}/>} />
+          <Route path="/location" element={<LocationPage handleLogout={handleLogout}/>} />
+          <Route path="/order" element={<OrderPage handleLogout={handleLogout}/>} />
+          <Route path="/company" element={<CompanyPage handleLogout={handleLogout}/>} />
+          <Route path="/itemCheckIn" element={<ItemCheckInPage handleLogout={handleLogout}/>} />
+          <Route path="/shipping" element={<Shipping handleLogout={handleLogout}/>} />
+          <Route path="/search" element={<Search />} />
+          <Route path="/search/searchcompany" element={<SearchCompany />} />
+          <Route path="/search/searchContact" element={<SearchContact />} />
+        </Routes>
+     
+    </div>
+  );
+
+  /*return (
+    <div className="App">
       {isLoggedIn && !isViewOnly ? (
         <Routes>
+
+<Route path="/invoice" element={<Invoice />} />
           <Route path="/" element={<HomePage handleLogout={handleLogout} />} />
           <Route path="/product" element={<ProductPage handleLogout={handleLogout}/>} />
           <Route path="/contact" element={<ContactPage handleLogout={handleLogout}/>} />
@@ -65,6 +91,7 @@ function App() {
     </div>
   );
 
+}*/
 }
 
 export default App;

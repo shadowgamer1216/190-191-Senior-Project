@@ -17,6 +17,14 @@
     })
   
   passport.use(localStrategy)
+  // Define the serialize and deserialize functions
+passport.serializeUser((user, done) => {
+  done(null, user)
+})
+
+passport.deserializeUser((user, done) => {
+  done(null, user)
+})
   
   export default nextConnect()
     .use(cors())
@@ -30,6 +38,10 @@
         
         console.log("session user: " + session[0].viewOnly)
         console.log("res " + res.statusCode)
+
+        passport.serializeUser((session, done) => {
+          done(null, session)
+        })
   
         await setLoginSession(res, session)
         const sessionView = session[0].viewOnly
