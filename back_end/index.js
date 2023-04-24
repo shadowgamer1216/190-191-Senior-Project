@@ -518,3 +518,15 @@ app.post("/api/insertCompany" , (req, res) =>{
      });
 });
 //----------------end of Company page------------------
+
+
+app.get("/api/orders", (req, res) =>{
+    const customer_id = req.body.customer_id;
+    const company = req.body.company;
+
+        db.query("SELECT * FROM orders", (err, result) =>{
+            if (err) throw err;
+            res.send(result);
+        });
+    
+});

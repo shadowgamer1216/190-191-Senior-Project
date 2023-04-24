@@ -67,6 +67,13 @@ function HomePage({ handleLogout }) {
 				</Link>
 			</div>
 
+			<div class="block7">
+				<Link to = "Invoice">
+					<button type="Search" id="Search" class="HomePageButton" >Invoice</button>
+				</Link>
+			</div>
+			
+
 		</div>
 	);
 }

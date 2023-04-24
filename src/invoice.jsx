@@ -67,66 +67,6 @@ function Invoice({ match }) {
     
   );
 }
-  /*const [invoiceData, setInvoiceData] = useState(null);
-  const [numPages, setNumPages] = useState(null);
-  const [showPdf, setShowPdf] = useState(false);
-
-  const fetchInvoiceData = () => {
-    Axios.get("http://localhost:3001/api/orders").then((response) =>{
-      setInvoiceData(response.data);
-    });
-  };
-
-  useEffect(() => {
-    fetchInvoiceData();
-  }, []);
-
-  const onDocumentLoadSuccess = ({ numPages }) => {
-    setNumPages(numPages);
-    setShowPdf(true); // Set showPdf to true once the PDF is loaded
-  };
-
-  const renderInvoice = () => (
-    <Document
-      file={null}
-      onLoadSuccess={onDocumentLoadSuccess}
-    >
-      <Page>
-        <View>
-          <Text>Invoice #{invoiceData.invoiceNumber}</Text>
-          <Text>Company: {invoiceData.company}</Text>
-          <Text>Company Address: {invoiceData.companyAddress}</Text>
-          <Text>Customer: {invoiceData.customerName}</Text>
-          <Text>Customer Address: {invoiceData.customerAddress}</Text>
-          <Text>Invoice Date: {invoiceData.invoiceDate}</Text>
-          <View>
-            {invoiceData.items.map(item => (
-              <View key={item.id}>
-                <Text>{item.quantity}</Text>
-                <Text>{item.description}</Text>
-                <Text>{item.unitPrice}</Text>
-                <Text>{item.totalPrice}</Text>
-              </View>
-            ))}
-          </View>
-          <Text>Total: {invoiceData.total}</Text>
-        </View>
-      </Page>
-    </Document>
-  );
-
-  return (
-    <div>
-      <div className='block7'>
-        <button type='button' onClick={fetchInvoiceData} className='HomePageButton'>
-          Fetch Orders
-        </button>
-      </div>
-      {showPdf && renderInvoice()} {/* Conditionally render the PDF }
-      <p>Page {numPages} of {numPages}</p>
-    </div>
-  );
-}*/
 
 export default Invoice;
 

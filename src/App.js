@@ -38,8 +38,8 @@ function App() {
      
         <Routes>
 
-<Route path="/invoice" element={<Invoice />} />
           <Route path="/" element={<HomePage handleLogout={handleLogout} />} />
+          <Route path="/invoice" element={<Invoice />} />
           <Route path="/product" element={<ProductPage handleLogout={handleLogout}/>} />
           <Route path="/contact" element={<ContactPage handleLogout={handleLogout}/>} />
           <Route path="/component" element={<ComponentPage handleLogout={handleLogout}/>} />

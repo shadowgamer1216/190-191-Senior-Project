@@ -314,3 +314,13 @@ CREATE TABLE company_table (
     PRIMARY KEY (company_ID)
 );
 
+
+CREATE TABLE orders (
+    orderID INT AUTO_INCREMENT PRIMARY KEY,
+    company VARCHAR(255),
+    company_address VARCHAR(255),
+    customer VARCHAR(255),
+    customer_address VARCHAR(255),
+    date DATE
+);
+
