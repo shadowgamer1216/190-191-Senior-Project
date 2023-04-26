@@ -530,3 +530,11 @@ app.get("/api/orders", (req, res) =>{
         });
     
 });
+
+app.get("/api/packingSlip", (req, res) =>{
+        db.query("SELECT * FROM shipping", (err, result) =>{
+            if (err) throw err;
+            res.send(result);
+        });
+    
+});

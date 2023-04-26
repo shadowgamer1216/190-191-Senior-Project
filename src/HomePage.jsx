@@ -73,6 +73,11 @@ function HomePage({ handleLogout }) {
 				</Link>
 			</div>
 			
+			<div class="block8">
+				<Link to = "PackingSlip">
+					<button type="Search" id="Search" class="HomePageButton" >Packing Slip</button>
+				</Link>
+			</div>
 
 		</div>
 	);

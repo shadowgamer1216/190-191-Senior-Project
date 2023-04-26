@@ -17,6 +17,7 @@ import SearchCompany from './searchcompany';
 import SearchContact from './searchContact';
 import ViewOnlyHome from './ViewOnlyHome';
 import Invoice from './invoice';
+import PackingSlip from './packingSlip'
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -40,6 +41,7 @@ function App() {
 
           <Route path="/" element={<HomePage handleLogout={handleLogout} />} />
           <Route path="/invoice" element={<Invoice />} />
+          <Route path="/packingSlip" element={<PackingSlip />} />
           <Route path="/product" element={<ProductPage handleLogout={handleLogout}/>} />
           <Route path="/contact" element={<ContactPage handleLogout={handleLogout}/>} />
           <Route path="/component" element={<ComponentPage handleLogout={handleLogout}/>} />

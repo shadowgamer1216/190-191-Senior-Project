@@ -324,3 +324,22 @@ CREATE TABLE orders (
     date DATE
 );
 
+CREATE TABLE shipping(
+    company VARCHAR(50),
+    address VARCHAR(50),
+    city VARCHAR(50),
+    state VARCHAR(50),
+    zip VARCHAR(50),
+    orderMaster VARCHAR(50),
+    shipDate VARCHAR(50),
+    orderDate VARCHAR(50),
+    po VARCHAR(50),
+    saturdayDelivery VARCHAR(50),
+    notes VARCHAR(50),
+    quantity VARCHAR(50),
+    abspn VARCHAR(50),
+    description VARCHAR(50),
+    productTitle VARCHAR(50),
+    oem VARCHAR(50),
+    product VARCHAR(50)
+);
