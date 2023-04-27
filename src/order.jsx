@@ -3,9 +3,14 @@ import './App.css'
 import { Link, useNavigate } from "react-router-dom"
 import { useState, useEffect } from "react";
 import Axios from 'axios';
+import Select from "react-select";
 
 const Order = ({ handleLogout }) => {
     const navigate = useNavigate();
+    
+    const [productID, setProductID] = useState(null);
+    const [companyID, setCompanyID] = useState(null);
+
     const [salesPerson, setSalesPerson] = useState(null);
     const [requestor, setRequestor] = useState(null);
     const [customerContact, setCustomerContact] = useState(null);
@@ -88,7 +93,6 @@ const Order = ({ handleLogout }) => {
     const [numberOfScreens, setNumberOfScreens] = useState(0);
     const [screensPrice, setScreensPrice] = useState(0);
     const [subTotal, setSubTotal] = useState(0);
-    //const [taxable, setTaxable] = useState(false);
     const [taxRate, setTaxRate] = useState(0);
     const [tax, setTax] = useState(0);
     const [freightCharges, setFreightCharges] = useState(0);
@@ -107,10 +111,6 @@ const Order = ({ handleLogout }) => {
     const [creditChecked, setCreditChecked] = useState(false);
     const [daysTurn, setDaysTurn] = useState(0);
     const [dateCodePrinting, setDateCodePrinting] = useState(null);
-    // const [assemblyBy, setAssemblyBy] = useState(null);
-    // const [discManufacturedBy, setDiscManufacturedBy] = useState(null);
-    // const [CDBrand, setCDBrand] = useState(null);
-    // const [discProvidedBy, setDiscProvidedBy] = useState(null);
     const [customerProvidedMaterial, setCustomerProvidedMaterial] = useState(null);
     const [customerMaterialETA, setCustomerMaterialETA] = useState(null);
     const [customerNotes, setCustomerNotes] = useState(null);
@@ -118,13 +118,35 @@ const Order = ({ handleLogout }) => {
     const [orderNotes, setOrderNotes] = useState(null);
     const [orderStatus, setOrderStatus] = useState("Submitted");
 
-    const [productList, setProductList] = useState([]);
-    //const [productID, setProductID] = useState(0);
-
-    const [customerList, setCustomerList] = useState([]);
-    //const [customerID, setCustomerID] = useState("");
-
-    const [index, setIndex] = useState(1);
+    const customStyle = {
+        control: base => ({
+            ...base,
+            height: 38,
+            minHeight: 38,
+            fontSize: '16px',
+            backgroundColor: '#E2EAFF',
+        }),
+        valueContainer: (base, state) => ({
+            ...base,
+            borderWidth: 1,
+            borderTopLeftRadius: 4,
+            borderBottomLeftRadius: 4,
+            paddingLeft: 10,
+            paddingBottom: 5,
+        }),
+        option: base => ({
+            ...base,
+            fontSize: '14px',
+        }),
+        menuPortal: (base) => ({
+            ...base,
+            zIndex: 9999,
+        }),
+        placeholder: (base, state) => ({
+            ...base,
+            overflow: 'hidden',
+        }),
+    };
 
     const CalculateCustomTotal = ({customQuantity, customUnitPrice, customTotalPrice, setCustomTotalPrice}) => {
         const sum = customQuantity * customUnitPrice;
@@ -133,7 +155,7 @@ const Order = ({ handleLogout }) => {
         return (
             <div className="order">
                 <div className="form-row">
-                    <label className="col-md-2.5 col-form-label">Total Price $</label>
+                    <label className="col-md-3.5 col-form-label">Total Price $</label>
                     <div className="input-group input-group-sm mb-3 col-md-5">
                         <input type="number" readOnly defaultValue={customTotalPrice} className="form-control" id="customTotalPrice"
                         />
@@ -323,357 +345,285 @@ const Order = ({ handleLogout }) => {
         setSubTotal(newSum)
         return (
             <div className="form-row">
-                <label htmlFor="subTotal" className="col-md-2 col-form-label">Sub Total $</label>
-                <div className="input-group input-group-sm mb-3 col-md-10">
+                <label htmlFor="subTotal" className="col-md-3 col-form-label">Sub Total $</label>
+                <div className="input-group input-group-sm mb-3 col-md-8">
                     <input type="number" readOnly defaultValue={subTotal} className="form-control" id="subTotal" />
                 </div>
             </div>
         );
     }
-
     const CalculateTax = ({setTax, tax, taxRate, subTotal}) => {
         const sum = taxRate * subTotal;
         const newSum = Number(sum.toFixed(2));
         setTax(newSum)
         return (
             <div className="form-row">
-                <label htmlFor="tax" className="col-md-2 col-form-label">Tax</label>
-                <div className="input-group input-group-sm mb-3 col-md-10">
+                <label htmlFor="tax" className="col-md-3 col-form-label">Tax</label>
+                <div className="input-group input-group-sm mb-3 col-md-8">
                     <input type="number" readOnly defaultValue={tax} className="form-control" id="tax" placeholder="$"/>
                 </div>
             </div>
         );
     }
-
     const CalculateTotal = ({setPriceTotal, priceTotal, tax, subTotal, freightCharges}) => {
         const sum =  subTotal + freightCharges + tax;
         const newSum = Number(sum.toFixed(2));
         setPriceTotal(newSum)
         return (
             <div className="form-row">
-                <label htmlFor="priceTotal" className="col-md-2 col-form-label">Order Price Total $</label>
-                <div className="input-group input-group-sm mb-3 col-md-10">  
+                <label htmlFor="priceTotal" className="col-md-3 col-form-label">Order Price Total $</label>
+                <div className="input-group input-group-sm mb-3 col-md-8">  
                     <input type="number" readOnly defaultValue={priceTotal} className="form-control" id="priceTotal"/>
                 </div>
             </div>
         );
     }
 
-
     const submit = () => {
-        setIndex(index + 1);
 
-        Axios.post("http://localhost:3001/api/insertOrder", {
-            salesPerson: salesPerson,
-            requestor: requestor,
-            customerContact: customerContact,
-            reOrder: reOrder,
+        if (!productID || !companyID || !factoryOrderQuantity) {
+            alert("Please fill in all required fields");
+        }
+        // else if (checkNum === true) {
+        //     setCheckNum(false);
+        // }
+        // else {
+            Axios.post("http://localhost:3001/api/insertOrder", {
+                productID: productID,
+                companyID: companyID,
 
-            // Custom Product
-            factoryOrderQuantity: factoryOrderQuantity,
-            customInvoice: customInvoice,
-            customPackingSlip: customPackingSlip,
-            customQuantity: customQuantity,
-            customUnitPrice: customUnitPrice,
-            customTotalPrice: customTotalPrice,
+                salesPerson: salesPerson,
+                requestor: requestor,
+                customerContact: customerContact,
+                reOrder: reOrder,
 
-            // Non-Inventory Items
-            nonItem1: nonItem1,
-            nonItemInvoice1: nonItemInvoice1,
-            nonItemPackingSlip1: nonItemPackingSlip1,
-            nonItemQuantity1: nonItemQuantity1,
-            nonItemUnitPrice1: nonItemUnitPrice1,
-            nonItemTotalPrice1: nonItemTotalPrice1,
-            nonItem2: nonItem2,
-            nonItemInvoice2: nonItemInvoice2,
-            nonItemPackingSlip2: nonItemPackingSlip2,
-            nonItemQuantity2: nonItemQuantity2,
-            nonItemUnitPrice2: nonItemUnitPrice2,
-            nonItemTotalPrice2: nonItemTotalPrice2,
-            nonItem3: nonItem3,
-            nonItemInvoice3: nonItemInvoice3,
-            nonItemPackingSlip3: nonItemPackingSlip3,
-            nonItemQuantity3: nonItemQuantity3,
-            nonItemUnitPrice3: nonItemUnitPrice3,
-            nonItemTotalPrice3: nonItemTotalPrice3,
-            nonItem4: nonItem4,
-            nonItemInvoice4: nonItemInvoice4,
-            nonItemPackingSlip4: nonItemPackingSlip4,
-            nonItemQuantity4: nonItemQuantity4,
-            nonItemUnitPrice4: nonItemUnitPrice4,
-            nonItemTotalPrice4: nonItemTotalPrice4,
-            nonItem5: nonItem5,
-            nonItemInvoice5: nonItemInvoice5,
-            nonItemPackingSlip5: nonItemPackingSlip5,
-            nonItemQuantity5: nonItemQuantity5,
-            nonItemUnitPrice5: nonItemUnitPrice5,
-            nonItemTotalPrice5: nonItemTotalPrice5,
-            nonItem6: nonItem6,
-            nonItemInvoice6: nonItemInvoice6,
-            nonItemPackingSlip6: nonItemPackingSlip6,
-            nonItemQuantity6: nonItemQuantity6,
-            nonItemUnitPrice6: nonItemUnitPrice6,
-            nonItemTotalPrice6: nonItemTotalPrice6,
+                // Custom Product
+                factoryOrderQuantity: factoryOrderQuantity,
+                customInvoice: customInvoice,
+                customPackingSlip: customPackingSlip,
+                customQuantity: customQuantity,
+                customUnitPrice: customUnitPrice,
+                customTotalPrice: customTotalPrice,
 
-            // Inventory Items
-            item1: item1,
-            itemInvoice1: itemInvoice1,
-            itemPackingSlip1: itemPackingSlip1,
-            itemQuantity1: itemQuantity1,
-            itemUnitPrice1: itemUnitPrice1,
-            itemTotalPrice1: itemTotalPrice1,
-            item2: item2,
-            itemInvoice2: itemInvoice2,
-            itemPackingSlip2: itemPackingSlip2,
-            itemQuantity2: itemQuantity2,
-            itemUnitPrice2: itemUnitPrice2,
-            itemTotalPrice2: itemTotalPrice2,
-            item3: item3,
-            itemInvoice3: itemInvoice3,
-            itemPackingSlip3: itemPackingSlip3,
-            itemQuantity3: itemQuantity3,
-            itemUnitPrice3: itemUnitPrice3,
-            itemTotalPrice3: itemTotalPrice3,
+                // Non-Inventory Items
+                nonItem1: nonItem1,
+                nonItemInvoice1: nonItemInvoice1,
+                nonItemPackingSlip1: nonItemPackingSlip1,
+                nonItemQuantity1: nonItemQuantity1,
+                nonItemUnitPrice1: nonItemUnitPrice1,
+                nonItemTotalPrice1: nonItemTotalPrice1,
+                nonItem2: nonItem2,
+                nonItemInvoice2: nonItemInvoice2,
+                nonItemPackingSlip2: nonItemPackingSlip2,
+                nonItemQuantity2: nonItemQuantity2,
+                nonItemUnitPrice2: nonItemUnitPrice2,
+                nonItemTotalPrice2: nonItemTotalPrice2,
+                nonItem3: nonItem3,
+                nonItemInvoice3: nonItemInvoice3,
+                nonItemPackingSlip3: nonItemPackingSlip3,
+                nonItemQuantity3: nonItemQuantity3,
+                nonItemUnitPrice3: nonItemUnitPrice3,
+                nonItemTotalPrice3: nonItemTotalPrice3,
+                nonItem4: nonItem4,
+                nonItemInvoice4: nonItemInvoice4,
+                nonItemPackingSlip4: nonItemPackingSlip4,
+                nonItemQuantity4: nonItemQuantity4,
+                nonItemUnitPrice4: nonItemUnitPrice4,
+                nonItemTotalPrice4: nonItemTotalPrice4,
+                nonItem5: nonItem5,
+                nonItemInvoice5: nonItemInvoice5,
+                nonItemPackingSlip5: nonItemPackingSlip5,
+                nonItemQuantity5: nonItemQuantity5,
+                nonItemUnitPrice5: nonItemUnitPrice5,
+                nonItemTotalPrice5: nonItemTotalPrice5,
+                nonItem6: nonItem6,
+                nonItemInvoice6: nonItemInvoice6,
+                nonItemPackingSlip6: nonItemPackingSlip6,
+                nonItemQuantity6: nonItemQuantity6,
+                nonItemUnitPrice6: nonItemUnitPrice6,
+                nonItemTotalPrice6: nonItemTotalPrice6,
 
-            // Billing Information
-            assemblyChargesQuantity: assemblyChargesQuantity,
-            assemblyChargesUnitPrice: assemblyChargesUnitPrice,
-            assemblyChargesTotalPrice: assemblyChargesTotalPrice,
-            printingChargesQuantity: printingChargesQuantity,
-            printingChargesUnitPrice: printingChargesUnitPrice,
-            printingChargesTotalPrice: printingChargesTotalPrice,
-            setupCharge: setupCharge,
-            numberOfScreens: numberOfScreens,
-            screensPrice: screensPrice,
-            subTotal: subTotal,
-            taxRate: taxRate,
-            //taxable: taxable,
-            tax: tax,
-            freightCharges: freightCharges,
-            priceTotal: priceTotal,
+                // Inventory Items
+                item1: item1,
+                itemInvoice1: itemInvoice1,
+                itemPackingSlip1: itemPackingSlip1,
+                itemQuantity1: itemQuantity1,
+                itemUnitPrice1: itemUnitPrice1,
+                itemTotalPrice1: itemTotalPrice1,
+                item2: item2,
+                itemInvoice2: itemInvoice2,
+                itemPackingSlip2: itemPackingSlip2,
+                itemQuantity2: itemQuantity2,
+                itemUnitPrice2: itemUnitPrice2,
+                itemTotalPrice2: itemTotalPrice2,
+                item3: item3,
+                itemInvoice3: itemInvoice3,
+                itemPackingSlip3: itemPackingSlip3,
+                itemQuantity3: itemQuantity3,
+                itemUnitPrice3: itemUnitPrice3,
+                itemTotalPrice3: itemTotalPrice3,
 
-            // Invoice Information
-            invoiceDate: invoiceDate,
-            invoiceDatePaid: invoiceDatePaid,
-            invoiceNotes: invoiceNotes,
+                // Billing Information
+                assemblyChargesQuantity: assemblyChargesQuantity,
+                assemblyChargesUnitPrice: assemblyChargesUnitPrice,
+                assemblyChargesTotalPrice: assemblyChargesTotalPrice,
+                printingChargesQuantity: printingChargesQuantity,
+                printingChargesUnitPrice: printingChargesUnitPrice,
+                printingChargesTotalPrice: printingChargesTotalPrice,
+                setupCharge: setupCharge,
+                numberOfScreens: numberOfScreens,
+                screensPrice: screensPrice,
+                subTotal: subTotal,
+                taxRate: taxRate,
+                tax: tax,
+                freightCharges: freightCharges,
+                priceTotal: priceTotal,
 
-            // Job Information
-            ABSOrder: ABSOrder,
-            customerOrder: customerOrder,
-            customerPODate: customerPODate,
-            customerPONumber: customerPONumber,
-            creditChecked: creditChecked,
-            daysTurn: daysTurn,
-            dateCodePrinting: dateCodePrinting,
-            // assemblyBy: assemblyBy,
-            // discManufacturedBy: discManufacturedBy,
-            // CDBrand: CDBrand,
-            // discProvidedBy: discProvidedBy,
-            customerProvidedMaterial: customerProvidedMaterial,
-            customerMaterialETA: customerMaterialETA,
-            customerNotes: customerNotes,
-            vendorNotes: vendorNotes,
-            orderNotes: orderNotes,
-            orderStatus: orderStatus
-        }).then(() => {
-            console.log("Success");
-        })
+                // Invoice Information
+                invoiceDate: invoiceDate,
+                invoiceDatePaid: invoiceDatePaid,
+                invoiceNotes: invoiceNotes,
+
+                // Job Information
+                ABSOrder: ABSOrder,
+                customerOrder: customerOrder,
+                customerPODate: customerPODate,
+                customerPONumber: customerPONumber,
+                creditChecked: creditChecked,
+                daysTurn: daysTurn,
+                dateCodePrinting: dateCodePrinting,
+                customerProvidedMaterial: customerProvidedMaterial,
+                customerMaterialETA: customerMaterialETA,
+                customerNotes: customerNotes,
+                vendorNotes: vendorNotes,
+                orderNotes: orderNotes,
+                orderStatus: orderStatus
+            }).then(() => {
+                console.log("Success");
+            })
+
+            Axios.post("http://localhost:3001/api/insertOrderNonItem", {
+                productID: productID,
+                companyID: companyID,
+
+                // Non-Inventory Items
+                nonItem1: nonItem1,
+                nonItemInvoice1: nonItemInvoice1,
+                nonItemPackingSlip1: nonItemPackingSlip1,
+                nonItemQuantity1: nonItemQuantity1,
+                nonItemUnitPrice1: nonItemUnitPrice1,
+                nonItemTotalPrice1: nonItemTotalPrice1,
+                nonItem2: nonItem2,
+                nonItemInvoice2: nonItemInvoice2,
+                nonItemPackingSlip2: nonItemPackingSlip2,
+                nonItemQuantity2: nonItemQuantity2,
+                nonItemUnitPrice2: nonItemUnitPrice2,
+                nonItemTotalPrice2: nonItemTotalPrice2,
+                nonItem3: nonItem3,
+                nonItemInvoice3: nonItemInvoice3,
+                nonItemPackingSlip3: nonItemPackingSlip3,
+                nonItemQuantity3: nonItemQuantity3,
+                nonItemUnitPrice3: nonItemUnitPrice3,
+                nonItemTotalPrice3: nonItemTotalPrice3,
+                nonItem4: nonItem4,
+                nonItemInvoice4: nonItemInvoice4,
+                nonItemPackingSlip4: nonItemPackingSlip4,
+                nonItemQuantity4: nonItemQuantity4,
+                nonItemUnitPrice4: nonItemUnitPrice4,
+                nonItemTotalPrice4: nonItemTotalPrice4,
+                nonItem5: nonItem5,
+                nonItemInvoice5: nonItemInvoice5,
+                nonItemPackingSlip5: nonItemPackingSlip5,
+                nonItemQuantity5: nonItemQuantity5,
+                nonItemUnitPrice5: nonItemUnitPrice5,
+                nonItemTotalPrice5: nonItemTotalPrice5,
+                nonItem6: nonItem6,
+                nonItemInvoice6: nonItemInvoice6,
+                nonItemPackingSlip6: nonItemPackingSlip6,
+                nonItemQuantity6: nonItemQuantity6,
+                nonItemUnitPrice6: nonItemUnitPrice6,
+                nonItemTotalPrice6: nonItemTotalPrice6,
+            }).then(() => {
+                console.log("Success");
+            })
+
+            Axios.post("http://localhost:3001/api/insertOrderItem", {
+                productID: productID,
+                companyID: companyID,
+
+                // Inventory Items
+                item1: item1,
+                itemInvoice1: itemInvoice1,
+                itemPackingSlip1: itemPackingSlip1,
+                itemQuantity1: itemQuantity1,
+                itemUnitPrice1: itemUnitPrice1,
+                itemTotalPrice1: itemTotalPrice1,
+                item2: item2,
+                itemInvoice2: itemInvoice2,
+                itemPackingSlip2: itemPackingSlip2,
+                itemQuantity2: itemQuantity2,
+                itemUnitPrice2: itemUnitPrice2,
+                itemTotalPrice2: itemTotalPrice2,
+                item3: item3,
+                itemInvoice3: itemInvoice3,
+                itemPackingSlip3: itemPackingSlip3,
+                itemQuantity3: itemQuantity3,
+                itemUnitPrice3: itemUnitPrice3,
+                itemTotalPrice3: itemTotalPrice3,
+            }).then(() => {
+                console.log("Success");
+            })
+        //}
     };
 
+    const [companyOptions, setCompanyOptions] = useState([]);
     useEffect(() => {
-        Axios.get("http://localhost:3001/api/getProductInfo").then((response) =>{
-            setProductList(response.productList);
+        Axios.get('http://localhost:3001/api/getCompanyData')
+        .then(response => {
+            const options = response.data.map(option => {
+                return { value: option.company_ID, label: option.company_ID + " — " + option.company_Name };
+            });
+            setCompanyOptions(options);
+        })
+        .catch(error => {
+            console.log(error);
         });
-    }, [index]);
+    }, []);
 
-    // const getProduct = useMemo(() => {
-    //     Axios.get("http://localhost:3001/api/getProductInfo", {productID: productID}).then((response) => {
-    //         setProductList(response.data);
-    //     });
-    // }, [productID]);
+    const [productOptions, setProductOptions] = useState([]);
+    useEffect(() => {
+        Axios.get('http://localhost:3001/api/getProductData')
+        .then(response => {
+            const options = response.data.map(option => {
+                return { value: option.product_id, label: option.product_id + " — " + option.product_title };
+            });
+            setProductOptions(options);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    }, []);
 
-    // const getContact = useMemo(() => {
-    //     Axios.get("http://localhost:3001/api/getContactInfo", {customerID: customerID}).then((response) => {
-    //         setCustomerList(response.data);
-    //     });
-    // }, [customerID]);
-
-    // function AddNonItem() {
-    //     const [inputFields, setInputFields] = useState([
-    //         { field: '' }
-    //     ])
-    //     const handleChange = (index, event) => {
-    //         let data = [...inputFields];
-    //         data[index][event.target.name] = event.target.value;
-    //         setInputFields(data);
+    const [componentOptions, setComponentOptions] = useState([]);
+    useEffect(() => {
+        Axios.get('http://localhost:3001/api/getComponentData')
+        .then(response => {
+            const options = response.data.map(option => {
+                return { value: option.component_id, label: option.component_id + " — " + option.title };
+            });
+            setComponentOptions(options);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    }, []);
+    
+    // const [checkNum, setCheckNum] = useState(false);
+    // function CheckWholeNumber(num) {
+    //     if(num % 1 !== 0) {
+    //         setCheckNum(true);
     //     }
-    //     const addField = () => {
-    //         let newField = { field: '' }
-    //         setInputFields([...inputFields, newField])
-    //     }
-    //     const removeField = (index) => {
-    //         let data = [...inputFields];
-    //         data.splice(index, 1)
-    //         setInputFields(data)
-    //     }
-    
-    //     return (
-    //         <div className="order">
-    //             <div className="form-row">
-    //                 <div className="input-group input-group-sm mb-3 col-md-10">
-    //                     <button type="button" id="item-add" className="btn btn-outline-primary btn-sm" onClick={addField}>Add New Non-Inventory Item</button>
-    //                 </div>
-    //             </div>
-    //             {inputFields.map((input, index) => {
-    //                 return (
-    //                     <div className="it-field" key={index}>
-    //                         <div className="form-row">
-    //                             <label className="col-md-2 col-form-label">Non-Inventory Item #{index + 1}</label>
-    //                             <div className="input-group input-group-sm mb-3 col-md-9">
-    //                                 <input
-    //                                     key={index}
-    //                                     className="form-control field"
-    //                                     type="text"
-    //                                     value={input.field}
-    //                                     onChange={event => handleChange(index, event)}
-    //                                 />
-    //                             </div>
-    //                             <div className="input-group input-group-sm mb-3 col-md-1">
-    //                                 <button
-    //                                     type="button"
-    //                                     id="component-remove"
-    //                                     className="btn btn-outline-danger btn-sm"
-    //                                     onClick={removeField}
-    //                                 >X</button>
-    //                             </div>
-                                
-    //                             <label className="col-md-2.75 col-form-label">Invoice</label>
-    //                             <div className="input-group input-group-sm mb-3 col-md-1">
-    //                                 <div className="form-group custom-control custom-checkbox">
-    //                                     <input type="checkbox" className="custom-control-input" id="invoice1" />
-    //                                     <label htmlFor="invoice" className="custom-control-label"></label>
-    //                                 </div>
-    //                             </div>
-    
-    //                             <label className="col-md-2.75 col-form-label">Packing Slip</label>
-    //                             <div className="input-group input-group-sm mb-3 col-md-1">
-    //                                 <div className="form-group custom-control custom-checkbox">
-    //                                     <input type="checkbox" className="custom-control-input" id="packingSlip1" />
-    //                                    <label htmlFor="packingSlip" className="custom-control-label"></label>
-    //                                 </div>
-    //                             </div>
-    
-    //                             <label className="col-md-2.75 col-form-label">Quantity</label>
-    //                             <div className="input-group input-group-sm mb-3 col-md-1">
-    //                                 <input type="text" className="form-control" id="quantity1" />
-    //                             </div>
-    
-    //                             <label className="col-md-2.75 col-form-label">Unit Price $</label>
-    //                             <div className="input-group input-group-sm mb-3 col-md-1">
-    //                                 <input type="text" className="form-control" id="unitPrice1" />
-    //                             </div>
-    
-    //                             <label className="col-md-2.75 col-form-label">Total Price $</label>
-    //                             <div className="input-group input-group-sm mb-3 col-md-1">
-    //                                 <input type="text" readOnly className="form-control" id="totalPrice1" />
-    //                             </div>
-    //                         </div>
-    //                     </div>
-    //                 );
-    //             })}
-    //         </div>
-    //     );
     // }
-    
-    // function AddItem() {
-    //     const [inputFields, setInputFields] = useState([
-    //         { field: '' }
-    //     ])
-    //     const handleChange = (index, event) => {
-    //         let data = [...inputFields];
-    //         data[index][event.target.name] = event.target.value;
-    //         setInputFields(data);
-    //     }
-    //     const addField = () => {
-    //         let newField = { field: '' }
-    //         setInputFields([...inputFields, newField])
-    //     }
-    //     const removeField = (index) => {
-    //         let data = [...inputFields];
-    //         data.splice(index, 1)
-    //         setInputFields(data)
-    //     }
-    
-    //     return (
-    //         <div className="order">
-    //             <div className="form-row">
-    //                 <div className="input-group input-group-sm mb-3 col-md-10">
-    //                     <button type="button" id="item-add" className="btn btn-outline-primary btn-sm" onClick={addField}>Add New Inventory Item</button>
-    //                 </div>
-    //             </div>
-    //             {inputFields.map((input, index) => {
-    //                 return (
-    //                     <div className="it-field" key={index}>
-    //                         <div className="form-row">
-    //                             <label className="col-md-2 col-form-label">Inventory Item #{index + 1}</label>
-    //                             <div className="input-group input-group-sm mb-3 col-md-3">
-    //                                 <select key={index} className="form-control" value={input.field} onChange={event => handleChange(index, event)}>
-    //                                     <option defaultValue="0">Select Value</option>
-    //                                     <option value="1">Option 1</option>
-    //                                     <option value="2">Option 2</option>
-    //                                     <option value="3">Option 3</option>
-    //                                 </select>
-    //                             </div>
-    
-    //                             <div className="input-group input-group-sm mb-3 col-md-1">
-    //                                 <button
-    //                                     type="button"
-    //                                     id="component-remove"
-    //                                     className="btn btn-outline-danger btn-sm"
-    //                                     onClick={removeField}
-    //                                 >X</button>
-    //                             </div>
-    
-    //                             <div className="form-row">
-    //                                 <label className="col-md-2.75 col-form-label">Invoice</label>
-    //                                 <div className="input-group input-group-sm mb-3 col-md-1">
-    //                                     <div className="form-group custom-control custom-checkbox">
-    //                                         <input type="checkbox" className="custom-control-input" id="invoice1" />
-    //                                         <label htmlFor="invoice" className="custom-control-label"></label>
-    //                                     </div>
-    //                                 </div>
-    
-    //                                 <label className="col-md-2.75 col-form-label">Packing Slip</label>
-    //                                 <div className="input-group input-group-sm mb-3 col-md-1">
-    //                                     <div className="form-group custom-control custom-checkbox">
-    //                                         <input type="checkbox" className="custom-control-input" id="packingSlip1" />
-    //                                         <label htmlFor="packingSlip" className="custom-control-label"></label>
-    //                                     </div>
-    //                                 </div>
-    
-    //                                 <label className="col-md-2.75 col-form-label">Quantity</label>
-    //                                 <div className="input-group input-group-sm mb-3 col-md-1">
-    //                                     <input type="text" className="form-control" id="quantity1" />
-    //                                 </div>
-    
-    //                                 <label className="col-md-2.75 col-form-label">Unit Price $</label>
-    //                                 <div className="input-group input-group-sm mb-3 col-md-1">
-    //                                     <input type="text" className="form-control" id="unitPrice1" />
-    //                                 </div>
-    
-    //                                 <label className="col-md-2.75 col-form-label">Total Price $</label>
-    //                                 <div className="input-group input-group-sm mb-3 col-md-1">
-    //                                     <input type="text" readOnly className="form-control" id="totalPrice1" />
-    //                                 </div>
-    //                             </div>
-    //                         </div>
-    //                     </div>
-    //                 );
-    //             })}
-    //         </div>
-    //     );
-    // }
-    
     return (
         <div className="page">
             <nav className="navbar navbar-expand-lg navbar-dark bg-maroon">
@@ -690,7 +640,7 @@ const Order = ({ handleLogout }) => {
                     </div>
                 </div>
 
-                <button className="btn btn-outline-light">Sign In</button>
+                <button className="btn btn-outline-light" onClick={handleLogout}>Logout</button>
             </nav>
 
             <div className="container p-5">
@@ -698,7 +648,7 @@ const Order = ({ handleLogout }) => {
                     <h2>ADD ORDER</h2>
                 </div>
 
-            <form>
+            <form onSubmit={submit}>
                 <div className="company-info pt-3">
                     <div className="section-headers">
                         <h5>ABSO - Absolute Media, Inc.</h5>
@@ -799,8 +749,19 @@ const Order = ({ handleLogout }) => {
                     </div> */}
 
                     <div className="form-row">
-                        <label htmlFor="salesPerson" className="col-md-2 col-form-label">SalesPerson</label>
-                        <div className="input-group input-group-sm mb-3 col-md-10">
+                        <label htmlFor="companyID" className="col-md-3 col-form-label">Company ID <span style={{ color: 'red' }}>*</span></label>
+                        <div className="input-group input-group-sm mb-3 col-md-8">
+                            <div className="form-control p-0">
+                                <Select onChange={(e) => setCompanyID(e.value)} className="react-select" menuPortalTarget={document.body} styles={customStyle} value={companyOptions.filter(function(option) {
+                                    return option.value === companyID;
+                                })} id="companyID" required options={companyOptions}/>
+                            </div>
+                        </div>                    
+                    </div>
+
+                    <div className="form-row">
+                        <label htmlFor="salesPerson" className="col-md-3 col-form-label">SalesPerson</label>
+                        <div className="input-group input-group-sm mb-3 col-md-8">
                             <input type="text" className="form-control" id="salesPerson" 
                             onChange = {(e) => {
                                 setSalesPerson(e.target.value)
@@ -809,8 +770,8 @@ const Order = ({ handleLogout }) => {
                     </div>
 
                     <div className="form-row">
-                        <label htmlFor="requestor" className="col-md-2 col-form-label">Requestor</label>
-                        <div className="input-group input-group-sm mb-3 col-md-10">
+                        <label htmlFor="requestor" className="col-md-3 col-form-label">Requestor</label>
+                        <div className="input-group input-group-sm mb-3 col-md-8">
                             <input type="text" className="form-control" id="requestor"
                             onChange = {(e) => {
                                 setRequestor(e.target.value)
@@ -819,8 +780,8 @@ const Order = ({ handleLogout }) => {
                     </div>
 
                     <div className="form-row">
-                        <label htmlFor="cContact" className="col-md-2 col-form-label">Customer Contact</label>
-                        <div className="input-group input-group-sm mb-3 col-md-10">
+                        <label htmlFor="cContact" className="col-md-3 col-form-label">Customer Contact</label>
+                        <div className="input-group input-group-sm mb-3 col-md-8">
                             <input type="text" className="form-control" id="customerContact"
                             onChange = {(e) => {
                                 setCustomerContact(e.target.value)
@@ -829,7 +790,7 @@ const Order = ({ handleLogout }) => {
                     </div>
 
                     <div className="form-row">
-                        <label htmlFor="reOrder" className="col-md-2 col-form-label">Re-Order?</label>
+                        <label htmlFor="reOrder" className="col-md-3 col-form-label">Re-Order?</label>
                         <div className="input-group input-group-sm col-md-2 pl-5">
                             <div className="form-group custom-control custom-checkbox">
                                 <input type="checkbox" checked={reOrder} className="custom-control-input" id="reOrder"
@@ -849,23 +810,20 @@ const Order = ({ handleLogout }) => {
                     </div>
 
                     <div className="form-row">
-                        <label htmlFor="productTitle" className="col-md-2 col-form-label"><b>Product Title:</b></label>
-                            {/* {productList.map((val, key) => {
-                                return <div> {val.product_title} </div>
-                            })} */}
+                        <label htmlFor="productID" className="col-md-3 col-form-label">Product ID <span style={{ color: 'red' }}>*</span></label>
+                        <div className="input-group input-group-sm mb-3 col-md-8">
+                            <div className="form-control p-0">
+                                <Select onChange={(e) => setProductID(e.value)} className="react-select" menuPortalTarget={document.body} styles={customStyle} value={productOptions.filter(function(option) {
+                                    return option.value === productID;
+                                })} id="productID" required options={productOptions}/>
+                            </div>
+                        </div>                    
                     </div>
 
                     <div className="form-row">
-                        <label htmlFor="productID" className="col-md-2 col-form-label"><b>Product ID:</b></label>
-                            {/* {productList.map((val, key) => {
-                                return <div> {val.product_id} </div>
-                            })} */}
-                    </div>
-
-                    <div className="form-row">
-                        <label htmlFor="factoryOrderQuantity" className="col-md-2 col-form-label">Factory Order Quantity</label>
-                        <div className="input-group input-group-sm mb-3 col-md-10">
-                            <input type="number" className="form-control" id="factoryOrderQuantity" pattern="[0-9]*"
+                        <label htmlFor="factoryOrderQuantity" className="col-md-3 col-form-label">Factory Order Quantity <span style={{ color: 'red' }}>*</span></label>
+                        <div className="input-group input-group-sm mb-3 col-md-8">
+                            <input type="number" className="form-control" id="factoryOrderQuantity" pattern="[0-9]*" required
                             onChange = {(e) => {
                                 setFactoryOrderQuantity(e.target.value)
                             }}/>
@@ -917,18 +875,18 @@ const Order = ({ handleLogout }) => {
                         <h5>Non-Inventory Line Items</h5>
                     </div>
 
-                    {/* <AddNonItem></AddNonItem> */}
-
                     {/* Non-Item #1 */}
                     <div className="form-row">
-                        <label htmlFor="nonItem1" className="col-md-2 col-form-label">Non-Inventory Item #1</label>
-                        <div className="input-group input-group-sm mb-3 col-md-10">
+                        <label htmlFor="nonItem1" className="col-md-3 col-form-label">Non-Inventory Item #1</label>
+                        <div className="input-group input-group-sm mb-3 col-md-8">
                             <input type="text" className="form-control" id="nonItem1"
                             onChange = {(e) => {
                                 setNonItem1(e.target.value)
                             }}/>
                         </div>
+                    </div>
 
+                    <div className="form-row">
                         <label className="col-md-2.5 col-form-label">Invoice</label>
                         <div className="input-group input-group-sm mb-3 col-md-1">
                             <div className="form-group custom-control custom-checkbox">
@@ -968,14 +926,16 @@ const Order = ({ handleLogout }) => {
 
                     {/* Non-Item #2 */}
                     <div className="form-row">
-                        <label htmlFor="nonItem2" className="col-md-2 col-form-label">Non-Inventory Item #2</label>
-                        <div className="input-group input-group-sm mb-3 col-md-10">
+                        <label htmlFor="nonItem2" className="col-md-3 col-form-label">Non-Inventory Item #2</label>
+                        <div className="input-group input-group-sm mb-3 col-md-8">
                             <input type="text" className="form-control" id="nonItem2"
                             onChange = {(e) => {
                                 setNonItem2(e.target.value)
                             }}/>
                         </div>
+                    </div>
 
+                    <div className="form-row">
                         <label className="col-md-2.5 col-form-label">Invoice</label>
                         <div className="input-group input-group-sm mb-3 col-md-1">
                             <div className="form-group custom-control custom-checkbox">
@@ -1015,14 +975,16 @@ const Order = ({ handleLogout }) => {
 
                     {/* Non-Item #3 */}
                     <div className="form-row">
-                        <label htmlFor="nonItem3" className="col-md-2 col-form-label">Non-Inventory Item #3</label>
-                        <div className="input-group input-group-sm mb-3 col-md-10">
+                        <label htmlFor="nonItem3" className="col-md-3 col-form-label">Non-Inventory Item #3</label>
+                        <div className="input-group input-group-sm mb-3 col-md-8">
                             <input type="text" className="form-control" id="nonItem3"
                             onChange = {(e) => {
                                 setNonItem3(e.target.value)
                             }}/>
                         </div>
+                    </div>
 
+                    <div className="form-row">
                         <label className="col-md-2.5 col-form-label">Invoice</label>
                         <div className="input-group input-group-sm mb-3 col-md-1">
                             <div className="form-group custom-control custom-checkbox">
@@ -1062,14 +1024,16 @@ const Order = ({ handleLogout }) => {
 
                     {/* Non-Item #4 */}
                     <div className="form-row">
-                        <label htmlFor="nonItem4" className="col-md-2 col-form-label">Non-Inventory Item #4</label>
-                        <div className="input-group input-group-sm mb-3 col-md-10">
+                        <label htmlFor="nonItem4" className="col-md-3 col-form-label">Non-Inventory Item #4</label>
+                        <div className="input-group input-group-sm mb-3 col-md-8">
                             <input type="text" className="form-control" id="nonItem4"
                             onChange = {(e) => {
                                 setNonItem4(e.target.value)
                             }}/>
                         </div>
+                    </div>
 
+                    <div className="form-row">
                         <label className="col-md-2.5 col-form-label">Invoice</label>
                         <div className="input-group input-group-sm mb-3 col-md-1">
                             <div className="form-group custom-control custom-checkbox">
@@ -1109,14 +1073,16 @@ const Order = ({ handleLogout }) => {
 
                     {/* Non-Item #5 */}
                     <div className="form-row">
-                        <label htmlFor="nonItem5" className="col-md-2 col-form-label">Non-Inventory Item #5</label>
-                        <div className="input-group input-group-sm mb-3 col-md-10">
+                        <label htmlFor="nonItem5" className="col-md-3 col-form-label">Non-Inventory Item #5</label>
+                        <div className="input-group input-group-sm mb-3 col-md-8">
                             <input type="text" className="form-control" id="nonItem5"
                             onChange = {(e) => {
                                 setNonItem5(e.target.value)
                             }}/>
                         </div>
+                    </div>
 
+                    <div className="form-row">
                         <label className="col-md-2.5 col-form-label">Invoice</label>
                         <div className="input-group input-group-sm mb-3 col-md-1">
                             <div className="form-group custom-control custom-checkbox">
@@ -1156,14 +1122,16 @@ const Order = ({ handleLogout }) => {
 
                     {/* Non-Item #6 */}
                     <div className="form-row">
-                        <label htmlFor="nonItem6" className="col-md-2 col-form-label">Non-Inventory Item #6</label>
-                        <div className="input-group input-group-sm mb-3 col-md-10">
+                        <label htmlFor="nonItem6" className="col-md-3 col-form-label">Non-Inventory Item #6</label>
+                        <div className="input-group input-group-sm mb-3 col-md-8">
                             <input type="text" className="form-control" id="nonItem6"
                             onChange = {(e) => {
                                 setNonItem6(e.target.value)
                             }}/>
                         </div>
+                    </div>
 
+                    <div className="form-row">
                         <label className="col-md-2.5 col-form-label">Invoice</label>
                         <div className="input-group input-group-sm mb-3 col-md-1">
                             <div className="form-group custom-control custom-checkbox">
@@ -1208,23 +1176,19 @@ const Order = ({ handleLogout }) => {
                         <h5>Inventory Items</h5>
                     </div>
 
-                    {/* <AddItem></AddItem> */}
-
                     {/* Item #1 */}
                     <div className="form-row">
-                        <label htmlFor="item1" className="col-md-2 col-form-label">Inventory Item #1</label>
-                        <div className="input-group input-group-sm mb-3 col-md-10">
-                            <select className="form-control" name="item1" id="item1"
-                            onChange = {(e) => {
-                                setItem1(e.target.value)
-                            }}>
-                                <option defaultValue="0">Select Value</option>
-                                <option value="1">Option 1</option>
-                                <option value="2">Option 2</option>
-                                <option value="3">Option 3</option>
-                            </select>
+                        <label htmlFor="item1" className="col-md-3 col-form-label">Inventory Item #1</label>
+                        <div className="input-group input-group-sm mb-3 col-md-8">
+                            <div className="form-control p-0">
+                                <Select onChange={(e) => setItem1(e.value)} className="react-select" menuPortalTarget={document.body} styles={customStyle} value={componentOptions.filter(function(option) {
+                                    return option.value === item1;
+                                })} id="item1" options={componentOptions}/>
+                            </div>
                         </div>
-
+                    </div>
+                    
+                    <div className="form-row">
                         <label className="col-md-2.5 col-form-label">Invoice</label>
                         <div className="input-group input-group-sm mb-3 col-md-1">
                             <div className="form-group custom-control custom-checkbox">
@@ -1264,19 +1228,17 @@ const Order = ({ handleLogout }) => {
 
                     {/* Item #2 */}
                     <div className="form-row">
-                        <label htmlFor="item2" className="col-md-2 col-form-label">Inventory Item #2</label>
-                        <div className="input-group input-group-sm mb-3 col-md-10">
-                            <select className="form-control" name="item2" id="item2"
-                            onChange = {(e) => {
-                                setItem2(e.target.value)
-                            }}>
-                                <option defaultValue="0">Select Value</option>
-                                <option value="1">Option 1</option>
-                                <option value="2">Option 2</option>
-                                <option value="3">Option 3</option>
-                            </select>
+                        <label htmlFor="item2" className="col-md-3 col-form-label">Inventory Item #2</label>
+                        <div className="input-group input-group-sm mb-3 col-md-8">
+                            <div className="form-control p-0">
+                                <Select onChange={(e) => setItem2(e.value)} className="react-select" menuPortalTarget={document.body} styles={customStyle} value={componentOptions.filter(function(option) {
+                                    return option.value === item2;
+                                })} id="item2" options={componentOptions}/>
+                            </div>
                         </div>
+                    </div>
 
+                    <div className="form-row">
                         <label className="col-md-2.5 col-form-label">Invoice</label>
                         <div className="input-group input-group-sm mb-3 col-md-1">
                             <div className="form-group custom-control custom-checkbox">
@@ -1316,19 +1278,17 @@ const Order = ({ handleLogout }) => {
 
                     {/* Item #3 */}
                     <div className="form-row">
-                        <label htmlFor="item3" className="col-md-2 col-form-label">Inventory Item #3</label>
-                        <div className="input-group input-group-sm mb-3 col-md-10">
-                            <select className="form-control" name="item3" id="item3"
-                            onChange = {(e) => {
-                                setItem3(e.target.value)
-                            }}>
-                                <option defaultValue="0">Select Value</option>
-                                <option value="1">Option 1</option>
-                                <option value="2">Option 2</option>
-                                <option value="3">Option 3</option>
-                            </select>
+                        <label htmlFor="item3" className="col-md-3 col-form-label">Inventory Item #3</label>
+                        <div className="input-group input-group-sm mb-3 col-md-8">
+                            <div className="form-control p-0">
+                                <Select onChange={(e) => setItem3(e.value)} className="react-select" menuPortalTarget={document.body} styles={customStyle} value={componentOptions.filter(function(option) {
+                                    return option.value === item3;
+                                })} id="item3" options={componentOptions}/>
+                            </div>
                         </div>
+                    </div>
 
+                    <div className="form-row">
                         <label className="col-md-2.5 col-form-label">Invoice</label>
                         <div className="input-group input-group-sm mb-3 col-md-1">
                             <div className="form-group custom-control custom-checkbox">
@@ -1373,8 +1333,8 @@ const Order = ({ handleLogout }) => {
                     </div>
 
                     <div className="form-row">
-                        <label htmlFor="assemblyCharges" className="col-md-2 col-form-label">Assembly Charges $</label>
-                        <div className="input-group input-group-sm mb-3 col-md-10">
+                        <label htmlFor="assemblyCharges" className="col-md-3 col-form-label">Assembly Charges $</label>
+                        <div className="input-group input-group-sm mb-3 col-md-8">
                             <input type="number" className="form-control" id="assemblyChargesQuantity" placeholder="Quantity" pattern="[0-9]*"
                             onChange = {(e) => {
                                 setAssemblyChargesQuantity(e.target.value)
@@ -1391,8 +1351,8 @@ const Order = ({ handleLogout }) => {
                     </div>
 
                     <div className="form-row">
-                        <label htmlFor="printingCharges" className="col-md-2 col-form-label">Date Code Printing Charges $</label>
-                        <div className="input-group input-group-sm mb-3 col-md-10">
+                        <label htmlFor="printingCharges" className="col-md-3 col-form-label">Date Code Printing Charges $</label>
+                        <div className="input-group input-group-sm mb-3 col-md-8">
                             <input type="number" className="form-control" id="printingChargesQuantity" placeholder="Quantity" pattern="[0-9]*"
                             onChange = {(e) => {
                                 setPrintingChargesQuantity(e.target.value)
@@ -1409,8 +1369,8 @@ const Order = ({ handleLogout }) => {
                     </div>
 
                     <div className="form-row">
-                        <label htmlFor="setupCharge" className="col-md-2 col-form-label">Date Code Setup Charge $</label>
-                        <div className="input-group input-group-sm mb-3 col-md-10">
+                        <label htmlFor="setupCharge" className="col-md-3 col-form-label">Date Code Setup Charge $</label>
+                        <div className="input-group input-group-sm mb-3 col-md-8">
                             
                             <input type="number" className="form-control" id="setupCharge" step="0.01"
                             onChange = {(e) => {
@@ -1420,17 +1380,17 @@ const Order = ({ handleLogout }) => {
                     </div>
 
                     <div className="form-row">
-                        <label htmlFor="numberofScreens" className="col-md-2 col-form-label">Art Manipulation / Film Charges for Screens</label>
-                        <div className="input-group input-group-sm mb-3 col-md-5">
+                        <label htmlFor="numberofScreens" className="col-md-3 col-form-label">Art Manipulation / Film Charges for Screens</label>
+                        <div className="input-group input-group-sm mb-3 col-md-4">
 
                             <input type="number" className="form-control" id="numberOfScreens" placeholder="Number of Screens" pattern="[0-9]*"
                             onChange = {(e) => {
                                 setNumberOfScreens(e.target.value)
                             }}/>
                         </div>
-                        <div className="input-group input-group-sm mb-3 col-md-5">
+                        <div className="input-group input-group-sm mb-3 col-md-4">
                             
-                            <input type="number" className="form-control" id="screensPrice" step="0.01"
+                            <input type="number" className="form-control" id="screensPrice" placeholder="Price per Screen" step="0.01"
                             onChange = {(e) => {
                                 setScreensPrice(e.target.value)
                             }}/>
@@ -1444,9 +1404,9 @@ const Order = ({ handleLogout }) => {
                         setupCharge={setupCharge} numberOfScreens={numberOfScreens} screensPrice={screensPrice} />
 
                     <div className="form-row">
-                        <label htmlFor="taxable" className="col-md-2 col-form-label">Tax Rate</label>
-                        <div className="input-group input-group-sm mb-3 col-md-10">
-                            <input type="number" className="form-control" id="taxable" step="0.01" placeholder="If none, type 0"
+                        <label htmlFor="taxable" className="col-md-3 col-form-label">Tax Rate</label>
+                        <div className="input-group input-group-sm mb-3 col-md-8">
+                            <input type="number" className="form-control" id="taxable" step="0.01" placeholder="If 'None', Please enter 0."
                             onChange = {(e) => {
                                 setTaxRate(e.target.value)
                             }}/>
@@ -1456,8 +1416,8 @@ const Order = ({ handleLogout }) => {
                     <CalculateTax setTax={setTax} tax={tax} taxRate={taxRate} subTotal={subTotal}/>
 
                     <div className="form-row">
-                        <label htmlFor="freightCharges" className="col-md-2 col-form-label">Freight Charges $</label>
-                        <div className="input-group input-group-sm mb-3 col-md-10">
+                        <label htmlFor="freightCharges" className="col-md-3 col-form-label">Freight Charges $</label>
+                        <div className="input-group input-group-sm mb-3 col-md-8">
                             <input type="number" className="form-control" id="freightCharges" step="0.01"
                             onChange = {(e) => {
                                 setFreightCharges(+e.target.value)
@@ -1474,7 +1434,7 @@ const Order = ({ handleLogout }) => {
                     </div>
 
                     <div className="form-row">
-                        <label htmlFor="invoiceDate" className="col-md-2 col-form-label">Invoice Date</label>
+                        <label htmlFor="invoiceDate" className="col-md-3 col-form-label">Invoice Date</label>
                         <div className="input-group input-group-sm mb-3 col-md-3">
                                 <input type="date" className="form-control" name="invoiceDate" id="invoiceDate"
                                 onChange = {(e) => {
@@ -1484,7 +1444,7 @@ const Order = ({ handleLogout }) => {
                     </div>
 
                     <div className="form-row">
-                        <label htmlFor="invoiceDatePaid" className="col-md-2 col-form-label">Invoice Date Paid</label>
+                        <label htmlFor="invoiceDatePaid" className="col-md-3 col-form-label">Invoice Date Paid</label>
                         <div className="input-group input-group-sm mb-3 col-md-3">
                                 <input type="date" className="form-control" name="invoiceDatePaid" id="invoiceDatePaid"
                                 onChange = {(e) => {
@@ -1494,8 +1454,8 @@ const Order = ({ handleLogout }) => {
                     </div>
 
                     <div className="form-row">
-                        <label htmlFor="invoiceNotes" className="col-md-2 col-form-label">Invoice Notes</label>
-                        <div className="input-group input-group-sm mb-3 col-md-10">
+                        <label htmlFor="invoiceNotes" className="col-md-3 col-form-label">Invoice Notes</label>
+                        <div className="input-group input-group-sm mb-3 col-md-8">
                                 <textarea rows="4" cols="50" className="form-control" name="invoiceNotes" id="invoiceNotes"
                                 onChange = {(e) => {
                                     setInvoiceNotes(e.target.value)
@@ -1510,7 +1470,7 @@ const Order = ({ handleLogout }) => {
                     </div>
 
                     <div className="form-row">
-                        <label htmlFor="ABSOrder" className="col-md-2 col-form-label">ABS Sales Order Date</label>
+                        <label htmlFor="ABSOrder" className="col-md-3 col-form-label">ABS Sales Order Date</label>
                         <div className="input-group input-group-sm mb-3 col-md-3">
                                 <input type="date" className="form-control" name="ABSOrder" id="ABSOrder"
                                 onChange = {(e) => {
@@ -1520,7 +1480,7 @@ const Order = ({ handleLogout }) => {
                     </div>
                     
                     <div className="form-row">
-                        <label htmlFor="customerOrder" className="col-md-2 col-form-label">Customer Order Date</label>
+                        <label htmlFor="customerOrder" className="col-md-3 col-form-label">Customer Order Date</label>
                         <div className="input-group input-group-sm mb-3 col-md-3">
                                 <input type="date" className="form-control" name="customerOrder" id="customerOrder" 
                                 onChange = {(e) => {
@@ -1530,7 +1490,7 @@ const Order = ({ handleLogout }) => {
                     </div>
 
                     <div className="form-row">
-                        <label htmlFor="customerPODate" className="col-md-2 col-form-label">Customer PO Date</label>
+                        <label htmlFor="customerPODate" className="col-md-3 col-form-label">Customer PO Date</label>
                         <div className="input-group input-group-sm mb-3 col-md-3">
                                 <input type="date" className="form-control" name="customerPODate" id="customerPODate"
                                 onChange = {(e) => {
@@ -1540,8 +1500,8 @@ const Order = ({ handleLogout }) => {
                     </div>
 
                     <div className="form-row">
-                        <label htmlFor="customerPONumber" className="col-md-2 col-form-label">Customer PO Number</label>
-                        <div className="input-group input-group-sm mb-3 col-md-10">
+                        <label htmlFor="customerPONumber" className="col-md-3 col-form-label">Customer PO Number</label>
+                        <div className="input-group input-group-sm mb-3 col-md-8">
                             <input type="number" className="form-control" id="customerPONumber" pattern="[0-9]*"
                             onChange = {(e) => {
                                 setCustomerPONumber(e.target.value)
@@ -1550,8 +1510,8 @@ const Order = ({ handleLogout }) => {
                     </div>
 
                     <div className="form-row">
-                        <label htmlFor="creditChecked" className="col-md-2 col-form-label">Credit Checked?</label>
-                        <div className="input-group input-group-sm col-md-2 pl-5">
+                        <label htmlFor="creditChecked" className="col-md-3 col-form-label">Credit Checked?</label>
+                        <div className="input-group input-group-sm col-md-3 pl-5">
                             <div className="form-group custom-control custom-checkbox">
                                 <input type="checkbox" checked={creditChecked} className="custom-control-input" id="creditChecked"
                                 onChange = {() => setCreditChecked((prev) => !prev)} />
@@ -1561,8 +1521,8 @@ const Order = ({ handleLogout }) => {
                     </div>
 
                     <div className="form-row">
-                        <label htmlFor="daysTurn" className="col-md-2 col-form-label">Days Turn</label>
-                        <div className="input-group input-group-sm mb-3 col-md-10">
+                        <label htmlFor="daysTurn" className="col-md-3 col-form-label">Days Turn</label>
+                        <div className="input-group input-group-sm mb-3 col-md-8">
                             <input type="number" className="form-control" id="daysTurn" pattern="[0-9]*"
                             onChange = {(e) => {
                                 setDaysTurn(e.target.value)
@@ -1571,7 +1531,7 @@ const Order = ({ handleLogout }) => {
                     </div>
 
                     <div className="form-row">
-                        <label htmlFor="dateCodePrinting" className="col-md-2 col-form-label">Date Code Printing</label>
+                        <label htmlFor="dateCodePrinting" className="col-md-3 col-form-label">Date Code Printing</label>
                         <div className="input-group input-group-sm mb-3 col-md-3">
                             <input type="date" className="form-control" name="dateCodePrinting" id="dateCodePrinting"
                             onChange = {(e) => {
@@ -1580,69 +1540,9 @@ const Order = ({ handleLogout }) => {
                         </div>
                     </div>
 
-                    {/* <div className="form-row">
-                        <label htmlFor="assemblyBy" className="col-md-2 col-form-label">Assembly By</label>
-                        <div className="input-group input-group-sm mb-3 col-md-3">
-                            <select className="form-control" name="assemblyBy" id="assemblyBy"
-                            onChange = {(e) => {
-                                setAssemblyBy(e.target.value)
-                            }}>
-                                <option defaultValue="0">Select Value</option>
-                                <option value="1">Option 1</option>
-                                <option value="2">Option 2</option>
-                                <option value="3">Option 3</option>
-                            </select>
-                        </div>
-                    </div>
-
                     <div className="form-row">
-                        <label htmlFor="discManufacturedBy" className="col-md-2 col-form-label">Disc Manufactured By</label>
-                        <div className="input-group input-group-sm mb-3 col-md-3">
-                            <select className="form-control" name="discManufacturedBy" id="discManufacturedBy"
-                            onChange = {(e) => {
-                                setDiscManufacturedBy(e.target.value)
-                            }}>
-                                <option defaultValue="0">Select Value</option>
-                                <option value="1">Option 1</option>
-                                <option value="2">Option 2</option>
-                                <option value="3">Option 3</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div className="form-row">
-                        <label htmlFor="CDBrand" className="col-md-2 col-form-label">CD-R / DVD-R Brand</label>
-                        <div className="input-group input-group-sm mb-3 col-md-3">
-                            <select className="form-control" name="CDBrand" id="CDBrand"
-                            onChange = {(e) => {
-                                setCDBrand(e.target.value)
-                            }}>
-                                <option defaultValue="0">Select Value</option>
-                                <option value="1">Option 1</option>
-                                <option value="2">Option 2</option>
-                                <option value="3">Option 3</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div className="form-row">
-                        <label htmlFor="discProvidedBy" className="col-md-2 col-form-label">Disc Provided By</label>
-                        <div className="input-group input-group-sm mb-3 col-md-3">
-                            <select className="form-control" name="discProvidedBy" id="discProvidedBy"
-                            onChange = {(e) => {
-                                setDiscProvidedBy(e.target.value)
-                            }}>
-                                <option defaultValue="0">Select Value</option>
-                                <option value="1">Option 1</option>
-                                <option value="2">Option 2</option>
-                                <option value="3">Option 3</option>
-                            </select>
-                        </div>
-                    </div> */}
-
-                    <div className="form-row">
-                        <label htmlFor="customerProvidedMaterial" className="col-md-2 col-form-label">Customer Provided Material</label>
-                        <div className="input-group input-group-sm mb-3 col-md-10">
+                        <label htmlFor="customerProvidedMaterial" className="col-md-3 col-form-label">Customer Provided Material</label>
+                        <div className="input-group input-group-sm mb-3 col-md-8">
                             <textarea rows="4" cols="50" className="form-control" name="customerProvidedMaterial" id="customerProvidedMaterial"
                             onChange = {(e) => {
                                 setCustomerProvidedMaterial(e.target.value)
@@ -1651,7 +1551,7 @@ const Order = ({ handleLogout }) => {
                     </div>
 
                     <div className="form-row">
-                        <label htmlFor="customerMaterialETA" className="col-md-2 col-form-label">Customer Material ETA</label>
+                        <label htmlFor="customerMaterialETA" className="col-md-3 col-form-label">Customer Material ETA</label>
                         <div className="input-group input-group-sm mb-3 col-md-3">
                              <input type="date" className="form-control" name="customerMaterialETA" id="customerMaterialETA"
                              onChange = {(e) => {
@@ -1661,8 +1561,8 @@ const Order = ({ handleLogout }) => {
                     </div>
 
                     <div className="form-row">
-                        <label htmlFor="customerNotes" className="col-md-2 col-form-label">Customer Notes</label>
-                        <div className="input-group input-group-sm mb-3 col-md-10">
+                        <label htmlFor="customerNotes" className="col-md-3 col-form-label">Customer Notes</label>
+                        <div className="input-group input-group-sm mb-3 col-md-8">
                             <textarea rows="4" cols="50" className="form-control" name="customerNotes" id="customerNotes"
                             onChange = {(e) => {
                                 setCustomerNotes(e.target.value)
@@ -1671,8 +1571,8 @@ const Order = ({ handleLogout }) => {
                     </div>
 
                     <div className="form-row">
-                        <label htmlFor="vendorNotes" className="col-md-2 col-form-label">Vendor Notes</label>
-                        <div className="input-group input-group-sm mb-3 col-md-10">
+                        <label htmlFor="vendorNotes" className="col-md-3 col-form-label">Vendor Notes</label>
+                        <div className="input-group input-group-sm mb-3 col-md-8">
                             <textarea rows="4" cols="50" className="form-control" name="vendorNotes" id="vendorNotes"
                             onChange = {(e) => {
                                 setVendorNotes(e.target.value)
@@ -1681,8 +1581,8 @@ const Order = ({ handleLogout }) => {
                     </div>
 
                     <div className="form-row">
-                        <label htmlFor="orderNotes" className="col-md-2 col-form-label">Order Notes</label>
-                        <div className="input-group input-group-sm mb-3 col-md-10">
+                        <label htmlFor="orderNotes" className="col-md-3 col-form-label">Order Notes</label>
+                        <div className="input-group input-group-sm mb-3 col-md-8">
                             <textarea rows="4" cols="50" className="form-control" name="orderNotes" id="orderNotes"
                             onChange = {(e) => {
                                 setOrderNotes(e.target.value)
@@ -1691,7 +1591,7 @@ const Order = ({ handleLogout }) => {
                     </div>
 
                     <div className="form-row">
-                        <label htmlFor="orderStatus" className="col-md-2 col-form-label">Order Status</label>
+                        <label htmlFor="orderStatus" className="col-md-3 col-form-label">Order Status</label>
                         <div className="input-group input-group-sm mb-3 col-md-3">
                             <select className="form-control" name="orderStatus" id="orderStatus"
                             onChange = {(e) => {

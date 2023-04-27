@@ -56,6 +56,9 @@ app.post("/api/insertContact", (req, res)=> {
 // ORDER PAGE - POST API =>
 app.post("/api/insertOrder", (req, res) => {
     //go to back_end directory in terminal and type 'node index.js'
+    const productID = req.body.productID;
+    const companyID = req.body.companyID;
+
     const salesPerson = req.body.salesPerson;
     const requestor = req.body.requestor;
     const customerContact = req.body.customerContact;
@@ -68,14 +71,73 @@ app.post("/api/insertOrder", (req, res) => {
     const customQuantity = req.body.customQuantity;
     const customUnitPrice = req.body.customUnitPrice;
     const customTotalPrice = req.body.customTotalPrice;
+
+    // Billing Information
+    const assemblyChargesQuantity = req.body.assemblyChargesQuantity;
+    const assemblyChargesUnitPrice = req.body.assemblyChargesUnitPrice;
+    const assemblyChargesTotalPrice = req.body.assemblyChargesTotalPrice;
+    const printingChargesQuantity = req.body.printingChargesQuantity;
+    const printingChargesUnitPrice = req.body.printingChargesUnitPrice;
+    const printingChargesTotalPrice = req.body.printingChargesTotalPrice;
+    const setupCharge = req.body.setupCharge;
+    const numberOfScreens = req.body.numberOfScreens;
+    const screensPrice = req.body.screensPrice;
+    const subTotal = req.body.subTotal;
+    const taxRate = req.body.taxRate;
+    const tax = req.body.tax;
+    const freightCharges = req.body.freightCharges;
+    const priceTotal = req.body.priceTotal;
     
+    // Invoice Information
+    const invoiceDate = req.body.invoiceDate;
+    const invoiceDatePaid = req.body.invoiceDatePaid;
+    const invoiceNotes = req.body.invoiceNotes;
+    
+    // Job Information
+    const ABSOrder = req.body.ABSOrder;
+    const customerOrder = req.body.customerOrder;
+    const customerPODate = req.body.customerPODate;
+    const customerPONumber = req.body.customerPONumber;
+    const creditChecked = req.body.creditChecked;
+    const daysTurn = req.body.daysTurn;
+    const dateCodePrinting = req.body.dateCodePrinting;
+    const customerProvidedMaterial = req.body.customerProvidedMaterial;
+    const customerMaterialETA = req.body.customerMaterialETA;
+    const customerNotes = req.body.customerNotes;
+    const vendorNotes = req.body.vendorNotes;
+    const orderNotes = req.body.orderNotes;
+    const orderStatus = req.body.orderStatus;
+    
+    db.query(
+        "INSERT INTO order_table (product_id, company_id, salesperson, requestor, customer_contact, re_order, \
+                                  factory_order_quantity, custom_invoice, custom_packing_slip, custom_quantity, custom_unit_price, custom_total_price, \
+                                  assembly_charges_quantity, assembly_charges_unit_price, assembly_charges_total_price, date_code_printing_charges_quantity, date_code_printing_charges_unit_price, date_code_printing_charges_total_price, date_code_setup_charge, number_of_screens, art_manipulation, sub_total, tax_rate, tax, freight_charges, order_price_total, \
+                                  invoice_date, invoice_date_paid, invoice_notes, \
+                                  abs_sales_order_date, customer_order_date, customer_po_date, customer_po_number, credit_checked, days_turn, date_code_printing, customer_provided_material, customer_material_eta, customer_notes, vendor_notes, order_notes, order_status) \
+                                  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+        [productID, companyID, salesPerson, requestor, customerContact, reOrder,
+            factoryOrderQuantity, customInvoice, customPackingSlip, customQuantity, customUnitPrice, customTotalPrice,
+            assemblyChargesQuantity, assemblyChargesUnitPrice, assemblyChargesTotalPrice, printingChargesQuantity, printingChargesUnitPrice, printingChargesTotalPrice, setupCharge, numberOfScreens, screensPrice, subTotal, taxRate, tax, freightCharges, priceTotal,
+            invoiceDate, invoiceDatePaid, invoiceNotes,
+            ABSOrder, customerOrder, customerPODate, customerPONumber, creditChecked, daysTurn, dateCodePrinting, customerProvidedMaterial, customerMaterialETA, customerNotes, vendorNotes, orderNotes, orderStatus]
+            , (err, result) => {
+                console.log(result);
+        }
+    );
+});
+
+// ORDER PAGE(NON-ITEM) - POST API =>
+app.post("/api/insertOrderNonItem", (req, res) => {
+    const productID = req.body.productID;
+    const companyID = req.body.companyID;
+
     // Non-Inventory Items
     const nonItem1 = req.body.nonItem1;
     const nonItemInvoice1 = req.body.nonItemInvoice1;
     const nonItemPackingSlip1 = req.body.nonItemPackingSlip1;
     const nonItemQuantity1 = req.body.nonItemQuantity1;
     const nonItemUnitPrice1 = req.body.nonItemUnitPrice1;
-    const nonItemTotalPrice1 = req.bodynonItemTotalPrice1;
+    const nonItemTotalPrice1 = req.body.nonItemTotalPrice1;
     const nonItem2 = req.body.nonItem2;
     const nonItemInvoice2 = req.body.nonItemInvoice2;
     const nonItemPackingSlip2 = req.body.nonItemPackingSlip2;
@@ -107,6 +169,31 @@ app.post("/api/insertOrder", (req, res) => {
     const nonItemUnitPrice6 = req.body.nonItemUnitPrice6;
     const nonItemTotalPrice6 = req.body.nonItemTotalPrice6;
 
+    db.query(
+        "INSERT INTO order_nonItem (product_id, company_id, non_inventory_line_item1, non_inventory_invoice1, non_inventory_packing_slip1, non_inventory_quantity1, non_inventory_unit_price1, non_inventory_total_price1, \
+                                             non_inventory_line_item2, non_inventory_invoice2, non_inventory_packing_slip2, non_inventory_quantity2, non_inventory_unit_price2, non_inventory_total_price2, \
+                                             non_inventory_line_item3, non_inventory_invoice3, non_inventory_packing_slip3, non_inventory_quantity3, non_inventory_unit_price3, non_inventory_total_price3, \
+                                             non_inventory_line_item4, non_inventory_invoice4, non_inventory_packing_slip4, non_inventory_quantity4, non_inventory_unit_price4, non_inventory_total_price4, \
+                                             non_inventory_line_item5, non_inventory_invoice5, non_inventory_packing_slip5, non_inventory_quantity5, non_inventory_unit_price5, non_inventory_total_price5, \
+                                             non_inventory_line_item6, non_inventory_invoice6, non_inventory_packing_slip6, non_inventory_quantity6, non_inventory_unit_price6, non_inventory_total_price6) \
+                                             VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+        [productID, companyID, nonItem1, nonItemInvoice1, nonItemPackingSlip1, nonItemQuantity1, nonItemUnitPrice1, nonItemTotalPrice1,
+            nonItem2, nonItemInvoice2, nonItemPackingSlip2, nonItemQuantity2, nonItemUnitPrice2, nonItemTotalPrice2,
+            nonItem3, nonItemInvoice3, nonItemPackingSlip3, nonItemQuantity3, nonItemUnitPrice3, nonItemTotalPrice3,
+            nonItem4, nonItemInvoice4, nonItemPackingSlip4, nonItemQuantity4, nonItemUnitPrice4, nonItemTotalPrice4,
+            nonItem5, nonItemInvoice5, nonItemPackingSlip5, nonItemQuantity5, nonItemUnitPrice5, nonItemTotalPrice5,
+            nonItem6, nonItemInvoice6, nonItemPackingSlip6, nonItemQuantity6, nonItemUnitPrice6, nonItemTotalPrice6]
+            , (err, result) => {
+                console.log(result);
+        }
+    );
+});
+
+// ORDER PAGE(ITEM) - POST API =>
+app.post("/api/insertOrderItem", (req, res) => {
+    const productID = req.body.productID;
+    const companyID = req.body.companyID;
+
     // Inventory Items
     const item1 = req.body.item1;
     const itemInvoice1 = req.body.itemInvoice1;
@@ -127,92 +214,27 @@ app.post("/api/insertOrder", (req, res) => {
     const itemUnitPrice3 = req.body.itemUnitPrice3;
     const itemTotalPrice3 = req.body.itemTotalPrice3;
 
-    // Billing Information
-    const assemblyChargesQuantity = req.body.assemblyChargesQuantity;
-    const assemblyChargesUnitPrice = req.body.assemblyChargesUnitPrice;
-    const assemblyChargesTotalPrice = req.body.assemblyChargesTotalPrice;
-    const printingChargesQuantity = req.body.printingChargesQuantity;
-    const printingChargesUnitPrice = req.body.printingChargesUnitPrice;
-    const printingChargesTotalPrice = req.body.printingCharegsTotalPrice;
-    const setupCharge = req.body.setupCharge;
-    const numberOfScreens = req.body.numberOfScreens;
-    const screensPrice = req.body.screensPrice;
-    const subTotal = req.body.subTotal;
-    const taxRate = req.body.taxRate;
-    const tax = req.body.tax;
-    const freightCharges = req.body.freightCharges;
-    const priceTotal = req.body.priceTotal;
-    
-    // Invoice Information
-    const invoiceDate = req.body.invoiceDate;
-    const invoiceDatePaid = req.body.invoiceDatePaid;
-    const invoiceNotes = req.body.invoiceNotes;
-    
-    // Job Information
-    const ABSOrder = req.body.ABSOrder;
-    const customerOrder = req.body.customerOrder;
-    const customerPODate = req.body.customerPODate;
-    const customerPONumber = req.body.customerPONumber;
-    const creditChecked = req.body.creditChecked;
-    const daysTurn = req.body.daysTurn;
-    const dateCodePrinting = req.body.dateCodePrinting;
-    const customerProvidedMaterial = req.body.customerProvidedMaterial;
-    const customerMaterialETA = req.body.customerMaterialETA;
-    const customerNotes = req.body.customerNotes;
-    const vendorNotes = req.body.vendorNotes;
-    const orderNotes = req.body.orderNotes;
-    const orderStatus = req.body.orderStatus;
-    
     db.query(
-        "INSERT INTO order_table (salesperson, requestor, customer_contact, re_order, \
-                                  factory_order_quantity, custom_invoice, custom_packing_slip, custom_quantity, custom_unit_price, custom_total_price, \
-                                  assembly_charges_quantity, assembly_charges_unit_price, assembly_charges_total_price, date_code_printing_charges_quantity, date_code_printing_charges_unit_price, date_code_printing_charges_total_price, date_code_setup_charge, number_of_screens, art_manipulation, sub_total, tax_rate, tax, freight_charges, order_price_total, \
-                                  invoice_date, invoice_date_paid, invoice_notes, \
-                                  abs_sales_order_date, customer_order_date, customer_po_date, customer_po_number, credit_checked, days_turn, date_code_printing, customer_provided_material, customer_material_eta, customer_notes, vendor_notes, order_notes, order_status) \
-                                  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
-        [salesPerson, requestor, customerContact, reOrder,
-            factoryOrderQuantity, customInvoice, customPackingSlip, customQuantity, customUnitPrice, customTotalPrice,
-            assemblyChargesQuantity, assemblyChargesUnitPrice, assemblyChargesTotalPrice, printingChargesQuantity, printingChargesUnitPrice, printingChargesTotalPrice, setupCharge, numberOfScreens, screensPrice, subTotal, taxRate, tax, freightCharges, priceTotal,
-            invoiceDate, invoiceDatePaid, invoiceNotes,
-            ABSOrder, customerOrder, customerPODate, customerPONumber, creditChecked, daysTurn, dateCodePrinting, customerProvidedMaterial, customerMaterialETA, customerNotes, vendorNotes, orderNotes, orderStatus]
-            , (err, result) => {
-                console.log(result);
-        }
-    );
-
-    // Non-Inventory Items
-    db.query(
-        "INSERT INTO order_nonItem (non_inventory_line_item1, non_inventory_invoice1, non_inventory_packing_slip1, non_inventory_quantity1, non_inventory_unit_price1, non_inventory_total_price1, \
-                                             non_inventory_line_item2, non_inventory_invoice2, non_inventory_packing_slip2, non_inventory_quantity2, non_inventory_unit_price2, non_inventory_total_price2, \
-                                             non_inventory_line_item3, non_inventory_invoice3, non_inventory_packing_slip3, non_inventory_quantity3, non_inventory_unit_price3, non_inventory_total_price3, \
-                                             non_inventory_line_item4, non_inventory_invoice4, non_inventory_packing_slip4, non_inventory_quantity4, non_inventory_unit_price4, non_inventory_total_price4, \
-                                             non_inventory_line_item5, non_inventory_invoice5, non_inventory_packing_slip5, non_inventory_quantity5, non_inventory_unit_price5, non_inventory_total_price5, \
-                                             non_inventory_line_item6, non_inventory_invoice6, non_inventory_packing_slip6, non_inventory_quantity6, non_inventory_unit_price6, non_inventory_total_price6) \
-                                             VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
-        [nonItem1, nonItemInvoice1, nonItemPackingSlip1, nonItemQuantity1, nonItemUnitPrice1, nonItemTotalPrice1,
-            nonItem2, nonItemInvoice2, nonItemPackingSlip2, nonItemQuantity2, nonItemUnitPrice2, nonItemTotalPrice2,
-            nonItem3, nonItemInvoice3, nonItemPackingSlip3, nonItemQuantity3, nonItemUnitPrice3, nonItemTotalPrice3,
-            nonItem4, nonItemInvoice4, nonItemPackingSlip4, nonItemQuantity4, nonItemUnitPrice4, nonItemTotalPrice4,
-            nonItem5, nonItemInvoice5, nonItemPackingSlip5, nonItemQuantity5, nonItemUnitPrice5, nonItemTotalPrice5,
-            nonItem6, nonItemInvoice6, nonItemPackingSlip6, nonItemQuantity6, nonItemUnitPrice6, nonItemTotalPrice6]
-            , (err, result) => {
-                console.log(result);
-        }
-    );
-
-    // Inventory Items
-    db.query(
-        "INSERT INTO order_item (inventory_item1, inventory_invoice1, inventory_packing_slip1, inventory_quantity1, inventory_unit_price1, inventory_total_price1, \
+        "INSERT INTO order_item (product_id, company_id, inventory_item1, inventory_invoice1, inventory_packing_slip1, inventory_quantity1, inventory_unit_price1, inventory_total_price1, \
                                              inventory_item2, inventory_invoice2, inventory_packing_slip2, inventory_quantity2, inventory_unit_price2, inventory_total_price2, \
                                              inventory_item3, inventory_invoice3, inventory_packing_slip3, inventory_quantity3, inventory_unit_price3, inventory_total_price3) \
-                                             VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
-        [item1, itemInvoice1, itemPackingSlip1, itemQuantity1, itemUnitPrice1, itemTotalPrice1,
+                                             VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+        [productID, companyID, item1, itemInvoice1, itemPackingSlip1, itemQuantity1, itemUnitPrice1, itemTotalPrice1,
             item2, itemInvoice2, itemPackingSlip2, itemQuantity2, itemUnitPrice2, itemTotalPrice2,
             item3, itemInvoice3, itemPackingSlip3, itemQuantity3, itemUnitPrice3, itemTotalPrice3]
             , (err, result) => {
                 console.log(result);
         }
     );
+});
+
+// PRODUCT TABLE INFO - GET API <=
+app.get("/api/getProductData", (req, res) => {
+    //db.query ("SELECT MAX(product_id), product_category, oem_product_id, product_title FROM product_table", (err, result) =>{
+    db.query ("SELECT product_id, product_title FROM product_table", (err, result) =>{
+        if (err) throw err;
+        res.send(result);
+    });
 });
 
 // PRODUCT TABLE INFO - GET API <=
@@ -223,19 +245,6 @@ app.get("/api/getProductInfo", (req, res) => {
     });
 });
 
-// // CONTACT TABLE INFO - GET API <=
-// app.get("/api/getContactInfo", (req, res) => {
-//      const customerID = req.body.customerID;
-//     // const phone = req.body.phone;
-//     db.query("SELECT * FROM contact_table WHERE customer_id = ?", [customerID], (err, result) => {
-//         if (err) {
-//             console.log(err);
-//         }
-//         else {
-//             res.send(result);
-//         }
-//     });
-// });
 
 // LATEST PRODUCT ID - GET API <=
 app.get("/api/getLatestProductId", (req, res) => {
