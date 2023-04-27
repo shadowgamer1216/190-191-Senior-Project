@@ -318,6 +318,19 @@ app.get("/api/getSearchCompany", (req, res) =>{
     }
 });
 
+// PRODUCT INFO BY ID - GET API <=
+app.get("/api/products/:product_id", (req, res) => {
+    const product_id = req.params.product_id;
+    db.query("SELECT * FROM product_table WHERE product_id = ?", [product_id], (err, result) =>{
+        if (err) {
+            console.error(err);
+            res.status(500).send('Error retrieving product data');
+        } else {
+            res.send(result[0]);
+        }
+    });
+});
+
 // PRODUCT PAGE - POST API =>
 app.post("/api/insertProduct", (req, res) => {
     const oldId = req.body.old_abs_id;

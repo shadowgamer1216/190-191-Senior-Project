@@ -2,6 +2,7 @@ import React from 'react';
 import { Routes, Route, useNavigate as navigate } from 'react-router-dom';
 import HomePage from './HomePage';
 import ProductPage from './product';
+import ProductViewPage from './product-view';
 import ContactPage from './contact';
 import ComponentPage from './component';
 import LocationPage from './location';
@@ -43,6 +44,7 @@ function App() {
           <Route path="/invoice" element={<Invoice />} />
           <Route path="/packingSlip" element={<PackingSlip />} />
           <Route path="/product" element={<ProductPage handleLogout={handleLogout}/>} />
+          <Route path="/product/:product_id" element={<ProductViewPage handleLogout={handleLogout}/>} />
           <Route path="/contact" element={<ContactPage handleLogout={handleLogout}/>} />
           <Route path="/component" element={<ComponentPage handleLogout={handleLogout}/>} />
           <Route path="/location" element={<LocationPage handleLogout={handleLogout}/>} />

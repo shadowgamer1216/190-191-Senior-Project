@@ -84,6 +84,7 @@ const Product = ({ handleLogout }) => {
     const [product_notes, setProductNotes] = useState(null);
     const [product_status, setProductStatus] = useState(null);
     
+    const Sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
     const [submitting, setSubmitting] = useState(false);
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -124,7 +125,13 @@ const Product = ({ handleLogout }) => {
             console.log(err);
         });
         setSubmitting(false);
-    };
+    }
+
+    const handleNavigate = async (pId) => {
+        const pIdPassed = pId.toString();
+        await Sleep(2000);
+        navigate(`/product/${pIdPassed}`);
+    }
 
     const [latestProductId, setProductId] = useState(null);
     const nextNewProductId = latestProductId + 1;
@@ -245,7 +252,7 @@ const Product = ({ handleLogout }) => {
                     <h2>ADD PRODUCT</h2>
                 </div>
 
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} autoComplete="off">
                     <div className="product-info pt-3">
                         <div className="section-headers">
                             <h5>Product Information</h5>
@@ -612,24 +619,11 @@ const Product = ({ handleLogout }) => {
 
                     <br></br>
                     <div className="submit">
-                        <button type="submit" id="add_product" className="btn btn-success" disabled={submitting}>{submitting ? 'Submitting...' : 'Submit'}</button>
+                        <button type="submit" onClick={() => handleNavigate(nextNewProductId)} id="add_product" className="btn btn-success" disabled={submitting}>{submitting ? 'Submitting...' : 'Submit'}</button>
                     </div>
 
                 </form>
                 <br></br>
-
-                {/* <div className="product-location m-3 p-3">
-                    <label htmlFor="add_location" className="col-form-label-sm">Choose New Location for this Product</label>
-                    <div className="input-group input-group-sm mb-3 col-md-6">
-                        <select className="form-control form-control-sm" id="add_location">
-                            <option value="">Select Location</option>
-                            <option value="1">Option 1</option>
-                            <option value="2">Option 2</option>
-                            <option value="3">Option 3</option>
-                        </select>
-                        <button type="submit" id="add_location" className="btn btn-info btn-sm ml-3">Change Location</button>
-                    </div>
-                </div> */}
 
                 <button className="btn btn-outline-dark" onClick={() => navigate(-1)}>Home</button>
                 <br></br>
