@@ -148,432 +148,173 @@ const Order = ({ handleLogout }) => {
         }),
     };
 
-    const CalculateCustomTotal = ({customQuantity, customUnitPrice, customTotalPrice, setCustomTotalPrice}) => {
-        const sum = customQuantity * customUnitPrice;
-        const newSum = Number(sum.toFixed(2));
-        setCustomTotalPrice(newSum)
-        return (
-            <div className="order">
-                <div className="form-row">
-                    <label className="col-md-3.5 col-form-label">Total Price $</label>
-                    <div className="input-group input-group-sm mb-3 col-md-5">
-                        <input type="number" readOnly defaultValue={customTotalPrice} className="form-control" id="customTotalPrice"
-                        />
-                    </div>
-                </div>
-            </div>
-        );
-    }
-    const CalculateNonItem1 = ({nonItemQuantity1, nonItemUnitPrice1, nonItemTotalPrice1, setNonItemTotalPrice1}) => {
-        const sum = nonItemQuantity1 * nonItemUnitPrice1;
-        const newSum = Number(sum.toFixed(2));
-        setNonItemTotalPrice1(newSum)
-        return (
-            <div className="order">
-                <div className="form-row">
-                    <label className="col-md-2.5 col-form-label">Total Price $</label>
-                    <div className="input-group input-group-sm mb-3 col-md-5">
-                        <input type="number" readOnly defaultValue={nonItemTotalPrice1} className="form-control" id="nonItemTotalPrice1"
-                        />
-                    </div>
-                </div>
-            </div>
-        );
-    }
-    const CalculateNonItem2 = ({nonItemQuantity2, nonItemUnitPrice2, nonItemTotalPrice2, setNonItemTotalPrice2}) => {
-        const sum = nonItemQuantity2 * nonItemUnitPrice2;
-        const newSum = Number(sum.toFixed(2));
-        setNonItemTotalPrice2(newSum)
-        return (
-            <div className="order">
-                <div className="form-row">
-                    <label className="col-md-2.5 col-form-label">Total Price $</label>
-                    <div className="input-group input-group-sm mb-3 col-md-5">
-                        <input type="number" readOnly defaultValue={nonItemTotalPrice2} className="form-control" id="nonItemTotalPrice2"
-                        />
-                    </div>
-                </div>
-            </div>
-        );
-    }
-    const CalculateNonItem3 = ({nonItemQuantity3, nonItemUnitPrice3, nonItemTotalPrice3, setNonItemTotalPrice3}) => {
-        const sum = nonItemQuantity3 * nonItemUnitPrice3;
-        const newSum = Number(sum.toFixed(2));
-        setNonItemTotalPrice3(newSum)
-        return (
-            <div className="order">
-                <div className="form-row">
-                    <label className="col-md-2.5 col-form-label">Total Price $</label>
-                    <div className="input-group input-group-sm mb-3 col-md-5">
-                        <input type="number" readOnly defaultValue={nonItemTotalPrice3} className="form-control" id="nonItemTotalPrice3"
-                        />
-                    </div>
-                </div>
-            </div>
-        );
-    }
-    const CalculateNonItem4 = ({nonItemQuantity4, nonItemUnitPrice4, nonItemTotalPrice4, setNonItemTotalPrice4}) => {
-        const sum = nonItemQuantity4 * nonItemUnitPrice4;
-        const newSum = Number(sum.toFixed(2));
-        setNonItemTotalPrice4(newSum)
-        return (
-            <div className="order">
-                <div className="form-row">
-                    <label className="col-md-2.5 col-form-label">Total Price $</label>
-                    <div className="input-group input-group-sm mb-3 col-md-5">
-                        <input type="number" readOnly defaultValue={nonItemTotalPrice4} className="form-control" id="nonItemTotalPrice4"
-                        />
-                    </div>
-                </div>
-            </div>
-        );
-    }
-    const CalculateNonItem5 = ({nonItemQuantity5, nonItemUnitPrice5, nonItemTotalPrice5, setNonItemTotalPrice5}) => {
-        const sum = nonItemQuantity5 * nonItemUnitPrice5;
-        const newSum = Number(sum.toFixed(2));
-        setNonItemTotalPrice5(newSum)
-        return (
-            <div className="order">
-                <div className="form-row">
-                    <label className="col-md-2.5 col-form-label">Total Price $</label>
-                    <div className="input-group input-group-sm mb-3 col-md-5">
-                        <input type="number" readOnly defaultValue={nonItemTotalPrice5} className="form-control" id="nonItemTotalPrice5"
-                        />
-                    </div>
-                </div>
-            </div>
-        );
-    }
-    const CalculateNonItem6 = ({nonItemQuantity6, nonItemUnitPrice6, nonItemTotalPrice6, setNonItemTotalPrice6}) => {
-        const sum = nonItemQuantity6 * nonItemUnitPrice6;
-        const newSum = Number(sum.toFixed(2));
-        setNonItemTotalPrice6(newSum)
-        return (
-            <div className="order">
-                <div className="form-row">
-                    <label className="col-md-2.5 col-form-label">Total Price $</label>
-                    <div className="input-group input-group-sm mb-3 col-md-5">
-                        <input type="number" readOnly defaultValue={nonItemTotalPrice6} className="form-control" id="nonItemTotalPrice6"
-                        />
-                    </div>
-                </div>
-            </div>
-        );
-    }
-    const CalculateItem1 = ({itemQuantity1, itemUnitPrice1, itemTotalPrice1, setItemTotalPrice1}) => {
-        const sum = itemQuantity1 * itemUnitPrice1;
-        const newSum = Number(sum.toFixed(2));
-        setItemTotalPrice1(newSum)
-        return (
-            <div className="order">
-                <div className="form-row">
-                    <label className="col-md-2.5 col-form-label">Total Price $</label>
-                    <div className="input-group input-group-sm mb-3 col-md-5">
-                        <input type="number" readOnly defaultValue={itemTotalPrice1} className="form-control" id="itemTotalPrice1" step="0.01"
-                        />
-                    </div>
-                </div>
-            </div>
-        );
-    }
-    const CalculateItem2 = ({itemQuantity2, itemUnitPrice2, itemTotalPrice2, setItemTotalPrice2}) => {
-        const sum = itemQuantity2 * itemUnitPrice2;
-        const newSum = Number(sum.toFixed(2));
-        setItemTotalPrice2(newSum)
-        return (
-            <div className="order">
-                <div className="form-row">
-                    <label className="col-md-2.5 col-form-label">Total Price $</label>
-                    <div className="input-group input-group-sm mb-3 col-md-5">
-                        <input type="number" readOnly defaultValue={itemTotalPrice2} className="form-control" id="itemTotalPrice2"
-                        />
-                    </div>
-                </div>
-            </div>
-        );
-    }
-    const CalculateItem3 = ({itemQuantity3, itemUnitPrice3, itemTotalPrice3, setItemTotalPrice3}) => {
-        const sum = itemQuantity3 * itemUnitPrice3;
-        const newSum = Number(sum.toFixed(2));
-        setItemTotalPrice3(newSum)
-        return (
-            <div className="order">
-                <div className="form-row">
-                    <label className="col-md-2.5 col-form-label">Total Price $</label>
-                    <div className="input-group input-group-sm mb-3 col-md-5">
-                        <input type="number" readOnly defaultValue={itemTotalPrice3} className="form-control" id="itemTotalPrice3"
-                        />
-                    </div>
-                </div>
-            </div>
-        );
-    }
-    const CalculateAssemblyCharges = ({assemblyChargesQuantity, assemblyChargesUnitPrice, assemblyChargesTotalPrice, setAssemblyChargesTotalPrice}) => {
-        const sum = assemblyChargesQuantity * assemblyChargesUnitPrice;
-        const newSum = Number(sum.toFixed(2));
-        setAssemblyChargesTotalPrice(newSum)
-        return (
-            <div className="order">
-                <div className="form-row">
-                    {/* <label className="col-md-2.5 col-form-label">Total Price $</label> */}
-                    <div className="input-group input-group-sm mb-3 col-md-12">
-                        <input type="number" readOnly defaultValue={assemblyChargesTotalPrice} className="form-control" id="assemblyChargesTotalPrice" />
-                    </div>
-                 </div>
-            </div>
-        );
-    }
-    const CalculatePrintingCharges = ({printingChargesQuantity, printingChargesUnitPrice, printingChargesTotalPrice, setPrintingChargesTotalPrice}) => {
-        const sum = printingChargesQuantity * printingChargesUnitPrice;
-        const newSum = Number(sum.toFixed(2));
-        setPrintingChargesTotalPrice(newSum)
-        return (
-            <div className="order">
-                <div className="form-row">
-                    {/* <label className="col-md-2.5 col-form-label">Total Price $</label> */}
-                    <div className="input-group input-group-sm mb-3 col-md-12">
-                        <input type="number" readOnly defaultValue={printingChargesTotalPrice} className="form-control" id="printingChargesTotalPrice" />
-                    </div>
-                 </div>
-            </div>
-        );
-    }
-    const CalculateSubTotal = ({setSubTotal, subTotal, customTotalPrice, nonItemTotalPrice1, nonItemTotalPrice2, nonItemTotalPrice3, nonItemTotalPrice4, nonItemTotalPrice5, nonItemTotalPrice6, itemTotalPrice1, itemTotalPrice2, itemTotalPrice3, assemblyChargesTotalPrice, printingChargesTotalPrice, setupCharge, numberOfScreens, screensPrice}) => {
+    //Calculate Price's Total
+    useEffect(() => {
+        setCustomTotalPrice(Number((customQuantity * customUnitPrice).toFixed(2)));
+        setNonItemTotalPrice1(Number((nonItemQuantity1 * nonItemUnitPrice1).toFixed(2)));
+        setNonItemTotalPrice2(Number((nonItemQuantity2 * nonItemUnitPrice2).toFixed(2)));
+        setNonItemTotalPrice3(Number((nonItemQuantity3 * nonItemUnitPrice3).toFixed(2)));
+        setNonItemTotalPrice4(Number((nonItemQuantity4 * nonItemUnitPrice4).toFixed(2)));
+        setNonItemTotalPrice5(Number((nonItemQuantity5 * nonItemUnitPrice5).toFixed(2)));
+        setNonItemTotalPrice6(Number((nonItemQuantity6 * nonItemUnitPrice6).toFixed(2)));
+        setItemTotalPrice1(Number((itemQuantity1 * itemUnitPrice1).toFixed(2)));
+        setItemTotalPrice2(Number((itemQuantity2 * itemUnitPrice2).toFixed(2)));
+        setItemTotalPrice3(Number((itemQuantity3 * itemUnitPrice3).toFixed(2)));
+        setAssemblyChargesTotalPrice(Number((assemblyChargesQuantity * assemblyChargesUnitPrice).toFixed(2)));
+        setPrintingChargesTotalPrice(Number((printingChargesQuantity * printingChargesUnitPrice).toFixed(2)));
+    }, [customQuantity, customUnitPrice, 
+        nonItemQuantity1, nonItemUnitPrice1, nonItemQuantity2, nonItemUnitPrice2, nonItemQuantity3, nonItemUnitPrice3, nonItemQuantity4, nonItemUnitPrice4, nonItemQuantity5, nonItemUnitPrice5, nonItemQuantity6, nonItemUnitPrice6,
+        itemQuantity1, itemUnitPrice1, itemQuantity2, itemUnitPrice2, itemQuantity3, itemUnitPrice3,
+        assemblyChargesQuantity, assemblyChargesUnitPrice,
+        printingChargesQuantity,  printingChargesUnitPrice]);
+
+    //Calculate SubTotal
+    useEffect (() => {
         const totalScreens = numberOfScreens * screensPrice;
-        const sum = customTotalPrice + nonItemTotalPrice1 + nonItemTotalPrice2 + nonItemTotalPrice3 + nonItemTotalPrice4 + nonItemTotalPrice5 + nonItemTotalPrice6 + itemTotalPrice1 + itemTotalPrice2 + itemTotalPrice3 + assemblyChargesTotalPrice + printingChargesTotalPrice + setupCharge + totalScreens;
-        const newSum = Number(sum.toFixed(2));
-        setSubTotal(newSum)
-        return (
-            <div className="form-row">
-                <label htmlFor="subTotal" className="col-md-3 col-form-label">Sub Total $</label>
-                <div className="input-group input-group-sm mb-3 col-md-8">
-                    <input type="number" readOnly defaultValue={subTotal} className="form-control" id="subTotal" />
-                </div>
-            </div>
-        );
-    }
-    const CalculateTax = ({setTax, tax, taxRate, subTotal}) => {
-        const sum = taxRate * subTotal;
-        const newSum = Number(sum.toFixed(2));
-        setTax(newSum)
-        return (
-            <div className="form-row">
-                <label htmlFor="tax" className="col-md-3 col-form-label">Tax</label>
-                <div className="input-group input-group-sm mb-3 col-md-8">
-                    <input type="number" readOnly defaultValue={tax} className="form-control" id="tax" placeholder="$"/>
-                </div>
-            </div>
-        );
-    }
-    const CalculateTotal = ({setPriceTotal, priceTotal, tax, subTotal, freightCharges}) => {
-        const sum =  subTotal + freightCharges + tax;
-        const newSum = Number(sum.toFixed(2));
-        setPriceTotal(newSum)
-        return (
-            <div className="form-row">
-                <label htmlFor="priceTotal" className="col-md-3 col-form-label">Order Price Total $</label>
-                <div className="input-group input-group-sm mb-3 col-md-8">  
-                    <input type="number" readOnly defaultValue={priceTotal} className="form-control" id="priceTotal"/>
-                </div>
-            </div>
-        );
-    }
+        setSubTotal(customTotalPrice + 
+            nonItemTotalPrice1 + nonItemTotalPrice2 + nonItemTotalPrice3 + nonItemTotalPrice4 + nonItemTotalPrice5 + nonItemTotalPrice6 + 
+            itemTotalPrice1 + itemTotalPrice2+ itemTotalPrice3 +
+            assemblyChargesTotalPrice + printingChargesTotalPrice + setupCharge + totalScreens)
+    },[customTotalPrice,
+        nonItemTotalPrice1, nonItemTotalPrice2, nonItemTotalPrice3, nonItemTotalPrice4, nonItemTotalPrice5, nonItemTotalPrice6,
+        itemTotalPrice1, itemTotalPrice2, itemTotalPrice3,
+        assemblyChargesTotalPrice, printingChargesTotalPrice, setupCharge, numberOfScreens, screensPrice]);
+
+    //Calculate Total and Tax
+    useEffect(() => {
+        setTax(Number((subTotal * taxRate).toFixed(2)));
+        setPriceTotal(Number((subTotal + freightCharges + tax).toFixed(2)))
+    }, [subTotal, taxRate, tax,
+        freightCharges]);
 
     const submit = () => {
+        Axios.post("http://localhost:3001/api/insertOrder", {
+            productID: productID,
+            companyID: companyID,
 
-        if (!productID || !companyID || !factoryOrderQuantity) {
-            alert("Please fill in all required fields");
-        }
-        // else if (checkNum === true) {
-        //     setCheckNum(false);
-        // }
-        // else {
-            Axios.post("http://localhost:3001/api/insertOrder", {
-                productID: productID,
-                companyID: companyID,
+            salesPerson: salesPerson,
+            requestor: requestor,
+            customerContact: customerContact,
+            reOrder: reOrder,
 
-                salesPerson: salesPerson,
-                requestor: requestor,
-                customerContact: customerContact,
-                reOrder: reOrder,
+            // Custom Product
+            factoryOrderQuantity: factoryOrderQuantity,
+            customInvoice: customInvoice,
+            customPackingSlip: customPackingSlip,
+            customQuantity: customQuantity,
+            customUnitPrice: customUnitPrice,
+            customTotalPrice: customTotalPrice,
 
-                // Custom Product
-                factoryOrderQuantity: factoryOrderQuantity,
-                customInvoice: customInvoice,
-                customPackingSlip: customPackingSlip,
-                customQuantity: customQuantity,
-                customUnitPrice: customUnitPrice,
-                customTotalPrice: customTotalPrice,
+            // Billing Information
+            assemblyChargesQuantity: assemblyChargesQuantity,
+            assemblyChargesUnitPrice: assemblyChargesUnitPrice,
+            assemblyChargesTotalPrice: assemblyChargesTotalPrice,
+            printingChargesQuantity: printingChargesQuantity,
+            printingChargesUnitPrice: printingChargesUnitPrice,
+            printingChargesTotalPrice: printingChargesTotalPrice,
+            setupCharge: setupCharge,
+            numberOfScreens: numberOfScreens,
+            screensPrice: screensPrice,
+            subTotal: subTotal,
+            taxRate: taxRate,
+            tax: tax,
+            freightCharges: freightCharges,
+            priceTotal: priceTotal,
 
-                // Non-Inventory Items
-                nonItem1: nonItem1,
-                nonItemInvoice1: nonItemInvoice1,
-                nonItemPackingSlip1: nonItemPackingSlip1,
-                nonItemQuantity1: nonItemQuantity1,
-                nonItemUnitPrice1: nonItemUnitPrice1,
-                nonItemTotalPrice1: nonItemTotalPrice1,
-                nonItem2: nonItem2,
-                nonItemInvoice2: nonItemInvoice2,
-                nonItemPackingSlip2: nonItemPackingSlip2,
-                nonItemQuantity2: nonItemQuantity2,
-                nonItemUnitPrice2: nonItemUnitPrice2,
-                nonItemTotalPrice2: nonItemTotalPrice2,
-                nonItem3: nonItem3,
-                nonItemInvoice3: nonItemInvoice3,
-                nonItemPackingSlip3: nonItemPackingSlip3,
-                nonItemQuantity3: nonItemQuantity3,
-                nonItemUnitPrice3: nonItemUnitPrice3,
-                nonItemTotalPrice3: nonItemTotalPrice3,
-                nonItem4: nonItem4,
-                nonItemInvoice4: nonItemInvoice4,
-                nonItemPackingSlip4: nonItemPackingSlip4,
-                nonItemQuantity4: nonItemQuantity4,
-                nonItemUnitPrice4: nonItemUnitPrice4,
-                nonItemTotalPrice4: nonItemTotalPrice4,
-                nonItem5: nonItem5,
-                nonItemInvoice5: nonItemInvoice5,
-                nonItemPackingSlip5: nonItemPackingSlip5,
-                nonItemQuantity5: nonItemQuantity5,
-                nonItemUnitPrice5: nonItemUnitPrice5,
-                nonItemTotalPrice5: nonItemTotalPrice5,
-                nonItem6: nonItem6,
-                nonItemInvoice6: nonItemInvoice6,
-                nonItemPackingSlip6: nonItemPackingSlip6,
-                nonItemQuantity6: nonItemQuantity6,
-                nonItemUnitPrice6: nonItemUnitPrice6,
-                nonItemTotalPrice6: nonItemTotalPrice6,
+            // Invoice Information
+            invoiceDate: invoiceDate,
+            invoiceDatePaid: invoiceDatePaid,
+            invoiceNotes: invoiceNotes,
 
-                // Inventory Items
-                item1: item1,
-                itemInvoice1: itemInvoice1,
-                itemPackingSlip1: itemPackingSlip1,
-                itemQuantity1: itemQuantity1,
-                itemUnitPrice1: itemUnitPrice1,
-                itemTotalPrice1: itemTotalPrice1,
-                item2: item2,
-                itemInvoice2: itemInvoice2,
-                itemPackingSlip2: itemPackingSlip2,
-                itemQuantity2: itemQuantity2,
-                itemUnitPrice2: itemUnitPrice2,
-                itemTotalPrice2: itemTotalPrice2,
-                item3: item3,
-                itemInvoice3: itemInvoice3,
-                itemPackingSlip3: itemPackingSlip3,
-                itemQuantity3: itemQuantity3,
-                itemUnitPrice3: itemUnitPrice3,
-                itemTotalPrice3: itemTotalPrice3,
+            // Job Information
+            ABSOrder: ABSOrder,
+            customerOrder: customerOrder,
+            customerPODate: customerPODate,
+            customerPONumber: customerPONumber,
+            creditChecked: creditChecked,
+            daysTurn: daysTurn,
+            dateCodePrinting: dateCodePrinting,
+            customerProvidedMaterial: customerProvidedMaterial,
+            customerMaterialETA: customerMaterialETA,
+            customerNotes: customerNotes,
+            vendorNotes: vendorNotes,
+            orderNotes: orderNotes,
+            orderStatus: orderStatus
+        }).then(() => {
+            console.log("Success");
+        })
 
-                // Billing Information
-                assemblyChargesQuantity: assemblyChargesQuantity,
-                assemblyChargesUnitPrice: assemblyChargesUnitPrice,
-                assemblyChargesTotalPrice: assemblyChargesTotalPrice,
-                printingChargesQuantity: printingChargesQuantity,
-                printingChargesUnitPrice: printingChargesUnitPrice,
-                printingChargesTotalPrice: printingChargesTotalPrice,
-                setupCharge: setupCharge,
-                numberOfScreens: numberOfScreens,
-                screensPrice: screensPrice,
-                subTotal: subTotal,
-                taxRate: taxRate,
-                tax: tax,
-                freightCharges: freightCharges,
-                priceTotal: priceTotal,
+        Axios.post("http://localhost:3001/api/insertOrderNonItem", {
+            productID: productID,
+            companyID: companyID,
 
-                // Invoice Information
-                invoiceDate: invoiceDate,
-                invoiceDatePaid: invoiceDatePaid,
-                invoiceNotes: invoiceNotes,
+            // Non-Inventory Items
+            nonItem1: nonItem1,
+            nonItemInvoice1: nonItemInvoice1,
+            nonItemPackingSlip1: nonItemPackingSlip1,
+            nonItemQuantity1: nonItemQuantity1,
+            nonItemUnitPrice1: nonItemUnitPrice1,
+            nonItemTotalPrice1: nonItemTotalPrice1,
+            nonItem2: nonItem2,
+            nonItemInvoice2: nonItemInvoice2,
+            nonItemPackingSlip2: nonItemPackingSlip2,
+            nonItemQuantity2: nonItemQuantity2,
+            nonItemUnitPrice2: nonItemUnitPrice2,
+            nonItemTotalPrice2: nonItemTotalPrice2,
+            nonItem3: nonItem3,
+            nonItemInvoice3: nonItemInvoice3,
+            nonItemPackingSlip3: nonItemPackingSlip3,
+            nonItemQuantity3: nonItemQuantity3,
+            nonItemUnitPrice3: nonItemUnitPrice3,
+            nonItemTotalPrice3: nonItemTotalPrice3,
+            nonItem4: nonItem4,
+            nonItemInvoice4: nonItemInvoice4,
+            nonItemPackingSlip4: nonItemPackingSlip4,
+            nonItemQuantity4: nonItemQuantity4,
+            nonItemUnitPrice4: nonItemUnitPrice4,
+            nonItemTotalPrice4: nonItemTotalPrice4,
+            nonItem5: nonItem5,
+            nonItemInvoice5: nonItemInvoice5,
+            nonItemPackingSlip5: nonItemPackingSlip5,
+            nonItemQuantity5: nonItemQuantity5,
+            nonItemUnitPrice5: nonItemUnitPrice5,
+            nonItemTotalPrice5: nonItemTotalPrice5,
+            nonItem6: nonItem6,
+            nonItemInvoice6: nonItemInvoice6,
+            nonItemPackingSlip6: nonItemPackingSlip6,
+            nonItemQuantity6: nonItemQuantity6,
+            nonItemUnitPrice6: nonItemUnitPrice6,
+            nonItemTotalPrice6: nonItemTotalPrice6,
+        }).then(() => {
+            console.log("Success");
+        })
 
-                // Job Information
-                ABSOrder: ABSOrder,
-                customerOrder: customerOrder,
-                customerPODate: customerPODate,
-                customerPONumber: customerPONumber,
-                creditChecked: creditChecked,
-                daysTurn: daysTurn,
-                dateCodePrinting: dateCodePrinting,
-                customerProvidedMaterial: customerProvidedMaterial,
-                customerMaterialETA: customerMaterialETA,
-                customerNotes: customerNotes,
-                vendorNotes: vendorNotes,
-                orderNotes: orderNotes,
-                orderStatus: orderStatus
-            }).then(() => {
-                console.log("Success");
-            })
+        Axios.post("http://localhost:3001/api/insertOrderItem", {
+            productID: productID,
+            companyID: companyID,
 
-            Axios.post("http://localhost:3001/api/insertOrderNonItem", {
-                productID: productID,
-                companyID: companyID,
-
-                // Non-Inventory Items
-                nonItem1: nonItem1,
-                nonItemInvoice1: nonItemInvoice1,
-                nonItemPackingSlip1: nonItemPackingSlip1,
-                nonItemQuantity1: nonItemQuantity1,
-                nonItemUnitPrice1: nonItemUnitPrice1,
-                nonItemTotalPrice1: nonItemTotalPrice1,
-                nonItem2: nonItem2,
-                nonItemInvoice2: nonItemInvoice2,
-                nonItemPackingSlip2: nonItemPackingSlip2,
-                nonItemQuantity2: nonItemQuantity2,
-                nonItemUnitPrice2: nonItemUnitPrice2,
-                nonItemTotalPrice2: nonItemTotalPrice2,
-                nonItem3: nonItem3,
-                nonItemInvoice3: nonItemInvoice3,
-                nonItemPackingSlip3: nonItemPackingSlip3,
-                nonItemQuantity3: nonItemQuantity3,
-                nonItemUnitPrice3: nonItemUnitPrice3,
-                nonItemTotalPrice3: nonItemTotalPrice3,
-                nonItem4: nonItem4,
-                nonItemInvoice4: nonItemInvoice4,
-                nonItemPackingSlip4: nonItemPackingSlip4,
-                nonItemQuantity4: nonItemQuantity4,
-                nonItemUnitPrice4: nonItemUnitPrice4,
-                nonItemTotalPrice4: nonItemTotalPrice4,
-                nonItem5: nonItem5,
-                nonItemInvoice5: nonItemInvoice5,
-                nonItemPackingSlip5: nonItemPackingSlip5,
-                nonItemQuantity5: nonItemQuantity5,
-                nonItemUnitPrice5: nonItemUnitPrice5,
-                nonItemTotalPrice5: nonItemTotalPrice5,
-                nonItem6: nonItem6,
-                nonItemInvoice6: nonItemInvoice6,
-                nonItemPackingSlip6: nonItemPackingSlip6,
-                nonItemQuantity6: nonItemQuantity6,
-                nonItemUnitPrice6: nonItemUnitPrice6,
-                nonItemTotalPrice6: nonItemTotalPrice6,
-            }).then(() => {
-                console.log("Success");
-            })
-
-            Axios.post("http://localhost:3001/api/insertOrderItem", {
-                productID: productID,
-                companyID: companyID,
-
-                // Inventory Items
-                item1: item1,
-                itemInvoice1: itemInvoice1,
-                itemPackingSlip1: itemPackingSlip1,
-                itemQuantity1: itemQuantity1,
-                itemUnitPrice1: itemUnitPrice1,
-                itemTotalPrice1: itemTotalPrice1,
-                item2: item2,
-                itemInvoice2: itemInvoice2,
-                itemPackingSlip2: itemPackingSlip2,
-                itemQuantity2: itemQuantity2,
-                itemUnitPrice2: itemUnitPrice2,
-                itemTotalPrice2: itemTotalPrice2,
-                item3: item3,
-                itemInvoice3: itemInvoice3,
-                itemPackingSlip3: itemPackingSlip3,
-                itemQuantity3: itemQuantity3,
-                itemUnitPrice3: itemUnitPrice3,
-                itemTotalPrice3: itemTotalPrice3,
-            }).then(() => {
-                console.log("Success");
-            })
-        //}
+            // Inventory Items
+            item1: item1,
+            itemInvoice1: itemInvoice1,
+            itemPackingSlip1: itemPackingSlip1,
+            itemQuantity1: itemQuantity1,
+            itemUnitPrice1: itemUnitPrice1,
+            itemTotalPrice1: itemTotalPrice1,
+            item2: item2,
+            itemInvoice2: itemInvoice2,
+            itemPackingSlip2: itemPackingSlip2,
+            itemQuantity2: itemQuantity2,
+            itemUnitPrice2: itemUnitPrice2,
+            itemTotalPrice2: itemTotalPrice2,
+            item3: item3,
+            itemInvoice3: itemInvoice3,
+            itemPackingSlip3: itemPackingSlip3,
+            itemQuantity3: itemQuantity3,
+            itemUnitPrice3: itemUnitPrice3,
+            itemTotalPrice3: itemTotalPrice3,
+        }).then(() => {
+            console.log("Success");
+        })
     };
 
     const [companyOptions, setCompanyOptions] = useState([]);
@@ -624,6 +365,7 @@ const Order = ({ handleLogout }) => {
     //         setCheckNum(true);
     //     }
     // }
+    
     return (
         <div className="page">
             <nav className="navbar navbar-expand-lg navbar-dark bg-maroon">
@@ -817,7 +559,7 @@ const Order = ({ handleLogout }) => {
                                     return option.value === productID;
                                 })} id="productID" required options={productOptions}/>
                             </div>
-                        </div>                    
+                        </div>
                     </div>
 
                     <div className="form-row">
@@ -865,7 +607,10 @@ const Order = ({ handleLogout }) => {
                             }}/>
                         </div>
 
-                        <CalculateCustomTotal customQuantity={customQuantity} customUnitPrice={customUnitPrice} customTotalPrice={customTotalPrice} setCustomTotalPrice={setCustomTotalPrice}/>
+                        <label className="col-md-3.5 col-form-label">Total Price $</label>
+                        <div className="input-group input-group-sm mb-3 col-md-1">
+                            <input type="number" readOnly value={customTotalPrice} className="form-control" id="customTotalPrice"/>
+                        </div>
                     </div>
                 </div>
 
@@ -921,7 +666,10 @@ const Order = ({ handleLogout }) => {
                             }}/>
                         </div>
 
-                        <CalculateNonItem1 nonItemQuantity1={nonItemQuantity1} nonItemUnitPrice1={nonItemUnitPrice1} nonItemTotalPrice1={nonItemTotalPrice1} setNonItemTotalPrice1={setNonItemTotalPrice1}/>
+                        <label className="col-md-2.5 col-form-label">Total Price $</label>
+                        <div className="input-group input-group-sm mb-3 col-md-1">
+                            <input type="number" readOnly value={nonItemTotalPrice1} className="form-control" id="nonItemTotalPrice1"/>
+                        </div>
                     </div>
 
                     {/* Non-Item #2 */}
@@ -970,7 +718,10 @@ const Order = ({ handleLogout }) => {
                             }}/>
                         </div>
 
-                        <CalculateNonItem2 nonItemQuantity2={nonItemQuantity2} nonItemUnitPrice2={nonItemUnitPrice2} nonItemTotalPrice2={nonItemTotalPrice2} setNonItemTotalPrice2={setNonItemTotalPrice2}/>
+                        <label className="col-md-2.5 col-form-label">Total Price $</label>
+                        <div className="input-group input-group-sm mb-3 col-md-1">
+                            <input type="number" readOnly value={nonItemTotalPrice2} className="form-control" id="nonItemTotalPrice2"/>
+                        </div>
                     </div>
 
                     {/* Non-Item #3 */}
@@ -1019,7 +770,10 @@ const Order = ({ handleLogout }) => {
                             }}/>
                         </div>
 
-                        <CalculateNonItem3 nonItemQuantity3={nonItemQuantity3} nonItemUnitPrice3={nonItemUnitPrice3} nonItemTotalPrice3={nonItemTotalPrice3} setNonItemTotalPrice3={setNonItemTotalPrice3}/>
+                        <label className="col-md-2.5 col-form-label">Total Price $</label>
+                        <div className="input-group input-group-sm mb-3 col-md-1">
+                            <input type="number" readOnly value={nonItemTotalPrice3} className="form-control" id="nonItemTotalPrice3"/>
+                        </div>
                     </div>
 
                     {/* Non-Item #4 */}
@@ -1068,7 +822,10 @@ const Order = ({ handleLogout }) => {
                             }}/>
                         </div>
 
-                        <CalculateNonItem4 nonItemQuantity4={nonItemQuantity4} nonItemUnitPrice4={nonItemUnitPrice4} nonItemTotalPrice4={nonItemTotalPrice4} setNonItemTotalPrice4={setNonItemTotalPrice4}/>
+                        <label className="col-md-2.5 col-form-label">Total Price $</label>
+                        <div className="input-group input-group-sm mb-3 col-md-1">
+                            <input type="number" readOnly value={nonItemTotalPrice4} className="form-control" id="nonItemTotalPrice4"/>
+                        </div>
                     </div>
 
                     {/* Non-Item #5 */}
@@ -1117,7 +874,10 @@ const Order = ({ handleLogout }) => {
                             }}/>
                         </div>
 
-                        <CalculateNonItem5 nonItemQuantity5={nonItemQuantity5} nonItemUnitPrice5={nonItemUnitPrice5} nonItemTotalPrice5={nonItemTotalPrice5} setNonItemTotalPrice5={setNonItemTotalPrice5}/>
+                        <label className="col-md-2.5 col-form-label">Total Price $</label>
+                        <div className="input-group input-group-sm mb-3 col-md-1">
+                            <input type="number" readOnly value={nonItemTotalPrice5} className="form-control" id="nonItemTotalPrice5"/>
+                        </div>
                     </div>
 
                     {/* Non-Item #6 */}
@@ -1166,7 +926,10 @@ const Order = ({ handleLogout }) => {
                             }}/>
                         </div>
 
-                        <CalculateNonItem6 nonItemQuantity6={nonItemQuantity6} nonItemUnitPrice6={nonItemUnitPrice6} nonItemTotalPrice6={nonItemTotalPrice6} setNonItemTotalPrice6={setNonItemTotalPrice6}/>
+                        <label className="col-md-2.5 col-form-label">Total Price $</label>
+                        <div className="input-group input-group-sm mb-3 col-md-1">
+                            <input type="number" readOnly value={nonItemTotalPrice6} className="form-control" id="nonItemTotalPrice6"/>
+                        </div>
                     </div>
                 </div>
 
@@ -1223,7 +986,10 @@ const Order = ({ handleLogout }) => {
                             }}/>
                         </div>
 
-                        <CalculateItem1 itemQuantity1={itemQuantity1} itemUnitPrice1={itemUnitPrice1} itemTotalPrice1={itemTotalPrice1} setItemTotalPrice1={setItemTotalPrice1}/>
+                        <label className="col-md-2.5 col-form-label">Total Price $</label>
+                        <div className="input-group input-group-sm mb-3 col-md-1">
+                            <input type="number" readOnly value={itemTotalPrice1} className="form-control" id="itemTotalPrice1"/>
+                        </div>
                     </div>
 
                     {/* Item #2 */}
@@ -1273,7 +1039,10 @@ const Order = ({ handleLogout }) => {
                             }}/>
                         </div>
 
-                        <CalculateItem2 itemQuantity2={itemQuantity2} itemUnitPrice2={itemUnitPrice2} itemTotalPrice2={itemTotalPrice2} setItemTotalPrice2={setItemTotalPrice2}/>
+                        <label className="col-md-2.5 col-form-label">Total Price $</label>
+                        <div className="input-group input-group-sm mb-3 col-md-1">
+                            <input type="number" readOnly value={itemTotalPrice2} className="form-control" id="itemTotalPrice2"/>
+                        </div>
                     </div>
 
                     {/* Item #3 */}
@@ -1323,7 +1092,10 @@ const Order = ({ handleLogout }) => {
                             }}/>
                         </div>
 
-                        <CalculateItem3 itemQuantity3={itemQuantity3} itemUnitPrice3={itemUnitPrice3} itemTotalPrice3={itemTotalPrice3} setItemTotalPrice3={setItemTotalPrice3}/>
+                        <label className="col-md-2.5 col-form-label">Total Price $</label>
+                        <div className="input-group input-group-sm mb-3 col-md-1">
+                            <input type="number" readOnly value={itemTotalPrice3} className="form-control" id="itemTotalPrice3"/>
+                        </div>
                     </div>
                 </div>
 
@@ -1344,9 +1116,9 @@ const Order = ({ handleLogout }) => {
                             onChange = {(e) => {
                                 setAssemblyChargesUnitPrice(e.target.value)
                             }}/>
+
+                            <input type="number" readOnly value={assemblyChargesTotalPrice} className="form-control" id="assemblyChargesTotalPrice" />
                             
-                            <CalculateAssemblyCharges assemblyChargesQuantity={assemblyChargesQuantity} assemblyChargesUnitPrice={assemblyChargesUnitPrice}
-                                assemblyChargesTotalPrice={assemblyChargesTotalPrice} setAssemblyChargesTotalPrice={setAssemblyChargesTotalPrice} />
                         </div>
                     </div>
 
@@ -1363,8 +1135,8 @@ const Order = ({ handleLogout }) => {
                                 setPrintingChargesUnitPrice(e.target.value)
                             }}/>
                             
-                            <CalculatePrintingCharges printingChargesQuantity={printingChargesQuantity} printingChargesUnitPrice={printingChargesUnitPrice}
-                                printingChargesTotalPrice={printingChargesTotalPrice} setPrintingChargesTotalPrice={setPrintingChargesTotalPrice} />
+                            <input type="number" readOnly value={printingChargesTotalPrice} className="form-control" id="pringtingChargesTotalPrice" />
+
                         </div>
                     </div>
 
@@ -1397,11 +1169,12 @@ const Order = ({ handleLogout }) => {
                         </div>
                     </div>
              
-                    <CalculateSubTotal setSubTotal={setSubTotal} subTotal={subTotal} customTotalPrice={customTotalPrice} 
-                        nonItemTotalPrice1={nonItemTotalPrice1} nonItemTotalPrice2={nonItemTotalPrice2} nonItemTotalPrice3={nonItemTotalPrice3} nonItemTotalPrice4={nonItemTotalPrice4} nonItemTotalPrice5={nonItemTotalPrice5} nonItemTotalPrice6={nonItemTotalPrice6} 
-                        itemTotalPrice1={itemTotalPrice1} itemTotalPrice2={itemTotalPrice2} itemTotalPrice3={itemTotalPrice3} 
-                        assemblyChargesTotalPrice={assemblyChargesTotalPrice} printingChargesTotalPrice={printingChargesTotalPrice}
-                        setupCharge={setupCharge} numberOfScreens={numberOfScreens} screensPrice={screensPrice} />
+                    <div className="form-row">
+                        <label htmlFor="subTotal" className="col-md-3 col-form-label">Sub Total $</label>
+                        <div className="input-group input-group-sm mb-3 col-md-8">
+                            <input type="number" readOnly value={subTotal} className="form-control" id="subTotal" />
+                        </div>
+                    </div>
 
                     <div className="form-row">
                         <label htmlFor="taxable" className="col-md-3 col-form-label">Tax Rate</label>
@@ -1412,9 +1185,14 @@ const Order = ({ handleLogout }) => {
                             }}/>
                         </div>
                     </div>
-                    
-                    <CalculateTax setTax={setTax} tax={tax} taxRate={taxRate} subTotal={subTotal}/>
 
+                    <div className="form-row">
+                        <label htmlFor="tax" className="col-md-3 col-form-label">Tax</label>
+                        <div className="input-group input-group-sm mb-3 col-md-8">
+                            <input type="number" readOnly value={tax} className="form-control" id="tax" placeholder="$"/>
+                        </div>
+                    </div>
+                    
                     <div className="form-row">
                         <label htmlFor="freightCharges" className="col-md-3 col-form-label">Freight Charges $</label>
                         <div className="input-group input-group-sm mb-3 col-md-8">
@@ -1425,7 +1203,12 @@ const Order = ({ handleLogout }) => {
                         </div>
                     </div>
 
-                    <CalculateTotal setPriceTotal={setPriceTotal} priceTotal={priceTotal} tax={tax} subTotal={subTotal} freightCharges={freightCharges} />
+                    <div className="form-row">
+                        <label htmlFor="priceTotal" className="col-md-3 col-form-label">Order Price Total $</label>
+                        <div className="input-group input-group-sm mb-3 col-md-8">  
+                            <input type="number" readOnly value={priceTotal} className="form-control" id="priceTotal"/>
+                        </div>
+                    </div>
                 </div>
 
                 <div className="company-info pt-3">
@@ -1610,7 +1393,7 @@ const Order = ({ handleLogout }) => {
                 </div>
 
                 <div className="submit p-3">
-                    <button onClick = {submit} type="submit" id="add-order" className="btn btn-success">Submit</button>
+                    <button type="submit" id="add-order" className="btn btn-success">Submit</button>
                 </div>
 
             </form>

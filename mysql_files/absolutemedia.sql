@@ -141,6 +141,7 @@ CREATE TABLE product_table (
 
 DROP TABLE IF EXISTS order_table;
 CREATE TABLE order_table (
+	order_id INT NOT NULL AUTO_INCREMENT,
     product_id INT NOT NULL,
     company_id VARCHAR(8) NOT NULL,
     salesperson VARCHAR(64) DEFAULT NULL,
@@ -183,12 +184,12 @@ CREATE TABLE order_table (
     vendor_notes TEXT DEFAULT NULL,
     order_notes TEXT DEFAULT NULL,
     order_status VARCHAR(128) DEFAULT NULL,
-    PRIMARY KEY (product_id),
-    KEY (company_id)
+    PRIMARY KEY (order_id)
 );
 
 DROP TABLE IF EXISTS order_nonItem;
 CREATE TABLE order_nonItem (
+	order_id INT NOT NULL AUTO_INCREMENT,
     product_id INT NOT NULL,
     company_id VARCHAR(8) NOT NULL,
     non_inventory_line_item1 VARCHAR(256) DEFAULT NULL,
@@ -227,12 +228,12 @@ CREATE TABLE order_nonItem (
     non_inventory_quantity6 INT DEFAULT NULL,
     non_inventory_unit_price6 FLOAT DEFAULT NULL,
     non_inventory_total_price6 FLOAT DEFAULT NULL,
-    PRIMARY KEY (product_id),
-    KEY (company_id)
+    PRIMARY KEY (order_id)
 );
 
 DROP TABLE IF EXISTS order_item;
 CREATE TABLE order_item (
+	order_id INT NOT NULL AUTO_INCREMENT,
     product_id INT NOT NULL,
     company_id VARCHAR(8) NOT NULL,
     inventory_item1 VARCHAR(256) DEFAULT NULL,
@@ -253,8 +254,7 @@ CREATE TABLE order_item (
     inventory_quantity3 INT DEFAULT NULL,
     inventory_unit_price3 FLOAT DEFAULT NULL,
     inventory_total_price3 FLOAT DEFAULT NULL,
-    PRIMARY KEY (product_id),
-    KEY (company_id)
+    PRIMARY KEY (order_id)
 );
 
 DROP TABLE IF EXISTS shipping_table;
