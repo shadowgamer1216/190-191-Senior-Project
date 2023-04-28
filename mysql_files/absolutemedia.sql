@@ -1,4 +1,4 @@
-#CREATE SCHEMA 191_database; /* schema for entire DB */
+#CREATE SCHEMA absolutemedia; /* schema for entire DB */
 
 DROP TABLE IF EXISTS contact_table;
 CREATE TABLE contact_table (

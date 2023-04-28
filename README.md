@@ -7,7 +7,7 @@
 
 
 ## **Home Page**:
-![Home Page](/src/homepage.png "Home Page")
+![Home Page](/public/homepage.png "Home Page")
 
 
 
@@ -15,14 +15,14 @@
 ### - Ability to Edit/View forms
 ### - Insertion into database (no available data yet)
 ### - Submitting forms
-![Edit Page](/src/unimplementedfeatures.png "Edit")
-![Viewt Page](/src/unimplementedfeatures3.png "View")
+![Edit Page](/public/unimplementedfeatures.png "Edit")
+![View Page](/public/unimplementedfeatures3.png "View")
 
 
 
 
 ## **Example of one of our developed pages**:
-![Product Page](/src/addproduct.png "Add Product Page")
+![Product Page](/public/addproduct.png "Add Product Page")
 
 ## **Testing instructions**:
   1. To be established (no current data to test with, nor is backend up and functional)

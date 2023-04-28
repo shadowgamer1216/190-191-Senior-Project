@@ -12,8 +12,6 @@ import CompanyPage from './company';
 import ItemCheckInPage from './itemCheckIn';
 import ItemCheckInViewPage from './itemCheckIn-view';
 import Shipping from './Shipping';
-import LoginForm from './LoginForm';
-import SignupForm from './signupForm';
 import { useState } from 'react';
 import Search from './search';
 import SearchCompany from './searchcompany';
@@ -40,26 +38,25 @@ function App() {
   return (
     <div className="App">
      
-        <Routes>
-
-          <Route path="/" element={<HomePage handleLogout={handleLogout} />} />
-          <Route path="/invoice" element={<Invoice />} />
-          <Route path="/packingSlip" element={<PackingSlip />} />
-          <Route path="/product" element={<ProductPage handleLogout={handleLogout}/>} />
-          <Route path="/product/:product_id" element={<ProductViewPage handleLogout={handleLogout}/>} />
-          <Route path="/contact" element={<ContactPage handleLogout={handleLogout}/>} />
-          <Route path="/component" element={<ComponentPage handleLogout={handleLogout}/>} />
-          <Route path="/location" element={<LocationPage handleLogout={handleLogout}/>} />
-          <Route path="/location/:id" element={<LocationViewPage handleLogout={handleLogout}/>} />
-          <Route path="/order" element={<OrderPage handleLogout={handleLogout}/>} />
-          <Route path="/company" element={<CompanyPage handleLogout={handleLogout}/>} />
-          <Route path="/itemCheckIn" element={<ItemCheckInPage handleLogout={handleLogout}/>} />
-          <Route path="/itemCheckIn/:id" element={<ItemCheckInViewPage handleLogout={handleLogout}/>} />
-          <Route path="/shipping" element={<Shipping handleLogout={handleLogout}/>} />
-          <Route path="/search" element={<Search />} />
-          <Route path="/search/searchcompany" element={<SearchCompany />} />
-          <Route path="/search/searchContact" element={<SearchContact />} />
-        </Routes>
+      <Routes>
+        <Route path="/" element={<HomePage handleLogout={handleLogout} />} />
+        <Route path="/invoice" element={<Invoice />} />
+        <Route path="/packingSlip" element={<PackingSlip />} />
+        <Route path="/product" element={<ProductPage handleLogout={handleLogout}/>} />
+        <Route path="/product/:product_id" element={<ProductViewPage handleLogout={handleLogout}/>} />
+        <Route path="/contact" element={<ContactPage handleLogout={handleLogout}/>} />
+        <Route path="/component" element={<ComponentPage handleLogout={handleLogout}/>} />
+        <Route path="/location" element={<LocationPage handleLogout={handleLogout}/>} />
+        <Route path="/location/:id" element={<LocationViewPage handleLogout={handleLogout}/>} />
+        <Route path="/order" element={<OrderPage handleLogout={handleLogout}/>} />
+        <Route path="/company" element={<CompanyPage handleLogout={handleLogout}/>} />
+        <Route path="/itemCheckIn" element={<ItemCheckInPage handleLogout={handleLogout}/>} />
+        <Route path="/itemCheckIn/:id" element={<ItemCheckInViewPage handleLogout={handleLogout}/>} />
+        <Route path="/shipping" element={<Shipping handleLogout={handleLogout}/>} />
+        <Route path="/search" element={<Search />} />
+        <Route path="/search/searchcompany" element={<SearchCompany />} />
+        <Route path="/search/searchContact" element={<SearchContact />} />
+      </Routes>
      
     </div>
   );

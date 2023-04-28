@@ -52,7 +52,7 @@ const Component = ({ handleLogout }) => {
     };
 
     const handleDropDown = (e) => {
-        if (e.target.value == "Other") {
+        if (e.target.value === "Other") {
             setTextBox(true);
         } else {
             setTextBox(false);
