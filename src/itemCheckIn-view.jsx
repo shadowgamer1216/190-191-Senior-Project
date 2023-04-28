@@ -1,63 +1,34 @@
-import React, { useState, useEffect } from "react";
+import React, {useEffect, useState } from "react";
 import './App.css'
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import Axios from "axios";
 
 const ItemCheckIn = ({ handleLogout }) => {
     const navigate = useNavigate();
-    const [customer_id, setCustomerID] = useState(null);
-    const [item_id, setItemID] = useState(null);
-    const [mfr_pn, setMfrPn] = useState(null);
-    const [description, setDescription] = useState(null);
-    const [carrier, setCarrier] = useState(null);
-    const [quantity, setQuantity] = useState(null);
-    const [disposition, setDisposition] = useState(null);
-    const [signed_for_by, setSignedForBy] = useState(null);
-    const [date_in, setDateIn] = useState(null);
-    const [date_complete, setDateComplete] = useState(null);
-    const Sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-    const [submitting, setSubmitting] = useState(false);
 
-    const submit = async(e) => {
-        e.preventDefault();
-        if (submitting) {
-            return; // prevent duplicate submission
-        }
-        setSubmitting(true);
-        await Axios.post("http://localhost:3001/api/insertItem", {
-            customer_id: customer_id, 
-            item_id: item_id, 
-            mfr_pn: mfr_pn, 
-            description: description, 
-            carrier: carrier, 
-            quantity: quantity, 
-            disposition: disposition, 
-            signed_for_by: signed_for_by, 
-            date_in: date_in, 
-            date_complete: date_complete
-        }).catch(err => {
-            console.log(err);
-        });
-        setSubmitting(false);
-    };
-
-    const handleNavigate = async (id) => {
-        const idPassed = id.toString();
-        await Sleep(2000);
-        navigate(`/itemCheckIn/${idPassed}`);
-    };
-
-    const [latestItemCheckInId, setItemCheckInId] = useState(null);
-    const nextItemCheckInId = latestItemCheckInId + 1;
+    const { id } = useParams();
+    const [itemCheckInData, setItemCheckInData] = useState(null);
     useEffect(() => {
-        Axios.get('http://localhost:3001/api/getLatestItemCheckInId')
+        Axios.get(`http://localhost:3001/api/itemCheckIn/${id}`)
         .then(response => {
-            setItemCheckInId(response.data[0]['MAX(id)']);
+            setItemCheckInData(response.data);
+            console.log(itemCheckInData?.customer_id);
         })
         .catch(error => {
             console.log(error);
         });
-    }, []);
+    }, [id]);
+
+    const customer_id = itemCheckInData?.customer_id ?? '';
+    const item_id = itemCheckInData?.item_id ?? '';
+    const mfr_pn = itemCheckInData?.mfr_pn ?? '';
+    const description = itemCheckInData?.description ?? '';
+    const carrier = itemCheckInData?.carrier ?? '';
+    const quantity = itemCheckInData?.quantity ?? '';
+    const disposition = itemCheckInData?.disposition ?? '';
+    const signed_for_by = itemCheckInData?.signed_for_by ?? '';
+    const date_in = itemCheckInData?.date_in ?? '';
+    const date_complete = itemCheckInData?.date_complete ?? '';
 
     return (
         <div className="page">
@@ -80,14 +51,10 @@ const ItemCheckIn = ({ handleLogout }) => {
 
             <div className="container p-5">
                 <div className="page-headers">
-                    <h2>ITEM CHECK IN
-                        <Link to="/Search">
-                            <button className = "btn btn-secondary btn-sm ml-3" style={{float: 'right'}}>Search Inventory</button>
-                        </Link>
-                    </h2>
+                    <h2>ITEM CHECK IN VIEW</h2>
                 </div>
 
-                <form onSubmit={submit} autoComplete="off">
+                <form>
                     <div className="product-info pt-3">
                         <div className="section-headers">
                             <h5>Item Information</h5>
@@ -96,105 +63,76 @@ const ItemCheckIn = ({ handleLogout }) => {
                         <div className="form-row">
                             <label htmlFor="customer-id" className="col-sm-2 col-form-label">Customer ID</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="customer-id" onChange={(e) =>{
-                                    setCustomerID(e.target.value)
-                                }} minLength = "4" maxLength = "4" required/>
+                                <input type="text" readOnly className="form-control" id="customer-id" value={customer_id}/>
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="item-id" className="col-sm-2 col-form-label">Item ID</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="item-id" onChange={(e) =>{
-                                    setItemID(e.target.value)
-                                }}/>
+                                <input type="text" readOnly className="form-control" id="item-id" value={item_id}/>
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="mfr-pn" className="col-sm-2 col-form-label">MFR PN</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="mfr-pn" onChange={(e) =>{
-                                    setMfrPn(e.target.value)
-                                }}/>
+                                <input type="text" readOnly className="form-control" id="mfr-pn" value={mfr_pn}/>
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="description" className="col-sm-2 col-form-label">Description</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="description" onChange={(e) =>{
-                                    setDescription(e.target.value)
-                                }} />
+                                <input type="text" readOnly className="form-control" id="description" value={description}/>
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="carrier" className="col-sm-2 col-form-label">Carrier</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="carrier" onChange={(e) =>{
-                                    setCarrier(e.target.value)
-                                }}/>
+                                <input type="text" readOnly className="form-control" id="carrier" value={carrier}/>
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="quantity" className="col-sm-2 col-form-label">Quantity</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="quantity" onChange={(e) =>{
-                                    setQuantity(e.target.value)
-                                }} required/>
+                                <input type="text" readOnly className="form-control" id="quantity" value={quantity}/>
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="disposition" className="col-sm-2 col-form-label">Disposition</label>
                             <div className="input-group input-group-sm mb-3 col-sm-3">
-                                <select className="form-control" name="disposition" id="disposition" onChange={(e) =>{
-                                    setDisposition(e.target.value)
-                                }}>
-                                    <option selected value="">Select Value</option>
-                                    <option value="Recieving">Recieving</option>
-                                    <option value="Delivered to Production">Delivered to Production</option>
-                                    <option value="Inventory">Inventory</option>
-                                    <option value="Rep Notified">Rep Notified</option>
-                                </select>
+                                <input type="text" readOnly className="form-control" id="disposition" value={disposition}/>
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="signed-for-by" className="col-sm-2 col-form-label">Signed For By</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="signed-for-by" onChange={(e) =>{
-                                    setSignedForBy(e.target.value)
-                                }}/>
+                                <input type="text" readOnly className="form-control" id="signed-for-by" value={signed_for_by}/>
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="date-in" className="col-sm-2 col-form-label">Date In</label>
                             <div className="input-group input-group-sm mb-3 col-sm-3">
-                                <input type="datetime-local" className="form-control" name="date-in" id="date-in" onChange={(e) =>{
-                                    setDateIn(e.target.value)
-                                }}/>
+                                <input type="text" readOnly className="form-control" name="date-in" id="date-in" value={date_in.slice(0,10)}/>
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="date-completed" className="col-sm-2 col-form-label">Date Completed</label>
                             <div className="input-group input-group-sm mb-3 col-sm-3">
-                                <input type="datetime-local" className="form-control" name="date-complete" id="date-complete" onChange={(e) =>{
-                                    setDateComplete(e.target.value)
-                                }}/>
+                                <input type="text" readOnly className="form-control" name="date-complete" id="date-complete" value={date_complete.slice(0,10)}/>
                             </div>
                         </div>
                     </div>
-
-                    <div className="submit p-3">
-                        <button onClick={() => handleNavigate(nextItemCheckInId)} type="submit" id="add-item" className="btn btn-success m-2">Submit</button>
-                    </div>
                 </form>
 
+                <button className="btn btn-outline-dark" onClick={() => navigate(-1)}>Back</button>
             </div>
             <footer className="footer">
                 <div className="container-fluid">

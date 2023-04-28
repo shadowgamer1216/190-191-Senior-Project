@@ -9,6 +9,7 @@ import LocationPage from './location';
 import OrderPage from './order';
 import CompanyPage from './company';
 import ItemCheckInPage from './itemCheckIn';
+import ItemCheckInViewPage from './itemCheckIn-view';
 import Shipping from './Shipping';
 import LoginForm from './LoginForm';
 import SignupForm from './signupForm';
@@ -51,6 +52,7 @@ function App() {
           <Route path="/order" element={<OrderPage handleLogout={handleLogout}/>} />
           <Route path="/company" element={<CompanyPage handleLogout={handleLogout}/>} />
           <Route path="/itemCheckIn" element={<ItemCheckInPage handleLogout={handleLogout}/>} />
+          <Route path="/itemCheckIn/:id" element={<ItemCheckInViewPage handleLogout={handleLogout}/>} />
           <Route path="/shipping" element={<Shipping handleLogout={handleLogout}/>} />
           <Route path="/search" element={<Search />} />
           <Route path="/search/searchcompany" element={<SearchCompany />} />

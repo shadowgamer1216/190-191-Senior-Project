@@ -438,6 +438,27 @@ app.post("/api/insertItem" , (req, res) =>{
     });
 });
 
+// ITEM INFO BY ID - GET API <=
+app.get("/api/itemCheckIn/:id", (req, res) => {
+    const id = req.params.id;
+    db.query("SELECT * FROM item_check_in_table WHERE id = ?", [id], (err, result) =>{
+        if (err) {
+            console.error(err);
+            res.status(500).send('Error retrieving item check in data');
+        } else {
+            res.send(result[0]);
+        }
+    });
+});
+
+// LATEST ITEM CHECK IN ID - GET API <=
+app.get("/api/getLatestItemCheckInId", (req, res) => {
+    db.query ("SELECT MAX(id) FROM item_check_in_table", (err, result) =>{
+        if (err) throw err;
+        res.send(result);
+    });
+});
+
 // LATEST COMPONENT ID - GET API <=
 app.get("/api/getLatestComponentId", (req, res) => {
     db.query ("SELECT MAX(component_id) FROM component_table", (err, result) =>{
