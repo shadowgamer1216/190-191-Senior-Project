@@ -14,6 +14,8 @@ const Location = ({ handleLogout }) => {
     const [notes, setNotes] = useState(null);
     const [data, setData] = useState([]);
     const date = new Date();
+    const Sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+    const [submitting, setSubmitting] = useState(false);
 
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5;
@@ -39,8 +41,13 @@ const Location = ({ handleLogout }) => {
     const endIndex = startIndex + itemsPerPage;
     const currentData = data.slice(startIndex, endIndex);
 
-    const submit = () => {
-        Axios.post("http://localhost:3001/api/insertLocation", {
+    const submit = async(e) => {
+        e.preventDefault();
+        if (submitting) {
+            return; // prevent duplicate submission
+        }
+        setSubmitting(true);
+        await Axios.post("http://localhost:3001/api/insertLocation", {
             location_id: location_id, 
             location_type: location_type, 
             item_id: item_id, 
@@ -48,24 +55,41 @@ const Location = ({ handleLogout }) => {
             item_owner: item_owner, 
             physical_location: physical_location, 
             notes: notes
-        })
-        .then(()=> {
-            alert('inserted location');
+        }).catch(err => {
+            console.log(err);
         });
-        Axios.post("http://localhost:3001/api/insertLocationHistory",{
+        await Axios.post("http://localhost:3001/api/insertLocationHistory",{
             location_id: location_id, 
             item_id: item_id, 
             qty: qty, 
             date: date
-        })
-        .then(()=>{
-            alert('inserted location history');
+        }).catch(err => {
+            console.log(err);
         });
+        setSubmitting(false);
     };
 
     useEffect(() => {
         Axios.get("http://localhost:3001/api/getLocationHistory").then((response) =>{
             setData(response.data);
+        });
+    }, []);
+
+    const handleNavigate = async (id) => {
+        const idPassed = id.toString();
+        await Sleep(2000);
+        navigate(`/location/${idPassed}`);
+    };
+
+    const [latestLocationId, setLocationId] = useState(null);
+    const nextLocationId = latestLocationId + 1;
+    useEffect(() => {
+        Axios.get('http://localhost:3001/api/getLatestLocationId')
+        .then(response => {
+            setLocationId(response.data[0]['MAX(id)']);
+        })
+        .catch(error => {
+            console.log(error);
         });
     }, []);
 
@@ -93,14 +117,14 @@ const Location = ({ handleLogout }) => {
                     <h2>ADD LOCATION</h2>
                 </div>
 
-                <form>
+                <form onSubmit={submit} autoComplete="off">
                     <div className="product-info pt-3">
                         <div className="section-headers">
                             <h5>Location Information</h5>
                         </div>
                        
                         <div className="form-row">
-                            <label htmlFor="location-id" className="col-sm-2 col-form-label">Location ID</label>
+                            <label htmlFor="location-id" className="col-sm-2 col-form-label">Location ID <span style={{ color: 'red' }}>*</span> </label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
                                 <input type="number" className="form-control" id="location-id" onChange={(e) =>{
                                     setLocationID(e.target.value)
@@ -110,7 +134,7 @@ const Location = ({ handleLogout }) => {
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="type" className="col-sm-2 col-form-label">Type</label>
+                            <label htmlFor="type" className="col-sm-2 col-form-label">Type <span style={{ color: 'red' }}>*</span> </label>
                             <div className="input-group input-group-sm mb-3 col-sm-3">
                                 <select className="form-control" name="type" id="type" onChange={(e) =>{
                                     setLocationType(e.target.value)
@@ -156,7 +180,7 @@ const Location = ({ handleLogout }) => {
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="physical-location" className="col-sm-2 col-form-label">Physical Location</label>
+                            <label htmlFor="physical-location" className="col-sm-2 col-form-label">Physical Location <span style={{ color: 'red' }}>*</span> </label>
                             <div className="input-group input-group-sm mb-3 col-sm-3">
                                 <select className="form-control" name="physical-location" id="physical-location" onChange={(e) =>{
                                     setPhysicalLocation(e.target.value)
@@ -180,7 +204,7 @@ const Location = ({ handleLogout }) => {
                     </div>
 
                     <div className="submit p-3">
-                        <button onClick = {submit} type="submit" id="add-location" className="btn btn-success">Submit</button>
+                        <button onClick={() => handleNavigate(nextLocationId)} type="submit" id="add-location" className="btn btn-success">Submit</button>
                     </div>
 
                 </form>
@@ -210,21 +234,19 @@ const Location = ({ handleLogout }) => {
                                         ))}
                                     </tbody>
                                 </table>
-                                <div className="pagination">
-                                    <button onClick={handleFirstPage} disabled={currentPage === 1}>First</button>
-                                    <button onClick={handlePrevPage} disabled={currentPage === 1}>Prev</button>
-                                    <span>
+                                <div className="d-flex justify-content-center align-items-center">
+                                    <button type="button" class="btn btn-dark mr-2" onClick={handleFirstPage} disabled={currentPage === 1}>First</button>
+                                    <button type="button" class="btn btn-dark mr-2" onClick={handlePrevPage} disabled={currentPage === 1}>Prev</button>
+                                    <span class="text-center">
                                         Page {currentPage} of {totalPages}
                                     </span>
-                                    <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
-                                    <button onClick={handleLastPage} disabled={currentPage === totalPages}>Last</button>
+                                    <button type="button" class="btn btn-dark ml-2" onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
+                                    <button type="button" class="btn btn-dark ml-2" onClick={handleLastPage} disabled={currentPage === totalPages}>Last</button>
                                 </div>
                             </>
                         )}
                     </div>
                 </form>
-
-                <button className="btn btn-outline-dark" onClick={() => navigate(-1)}>Home</button>
 
             </div>
             <footer className="footer">

@@ -94,7 +94,7 @@ const ItemCheckIn = ({ handleLogout }) => {
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="customer-id" className="col-sm-2 col-form-label">Customer ID</label>
+                            <label htmlFor="customer-id" className="col-sm-2 col-form-label">Customer ID <span style={{ color: 'red' }}>*</span> </label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
                                 <input type="text" className="form-control" id="customer-id" onChange={(e) =>{
                                     setCustomerID(e.target.value)
@@ -139,7 +139,7 @@ const ItemCheckIn = ({ handleLogout }) => {
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="quantity" className="col-sm-2 col-form-label">Quantity</label>
+                            <label htmlFor="quantity" className="col-sm-2 col-form-label">Quantity <span style={{ color: 'red' }}>*</span> </label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
                                 <input type="text" className="form-control" id="quantity" onChange={(e) =>{
                                     setQuantity(e.target.value)

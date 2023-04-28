@@ -12,7 +12,6 @@ const ItemCheckIn = ({ handleLogout }) => {
         Axios.get(`http://localhost:3001/api/itemCheckIn/${id}`)
         .then(response => {
             setItemCheckInData(response.data);
-            console.log(itemCheckInData?.customer_id);
         })
         .catch(error => {
             console.log(error);
@@ -51,7 +50,7 @@ const ItemCheckIn = ({ handleLogout }) => {
 
             <div className="container p-5">
                 <div className="page-headers">
-                    <h2>ITEM CHECK IN VIEW</h2>
+                    <h2>ITEM CHECK IN VIEW PAGE</h2>
                 </div>
 
                 <form>

@@ -6,6 +6,7 @@ import ProductViewPage from './product-view';
 import ContactPage from './contact';
 import ComponentPage from './component';
 import LocationPage from './location';
+import LocationViewPage from './location-view'
 import OrderPage from './order';
 import CompanyPage from './company';
 import ItemCheckInPage from './itemCheckIn';
@@ -49,6 +50,7 @@ function App() {
           <Route path="/contact" element={<ContactPage handleLogout={handleLogout}/>} />
           <Route path="/component" element={<ComponentPage handleLogout={handleLogout}/>} />
           <Route path="/location" element={<LocationPage handleLogout={handleLogout}/>} />
+          <Route path="/location/:id" element={<LocationViewPage handleLogout={handleLogout}/>} />
           <Route path="/order" element={<OrderPage handleLogout={handleLogout}/>} />
           <Route path="/company" element={<CompanyPage handleLogout={handleLogout}/>} />
           <Route path="/itemCheckIn" element={<ItemCheckInPage handleLogout={handleLogout}/>} />

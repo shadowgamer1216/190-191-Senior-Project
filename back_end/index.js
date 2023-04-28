@@ -419,6 +419,27 @@ app.post("/api/insertLocationHistory", (req, res) =>{
     });
 });
 
+// LOCATION INFO BY ID - GET API <=
+app.get("/api/location/:id", (req, res) => {
+    const id = req.params.id;
+    db.query("SELECT * FROM location_table WHERE id = ?", [id], (err, result) =>{
+        if (err) {
+            console.error(err);
+            res.status(500).send('Error retrieving locaiton data');
+        } else {
+            res.send(result[0]);
+        }
+    });
+});
+
+// LATEST LOCATION ID - GET API <=
+app.get("/api/getLatestLocationId", (req, res) => {
+    db.query ("SELECT MAX(id) FROM location_table", (err, result) =>{
+        if (err) throw err;
+        res.send(result);
+    });
+});
+
 // ITEM CHECKIN TABLE PAGE - POST API =>
 app.post("/api/insertItem" , (req, res) =>{
     const customer_id = req.body.customer_id;
