@@ -21,16 +21,14 @@ const Company = ({ handleLogout }) => {
     const [Web_addr, setWebAddr] = useState(null);
     const [Tax_ID, setTaxID] = useState(null);
     const [Resale, setResale] = useState(null);
-    const [credit_checked, setCreditChecked] = useState(null);
     const [status, setStatus] = useState(null);
     const [customer, setCustomer] = useState(null);
     const [vendor, setVendor] = useState(null);
-    const [OEM, setOEM] = useState(null);
-    const [other_class, setOtherClass] = useState(null);
+    const [Other, setOther] = useState(null);
     const [notes, setNotes] = useState(null);
     
     const submit = () => {
-        Axios.post("http://localhost:3001/api/insertCompany", {company_ID: company_ID, company_Name: company_Name, addr1: addr1, addr2: addr2, city: city, state: state, country: country, zip: zip, Salesperson: Salesperson, phone: phone, Extension: Extension, fax: fax, email: email, Web_addr: Web_addr, Tax_ID: Tax_ID, Resale: Resale, credit_checked: credit_checked, status: status, customer: customer, vendor: vendor, OEM: OEM, other_class: other_class, notes: notes})
+        Axios.post("http://localhost:3001/api/insertCompany", {company_ID: company_ID, company_Name: company_Name, addr1: addr1, addr2: addr2, city: city, state: state, country: country, zip: zip, Salesperson: Salesperson, phone: phone, Extension: Extension, fax: fax, email: email, Web_addr: Web_addr, Tax_ID: Tax_ID, Resale: Resale, status: status, customer: customer, vendor: vendor, Other: Other, notes: notes})
         .then(()=> {
             alert('inserted Company');
         })
@@ -282,7 +280,7 @@ const Company = ({ handleLogout }) => {
                             <label htmlFor="Resale" className="col-sm-2 col-form-label">Resale Certificate</label>
                             <div className="input-group input-group-sm mb-3 col-sm-10">
                                 <input type="text" className="form-control" id="Resale" onChange={(e) =>{
-                                    setTaxID(e.target.value)
+                                    setResale(e.target.value)
                                 }} maxLength = "64"/>
                             </div>
                         </div>
@@ -300,43 +298,26 @@ const Company = ({ handleLogout }) => {
                             </div>
                         </div>
 
-                        <div className="form-row">
-                            <div className="input-group input-group-sm col-sm-3 pl-5">
-                                <div className="form-group custom-control custom-checkbox">
-                                    <input onChange={(prev) => setCreditChecked(prev => !prev)} checked={credit_checked} type="checkbox" className="custom-control-input" id="creditCheck"/>
-                                    <label htmlFor="creditCheck" className="custom-control-label">Credit Checked?</label>
-                                </div>
-                            </div>
-
-
+                        <div className="form-row">                           
                             <div className="input-group input-group-sm col-sm-3 pl-5">
                                 <div className="form-group custom-control custom-checkbox">
                                     <input  onChange={(prev) => setCustomer(prev => !prev)} checked={customer} type="checkbox" className="custom-control-input" id="customerCheck"/>
-                                    <label htmlFor="customerCheck" className="custom-control-label">Customer?</label>
+                                    <label htmlFor="customerCheck" className="custom-control-label">Company is Customer</label>
                                 </div>
                             </div>
 
                             <div className="input-group input-group-sm col-sm-3 pl-5">
                                 <div className="form-group custom-control custom-checkbox">
                                     <input  onChange={(prev) => setVendor(prev => !prev)} checked={vendor} type="checkbox" className="custom-control-input" id="vendorCheck"/>
-                                    <label htmlFor="vendorCheck" className="custom-control-label">Vendor?</label>
+                                    <label htmlFor="vendorCheck" className="custom-control-label">Company is Vendor</label>
                                 </div>
                             </div>
 
                             <div className="input-group input-group-sm col-sm-3 pl-5">
                                 <div className="form-group custom-control custom-checkbox">
-                                    <input  onChange={(prev) => setOEM(prev => !prev)} checked={OEM}  type="checkbox" className="custom-control-input" id="OEMCheck"/>
-                                    <label htmlFor="OEMCheck" className="custom-control-label">OEM?</label>
+                                    <input  onChange={(prev) => setOther(prev => !prev)} checked={Other}  type="checkbox" className="custom-control-input" id="OtherCheck"/>
+                                    <label htmlFor="OtherCheck" className="custom-control-label">Company is Other</label>
                                 </div>
-                            </div>
-                        </div>
-
-                        <div className="form-row">
-                            <label htmlFor="otherClass" className="col-sm-2 col-form-label">Other Classification</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="otherClass" onChange={(e) =>{
-                                    setOtherClass(e.target.value)
-                                }} maxLength = "64"/>
                             </div>
                         </div>
 
@@ -373,11 +354,7 @@ const Company = ({ handleLogout }) => {
                     </div>
                 </div>
             </footer>
-
         </div>
     )
-
 }
 export default Company;
-
-

@@ -304,12 +304,10 @@ CREATE TABLE company_table (
     web_addr VARCHAR(128) DEFAULT NULL,
     tax_ID VARCHAR(64) DEFAULT NULL,
     Resale VARCHAR(64) DEFAULT NULL,
-    credit_checked CHAR(1) DEFAULT NULL,
     status VARCHAR(10) DEFAULT 'Active',
     customer CHAR(1) DEFAULT NULL,
     vendor CHAR(1) DEFAULT NULL,
-    OEM CHAR(1) DEFAULT NULL,
-    other_class VARCHAR(60) DEFAULT NULL,
+    Other CHAR(1) DEFAULT NULL,
     notes TEXT,
     PRIMARY KEY (company_ID)
 );
