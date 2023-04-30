@@ -19,6 +19,7 @@ import SearchContact from './searchContact';
 import ViewOnlyHome from './ViewOnlyHome';
 import Invoice from './invoice';
 import PackingSlip from './packingSlip';
+import QCInspection from './QC-Inspection';
 import JobOrder from './jobOrder';
 
 function App() {
@@ -43,6 +44,7 @@ function App() {
         <Route path="/" element={<HomePage handleLogout={handleLogout} />} />
         <Route path="/invoice" element={<Invoice />} />
         <Route path="/packingSlip" element={<PackingSlip />} />
+        <Route path="/QC-Inspection" element={<QCInspection />} />
         <Route path="/jobOrder" element={<JobOrder />} />
         <Route path="/product" element={<ProductPage handleLogout={handleLogout}/>} />
         <Route path="/product/:product_id" element={<ProductViewPage handleLogout={handleLogout}/>} />

@@ -80,6 +80,12 @@ function HomePage({ handleLogout }) {
 			</div>
 
 			<div class="block9">
+				<Link to = "QC-Inspection">
+					<button type="Search" id="Search" class="HomePageButton" >QC Inspection</button>
+				</Link>
+			</div>
+
+			<div class="block10">
 				<Link to = "JobOrder">
 					<button type="Search" id="Search" class="HomePageButton" >Job Order</button>
 				</Link>

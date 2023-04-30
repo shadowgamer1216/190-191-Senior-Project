@@ -62,8 +62,13 @@ function JobOrder({ match }) {
         doc.rect(105, 44, 35, 7);
         doc.rect(105, 51, 35, 7);
         doc.rect(140, 44, 25, 14);
+        doc.text('Production', 143, 49);
         doc.rect(165, 44, 25, 14);
+        doc.text('First Article', 168, 49);
 
+        //CheckBox
+        doc.rect(150, 52, 3, 3);
+        doc.rect(175, 52, 3, 3);
 
         doc.rect(20, 58, 35, 14);
         doc.text('Order Quantity', 21, 65);
@@ -78,6 +83,11 @@ function JobOrder({ match }) {
         doc.rect(140, 58, 50, 7);
         doc.rect(140, 65, 50, 7);
 
+        const textWidth = doc.getTextWidth('Customer');
+        doc.line(56, 64, 56 + textWidth, 64);
+        const textWidth1 = doc.getTextWidth('Factory');
+        doc.line(81, 64, 81 + textWidth1, 64);
+
         doc.rect(20, 72, 35, 14);
         doc.text('Scheduled Ship', 21, 77);
         doc.text('Date / Time', 21, 84);
@@ -91,6 +101,9 @@ function JobOrder({ match }) {
         doc.rect(140, 72, 50, 7);
         doc.rect(140, 79, 50, 7);
 
+        const textWidth2 = doc.getTextWidth('CD-ROM ETA:');
+        doc.line(81, 78, 81 + textWidth2, 78);
+
         doc.rect(20, 86, 35, 7);
         doc.text('OEM ID', 21, 91);
         doc.rect(55, 86, 135, 7);
@@ -98,7 +111,13 @@ function JobOrder({ match }) {
         doc.rect(20, 93, 35, 21);
         doc.text('Packaging', 21, 103);
         doc.rect(55, 93, 135, 21);
+        doc.setFont('helvetica', 'bold');
         doc.text('Product Packaging Information', 56, 98);
+
+        const textWidth3 = doc.getTextWidth('Product Packaging Information');
+        doc.line(56, 99, 56 + textWidth3, 99);
+
+        doc.setFont('helvetica', 'normal');
 
         doc.rect(20, 114, 35, 7);
         doc.text('Packaging Notes', 21, 119);
