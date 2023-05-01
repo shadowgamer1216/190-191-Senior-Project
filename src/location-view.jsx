@@ -18,13 +18,25 @@ const Location = ({ handleLogout }) => {
         });
     }, [id]);
 
-    const location_id = locationData?.location_id ?? '';
-    const location_type = locationData?.location_type ?? '';
-    const item_id = locationData?.item_id ?? '';
-    const qty = locationData?.qty ?? '';
-    const item_owner = locationData?.item_owner ?? '';
-    const physical_location = locationData?.physical_location ?? '';
-    const notes = locationData?.notes ?? '';
+    var location_id = locationData?.location_id ?? '';
+    var location_type = locationData?.location_type ?? '';
+    var item_id = locationData?.item_id ?? '';
+    const [itemName, setItemName] = useState('');
+    const [itemType, setItemType] = useState('');
+    useEffect(() => {
+        if(item_id) {
+            Axios.get(`http://localhost:3001/api/component/${item_id}`).then((response) =>{
+                setItemName(response.data.title);
+                setItemType(response.data.component_type);
+            }).catch(err => {
+                console.log(err);
+            });
+        }
+    }, [item_id]);
+    var qty = locationData?.qty ?? '';
+    var item_owner = locationData?.item_owner ?? '';
+    var physical_location = locationData?.physical_location ?? '';
+    var notes = locationData?.notes ?? '';
 
     return (
         <div className="page">
@@ -37,8 +49,7 @@ const Location = ({ handleLogout }) => {
 
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div className="navbar-nav">
-                        <Link className="nav-link pl-4" to="/">Home</Link>
-                        <Link className="nav-link">Settings</Link>
+                        <Link className="nav-link" to="/">Home</Link>
                     </div>
                 </div>
 
@@ -47,7 +58,7 @@ const Location = ({ handleLogout }) => {
 
             <div className="container p-5">
                 <div className="page-headers">
-                    <h2>ADD LOCATION VIEW PAGE</h2>
+                    <h2>[VIEW] LOCATION</h2>
                 </div>
 
                 <form>
@@ -57,51 +68,65 @@ const Location = ({ handleLogout }) => {
                         </div>
                        
                         <div className="form-row">
-                            <label htmlFor="location-id" className="col-sm-2 col-form-label">Location ID</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
+                            <label htmlFor="location-id" className="col-md-3 col-form-label">Location ID</label>
+                            <div className="input-group input-group-sm mb-3 col-md-2">
                                 <input type="number" readOnly className="form-control" id="location-id" value={location_id}/>
                                 
                             </div>
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="type" className="col-sm-2 col-form-label">Type</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-3">
+                            <label htmlFor="type" className="col-md-3 col-form-label">Type</label>
+                            <div className="input-group input-group-sm mb-3 col-md-3">
                                 <input type="text" readOnly className="form-control" id="type" value={location_type}/>    
                             </div>
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="item-id" className="col-sm-2 col-form-label">Item ID</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="number" readOnly className="form-control" id="item-id" value={item_id}/>
+                            <label htmlFor="item-id" className="col-md-3 col-form-label">Item ID</label>
+                            <div className="input-group input-group-sm mb-3 col-md-2">
+                                <input type="text" readOnly className="form-control" id="item-id" value={item_id}/>
                             </div>
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="qty" className="col-sm-2 col-form-label">Qty</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
+                            <label htmlFor="item-name" className="col-md-3 col-form-label">Item Name</label>
+                            <div className="input-group input-group-sm mb-3 col-md-8">
+                                <input type="text" readOnly className="form-control" id="item-name" value={itemName}/>
+                            </div>
+                        </div>
+
+                        <div className="form-row">
+                            <label htmlFor="item-type" className="col-md-3 col-form-label">Item Type</label>
+                            <div className="input-group input-group-sm mb-3 col-md-8">
+                                <input type="text" readOnly className="form-control" id="item-type" value={itemType}/>
+                            </div>
+                        </div>
+
+                        <div className="form-row">
+                            <label htmlFor="qty" className="col-md-3 col-form-label">Quantity</label>
+                            <div className="input-group input-group-sm mb-3 col-md-2">
                                 <input type="number" readOnly className="form-control" id="qty" value={qty}/>
                             </div>
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="owner" className="col-sm-2 col-form-label">Owner</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-3">
+                            <label htmlFor="owner" className="col-md-3 col-form-label">Owner</label>
+                            <div className="input-group input-group-sm mb-3 col-md-3">
                                 <input type="text" readOnly className="form-control" id="owner" value={item_owner}/>
                             </div>
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="physical-location" className="col-sm-2 col-form-label">Physical Location</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-3">
+                            <label htmlFor="physical-location" className="col-md-3 col-form-label">Physical Location</label>
+                            <div className="input-group input-group-sm mb-3 col-md-3">
                                 <input type="text" readOnly className="form-control" id="physical-location" value={physical_location}/>
                             </div>
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="notes" className="col-sm-2 col-form-label">Notes</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
+                            <label htmlFor="notes" className="col-md-3 col-form-label">Notes</label>
+                            <div className="input-group input-group-sm mb-3 col-md-8">
                                 <textarea rows="4" cols="50" readOnly className="form-control" name="notes" id="custom-area" value={notes}/>
                             </div>
                         </div>

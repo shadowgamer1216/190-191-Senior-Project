@@ -3,7 +3,6 @@ import {useState, useEffect} from "react";
 import './App.css'
 import { Link, useNavigate } from "react-router-dom"
 import Axios from "axios";
-import axios from 'axios';
 
 
 const SearchContact = () => {
@@ -33,7 +32,7 @@ const SearchContact = () => {
 
     
     const submit = () => {
-        Axios.post("http://localhost:3001/api/searchContact", {customer_id:customer_id, comapny:company})
+        Axios.post("http://localhost:3001/api/searchContact", {customer_id:customer_id, company:company})
         .then(()=> {
             alert('searching for contact');
         })
@@ -49,8 +48,8 @@ const SearchContact = () => {
 
 
     return (
-        <div class='page'>
-            <div class='HomePageBar'>
+        <div className='page'>
+            <div className='HomePageBar'>
             <nav className="navbar navbar-expand-lg navbar-dark bg-maroon">
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
@@ -60,11 +59,11 @@ const SearchContact = () => {
 
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div className="navbar-nav">
-                        <Link className="nav-link pl-4" to="/">Home</Link>
-                        <Link className="nav-link">Settings</Link>
+                        <Link className="nav-link" to="/">Home</Link>
                     </div>
                 </div>
 
+                <button className="btn btn-outline-light">Logout</button>
             </nav>
 
             </div>
@@ -93,12 +92,12 @@ const SearchContact = () => {
 
                         </div>
                     </div>
-                    <div class='mb-5'>
+                    <div className='mb-5'>
                         <button onClick = {submit} type="submit" id="search-contact" className="btn btn-outline-success">Search</button>
                     </div>
 
-                    <table class="table mt-5">
-                                    <thead class="thead-light">
+                    <table className="table mt-5">
+                                    <thead className="thead-light">
                                         <tr>
                                             <th scope ="col">Search Results</th>
                                         </tr>
@@ -112,7 +111,7 @@ const SearchContact = () => {
                                     </tbody>
                     </table>
 
-                    <div class='mt-5'>
+                    <div className='mt-5'>
                         <button className="btn btn-outline-dark" onClick={() => navigate("../Search")}>Back</button>
                         <button className="btn btn-outline-dark" onClick={() => navigate("/")}>Home</button>
                     </div>

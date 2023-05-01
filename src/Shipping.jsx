@@ -79,10 +79,10 @@ const Shipping = ({ handleLogout }) => {
 
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div className="navbar-nav">
-            <Link className="nav-link pl-4" to="/">Home</Link>
-            <Link className="nav-link">Settings</Link>
+            <Link className="nav-link" to="/">Home</Link>
           </div>
         </div>
+        <button className="btn btn-outline-light" onClick={handleLogout}>Logout</button>
       </nav>
 
       <div className="container p-5">
@@ -93,32 +93,33 @@ const Shipping = ({ handleLogout }) => {
         <script defer ="shippingvalid.js"></script>
         <div id="error"></div>
 
-        <form id="shipping_form">
+        <form id="shipping_form" autoComplete="off">
           <div className ="list-address pt-3">
             <div className="section-headers">
                 <h5>List of Shipping Addresses For</h5>
             </div>
-            <table class="table">
-              <thead class = "thead-light">
-                <tr>
-                  <th scope="col">Edit</th>
-                  <th scope="col">Company</th>
-                  <th scope="col">Contact</th>
-                  <th scope="col">Address</th>
-                  <th scope="col">City</th>
-                  <th scope="col">State</th>
-                  <th scope="col">Ship Date</th>
-                  <th scope="col">Arrival Date</th>
-                  <th scope="col">Ship Via</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>No Records</td>
-                </tr>
-              </tbody>
-            </table>
-            
+            <div className="table-responsive-md">
+              <table className="table">
+                <thead className= "thead-light">
+                  <tr>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Company</th>
+                    <th scope="col">Contact</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">City</th>
+                    <th scope="col">State</th>
+                    <th scope="col">Ship Date</th>
+                    <th scope="col">Arrival Date</th>
+                    <th scope="col">Ship Via</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>No Records</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
 
           <div className ="customer-info pt-3">
@@ -128,54 +129,54 @@ const Shipping = ({ handleLogout }) => {
             
             <div className="form-row">
               <label htmlFor="order-id" 
-                className="col-sm-6 col-form-label"><b>Order Master ID:</b></label>
+                className="col-md-6 col-form-label"><b>Order ID:</b></label>
               <label htmlFor="date" 
-                className="col-sm-6 col-form-label"><b>Date:</b></label>
+                className="col-md-6 col-form-label"><b>Date:</b></label>
             </div>
 
+            <br></br>
             <div className ="form-row">
-              <label htmlFor="companyName" className="col-sm-2 col-form-label">Company Name</label>
-              <div className ="input-group input-group-sm mb-3 col-sm-10">
+              <label htmlFor="companyName" className="col-md-3 col-form-label">Company Name</label>
+              <div className ="input-group input-group-sm mb-3 col-md-8">
                 <input onChange={(e) => setCompany_name(e.target.value)} className="form-control" 
                   id="company_name" placeholder="If 'None', please enter N/A."required></input>
               </div>
             </div>
 
             <div className ="form-row">
-              <label htmlFor="con-name" className="col-sm-2 col-form-label">Contact Name</label>
-              <div className ="input-group input-group-sm mb-3 col-sm-10">
+              <label htmlFor="con-name" className="col-md-3 col-form-label">Contact Name</label>
+              <div className ="input-group input-group-sm mb-3 col-md-8">
                 <input onChange={(e) => setContact_name(e.target.value)}className="form-control"
                   name="contact_name" required/>
               </div>
             </div>
 
             <div className ="form-row">
-              <label htmlFor="add1" className="col-sm-2 col-form-label">Address 1</label>
-              <div className ="input-group input-group-sm mb-3 col-sm-10">
+              <label htmlFor="add1" className="col-md-3 col-form-label">Address 1</label>
+              <div className ="input-group input-group-sm mb-3 col-md-8">
                 <input onChange={(e) => setAdd1(e.target.value)} className="form-control"
                   name="add1" required/>
               </div>
             </div>
 
             <div className ="form-row">
-              <label htmlFor="add2" className="col-sm-2 col-form-label">Address 2</label>
-              <div className ="input-group input-group-sm mb-3 col-sm-10">
+              <label htmlFor="add2" className="col-md-3 col-form-label">Address 2</label>
+              <div className ="input-group input-group-sm mb-3 col-md-8">
                 <input onChange={(e) => setAdd2(e.target.value)} className="form-control"
                   name="add2" placeholder="If 'None', Please enter N/A." required/>
               </div>
             </div>
 
             <div className ="form-row">
-              <label htmlFor="csz" className="col-sm-2 col-form-label">City | State | Zip</label>
-              
-              <div className ="input-group input-group-sm mb-3 col-sm-6">
+              <label htmlFor="csz" className="col-md-3 col-form-label">City | State | Zip</label>
+              <div className ="input-group input-group-sm mb-3 col-md-4">
                 <input onChange={(e) => setCity(e.target.value)} className="form-control"
                   name="city" required/>
               </div>
               
-              <div className="input-group inout-group-sm mb-3 col-sm-2">
+              <div className="input-group inout-group-sm mb-3 col-md-2">
                 <select onChange={(e) => setState(e.target.value)} className="form-control" name="country_state" required>
-                  <option value="" selected="selected">Select a State</option>
+                  <option value="">Select a State</option>
                   <option value="AL">Alabama</option>
                   <option value="AK">Alaska</option>
                   <option value="AZ">Arizona</option>
@@ -230,47 +231,47 @@ const Shipping = ({ handleLogout }) => {
                 </select>
               </div>
 
-              <div className ="input-group input-group-sm mb-3 col-sm-2">
-                <input type="text" inputmode="numeric" onChange={(e) => setZip(e.target.value)} className="form-control"
+              <div className ="input-group input-group-sm mb-3 col-md-2">
+                <input type="text" inputMode="numeric" onChange={(e) => setZip(e.target.value)} className="form-control"
                   name="zip" required/>
               </div>
             </div>
 
             <div className ="form-row">
-              <label htmlFor="province" className="col-sm-2 col-form-label">Province</label>
-              <div className ="input-group input-group-sm mb-3 col-sm-10">
+              <label htmlFor="province" className="col-md-3 col-form-label">Province</label>
+              <div className ="input-group input-group-sm mb-3 col-md-8">
                 <input onChange={(e) => setProvince(e.target.value)} className="form-control"
                   name="province" placeholder="If 'None', Please enter N/A." required/>
               </div>
             </div>
 
             <div className ="form-row">
-              <label htmlFor="country" className="col-sm-2 col-form-label">Country</label>
-              <div className ="input-group input-group-sm mb-3 col-sm-10">
+              <label htmlFor="country" className="col-md-3 col-form-label">Country</label>
+              <div className ="input-group input-group-sm mb-3 col-md-8">
                 <input onChange={(e) => setCountry(e.target.value)} className="form-control"
                   name="country" required/>
               </div>
             </div>
 
             <div className ="form-row">
-              <label htmlFor="phone" className="col-sm-2 col-form-label">Phone</label>
-              <div className ="input-group input-group-sm mb-3 col-sm-10">
-                <input phone className="form-control"
+              <label htmlFor="phone" className="col-md-3 col-form-label">Phone</label>
+              <div className ="input-group input-group-sm mb-3 col-md-8">
+                <input onChange={(e) => setPhone(e.target.value)} className="form-control"
                 name="phone" required/>
               </div>
             </div>
 
             <div className ="form-row">
-              <label htmlFor="fax" className="col-sm-2 col-form-label">Fax</label>
-              <div className ="input-group input-group-sm mb-3 col-sm-10">
+              <label htmlFor="fax" className="col-md-3 col-form-label">Fax</label>
+              <div className ="input-group input-group-sm mb-3 col-md-8">
                 <input onChange={(e) => setFax(e.target.value)} className="form-control"
                   name="fax" placeholder="If 'None', Please enter N/A." required/>
               </div>
             </div>
 
             <div className ="form-row">
-              <label htmlFor="email" className="col-sm-2 col-form-label">Email</label>
-              <div className ="input-group input-group-sm mb-3 col-sm-10">
+              <label htmlFor="email" className="col-md-3 col-form-label">Email</label>
+              <div className ="input-group input-group-sm mb-3 col-md-8">
                 <input onChange={(e) => setEmail(e.target.value)} className="form-control"
                   name="email" required/>
               </div>
@@ -284,10 +285,10 @@ const Shipping = ({ handleLogout }) => {
             </div>
             
             <div className ="form-row">
-              <label htmlFor="fedex" className="col-sm-2 col-form-label">Fed Ex</label>
-              <div className="input-group input-group-sm mb-3 col-sm-3">
+              <label htmlFor="fedex" className="col-md-3 col-form-label">Fed Ex</label>
+              <div className="input-group input-group-sm mb-3 col-md-3">
                 <select onChange={(e) => setFedex(e.target.value)} className="form-control" name="fedex" id="fedex" required>
-                  <option value="option" selected="selected">Select Option</option>
+                  <option value="">Select Option</option>
                   <option value="none">None</option>
                   <option value="air-freight">Air Freight</option>
                   <option value="custom-critical-freight">Cusom Critical Freight</option>
@@ -309,10 +310,10 @@ const Shipping = ({ handleLogout }) => {
             </div>
 
             <div className ="form-row">
-              <label htmlFor="ups" className="col-sm-2 col-form-label">UPS</label>
-              <div className="input-group input-group-sm mb-3 col-sm-3">
+              <label htmlFor="ups" className="col-md-3 col-form-label">UPS</label>
+              <div className="input-group input-group-sm mb-3 col-md-3">
                 <select onChange={(e) => setUps(e.target.value)} className="form-control" name="ups" id="ups"required>
-                  <option value="option" selected="selected">Select Option</option>
+                  <option value="">Select Option</option>
                   <option value="none">None</option>
                   <option value="2day-air">2 Day Air</option>
                   <option value="2day-airam">2 Day Air AM</option>
@@ -330,10 +331,10 @@ const Shipping = ({ handleLogout }) => {
             </div>
 
             <div className ="form-row">
-              <label htmlFor="c-w" className="col-sm-2 col-form-label">Courier/Will Call</label>
-              <div className="input-group input-group-sm mb-3 col-sm-3">
+              <label htmlFor="c-w" className="col-md-3 col-form-label">Courier/Will Call</label>
+              <div className="input-group input-group-sm mb-3 col-md-3">
                 <select onChange={(e) => setCourier_willcall(e.target.value)} className="form-control" name="courier_willcall" id="c-w"required>
-                  <option value="option" selected="selected">Select Option</option>
+                  <option value="">Select Option</option>
                   <option value="none">None</option>
                   <option value="courier">Courier</option>
                   <option value="willcall">Will Call</option>
@@ -342,10 +343,10 @@ const Shipping = ({ handleLogout }) => {
             </div>
 
             <div className ="form-row">
-              <label htmlFor="abs" className="col-sm-2 col-form-label">ABS Van</label>
-              <div className="input-group input-group-sm mb-3 col-sm-3">
+              <label htmlFor="abs" className="col-md-3 col-form-label">ABS Van</label>
+              <div className="input-group input-group-sm mb-3 col-md-3">
                 <select onChange={(e) => setAbs(e.target.value)} className="form-control" name="abs" id="abs"required>
-                  <option value="option" selected="selected">Select Option</option>
+                  <option value="">Select Option</option>
                   <option value="none">None</option>
                   <option value="abs-van">ABS Van</option>
                 </select>
@@ -353,18 +354,18 @@ const Shipping = ({ handleLogout }) => {
             </div>
 
             <div className ="form-row">
-              <label htmlFor="other-ship" className="col-sm-2 col-form-label">Other Ship Method</label>
-              <div className ="input-group input-group-sm mb-3 col-sm-10">
+              <label htmlFor="other-ship" className="col-md-3 col-form-label">Other Ship Method</label>
+              <div className ="input-group input-group-sm mb-3 col-md-8">
                 <input onChange={(e) => setOther_ship_method(e.target.value)} className="form-control"
                   name="other_ship_method" placeholder="If 'None', Please enter N/A." required/>
               </div>
             </div>
 
             <div className ="form-row">
-              <label htmlFor="pay-type" className="col-sm-2 col-form-label">Payment Type</label>
-              <div className="input-group input-group-sm mb-3 col-sm-3">
+              <label htmlFor="pay-type" className="col-md-3 col-form-label">Payment Type</label>
+              <div className="input-group input-group-sm mb-3 col-md-3">
                 <select onChange={(e) => setPayment_type(e.target.value)} className="form-control" name="payment_type" id="pay-type" placeholder="If 'None, Please enter N/A." required>
-                  <option value="option" selected="selected">Select Option</option>
+                  <option value="">Select Option</option>
                   <option value="credit">Credit</option>
                   <option value="debit">Debit</option>
                 </select>
@@ -372,23 +373,23 @@ const Shipping = ({ handleLogout }) => {
             </div>
 
             <div className ="form-row">
-              <label htmlFor="acc-num" className="col-sm-2 col-form-label">Account Number</label>
-              <div className ="input-group input-group-sm mb-3 col-sm-10" required>
+              <label htmlFor="acc-num" className="col-md-3 col-form-label">Account Number</label>
+              <div className ="input-group input-group-sm mb-3 col-md-8" required>
                 <input onChange={(e) => setAccount_number(e.target.value)} className="form-control"
                   name="account_number" />
               </div>
             </div>
 
             <div className ="form-row">
-              <label htmlFor="ship-date" className="col-sm-2 col-form-label">Requested Ship Date/Time</label>
-              <div className ="input-group input-group-sm mb-3 col-sm-3">
+              <label htmlFor="ship-date" className="col-md-3 col-form-label">Requested Ship Date/Time</label>
+              <div className ="input-group input-group-sm mb-3 col-md-3">
                 <input type="datetime-local" className="form-control" onChange={(e) => setRequested_ship_date(e.target.value)}
                   name="request_ship_date" required/>
               </div>
 
-              <div className="input-group input-group-sm mb-3 col-sm-3">
+              <div className="input-group input-group-sm mb-3 col-md-3">
                 <select onChange={(e) => setRequested_ship_time(e.target.value)} className="form-control" name="request_ship_time" id="ship-time" required>
-                  <option value="option" selected="selected">Select Time</option>
+                  <option value="">Select Time</option>
                   <option value="9am">9:00am</option>
                   <option value="10am">10:00am</option>
                   <option value="11am">11:00am</option>
@@ -405,15 +406,15 @@ const Shipping = ({ handleLogout }) => {
             </div>
 
             <div className ="form-row">
-              <label htmlFor="arr-date" className="col-sm-2 col-form-label">Requested Arrival Date/Time</label>
-              <div className ="input-group input-group-sm mb-3 col-sm-3">
+              <label htmlFor="arr-date" className="col-md-3 col-form-label">Requested Arrival Date/Time</label>
+              <div className ="input-group input-group-sm mb-3 col-md-3">
                 <input type="datetime-local" className="form-control" onChange={(e) => setArrival_ship_date(e.target.value)}
                   name="arrival_ship_date" required/>
               </div>
 
-              <div className="input-group input-group-sm mb-3 col-sm-3">
+              <div className="input-group input-group-sm mb-3 col-md-3">
                 <select onChange={(e) => setArrival_ship_time(e.target.value)}className="form-control" name="arrival_ship_time" id="arrival-time" required>
-                  <option value="option" selected="selected">Select Time</option>
+                  <option value="">Select Time</option>
                   <option value="9am">9:00am</option>
                   <option value="10am">10:00am</option>
                   <option value="11am">11:00am</option>
@@ -428,7 +429,7 @@ const Shipping = ({ handleLogout }) => {
                 </select>
               </div>
 
-              <div className="input-group input-group-sm col-sm-3 pl-5">
+              <div className="input-group input-group-sm col-md-3 pl-3">
                 <div className="form-group custom-control custom-checkbox">
                   <input type="checkbox" className="custom-control-input" name="saturday_deliv" />
                   <label htmlFor="saturday" className="custom-control-label">Saturday?</label>
@@ -437,18 +438,19 @@ const Shipping = ({ handleLogout }) => {
             </div>
 
             <div className ="form-row">
-              <label htmlFor="fob" className="col-sm-2 col-form-label">FOB</label>
-              <div className="input-group input-group-sm mb-3 col-sm-3">
+              <label htmlFor="fob" className="col-md-3 col-form-label">FOB</label>
+              <div className="input-group input-group-sm mb-3 col-md-3">
                 <select onChange={(e) => setFob(e.target.value)}className="form-control" name="fob" id="fob" required>
-                  <option value="option" selected="selected">Point of Shipment</option>
+                  <option value="">Select Option</option>
+                  <option value="point of shipment">Point of Shipment</option>
                   <option value="none">None</option>
                 </select>
               </div>
             </div>
 
             <div className="form-row">
-              <label htmlFor="notes" className="col-sm-2 col-form-label">Notes</label>
-              <div className="input-group input-group-sm mb-3 col-sm-10">
+              <label htmlFor="notes" className="col-md-3 col-form-label">Notes</label>
+              <div className="input-group input-group-sm mb-3 col-md-8">
                 <textarea onChange={(e) => setNotes(e.target.value)} rows="4" cols="50" className="form-control" name="notes" id="custom-area" />
               </div>
             </div>
@@ -458,39 +460,43 @@ const Shipping = ({ handleLogout }) => {
             <div className="section-headers">
                 <h5>Order Details</h5>
             </div>
+          </div>
 
-            <div className="order-detail">
-              <label htmlFor="item" className="col-md-3 col-form-label">Item</label>
-              <label htmlFor="total-order" className="col-md-3 col-form-label">Total of Order</label>
-              <label htmlFor="already-ordered" className="col-md-3 col-form-label">Already Ordered</label>
-              <label htmlFor="ship-to-address" className="col-md-3 col-form-label">Ship to This Address</label>
-            </div>
+          <div className="order-detail">
             <div className="form-row">
-              <div className="input-group input-group-sm mb-3 col-sm-3">
-                <input type="text" className="form-control" 
-                  id="search-dir" readOnly></input>
+              <div className="input-group input-group-sm mb-3 col-md-3">
+                <div className="col">
+                  <label htmlFor="item">Item</label>
+                  <input type="text" className="form-control" id="search-dir" readOnly></input>
+                </div>
               </div>
-              <div className="input-group input-group-sm mb-3 col-sm-3">
-                <input type="text" className="form-control" 
-                  id="search-dir" readOnly></input>
+              <div className="input-group input-group-sm mb-3 col-md-3">
+                <div className="col">
+                  <label htmlFor="total-order">Total of Order</label>
+                  <input type="text" className="form-control" id="search-dir" readOnly></input>
+                </div>
               </div>
-              <div className="input-group input-group-sm mb-3 col-sm-3">
-                <input type="text" className="form-control" 
-                  id="search-dir" readOnly></input>
+              <div className="input-group input-group-sm mb-3 col-md-3">
+                <div className="col">
+                  <label htmlFor="already-ordered">Already Ordered</label>
+                  <input type="text" className="form-control" id="search-dir" readOnly></input>
+                </div>
               </div>
-              <div className="input-group input-group-sm mb-3 col-sm-3">
-                <input type="text" className="form-control" 
-                  id="search-dir" readOnly></input>
+              <div className="input-group input-group-sm mb-3 col-md-3">
+                <div className="col">
+                  <label htmlFor="ship-to-address">Ship to This Address</label>
+                  <input type="text" className="form-control" id="search-dir" readOnly></input>
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="Add/Cancel">
-            <button onClick = {submit} type="dd" id="add-company" className="btn btn-success m-2">Add</button>
-            <button type="Cancel" id="Cancel-company" className="btn btn-success m-2">Cancel</button>
+          <div className="add">
+            <button onClick = {submit} type="submit" id="add-company" className="btn btn-success m-2">Add</button>
           </div>
 
         </form>
+        <br></br>
         <button className="btn btn-outline-dark" onClick={() => navigate(-1)}>Home</button>
       </div>
       <footer className="footer">

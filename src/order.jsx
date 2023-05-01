@@ -322,7 +322,7 @@ const Order = ({ handleLogout }) => {
         Axios.get('http://localhost:3001/api/getCompanyData')
         .then(response => {
             const options = response.data.map(option => {
-                return { value: option.company_ID, label: option.company_ID + " — " + option.company_Name };
+                return { value: option.company_id, label: option.company_id + " — " + option.company_name };
             });
             setCompanyOptions(options);
         })
@@ -377,8 +377,7 @@ const Order = ({ handleLogout }) => {
 
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div className="navbar-nav">
-                        <Link className="nav-link pl-4" to="/">Home</Link>
-                        <Link className="nav-link">Settings</Link>
+                        <Link className="nav-link" to="/">Home</Link>
                     </div>
                 </div>
 
@@ -390,7 +389,7 @@ const Order = ({ handleLogout }) => {
                     <h2>ADD ORDER</h2>
                 </div>
 
-            <form onSubmit={submit}>
+            <form onSubmit={submit} autoComplete="off">
                 <div className="company-info pt-3">
                     <div className="section-headers">
                         <h5>ABSO - Absolute Media, Inc.</h5>

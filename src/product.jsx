@@ -45,7 +45,7 @@ const Product = ({ handleLogout }) => {
         const list = [...colorList];
         list[index][name] = value;
         setColorList(list);
-        console.log(list);
+        //console.log(list);
     };
     const [color_notes, setColorNotes] = useState(null);
     const [componentList, setComponentList] = useState([{ component: "" }]); 
@@ -72,26 +72,38 @@ const Product = ({ handleLogout }) => {
         const list = [...componentList];
         list[index]["component"] = e.value;
         setComponentList(list);
-        console.log(list);
+        //console.log(list);
 
         const list2 = [...selectedComponent];
         list2[index]["value"] = e.value;
         list2[index]["label"] = e.label;
         setSelectedComponent(list2);
-        console.log(list2);
+        //console.log(list2);
     };
     const [packaging_notes, setPackNotes] = useState(null);
     const [product_notes, setProductNotes] = useState(null);
     const [product_status, setProductStatus] = useState(null);
     
+    useEffect(() => {
+        const allColorsHave = colorList.length > 0 && colorList.every((item) => {
+            return item.color;
+        });
+        const allComponentsHave = componentList.length > 0 && componentList.every((item) => {
+            return item.component;
+        });
+        const shouldIncludeColor = colorList.length > 1;
+        const shouldIncludeComponent = componentList.length > 1;
+
+        setSubmitting(customer_id && product_category && product_title && 
+            (!shouldIncludeColor || allColorsHave) && 
+            (!shouldIncludeComponent || allComponentsHave)
+        );
+    }, [customer_id, product_category, product_title, colorList, componentList]);
+
     const Sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
     const [submitting, setSubmitting] = useState(false);
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (submitting) {
-            return; // prevent duplicate submission
-        }
-        setSubmitting(true);
         await Axios.post("http://localhost:3001/api/insertProduct", 
         {
             old_abs_id: old_abs_id,
@@ -121,10 +133,11 @@ const Product = ({ handleLogout }) => {
             packaging_notes: packaging_notes,
             product_notes: product_notes,
             product_status: product_status
+        }).then(()=> {
+            alert('Inserted new product');
         }).catch(err => {
             console.log(err);
         });
-        setSubmitting(false);
     }
 
     const handleNavigate = async (pId) => {
@@ -150,7 +163,7 @@ const Product = ({ handleLogout }) => {
         Axios.get('http://localhost:3001/api/getCompanyData')
         .then(response => {
             const options = response.data.map(option => {
-                return { value: option.company_ID, label: option.company_ID + " — " + option.company_Name };
+                return { value: option.company_id, label: option.company_id + " — " + option.company_name };
             });
             setCustomerOptions(options);
         })
@@ -162,6 +175,9 @@ const Product = ({ handleLogout }) => {
     const [selectedComponent, setSelectedComponent] = useState([{ value: "", label: "" }]);
     const [componentOptions, setComponentOptions] = useState([]);
     useEffect(() => {
+        setComponentList([{ component: "" }]);
+        setNumOfComponents(1);
+        setSelectedComponent([{ value: "", label: "" }]);
         Axios.get('http://localhost:3001/api/getComponentData')
         .then(response => {
             const options = response.data.map(option => {
@@ -176,6 +192,7 @@ const Product = ({ handleLogout }) => {
         .catch(error => {
             console.log(error);
         });
+        
     }, [customer_id]);
 
     const customStyle = {
@@ -240,10 +257,8 @@ const Product = ({ handleLogout }) => {
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div className="navbar-nav">
                         <Link className="nav-link" to="/">Home</Link>
-                        <Link className="nav-link">Settings</Link>
                     </div>
                 </div>
-
                 <button className="btn btn-outline-light" onClick={handleLogout}>Logout</button>
             </nav>
 
@@ -268,7 +283,7 @@ const Product = ({ handleLogout }) => {
                         <div className="form-row">
                             <label htmlFor="old_abs_id" className="col-3 col-form-label">Old ABS ID</label>
                             <div className="input-group input-group-sm mb-3 col-md-2">
-                                <input onChange={(e) => setOldID(e.target.value.toUpperCase())} type="text" className="form-control" id="old_abs_id" />
+                                <input onChange={(e) => setOldID(e.target.value.toUpperCase())} type="text" className="form-control" id="old_abs_id" maxLength = "50"/>
                             </div>
                         </div>
 
@@ -278,7 +293,7 @@ const Product = ({ handleLogout }) => {
                                 <div className="form-control p-0">
                                     <Select onChange={(e) => setCustomerID(e.value)} className="react-select" styles={customStyle} value={customerOptions.filter(function(option) {
                                         return option.value === customer_id;
-                                    })} minLength="4" maxLength="4" id="customer_id" required options={customerOptions}/>
+                                    })} id="customer_id" required options={customerOptions}/>
                                 </div>
                             </div>
                         </div>
@@ -308,7 +323,7 @@ const Product = ({ handleLogout }) => {
                         <div className="form-row">
                             <label htmlFor="oem_product_id" className="col-md-3 col-form-label">OEM Product ID</label>
                             <div className="input-group input-group-sm mb-3 col-md-2">
-                                <input onChange={(e) => setOemID(e.target.value.toUpperCase())} type="text" className="form-control" id="oem_product_id" />
+                                <input onChange={(e) => setOemID(e.target.value.toUpperCase())} type="text" className="form-control" id="oem_product_id" maxLength = "50"/>
                             </div>
                         </div>
 
@@ -317,7 +332,7 @@ const Product = ({ handleLogout }) => {
                         <div className="form-row">
                             <label htmlFor="product_title" className="col-md-3 col-form-label">Title <span style={{ color: 'red' }}>*</span></label>
                             <div className="input-group input-group-sm mb-3 col-md-8">
-                                <input onChange={(e) => setTitle(e.target.value)} type="text" className="form-control" id="product_title" required/>
+                                <input onChange={(e) => setTitle(e.target.value)} type="text" className="form-control" id="product_title" maxLength = "100" required/>
                             </div>
                         </div>
 
@@ -372,14 +387,14 @@ const Product = ({ handleLogout }) => {
                         <div className="form-row">
                             <label htmlFor="master_label" className="col-md-3 col-form-label">Master Label</label>
                             <div className="input-group input-group-sm mb-3 col-md-8">
-                                <input onChange={(e) => setMasterLabel(e.target.value)} type="text" className="form-control" id="master_label" />
+                                <input onChange={(e) => setMasterLabel(e.target.value)} type="text" className="form-control" id="master_label" maxLength = "50"/>
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="master_capacity" className="col-md-3 col-form-label">Master Capacity</label>
                             <div className="input-group input-group-sm mb-3 col-md-8">
-                                <input onChange={(e) => setMasterCapacity(e.target.value)} type="text" className="form-control" id="master_capacity" />
+                                <input onChange={(e) => setMasterCapacity(e.target.value)} type="text" className="form-control" id="master_capacity"  maxLength = "50"/>
                             </div>
                         </div>
 
@@ -417,33 +432,31 @@ const Product = ({ handleLogout }) => {
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="date_code_required" className="col-form-label col-sm-3 float-sm-left pt-1 mb-2">Date Code Required?</label>
-                            
-                            <div className="custom-control custom-checkbox col-sm-6 float-sm-left pt-1 mb-2 ml-2">
+                            <label htmlFor="date_code_required" className="col-form-label col-md-3 float-sm-left pt-1 mb-2">Date Code Required?</label>
+                            <div className="custom-control custom-checkbox col-md-6 float-md-left pt-1 mb-2 ml-2">
                                 <input onChange={(prev) => setDateRequired(prev => !prev)} checked={date_code_required} type="checkbox" className="custom-control-input" id="date_code_required" />
                                 <label className="custom-control-label" htmlFor="date_code_required"></label>
-                            </div>
-                                    
+                            </div>  
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="date_code_position" className="col-md-3 col-form-label">Date Code Position</label>
                             <div className="input-group input-group-sm mb-3 col-md-8">
-                                <input onChange={(e) => setDatePosition(e.target.value)} type="text" className="form-control" id="date_code_position" />
+                                <input onChange={(e) => setDatePosition(e.target.value)} type="text" className="form-control" id="date_code_position" maxLength = "50"/>
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="inner_hub" className="col-md-3 col-form-label">Inner Hub</label>
                             <div className="input-group input-group-sm mb-3 col-md-8">
-                                <input onChange={(e) => setInnerHub(e.target.value)} type="text" className="form-control" id="inner_hub" />
+                                <input onChange={(e) => setInnerHub(e.target.value)} type="text" className="form-control" id="inner_hub" maxLength = "50"/>
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="inner_hub_position" className="col-md-3 col-form-label">Inner Hub Position</label>
                             <div className="input-group input-group-sm mb-3 col-md-8">
-                                <input onChange={(e) => setInnerPos(e.target.value)} type="text" className="form-control" id="inner_hub_position" />
+                                <input onChange={(e) => setInnerPos(e.target.value)} type="text" className="form-control" id="inner_hub_position" maxLength = "50"/>
                             </div>
                         </div>
                     </div>
@@ -485,10 +498,10 @@ const Product = ({ handleLogout }) => {
                                             {colorList.length > 1 ? 
                                             <input className="form-control field" 
                                             name="color" type="text" id="color" required value={singleColor.color}
-                                            onChange={(e) => handleColorChange(e, index)}/> 
+                                            onChange={(e) => handleColorChange(e, index)} maxLength = "50"/> 
                                             : <input className="form-control field" 
                                             name="color" type="text" id="color" value={singleColor.color}
-                                            onChange={(e) => handleColorChange(e, index)}/>}
+                                            onChange={(e) => handleColorChange(e, index)} maxLength = "50"/>}
                                         </div>
                                         <div>
                                             {colorList.length > 0 && 
@@ -532,59 +545,65 @@ const Product = ({ handleLogout }) => {
                         <br></br>
 
                         <div className="form-row">
-                            {customer_id !== null ? <>{componentList.length > 1 ? <h6 className="ml-2">Select a component for all fields added (*): </h6> : <h6 className="ml-2">Select a component or leave it blank (N/A): </h6>}</> 
-                            : <h6 className="ml-2">Select a customer first, before choosing any component options! </h6>}
+                            {customer_id !== null ? 
+                                <>
+                                    {componentList.length > 1 ? <h6 className="ml-2">Select a component for all fields added (*): </h6> 
+                                    : <h6 className="ml-2">Select a component or leave it blank (N/A): </h6>}
+                                </> 
+                                
+                                : <h6 className="ml-2">Select a customer in order to start choosing components! </h6>}
                         </div>
-                        {customer_id !== null ?
-                        <div className="dynamic-component-list">
-                            {componentList.map((singleComponent, index) => (
-                                <div key={index} className="components">
-                                    <div className="form-row">
-                                        <div className="input-group input-group col-10 mb-2">
-                                            <div className="input-group-prepend">
-                                                {componentList.length > 1 ? 
-                                                <strong><span className="input-group-text">Component #{index + 1}<span style={{ color: 'red' }}>*</span></span></strong> 
-                                                : <strong><span className="input-group-text">Component #{index + 1}</span></strong>}
+                        {customer_id !== null && componentOptions.length !== 0 ?
+                            <div className="dynamic-component-list">
+                                {componentList.map((singleComponent, index) => (
+                                    <div key={index} className="components">
+                                        <div className="form-row">
+                                            <div className="input-group input-group col-10 mb-2">
+                                                <div className="input-group-prepend">
+                                                    {componentList.length > 1 ? 
+                                                    <strong><span className="input-group-text">Component #{index + 1}<span style={{ color: 'red' }}>*</span></span></strong> 
+                                                    : <strong><span className="input-group-text">Component #{index + 1}</span></strong>}
+                                                </div>
+                                                <div className="form-control p-0">
+                                                    {componentList.length > 1 ? 
+                                                    <Select key={`${customer_id}-${index}`} onChange={(e) => handleComponentChange(e, index)} value={selectedComponent[index]}
+                                                    className="react-select" styles={customStyle} id="component" required options={componentOptions}/>
+                                                    : 
+                                                    <Select key={`${customer_id}-${index}`} onChange={(e) => handleComponentChange(e, index)} value={selectedComponent[index]}
+                                                    className="react-select" styles={customStyle} id="component" options={componentOptions}/>}
+                                                </div>
                                             </div>
-                                            <div className="form-control p-0">
-                                                {componentList.length > 1 ? 
-                                                <Select key={`${customer_id}-${index}`} onChange={(e) => handleComponentChange(e, index)} value={selectedComponent[index]}
-                                                className="react-select" styles={customStyle} id="component" required options={componentOptions}/>
-                                                : 
-                                                <Select key={`${customer_id}-${index}`} onChange={(e) => handleComponentChange(e, index)} value={selectedComponent[index]}
-                                                className="react-select" styles={customStyle} id="component" options={componentOptions}/>}
+                                            <div>
+                                                {componentList.length > 0 && 
+                                                (
+                                                    <button onClick={()=>clearComponentOne(index)} type="button" id="component_remove" 
+                                                    className="btn btn-outline-dark btn-sm mt-1 mr-1">Clear</button>
+                                                )}
+                                                {componentList.length > 1 && 
+                                                ( 
+                                                    <button onClick={()=>handleComponentRemove(index)} type="button" id="component_remove" 
+                                                    className="btn btn-outline-danger btn-sm mt-1">X</button>
+                                                )}
                                             </div>
                                         </div>
-                                        <div>
-                                            {componentList.length > 0 && 
-                                            (
-                                                <button onClick={()=>clearComponentOne(index)} type="button" id="component_remove" 
-                                                className="btn btn-outline-dark btn-sm mt-1 mr-1">Clear</button>
-                                            )}
-                                            {componentList.length > 1 && 
-                                            ( 
-                                                <button onClick={()=>handleComponentRemove(index)} type="button" id="component_remove" 
-                                                className="btn btn-outline-danger btn-sm mt-1">X</button>
-                                            )}
+                                        <div className="form-row pl-2">
+                                                {componentList.length - 1 === index && componentList.length < 12 && 
+                                                (   
+                                                    <button onClick={handleComponentAdd} 
+                                                    type="button" className="btn btn-success btn-sm">Add Component</button>
+                                                )}
                                         </div>
                                     </div>
-                                    <div className="form-row pl-2">
-                                            {componentList.length - 1 === index && componentList.length < 12 && 
-                                            (   
-                                                <button onClick={handleComponentAdd} 
-                                                type="button" className="btn btn-success btn-sm">Add Component</button>
-                                            )}
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
+                                ))}
+                            </div>
+
                         :   <div className="form-row">
                                 <div className="input-group input-group col-10 mb-2">
                                     <div className="input-group-prepend">
                                         <strong><span className="input-group-text">Component #1</span></strong>
                                     </div>
                                     <div className="form-control p-0">
-                                        <Select className="react-select" styles={customStyle} id="component" options={componentOptions} placeholder="No options..."/>
+                                        <Select className="react-select" styles={customStyle} id="component" options={componentOptions} placeholder="No options available..."/>
                                     </div>
                                 </div>
                             </div> 
@@ -606,9 +625,9 @@ const Product = ({ handleLogout }) => {
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="product_status" className="col-md-3 col-form-label">Product Status <span style={{ color: 'red' }}>*</span></label>
+                            <label htmlFor="product_status" className="col-md-3 col-form-label">Product Status</label>
                             <div className="input-group input-group-sm mb-3 col-md-3">
-                                <select onChange={(e) => setProductStatus(e.target.value)} className="form-control" id="product_status" required>
+                                <select onChange={(e) => setProductStatus(e.target.value)} className="form-control" id="product_status">
                                     <option value="">Select Status</option>
                                     <option value="Current">Current</option>
                                     <option value="New">New</option>
@@ -619,7 +638,7 @@ const Product = ({ handleLogout }) => {
 
                     <br></br>
                     <div className="submit">
-                        <button type="submit" onClick={() => handleNavigate(nextNewProductId)} id="add_product" className="btn btn-success" disabled={submitting}>{submitting ? 'Submitting...' : 'Submit'}</button>
+                        <button type="submit" onClick={() => handleNavigate(nextNewProductId)} disabled={!submitting} id="add_product" className="btn btn-success">Submit</button>
                     </div>
 
                 </form>

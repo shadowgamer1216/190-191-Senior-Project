@@ -21,10 +21,31 @@ app.listen(3001, () =>{
     console.log("Running on port 3001");
 });
 
+// LATEST CONTACT ID - GET API <=
+app.get("/api/getLatestContactId", (req, res) => {
+    db.query ("SELECT MAX(contact_id) FROM contact_table", (err, result) =>{
+        if (err) throw err;
+        res.send(result);
+    });
+});
+
+// CONTACT INFO BY ID - GET API <=
+app.get("/api/contact/:contact_id", (req, res) => {
+    const contact_id = req.params.contact_id;
+    db.query("SELECT * FROM contact_table WHERE contact_id = ?", [contact_id], (err, result) =>{
+        if (err) {
+            console.error(err);
+            res.status(500).send('Error retrieving contact data');
+        } else {
+            res.send(result[0]);
+        }
+    });
+});
+
 // CONTACT PAGE - POST API =>
 app.post("/api/insertContact", (req, res)=> {
-    const customer_id = req.body.customer_id;
-    const company = req.body.company;
+    const company_id = req.body.company_id;
+    const company_name = req.body.company_name;
     const fname = req.body.fname;
     const lname = req.body.lname;
     const contact_type = req.body.contact_type;
@@ -41,13 +62,13 @@ app.post("/api/insertContact", (req, res)=> {
     const fax = req.body.fax;
     const email = req.body.fax;
     const cell_phone_number = req.body.cell_phone_number;
-    const third_party_compnay = req.body.third_party_company;
+    const third_party_company = req.body.third_party_company;
     const notes = req.body.notes;
 
 
-    const sqlInsert = "INSERT INTO contact_table (customer_id, company, fname, lname, contact_type, title, dept, add_1, add_2, city, state_in_country, zip, country, phone, extension, fax, email, cell_phone_number, third_party_company, notes) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    const sqlInsert = "INSERT INTO contact_table (company_id, company_name, fname, lname, contact_type, title, dept, add_1, add_2, city, state_in_country, zip, country, phone, extension, fax, email, cell_phone_number, third_party_company, notes) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-    db.query(sqlInsert, [customer_id, company, fname, lname, contact_type, title, dept, add_1, add_2, city, state_in_country, zip, country, phone, extension, fax, email, cell_phone_number, third_party_compnay, notes], (err, result)=>{
+    db.query(sqlInsert, [company_id, company_name, fname, lname, contact_type, title, dept, add_1, add_2, city, state_in_country, zip, country, phone, extension, fax, email, cell_phone_number, third_party_company, notes], (err, result)=>{
         console.log(result);
     
     });
@@ -256,7 +277,7 @@ app.get("/api/getLatestProductId", (req, res) => {
 
 // COMPANY TABLE INFO - GET API <=
 app.get("/api/getCompanyData", (req, res) => {
-    db.query ("SELECT company_ID, company_Name FROM company_table", (err, result) =>{
+    db.query ("SELECT company_id, company_name FROM company_table", (err, result) =>{
         if (err) throw err;
         res.send(result);
     });
@@ -271,23 +292,24 @@ app.get("/api/getComponentData", (req, res) => {
 });
 
 app.get("/api/getSearchContact", (req, res) =>{
-    const customer_id = req.body.customer_id;
-    const company = req.body.company;
+    const company_id = req.body.company_id;
+    const company_name = req.body.company_name;
 
-    if (!company) { //Looking via customer id
-        db.query("SELECT * FROM contact_table WHERE customer_id = ?", [customer_id], (err, result) =>{
+    if (!company_name) { //Looking via company id
+        db.query("SELECT * FROM contact_table WHERE company_id = ?", [company_id], (err, result) =>{
             if (err) throw err;
             res.send(result);
         });
-    } else if (!customer_id) { //looking via company name
-        db.query("SELECT * FROM contact_table WHERE company = ?", [company], (err, result) =>{
+    } else if (!company_id) { //looking via company name
+        db.query("SELECT * FROM contact_table WHERE company_name = ?", [company_name], (err, result) =>{
             if (err) throw err;
             res.send(result);
         });
-    } else if (!company && !customer_id) { //invalid 
+    } else if (!company_name && !company_id) { //invalid 
+        const err = new Error('Invalid request');
         throw err;
     } else { //search with both criteria 
-        db.query("SELECT * FROM contact_table WHERE customer_id = ? AND company = ?", [customer_id, company], (err, result) =>{
+        db.query("SELECT * FROM contact_table WHERE company_id = ? AND company_name = ?", [company_id, company_name], (err, result) =>{
             if (err) throw err;
             res.send(result);
         });
@@ -295,23 +317,24 @@ app.get("/api/getSearchContact", (req, res) =>{
 });
 
 app.get("/api/getSearchCompany", (req, res) =>{
-    const company_ID = req.body.company_ID;
-    const company_Name = req.body.company_Name;
+    const company_id = req.body.company_id;
+    const company_name = req.body.company_name;
 
-    if (!company_Name) { //Looking via comapny id
-        db.query("SELECT * FROM company_table WHERE company_ID = ?", [company_ID], (err, result) =>{
+    if (!company_name) { //Looking via comapny id
+        db.query("SELECT * FROM company_table WHERE company_id = ?", [company_id], (err, result) =>{
             if (err) throw err;
             res.send(result);
         });
-    } else if (!company_ID) { //looking via company name
-        db.query("SELECT * FROM company_table WHERE company_Name = ?", [company_Name], (err, result) =>{
+    } else if (!company_id) { //looking via company name
+        db.query("SELECT * FROM company_table WHERE company_name = ?", [company_name], (err, result) =>{
             if (err) throw err;
             res.send(result);
         });
-    } else if (!company_Name && !company_ID) { //invalid 
+    } else if (!company_name && !company_id) { //invalid 
+        const err = new Error('Invalid request');
         throw err;
     } else { //search with both criteria 
-        db.query("SELECT * FROM company_table WHERE company_ID = ? AND company_Name = ?", [company_ID, company_Name], (err, result) =>{
+        db.query("SELECT * FROM company_table WHERE company_id = ? AND company_name = ?", [company_id, company_name], (err, result) =>{
             if (err) throw err;
             res.send(result);
         });
@@ -319,7 +342,7 @@ app.get("/api/getSearchCompany", (req, res) =>{
 });
 
 // PRODUCT INFO BY ID - GET API <=
-app.get("/api/products/:product_id", (req, res) => {
+app.get("/api/product/:product_id", (req, res) => {
     const product_id = req.params.product_id;
     db.query("SELECT * FROM product_table WHERE product_id = ?", [product_id], (err, result) =>{
         if (err) {
@@ -425,7 +448,7 @@ app.get("/api/location/:id", (req, res) => {
     db.query("SELECT * FROM location_table WHERE id = ?", [id], (err, result) =>{
         if (err) {
             console.error(err);
-            res.status(500).send('Error retrieving locaiton data');
+            res.status(500).send('Error retrieving location data');
         } else {
             res.send(result[0]);
         }
@@ -488,6 +511,19 @@ app.get("/api/getLatestComponentId", (req, res) => {
     });
 });
 
+// COMPONENT INFO BY ID - GET API <=
+app.get("/api/component/:component_id", (req, res) => {
+    const component_id = req.params.component_id;
+    db.query("SELECT * FROM component_table WHERE component_id = ?", [component_id], (err, result) =>{
+        if (err) {
+            console.error(err);
+            res.status(500).send('Error retrieving component data');
+        } else {
+            res.send(result[0]);
+        }
+    });
+});
+
 // COMPONENT PAGE - POST API =>
 app.post("/api/insertComponent", (req, res) =>{
     /*------------------------------------------ Component Page ------------------------------------------*/
@@ -547,35 +583,48 @@ app.post("/api/insertShipping", (req, res) =>{
     })
 });
 
+// COMPANY INFO BY ID - GET API <=
+app.get("/api/company/:company_id", (req, res) => {
+    const company_id = req.params.company_id;
+    db.query("SELECT * FROM company_table WHERE company_id = ?", [company_id], (err, result) =>{
+        if (err) {
+            console.error(err);
+            res.status(500).send('Error retrieving company data');
+        } else {
+            res.send(result[0]);
+        }
+    });
+});
+
 // COMPANY PAGE - POST API =>
 //--------------------Company page----------------------
 app.post("/api/insertCompany" , (req, res) =>{
 
-    const company_ID = req.body.company_ID;
-    const company_Name  = req.body.company_Name;
+    const company_id = req.body.company_id;
+    const company_name  = req.body.company_name;
     const addr1 = req.body.addr1;
     const addr2 = req.body.addr2;
     const city = req.body.city;
     const state = req.body.state;
     const country = req.body.country;
     const zip = req.body.zip;
-    const Salesperson = req.body.Salesperson;
+    const salesperson = req.body.salesperson;
     const phone = req.body.phone;
-    const Extension = req.body.Extension;
+    const extension = req.body.extension;
     const fax = req.body.fax;
     const email = req.body.email;
-    const Web_addr = req.body.Web_addr;
-    const Tax_ID = req.body.Tax_ID;
-    const Resale = req.body.Resale;
+    const web_addr = req.body.web_addr;
+    const tax_id = req.body.tax_id;
+    const resale = req.body.resale;
     const status = req.body.status;
     const customer = req.body.customer;
     const vendor = req.body.vendor;
-    const Other = req.body.Other;
+    const other = req.body.other;
     const notes = req.body.notes;
 
 
-     const sqlInsert = "INSERT INTO company_table (company_ID, company_Name, addr1, addr2, city, state, country, zip, Salesperson, phone, Extension, fax, email, Web_addr, Tax_ID, Resale, status, customer, vendor, Other, notes) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-     db.query(sqlInsert, [company_ID, company_Name, addr1, addr2, city, state, country, zip, Salesperson, phone, Extension, fax, email, Web_addr, Tax_ID, Resale, status, customer, vendor, Other, notes], (err, result) => {
+     const sqlInsert = "INSERT INTO company_table (company_id, company_name, addr1, addr2, city, state, country, zip, salesperson, phone, extension, fax, email, web_addr, tax_id, resale, status, customer, vendor, other, notes) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+     db.query(sqlInsert, [company_id, company_name, addr1, addr2, city, state, country, zip, salesperson, phone, extension, fax, email, web_addr, tax_id, resale, status, customer, vendor, other, notes], (err, result) => {
          console.log(result);
      });
 });

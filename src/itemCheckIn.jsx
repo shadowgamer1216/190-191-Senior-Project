@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import './App.css'
 import { Link, useNavigate } from "react-router-dom"
 import Axios from "axios";
+import Select from "react-select";
 
 const ItemCheckIn = ({ handleLogout }) => {
     const navigate = useNavigate();
@@ -15,15 +16,11 @@ const ItemCheckIn = ({ handleLogout }) => {
     const [signed_for_by, setSignedForBy] = useState(null);
     const [date_in, setDateIn] = useState(null);
     const [date_complete, setDateComplete] = useState(null);
+
     const Sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
     const [submitting, setSubmitting] = useState(false);
-
     const submit = async(e) => {
         e.preventDefault();
-        if (submitting) {
-            return; // prevent duplicate submission
-        }
-        setSubmitting(true);
         await Axios.post("http://localhost:3001/api/insertItem", {
             customer_id: customer_id, 
             item_id: item_id, 
@@ -38,8 +35,11 @@ const ItemCheckIn = ({ handleLogout }) => {
         }).catch(err => {
             console.log(err);
         });
-        setSubmitting(false);
     };
+
+    useEffect(() => {
+        setSubmitting(customer_id && item_id && quantity);
+    }, [customer_id, item_id, quantity]);
 
     const handleNavigate = async (id) => {
         const idPassed = id.toString();
@@ -59,6 +59,64 @@ const ItemCheckIn = ({ handleLogout }) => {
         });
     }, []);
 
+    const [itemOptions, setItemOptions] = useState([]);
+    useEffect(() => {
+        Axios.get('http://localhost:3001/api/getComponentData')
+        .then(response => {
+            const options = response.data.map(option => {
+                return { value: option.component_id, label: option.component_id + " — " + option.title + " (" + option.component_type + ")"};
+            });
+            setItemOptions(options);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    }, []);
+
+    const [customerOptions, setCustomerOptions] = useState([]);
+    useEffect(() => {
+        Axios.get('http://localhost:3001/api/getCompanyData')
+        .then(response => {
+            const options = response.data.map(option => {
+                return { value: option.company_id, label: option.company_id + " — " + option.company_name };
+            });
+            setCustomerOptions(options);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    }, []);
+
+    const customStyle = {
+        control: base => ({
+            ...base,
+            height: 38,
+            minHeight: 38,
+            fontSize: '16px',
+            backgroundColor: '#E2EAFF',
+        }),
+        valueContainer: (base, state) => ({
+            ...base,
+            borderWidth: 1,
+            borderTopLeftRadius: 4,
+            borderBottomLeftRadius: 4,
+            paddingLeft: 10,
+            paddingBottom: 5,
+        }),
+        option: base => ({
+            ...base,
+            fontSize: '14px',
+        }),
+        menuPortal: (base) => ({
+            ...base,
+            zIndex: 9999,
+        }),
+        placeholder: (base, state) => ({
+            ...base,
+            overflow: 'hidden',
+        }),
+    };
+
     return (
         <div className="page">
             <nav className="navbar navbar-expand-lg navbar-dark bg-maroon">
@@ -70,8 +128,7 @@ const ItemCheckIn = ({ handleLogout }) => {
 
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div className="navbar-nav">
-                        <Link className="nav-link pl-4" to="/">Home</Link>
-                        <Link className="nav-link">Settings</Link>
+                        <Link className="nav-link" to="/">Home</Link>
                     </div>
                 </div>
 
@@ -94,44 +151,46 @@ const ItemCheckIn = ({ handleLogout }) => {
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="customer-id" className="col-sm-2 col-form-label">Customer ID <span style={{ color: 'red' }}>*</span> </label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="customer-id" onChange={(e) =>{
-                                    setCustomerID(e.target.value)
-                                }} minLength = "4" maxLength = "4" required/>
+                            <label htmlFor="customer_id" className="col-3 col-form-label">Customer ID <span style={{ color: 'red' }}>*</span></label>
+                            <div className="input-group input-group mb-3 col-md-8">
+                                <div className="form-control p-0">
+                                    <Select onChange={(e) => setCustomerID(e.value)} className="react-select" styles={customStyle} value={customerOptions.filter(function(option) {
+                                        return option.value === customer_id;
+                                    })} id="customer_id" required options={customerOptions}/>
+                                </div>
                             </div>
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="item-id" className="col-sm-2 col-form-label">Item ID</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="item-id" onChange={(e) =>{
-                                    setItemID(e.target.value)
-                                }}/>
+                            <label htmlFor="item-id" className="col-md-3 col-form-label">Item ID <span style={{ color: 'red' }}>*</span></label>
+                            <div className="input-group input-group mb-3 col-md-8">
+                                <div className="form-control p-0">
+                                    <Select onChange={(e) => setItemID(e.value)} className="react-select" styles={customStyle} value={itemOptions.filter(function(option) {
+                                        return option.value === item_id;
+                                    })} id="item_id" required options={itemOptions}/>
+                                </div>
                             </div>
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="mfr-pn" className="col-sm-2 col-form-label">MFR PN</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
+                            <label htmlFor="mfr-pn" className="col-md-3 col-form-label">MFR PN</label>
+                            <div className="input-group input-group-sm mb-3 col-md-8">
                                 <input type="text" className="form-control" id="mfr-pn" onChange={(e) =>{
                                     setMfrPn(e.target.value)
-                                }}/>
+                                }} maxLength = "50"/>
                             </div>
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="description" className="col-sm-2 col-form-label">Description</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="description" onChange={(e) =>{
-                                    setDescription(e.target.value)
-                                }} />
+                            <label htmlFor="description" className="col-md-3 col-form-label">Description</label>
+                            <div className="input-group input-group-sm mb-3 col-md-8">
+                                <textarea onChange={(e) => setDescription(e.target.value)} rows="4" cols="50" className="form-control" id="description" />
                             </div>
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="carrier" className="col-sm-2 col-form-label">Carrier</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
+                            <label htmlFor="carrier" className="col-md-3 col-form-label">Carrier</label>
+                            <div className="input-group input-group-sm mb-3 col-md-8">
                                 <input type="text" className="form-control" id="carrier" onChange={(e) =>{
                                     setCarrier(e.target.value)
                                 }}/>
@@ -139,22 +198,22 @@ const ItemCheckIn = ({ handleLogout }) => {
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="quantity" className="col-sm-2 col-form-label">Quantity <span style={{ color: 'red' }}>*</span> </label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="quantity" onChange={(e) =>{
+                            <label htmlFor="quantity" className="col-md-3 col-form-label">Quantity <span style={{ color: 'red' }}>*</span> </label>
+                            <div className="input-group input-group-sm mb-3 col-md-2">
+                                <input type="number" className="form-control" id="quantity" onChange={(e) =>{
                                     setQuantity(e.target.value)
                                 }} required/>
                             </div>
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="disposition" className="col-sm-2 col-form-label">Disposition</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-3">
+                            <label htmlFor="disposition" className="col-md-3 col-form-label">Disposition</label>
+                            <div className="input-group input-group-sm mb-3 col-md-3">
                                 <select className="form-control" name="disposition" id="disposition" onChange={(e) =>{
                                     setDisposition(e.target.value)
                                 }}>
-                                    <option selected value="">Select Value</option>
-                                    <option value="Recieving">Recieving</option>
+                                    <option value="">Select Option</option>
+                                    <option value="Recieving">Receiving</option>
                                     <option value="Delivered to Production">Delivered to Production</option>
                                     <option value="Inventory">Inventory</option>
                                     <option value="Rep Notified">Rep Notified</option>
@@ -163,8 +222,8 @@ const ItemCheckIn = ({ handleLogout }) => {
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="signed-for-by" className="col-sm-2 col-form-label">Signed For By</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
+                            <label htmlFor="signed-for-by" className="col-md-3 col-form-label">Signed For By</label>
+                            <div className="input-group input-group-sm mb-3 col-md-8">
                                 <input type="text" className="form-control" id="signed-for-by" onChange={(e) =>{
                                     setSignedForBy(e.target.value)
                                 }}/>
@@ -172,8 +231,8 @@ const ItemCheckIn = ({ handleLogout }) => {
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="date-in" className="col-sm-2 col-form-label">Date In</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-3">
+                            <label htmlFor="date-in" className="col-md-3 col-form-label">Date In</label>
+                            <div className="input-group input-group-sm mb-3 col-md-3">
                                 <input type="datetime-local" className="form-control" name="date-in" id="date-in" onChange={(e) =>{
                                     setDateIn(e.target.value)
                                 }}/>
@@ -181,8 +240,8 @@ const ItemCheckIn = ({ handleLogout }) => {
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="date-completed" className="col-sm-2 col-form-label">Date Completed</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-3">
+                            <label htmlFor="date-completed" className="col-md-3 col-form-label">Date Completed</label>
+                            <div className="input-group input-group-sm mb-3 col-md-3">
                                 <input type="datetime-local" className="form-control" name="date-complete" id="date-complete" onChange={(e) =>{
                                     setDateComplete(e.target.value)
                                 }}/>
@@ -191,7 +250,7 @@ const ItemCheckIn = ({ handleLogout }) => {
                     </div>
 
                     <div className="submit p-3">
-                        <button onClick={() => handleNavigate(nextItemCheckInId)} type="submit" id="add-item" className="btn btn-success m-2">Submit</button>
+                        <button onClick={() => handleNavigate(nextItemCheckInId)} disabled={!submitting} type="submit" id="add-item" className="btn btn-success m-2">Submit</button>
                     </div>
                 </form>
 

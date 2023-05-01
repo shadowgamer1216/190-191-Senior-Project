@@ -25,8 +25,8 @@ const SearchCompany = () => {
     }, []);
 
     return (
-        <div class='page'>
-            <div class='HomePageBar'>
+        <div className='page'>
+            <div className='HomePageBar'>
             <nav className="navbar navbar-expand-lg navbar-dark bg-maroon">
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
@@ -36,12 +36,11 @@ const SearchCompany = () => {
 
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div className="navbar-nav">
-                        <Link className="nav-link pl-4" to="/">Home</Link>
-                        <Link className="nav-link">Settings</Link>
+                        <Link className="nav-link" to="/">Home</Link>
                     </div>
                 </div>
 
-                <button className="btn btn-outline-light">Sign In</button>
+                <button className="btn btn-outline-light">Logout</button>
             </nav>
 
             </div>
@@ -70,11 +69,11 @@ const SearchCompany = () => {
 
                         </div>
                     </div>
-                    <div class='mb-5'>
+                    <div className='mb-5'>
                         <button onClick = {submit} type="submit" id="search-contact" className="btn btn-outline-success">Search</button>
                     </div>
-                    <table class="table mt-5">
-                                    <thead class="thead-light">
+                    <table className="table mt-5">
+                                    <thead className="thead-light">
                                         <tr>
                                             <th scope ="col">Search Results</th>
                                         </tr>

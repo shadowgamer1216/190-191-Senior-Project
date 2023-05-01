@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import './App.css'
 import { Link, useNavigate } from "react-router-dom"
 import Axios from "axios";
+import Select from "react-select";
 
 const Location = ({ handleLogout }) => {
     const navigate = useNavigate()
@@ -14,9 +15,15 @@ const Location = ({ handleLogout }) => {
     const [notes, setNotes] = useState(null);
     const [data, setData] = useState([]);
     const date = new Date();
+
     const Sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
     const [submitting, setSubmitting] = useState(false);
 
+    useEffect(() => {
+        setSubmitting(location_id && location_type && item_id && physical_location);
+    }, [location_id, location_type, item_id, physical_location]);
+
+    
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5;
     const totalPages = Math.ceil(data.length / itemsPerPage);
@@ -43,10 +50,6 @@ const Location = ({ handleLogout }) => {
 
     const submit = async(e) => {
         e.preventDefault();
-        if (submitting) {
-            return; // prevent duplicate submission
-        }
-        setSubmitting(true);
         await Axios.post("http://localhost:3001/api/insertLocation", {
             location_id: location_id, 
             location_type: location_type, 
@@ -66,7 +69,6 @@ const Location = ({ handleLogout }) => {
         }).catch(err => {
             console.log(err);
         });
-        setSubmitting(false);
     };
 
     useEffect(() => {
@@ -93,6 +95,50 @@ const Location = ({ handleLogout }) => {
         });
     }, []);
 
+    const [itemOptions, setItemOptions] = useState([]);
+    useEffect(() => {
+        Axios.get('http://localhost:3001/api/getComponentData')
+        .then(response => {
+            const options = response.data.map(option => {
+                return { value: option.component_id, label: option.component_id + " — " + option.title + " (" + option.component_type + ")"};
+            });
+            setItemOptions(options);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    }, []);
+
+    const customStyle = {
+        control: base => ({
+            ...base,
+            height: 38,
+            minHeight: 38,
+            fontSize: '16px',
+            backgroundColor: '#E2EAFF',
+        }),
+        valueContainer: (base, state) => ({
+            ...base,
+            borderWidth: 1,
+            borderTopLeftRadius: 4,
+            borderBottomLeftRadius: 4,
+            paddingLeft: 10,
+            paddingBottom: 5,
+        }),
+        option: base => ({
+            ...base,
+            fontSize: '14px',
+        }),
+        menuPortal: (base) => ({
+            ...base,
+            zIndex: 9999,
+        }),
+        placeholder: (base, state) => ({
+            ...base,
+            overflow: 'hidden',
+        }),
+    };
+
     return (
         <div className="page">
             <nav className="navbar navbar-expand-lg navbar-dark bg-maroon">
@@ -104,8 +150,7 @@ const Location = ({ handleLogout }) => {
 
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div className="navbar-nav">
-                        <Link className="nav-link pl-4" to="/">Home</Link>
-                        <Link className="nav-link">Settings</Link>
+                        <Link className="nav-link" to="/">Home</Link>
                     </div>
                 </div>
 
@@ -124,22 +169,22 @@ const Location = ({ handleLogout }) => {
                         </div>
                        
                         <div className="form-row">
-                            <label htmlFor="location-id" className="col-sm-2 col-form-label">Location ID <span style={{ color: 'red' }}>*</span> </label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
+                            <label htmlFor="location-id" className="col-md-3 col-form-label">Location ID <span style={{ color: 'red' }}>*</span></label>
+                            <div className="input-group input-group-sm mb-3 col-md-2">
                                 <input type="number" className="form-control" id="location-id" onChange={(e) =>{
                                     setLocationID(e.target.value)
-                                }} required />
+                                }} required maxLength="50"/>
                                 
                             </div>
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="type" className="col-sm-2 col-form-label">Type <span style={{ color: 'red' }}>*</span> </label>
-                            <div className="input-group input-group-sm mb-3 col-sm-3">
+                            <label htmlFor="type" className="col-md-3 col-form-label">Type <span style={{ color: 'red' }}>*</span></label>
+                            <div className="input-group input-group-sm mb-3 col-md-3">
                                 <select className="form-control" name="type" id="type" onChange={(e) =>{
                                     setLocationType(e.target.value)
                                 }} required>
-                                    <option selected value="">Select Value</option>
+                                    <option value="">Select Type</option>
                                     <option value="Multiple Boxes">Multiple Boxes</option>
                                     <option value="Single Box">Single Box</option>
                                     <option value="Pallet">Pallet</option>
@@ -149,30 +194,32 @@ const Location = ({ handleLogout }) => {
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="item-id" className="col-sm-2 col-form-label">Item ID</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="number" className="form-control" id="item-id" onChange={(e) =>{
-                                    setItemID(e.target.value)
-                                }}/>
+                            <label htmlFor="item-id" className="col-md-3 col-form-label">Item ID <span style={{ color: 'red' }}>*</span></label>
+                            <div className="input-group input-group mb-3 col-md-8">
+                                <div className="form-control p-0">
+                                    <Select onChange={(e) => setItemID(e.value)} className="react-select" styles={customStyle} value={itemOptions.filter(function(option) {
+                                        return option.value === item_id;
+                                    })} id="item_id" required options={itemOptions}/>
+                                </div>
                             </div>
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="qty" className="col-sm-2 col-form-label">Qty</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
+                            <label htmlFor="qty" className="col-md-3 col-form-label">Quantity</label>
+                            <div className="input-group input-group-sm mb-3 col-md-2">
                                 <input type="number" className="form-control" id="qty" onChange={(e) =>{
                                     setQty(e.target.value)
-                                }}/>
+                                }} placeholder="0"/>
                             </div>
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="owner" className="col-sm-2 col-form-label">Owner</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-3">
+                            <label htmlFor="owner" className="col-md-3 col-form-label">Owner</label>
+                            <div className="input-group input-group-sm mb-3 col-md-3">
                                 <select className="form-control" name="owner" id="owner" onChange={(e) =>{
                                     setItemOwner(e.target.value)
                                 }}>
-                                    <option selected value="">Select Value</option>
+                                    <option value="">Select Option</option>
                                     <option value="ABS">ABS</option>
                                     <option value="Customer">Customer</option>
                                 </select>
@@ -180,12 +227,12 @@ const Location = ({ handleLogout }) => {
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="physical-location" className="col-sm-2 col-form-label">Physical Location <span style={{ color: 'red' }}>*</span> </label>
-                            <div className="input-group input-group-sm mb-3 col-sm-3">
+                            <label htmlFor="physical-location" className="col-md-3 col-form-label">Physical Location <span style={{ color: 'red' }}>*</span> </label>
+                            <div className="input-group input-group-sm mb-3 col-md-3">
                                 <select className="form-control" name="physical-location" id="physical-location" onChange={(e) =>{
                                     setPhysicalLocation(e.target.value)
                                 }} required>
-                                    <option selected value="">Select Value</option>
+                                    <option value="">Select Option</option>
                                     <option value="ABS">ABS</option>
                                     <option value="Customer">Customer</option>
                                 </select>
@@ -193,8 +240,8 @@ const Location = ({ handleLogout }) => {
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="notes" className="col-sm-2 col-form-label">Notes</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
+                            <label htmlFor="notes" className="col-md-3 col-form-label">Notes</label>
+                            <div className="input-group input-group-sm mb-3 col-md-8">
                                 <textarea rows="4" cols="50" className="form-control" name="notes" id="custom-area" onChange={(e) =>{
                                     setNotes(e.target.value)
                                 }}/>
@@ -204,7 +251,7 @@ const Location = ({ handleLogout }) => {
                     </div>
 
                     <div className="submit p-3">
-                        <button onClick={() => handleNavigate(nextLocationId)} type="submit" id="add-location" className="btn btn-success">Submit</button>
+                        <button onClick={() => handleNavigate(nextLocationId)} disabled={!submitting} type="submit" id="add-location" className="btn btn-success">Submit</button>
                     </div>
 
                 </form>
@@ -216,6 +263,7 @@ const Location = ({ handleLogout }) => {
                         </div>
                         {currentData.length > 0 && (
                             <>
+                            <div className="table-responsive-md">
                                 <table class="table">
                                     <thead class="thead-light">
                                         <tr>
@@ -243,6 +291,7 @@ const Location = ({ handleLogout }) => {
                                     <button type="button" class="btn btn-dark ml-2" onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
                                     <button type="button" class="btn btn-dark ml-2" onClick={handleLastPage} disabled={currentPage === totalPages}>Last</button>
                                 </div>
+                            </div>
                             </>
                         )}
                     </div>

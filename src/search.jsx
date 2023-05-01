@@ -16,9 +16,9 @@ const Search = () => {
     };
 
     return (
-        <div class='SearchPage'>
+        <div className='SearchPage'>
 
-            <div class='HomePageBar'>
+            <div className='HomePageBar'>
                 <nav className="navbar navbar-expand-lg navbar-dark bg-maroon">
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
@@ -28,8 +28,7 @@ const Search = () => {
 
                     <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                         <div className="navbar-nav">
-                            <Link className="nav-link pl-4" to="/">Home</Link>
-                            <Link className="nav-link">Settings</Link>
+                            <Link className="nav-link" to="/">Home</Link>
                         </div>
                     </div>
 
@@ -37,16 +36,16 @@ const Search = () => {
                 </nav>
             </div>
 
-            <div class='block1'>
+            <div className='block1'>
                 <Link to = "SearchCompany">
-                    <button type="button" id="Add Company" class="HomePageButton">Search Company</button>
+                    <button type="button" id="Add Company" className="HomePageButton">Search Company</button>
                 </Link>
                 <Link to = "SearchContact">
-                    <button type="button" id="Add Company" class="HomePageButton">Search Contact</button>
+                    <button type="button" id="Add Company" className="HomePageButton">Search Contact</button>
                 </Link>
             </div>
 
-            <button className="btn btn-outline-dark" class="HomePageButton" onClick={() => navigate("../")}>Home</button>
+            <button className="HomePageButton" onClick={() => navigate("../")}>Home</button>
 
       </div>
 

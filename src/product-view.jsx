@@ -11,7 +11,7 @@ const ProductView = ({ handleLogout }) => {
     const { product_id } = useParams();
     const [productData, setProductData] = useState(null);
     useEffect(() => {
-        Axios.get(`http://localhost:3001/api/products/${product_id}`)
+        Axios.get(`http://localhost:3001/api/product/${product_id}`)
         .then(response => {
             setProductData(response.data);
         })
@@ -20,47 +20,203 @@ const ProductView = ({ handleLogout }) => {
         });
     }, [product_id]);
 
-    const old_abs_id = productData?.old_abs_id ?? '';
-    const customer_id = productData?.customer_id ?? '';
-    const product_category = productData?.product_category ?? '';
-    const oem_product_id = productData?.oem_product_id ?? '';
-    const product_title = productData?.product_title ?? '';
-    const product_desc = productData?.product_desc ?? '';
-    const product_repl = productData?.product_repl ?? '';
-    const master_format = productData?.master_format ?? '';
+    var old_abs_id = productData?.old_abs_id ?? '';
+    var customer_id = productData?.customer_id ?? '';
+    const [customer_name, setCustomerName] = useState("");
+    useEffect(() => {
+        if(customer_id) {
+            Axios.get(`http://localhost:3001/api/company/${customer_id}`).then((response) =>{
+                setCustomerName(response.data.company_name);
+            }).catch(err => {
+                console.log(err);
+            });
+        }
+    }, [customer_id]);
+    var product_category = productData?.product_category ?? '';
+    var oem_product_id = productData?.oem_product_id ?? '';
+    var product_title = productData?.product_title ?? '';
+    var product_desc = productData?.product_desc ?? '';
+    var product_repl = productData?.product_repl ?? '';
+    var master_format = productData?.master_format ?? '';
     var master_received = productData?.master_received ?? '';
     master_received = master_received.slice(0, 10);
-    const master_label = productData?.master_label ?? '';
-    const master_capacity = productData?.master_capacity ?? '';
-    const master_loc = productData?.master_loc ?? '';
-    const films_loc = productData?.films_loc ?? '';
-    const date_code_required = productData?.date_code_required ?? 0;
-    const date_code_position = productData?.date_code_position ?? '';
-    const inner_hub = productData?.inner_hub ?? '';
-    const inner_hub_position = productData?.inner_hub_position ?? '';
-    const floodcoat = productData?.floodcoat ?? 0;
-    const rimage_print = productData?.rimage_print ?? 0;
-    const color1 = productData?.color1 ?? '';
-    const color2 = productData?.color2 ?? '';
-    const color3 = productData?.color3 ?? '';
-    const color4 = productData?.color4 ?? '';
-    const color5 = productData?.color5 ?? '';
-    const color6 = productData?.color6 ?? '';
-    const color7 = productData?.color7 ?? '';
-    const color8 = productData?.color8 ?? '';
-    const color_notes = productData?.color_notes ?? '';
-    const component1 = productData?.component1 ?? '';
-    const component2 = productData?.component2 ?? '';
-    const component3 = productData?.component3 ?? '';
-    const component4 = productData?.component4 ?? '';
-    const component5 = productData?.component5 ?? '';
-    const component6 = productData?.component6 ?? '';
-    const component7 = productData?.component7 ?? '';
-    const component8 = productData?.component8 ?? '';
-    const component9 = productData?.component9 ?? '';
-    const component10 = productData?.component10 ?? '';
-    const component11 = productData?.component11 ?? '';
-    const component12 = productData?.component12 ?? '';
+    var master_label = productData?.master_label ?? '';
+    var master_capacity = productData?.master_capacity ?? '';
+    var master_loc = productData?.master_loc ?? '';
+    var films_loc = productData?.films_loc ?? '';
+    var date_code_required = productData?.date_code_required ?? 0;
+    var date_code_position = productData?.date_code_position ?? '';
+    var inner_hub = productData?.inner_hub ?? '';
+    var inner_hub_position = productData?.inner_hub_position ?? '';
+    var floodcoat = productData?.floodcoat ?? 0;
+    var rimage_print = productData?.rimage_print ?? 0;
+    var color1 = productData?.color_1 ?? '';
+    var color2 = productData?.color_2 ?? '';
+    var color3 = productData?.color_3 ?? '';
+    var color4 = productData?.color_4 ?? '';
+    var color5 = productData?.color_5 ?? '';
+    var color6 = productData?.color_6 ?? '';
+    var color7 = productData?.color_7 ?? '';
+    var color8 = productData?.color_8 ?? '';
+    var color_notes = productData?.color_notes ?? '';
+    var component1 = productData?.component_1 ?? '';
+    var component2 = productData?.component_2 ?? '';
+    var component3 = productData?.component_3 ?? '';
+    var component4 = productData?.component_4 ?? '';
+    var component5 = productData?.component_5 ?? '';
+    var component6 = productData?.component_6 ?? '';
+    var component7 = productData?.component_7 ?? '';
+    var component8 = productData?.component_8 ?? '';
+    var component9 = productData?.component_9 ?? '';
+    var component10 = productData?.component_10 ?? '';
+    var component11 = productData?.component_11 ?? '';
+    var component12 = productData?.component_12 ?? '';
+
+    const [componentName1, setComponentName1] = useState(null);
+    const [componentType1, setComponentType1] = useState(null);
+    useEffect(() => {
+        if(component1) {
+            Axios.get(`http://localhost:3001/api/component/${component1}`).then((response) =>{
+                setComponentName1(response.data.title);
+                setComponentType1(response.data.component_type);
+            }).catch(err => {
+                console.log(err);
+            });
+        }
+    }, [component1]);
+    const [componentName2, setComponentName2] = useState(null);
+    const [componentType2, setComponentType2] = useState(null);
+    useEffect(() => {
+        if(component2) {
+            Axios.get(`http://localhost:3001/api/component/${component2}`).then((response) =>{
+                setComponentName2(response.data.title);
+                setComponentType2(response.data.component_type);
+            }).catch(err => {
+                console.log(err);
+            });
+        }
+    }, [component2]);
+    const [componentName3, setComponentName3] = useState(null);
+    const [componentType3, setComponentType3] = useState(null);
+    useEffect(() => {
+        if(component3) {
+            Axios.get(`http://localhost:3001/api/component/${component3}`).then((response) =>{
+                setComponentName3(response.data.title);
+                setComponentType3(response.data.component_type);
+            }).catch(err => {
+                console.log(err);
+            });
+        }
+    }, [component3]);
+    const [componentName4, setComponentName4] = useState(null);
+    const [componentType4, setComponentType4] = useState(null);
+    useEffect(() => {
+        if(component4) {
+            Axios.get(`http://localhost:3001/api/component/${component4}`).then((response) =>{
+                setComponentName4(response.data.title);
+                setComponentType4(response.data.component_type);
+            }).catch(err => {
+                console.log(err);
+            });
+        }
+    }, [component4]);
+    const [componentName5, setComponentName5] = useState(null);
+    const [componentType5, setComponentType5] = useState(null);
+    useEffect(() => {
+        if(component5) {
+            Axios.get(`http://localhost:3001/api/component/${component5}`).then((response) =>{
+                setComponentName5(response.data.title);
+                setComponentType5(response.data.component_type);
+            }).catch(err => {
+                console.log(err);
+            });
+        }
+    }, [component5]);
+    const [componentName6, setComponentName6] = useState(null);
+    const [componentType6, setComponentType6] = useState(null);
+    useEffect(() => {
+        if(component6) {
+            Axios.get(`http://localhost:3001/api/component/${component6}`).then((response) =>{
+                setComponentName6(response.data.title);
+                setComponentType6(response.data.component_type);
+            }).catch(err => {
+                console.log(err);
+            });
+        }
+    }, [component6]);
+    const [componentName7, setComponentName7] = useState(null);
+    const [componentType7, setComponentType7] = useState(null);
+    useEffect(() => {
+        if(component7) {
+            Axios.get(`http://localhost:3001/api/component/${component7}`).then((response) =>{
+                setComponentName7(response.data.title);
+                setComponentType7(response.data.component_type);
+            }).catch(err => {
+                console.log(err);
+            });
+        }
+    }, [component7]);
+    const [componentName8, setComponentName8] = useState(null);
+    const [componentType8, setComponentType8] = useState(null);
+    useEffect(() => {
+        if(component8) {
+            Axios.get(`http://localhost:3001/api/component/${component8}`).then((response) =>{
+                setComponentName8(response.data.title);
+                setComponentType8(response.data.component_type);
+            }).catch(err => {
+                console.log(err);
+            });
+        }
+    }, [component8]);
+    const [componentName9, setComponentName9] = useState(null);
+    const [componentType9, setComponentType9] = useState(null);
+    useEffect(() => {
+        if(component9) {
+            Axios.get(`http://localhost:3001/api/component/${component9}`).then((response) =>{
+                setComponentName9(response.data.title);
+                setComponentType9(response.data.component_type);
+            }).catch(err => {
+                console.log(err);
+            });
+        }
+    }, [component9]);
+    const [componentName10, setComponentName10] = useState(null);
+    const [componentType10, setComponentType10] = useState(null);
+    useEffect(() => {
+        if(component10) {
+            Axios.get(`http://localhost:3001/api/component/${component10}`).then((response) =>{
+                setComponentName10(response.data.title);
+                setComponentType10(response.data.component_type);
+            }).catch(err => {
+                console.log(err);
+            });
+        }
+    }, [component10]);
+    const [componentName11, setComponentName11] = useState(null);
+    const [componentType11, setComponentType11] = useState(null);
+    useEffect(() => {
+        if(component11) {
+            Axios.get(`http://localhost:3001/api/component/${component11}`).then((response) =>{
+                setComponentName11(response.data.title);
+                setComponentType11(response.data.component_type);
+            }).catch(err => {
+                console.log(err);
+            });
+        }
+    }, [component11]);
+    const [componentName12, setComponentName12] = useState(null);
+    const [componentType12, setComponentType12] = useState(null);
+    useEffect(() => {
+        if(component12) {
+            Axios.get(`http://localhost:3001/api/component/${component12}`).then((response) =>{
+                setComponentName12(response.data.title);
+                setComponentType12(response.data.component_type);
+            }).catch(err => {
+                console.log(err);
+            });
+        }
+    }, [component12]);
+
     const packaging_notes = productData?.packaging_notes ?? '';
     const product_notes = productData?.product_notes ?? '';
     const product_status = productData?.product_status ?? '';
@@ -77,7 +233,6 @@ const ProductView = ({ handleLogout }) => {
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div className="navbar-nav">
                         <Link className="nav-link" to="/">Home</Link>
-                        <Link className="nav-link">Settings</Link>
                     </div>
                 </div>
 
@@ -86,7 +241,7 @@ const ProductView = ({ handleLogout }) => {
 
             <div className="container p-5">
                 <div className="page-headers">
-                    <h2>VIEW PRODUCT (READ)</h2>
+                    <h2>[VIEW] PRODUCT</h2>
                 </div>
 
                 <form autoComplete="off">
@@ -112,8 +267,15 @@ const ProductView = ({ handleLogout }) => {
 
                             <div className="form-row">
                                 <label htmlFor="customer_id" className="col-md-3 col-form-label">Customer ID</label>
-                                <div className="input-group input-group-sm mb-3 col-md-8">
+                                <div className="input-group input-group-sm mb-3 col-md-2">
                                     <input type="text" readOnly className="form-control" id="customer_id" value={customer_id}/>
+                                </div>
+                            </div>
+
+                            <div className="form-row">
+                                <label htmlFor="customer_name" className="col-md-3 col-form-label">Customer Name</label>
+                                <div className="input-group input-group-sm mb-3 col-md-8">
+                                    <input type="text" readOnly className="form-control" id="customer_name" value={customer_name}/>
                                 </div>
                             </div>
 
@@ -198,7 +360,7 @@ const ProductView = ({ handleLogout }) => {
                                 <label htmlFor="date_code_required" className="col-form-label col-sm-3 float-sm-left pt-1 mb-2">Date Code Required: </label>
                                 
                                 <div className="custom-control custom-checkbox col-sm-6 float-sm-left pt-1 mb-2 ml-2">
-                                    <input checked={date_code_required} disabled type="checkbox" readOnly  className="custom-control-input" id="date_code_required" />
+                                    <input checked={date_code_required} disabled type="checkbox" readOnly className="custom-control-input" id="date_code_required" />
                                     <label className="custom-control-label" htmlFor="date_code_required"></label>
                                 </div>
                                         
@@ -331,7 +493,7 @@ const ProductView = ({ handleLogout }) => {
                                 {component1 ? 
                                 <div className="input-group input-group col-10 mb-2">
                                     <strong><span className="input-group-text">Component #1</span></strong>
-                                    <input type="text" readOnly className="form-control" id="component1" value={component1}/> 
+                                    <input type="text" readOnly className="form-control" id="component1" value={`${component1} — ${componentName1} (${componentType1})`}/> 
                                 </div>
                                 : 
                                 <div className="input-group input-group col-10 mb-2">
@@ -343,77 +505,77 @@ const ProductView = ({ handleLogout }) => {
                                 {component2 ? 
                                 <div className="input-group input-group col-10 mb-2">
                                     <strong><span className="input-group-text">Component #2</span></strong>
-                                    <input type="text" readOnly className="form-control" id="component2" value={component2}/> 
+                                    <input type="text" readOnly className="form-control" id="component2" value={`${component2} — ${componentName2} (${componentType2})`}/> 
                                 </div>
                                 : null}
 
                                 {component3 ? 
                                 <div className="input-group input-group col-10 mb-2">
                                     <strong><span className="input-group-text">Component #3</span></strong>
-                                    <input type="text" readOnly className="form-control" id="component3" value={component3}/> 
+                                    <input type="text" readOnly className="form-control" id="component3" value={`${component3} — ${componentName3} (${componentType3})`}/> 
                                 </div>
                                 : null}
 
                                 {component4 ? 
                                 <div className="input-group input-group col-10 mb-2">
                                     <strong><span className="input-group-text">Component #4</span></strong>
-                                    <input type="text" readOnly className="form-control" id="component4" value={component4}/> 
+                                    <input type="text" readOnly className="form-control" id="component4" value={`${component4} — ${componentName4} (${componentType4})`}/> 
                                 </div>
                                 : null}
 
                                 {component5 ? 
                                 <div className="input-group input-group col-10 mb-2">
                                     <strong><span className="input-group-text">Component #5</span></strong>
-                                    <input type="text" readOnly className="form-control" id="component5" value={component5}/> 
+                                    <input type="text" readOnly className="form-control" id="component5" value={`${component5} — ${componentName5} (${componentType5})`}/> 
                                 </div>
                                 : null}   
 
                                 {component6 ? 
                                 <div className="input-group input-group col-10 mb-2">
                                     <strong><span className="input-group-text">Component #6</span></strong>
-                                    <input type="text" readOnly className="form-control" id="component6" value={component6}/> 
+                                    <input type="text" readOnly className="form-control" id="component6" value={`${component6} — ${componentName6} (${componentType6})`}/> 
                                 </div>
                                 : null}
 
                                 {component7 ? 
                                 <div className="input-group input-group col-10 mb-2">
                                     <strong><span className="input-group-text">Component #7</span></strong>
-                                    <input type="text" readOnly className="form-control" id="component7" value={component7}/> 
+                                    <input type="text" readOnly className="form-control" id="component7" value={`${component7} — ${componentName7} (${componentType7})`}/> 
                                 </div>
                                 : null}
 
                                 {component8 ? 
                                 <div className="input-group input-group col-10 mb-2">
                                     <strong><span className="input-group-text">Component #8</span></strong>
-                                    <input type="text" readOnly className="form-control" id="component8" value={component8}/> 
+                                    <input type="text" readOnly className="form-control" id="component8" value={`${component8} — ${componentName8} (${componentType8})`}/> 
                                 </div>
                                 : null}
 
                                 {component9 ? 
                                 <div className="input-group input-group col-10 mb-2">
                                     <strong><span className="input-group-text">Component #9</span></strong>
-                                    <input type="text" readOnly className="form-control" id="component9" value={component9}/> 
+                                    <input type="text" readOnly className="form-control" id="component9" value={`${component9} — ${componentName9} (${componentType9})`}/> 
                                 </div>
                                 : null}
 
                                 {component10 ? 
                                 <div className="input-group input-group col-10 mb-2">
                                     <strong><span className="input-group-text">Component #10</span></strong>
-                                    <input type="text" readOnly className="form-control" id="component10" value={component10}/> 
+                                    <input type="text" readOnly className="form-control" id="component10" value={`${component10} — ${componentName10} (${componentType10})`}/> 
                                 </div>
                                 : null}
 
                                 {component11 ? 
                                 <div className="input-group input-group col-10 mb-2">
                                     <strong><span className="input-group-text">Component #11</span></strong>
-                                    <input type="text" readOnly className="form-control" id="component11" value={component11}/> 
+                                    <input type="text" readOnly className="form-control" id="component11" value={`${component11} — ${componentName11} (${componentType11})`}/> 
                                 </div>
                                 : null}
 
                                 {component12 ? 
                                 <div className="input-group input-group col-10 mb-2">
                                     <strong><span className="input-group-text">Component #12</span></strong>
-                                    <input type="text" readOnly className="form-control" id="component12" value={component12}/> 
+                                    <input type="text" readOnly className="form-control" id="component12" value={`${component12} — ${componentName12} (${componentType12})`}/> 
                                 </div>
                                 : null}
 

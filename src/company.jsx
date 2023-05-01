@@ -1,38 +1,84 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import './App.css'
 import { Link, useNavigate } from "react-router-dom"
 import Axios from "axios";
 
 const Company = ({ handleLogout }) => {
     const navigate = useNavigate();
-    const [company_ID, setCompanyID] = useState(null);
-    const [company_Name, setCompanyName] = useState(null);
+    const [company_id, setCompanyID] = useState(null);
+    const [company_name, setCompanyName] = useState(null);
     const [addr1, setAddr1] = useState(null);
     const [addr2, setAddr2] = useState(null);
     const [city, setCity] = useState(null);
     const [state, setState] = useState(null);
     const [country, setCountry] = useState(null);
     const [zip, setZip] = useState(null);
-    const [Salesperson, setSalesperson] = useState(null);
+    const [salesperson, setSalesperson] = useState(null);
     const [phone, setPhone] = useState(null);
-    const [Extension, setExtension] = useState(null);
+    const [extension, setExtension] = useState(null);
     const [fax, setFax] = useState(null);
     const [email, setEmail] = useState(null);
-    const [Web_addr, setWebAddr] = useState(null);
-    const [Tax_ID, setTaxID] = useState(null);
-    const [Resale, setResale] = useState(null);
+    const [web_addr, setWebAddr] = useState(null);
+    const [tax_id, setTaxID] = useState(null);
+    const [resale, setResale] = useState(null);
     const [status, setStatus] = useState(null);
-    const [customer, setCustomer] = useState(null);
-    const [vendor, setVendor] = useState(null);
-    const [Other, setOther] = useState(null);
+    const [customer, setCustomer] = useState(0);
+    const [vendor, setVendor] = useState(0);
+    const [other, setOther] = useState(0);
     const [notes, setNotes] = useState(null);
     
-    const submit = () => {
-        Axios.post("http://localhost:3001/api/insertCompany", {company_ID: company_ID, company_Name: company_Name, addr1: addr1, addr2: addr2, city: city, state: state, country: country, zip: zip, Salesperson: Salesperson, phone: phone, Extension: Extension, fax: fax, email: email, Web_addr: Web_addr, Tax_ID: Tax_ID, Resale: Resale, status: status, customer: customer, vendor: vendor, Other: Other, notes: notes})
-        .then(()=> {
-            alert('inserted Company');
-        })
-    };
+    useEffect(() => {
+        setSubmitting(company_id && company_name);
+    }, [company_id, company_name]);
+
+    const handleIdChange = (e) => {
+        const id = e.target.value;
+        // validate input
+        if (id.length >= 4) {
+            setCompanyID(id);
+        } else {
+            setCompanyID(null);
+        }
+    }
+
+    const Sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+    const [submitting, setSubmitting] = useState(false);
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        await Axios.post("http://localhost:3001/api/insertCompany", {
+            company_id: company_id, 
+            company_name: company_name, 
+            addr1: addr1, 
+            addr2: addr2, 
+            city: city, 
+            state: state, 
+            country: country, 
+            zip: zip, 
+            salesperson: salesperson, 
+            phone: phone, 
+            extension: extension, 
+            fax: fax, 
+            email: email, 
+            web_addr: web_addr, 
+            tax_id: tax_id, 
+            resale: resale, 
+            status: status, 
+            customer: customer, 
+            vendor: vendor, 
+            other: other, 
+            notes: notes
+        }).then(()=> {
+            alert('Inserted new company');
+        }).catch(err => {
+            console.log(err);
+        });
+    }
+
+    const handleNavigate = async (cId) => {
+        const cIdPassed = cId.toString();
+        await Sleep(2000);
+        navigate(`/company/${cIdPassed}`);
+    }
 
     return (
         <div className="page">
@@ -45,8 +91,7 @@ const Company = ({ handleLogout }) => {
 
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div className="navbar-nav">
-                        <Link className="nav-link pl-4" to="/">Home</Link>
-                        <Link className="nav-link">Settings</Link>
+                        <Link className="nav-link" to="/">Home</Link>
                     </div>
                 </div>
 
@@ -60,27 +105,27 @@ const Company = ({ handleLogout }) => {
                     <h2>ADD COMPANY</h2>
                 </div>
 
-                <form>
+                <form onSubmit={handleSubmit} autoComplete="off">
                     <div className="company-info pt-3">
                         <div className="section-headers">
                             <h5>Company Name</h5>
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="CID" className="col-sm-2 col-form-label">Company ID</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
+                            <label htmlFor="CID" className="col-md-3 col-form-label">Company ID <span style={{ color: 'red' }}>*</span></label>
+                            <div className="input-group input-group-sm mb-3 col-md-2">
                                 <input type="text" className="form-control" id="CID" onChange={(e) =>{
-                                    setCompanyID(e.target.value)
-                                }} maxLength = "8" required/>
+                                    handleIdChange(e);
+                                }} minLength="4" maxLength="4" required/>
                             </div>
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="CName" className="col-sm-2 col-form-label">Company Name</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
+                            <label htmlFor="CName" className="col-md-3 col-form-label">Company Name <span style={{ color: 'red' }}>*</span></label>
+                            <div className="input-group input-group-sm mb-3 col-md-8">
                                 <input type="text" className="form-control" id="CName" onChange={(e) =>{
                                     setCompanyName(e.target.value)
-                                }} maxLength = "128" required/>
+                                }} maxLength = "100" required/>
                             </div>
                         </div>
                     </div>
@@ -92,39 +137,39 @@ const Company = ({ handleLogout }) => {
 
 
                         <div className="form-row">
-                            <label htmlFor="Addr1" className="col-sm-2 col-form-label">Address 1</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
+                            <label htmlFor="Addr1" className="col-md-3 col-form-label">Address 1</label>
+                            <div className="input-group input-group-sm mb-3 col-md-8">
                                 <input type="text" className="form-control" id="Addr1" onChange={(e) =>{
                                     setAddr1(e.target.value)
-                                }} maxLength = "64"/>
+                                }} maxLength = "50"/>
                             </div>
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="Addr2" className="col-sm-2 col-form-label">Address 2</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
+                            <label htmlFor="Addr2" className="col-md-3 col-form-label">Address 2</label>
+                            <div className="input-group input-group-sm mb-3 col-md-8">
                                 <input type="text" className="form-control" id="Addr2" onChange={(e) =>{
                                     setAddr2(e.target.value)
-                                }} maxLength = "64"/>
+                                }} maxLength = "50"/>
                             </div>
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="city" className="col-sm-2 col-form-label">City</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
+                            <label htmlFor="city" className="col-md-3 col-form-label">City</label>
+                            <div className="input-group input-group-sm mb-3 col-md-8">
                                 <input type="text" className="form-control" id="city" onChange={(e) =>{
                                     setCity(e.target.value)
-                                }} maxLength = "64"/>
+                                }} maxLength = "50"/>
                             </div>
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="state" className="col-sm-2 col-form-label">State</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-3">
+                            <label htmlFor="state" className="col-md-3 col-form-label">State</label>
+                            <div className="input-group input-group-sm mb-3 col-md-3">
                                 <select className="form-control" name="state" id="state" onChange={(e) =>{
                                     setState(e.target.value)
                                 }}>
-                                    <option selected value="">Select State</option>
+                                    <option value="">Select State</option>
                                     <option value="AL">AL</option>
                                     <option value="AK">AK</option>
                                     <option value="AR">AR</option>
@@ -181,21 +226,21 @@ const Company = ({ handleLogout }) => {
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="zip" className="col-sm-2 col-form-label">Zip</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
+                            <label htmlFor="zip" className="col-md-3 col-form-label">Zip Code</label>
+                            <div className="input-group input-group-sm mb-3 col-md-3">
                                 <input type="text" className="form-control" id="zip" onChange={(e) =>{
                                     setZip(e.target.value)
-                                }} maxLength = "16"/>
+                                }} maxLength="10" />
                             </div>
                         </div>
 
 
                         <div className="form-row">
-                            <label htmlFor="country" className="col-sm-2 col-form-label">Country</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
+                            <label htmlFor="country" className="col-md-3 col-form-label">Country</label>
+                            <div className="input-group input-group-sm mb-3 col-md-8">
                                 <input type="text" className="form-control" id="country" onChange={(e) =>{
                                     setCountry(e.target.value)
-                                }} maxLength = "25"/>
+                                }} maxLength = "50"/>
                             </div>
                         </div>
 
@@ -208,56 +253,56 @@ const Company = ({ handleLogout }) => {
 
 
                         <div className="form-row">
-                            <label htmlFor="sp" className="col-sm-2 col-form-label">Salesperson</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
+                            <label htmlFor="sp" className="col-md-3 col-form-label">Salesperson</label>
+                            <div className="input-group input-group-sm mb-3 col-md-8">
                                 <input type="text" className="form-control" id="sp" onChange={(e) =>{
                                     setSalesperson(e.target.value)
-                                }} maxLength = "60"/>
+                                }} maxLength = "50"/>
                             </div>
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="phone" className="col-sm-2 col-form-label">Phone</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="phone" onChange={(e) =>{
+                            <label htmlFor="phone" className="col-md-3 col-form-label">Phone</label>
+                            <div className="input-group input-group-sm mb-3 col-md-3">
+                                <input type="text" maxLength="13" className="form-control" id="phone" onChange={(e) =>{
                                     setPhone(e.target.value)
-                                }} maxLength = "16"/>
+                                }}/>
                             </div>
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="ext" className="col-sm-2 col-form-label">Extension</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="ext" onChange={(e) =>{
+                            <label htmlFor="ext" className="col-md-3 col-form-label">Extension</label>
+                            <div className="input-group input-group-sm mb-3 col-md-3">
+                                <input type="text" maxLength="6" className="form-control" id="ext" onChange={(e) =>{
                                     setExtension(e.target.value)
-                                }} maxLength = "5"/>
+                                }}/>
                             </div>
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="fax" className="col-sm-2 col-form-label">Fax</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="fax" onChange={(e) =>{
+                            <label htmlFor="fax" className="col-md-3 col-form-label">Fax</label>
+                            <div className="input-group input-group-sm mb-3 col-md-3">
+                                <input type="text" maxLength="13" className="form-control" id="fax" onChange={(e) =>{
                                     setFax(e.target.value)
-                                }} maxLength = "16"/>
+                                }}/>
                             </div>
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="email" className="col-sm-2 col-form-label">Email</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
+                            <label htmlFor="email" className="col-md-3 col-form-label">Email</label>
+                            <div className="input-group input-group-sm mb-3 col-md-8">
                                 <input type="text" className="form-control" id="email" onChange={(e) =>{
                                     setEmail(e.target.value)
-                                }} maxLength = "128"/>
+                                }} maxLength = "100"/>
                             </div>
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="wAddr" className="col-sm-2 col-form-label">WebAddress</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
+                            <label htmlFor="wAddr" className="col-md-3 col-form-label">Web Address</label>
+                            <div className="input-group input-group-sm mb-3 col-md-8">
                                 <input type="text" className="form-control" id="wAddr" onChange={(e) =>{
                                     setWebAddr(e.target.value)
-                                }} maxLength = "128"/>
+                                }} maxLength = "100"/>
                             </div>
                         </div>
                     </div>
@@ -268,32 +313,33 @@ const Company = ({ handleLogout }) => {
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="TID" className="col-sm-2 col-form-label">Tax ID</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="TID" onChange={(e) =>{
+                            <label htmlFor="tID" className="col-md-3 col-form-label">Tax ID</label>
+                            <div className="input-group input-group-sm mb-3 col-md-8">
+                                <input type="text" className="form-control" id="tID" onChange={(e) =>{
                                     setTaxID(e.target.value)
-                                }} maxLength = "64"/>
+                                }} maxLength = "50"/>
                             </div>
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="Resale" className="col-sm-2 col-form-label">Resale Certificate</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
-                                <input type="text" className="form-control" id="Resale" onChange={(e) =>{
+                            <label htmlFor="Resale" className="col-md-3 col-form-label">Resale Certificate</label>
+                            <div className="input-group input-group-sm mb-3 col-md-8">
+                                <input type="text" className="form-control" id="resale" onChange={(e) =>{
                                     setResale(e.target.value)
-                                }} maxLength = "64"/>
+                                }} maxLength = "50"/>
                             </div>
                         </div>
 
 
                         <div className="form-row">
-                            <label htmlFor="Status" className="col-sm-2 col-form-label">Status</label>
+                            <label htmlFor="Status" className="col-md-3 col-form-label">Status</label>
                             <div className="input-group input-group-sm mb-3 col-sm-3">
-                                <select className="form-control" name="Status" id="Status" onChange={(e) =>{
+                                <select className="form-control" name="status" id="status" onChange={(e) =>{
                                     setStatus(e.target.value)}}>
-                                    <option defaultValue="act">Active</option>
-                                    <option value="inAct">Inactive</option>
-                                    <option value="inAct">Obsolete</option>
+                                    <option value="">Select Status</option>
+                                    <option value="Active">Active</option>
+                                    <option value="Inactive">Inactive</option>
+                                    <option value="Obsolete">Obsolete</option>
                                 </select>
                             </div>
                         </div>
@@ -301,37 +347,37 @@ const Company = ({ handleLogout }) => {
                         <div className="form-row">                           
                             <div className="input-group input-group-sm col-sm-3 pl-5">
                                 <div className="form-group custom-control custom-checkbox">
-                                    <input  onChange={(prev) => setCustomer(prev => !prev)} checked={customer} type="checkbox" className="custom-control-input" id="customerCheck"/>
+                                    <input onChange={(prev) => setCustomer(prev => !prev)} checked={customer} type="checkbox" className="custom-control-input" id="customerCheck"/>
                                     <label htmlFor="customerCheck" className="custom-control-label">Company is Customer</label>
                                 </div>
                             </div>
 
                             <div className="input-group input-group-sm col-sm-3 pl-5">
                                 <div className="form-group custom-control custom-checkbox">
-                                    <input  onChange={(prev) => setVendor(prev => !prev)} checked={vendor} type="checkbox" className="custom-control-input" id="vendorCheck"/>
+                                    <input onChange={(prev) => setVendor(prev => !prev)} checked={vendor} type="checkbox" className="custom-control-input" id="vendorCheck"/>
                                     <label htmlFor="vendorCheck" className="custom-control-label">Company is Vendor</label>
                                 </div>
                             </div>
 
                             <div className="input-group input-group-sm col-sm-3 pl-5">
                                 <div className="form-group custom-control custom-checkbox">
-                                    <input  onChange={(prev) => setOther(prev => !prev)} checked={Other}  type="checkbox" className="custom-control-input" id="OtherCheck"/>
-                                    <label htmlFor="OtherCheck" className="custom-control-label">Company is Other</label>
+                                    <input onChange={(prev) => setOther(prev => !prev)} checked={other}  type="checkbox" className="custom-control-input" id="otherCheck"/>
+                                    <label htmlFor="otherCheck" className="custom-control-label">Company is Other</label>
                                 </div>
                             </div>
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="notes" className="col-sm-2 col-form-label">Notes</label>
-                            <div className="input-group input-group-sm mb-3 col-sm-10">
+                            <label htmlFor="notes" className="col-md-3 col-form-label">Notes</label>
+                            <div className="input-group input-group-sm mb-3 col-md-8">
                                 <textarea rows="4" cols="50" className="form-control" name="notes" id="custom-area" onChange={(e) =>{
                                     setNotes(e.target.value)}}/>
                             </div>
                         </div>
                     </div>
 
-                    <div className="Add/Cancel">
-                        <button onClick = {submit} type="Add" id="add-company" className="btn btn-success m-2">Add</button>
+                    <div className="add">
+                        <button onClick={() => handleNavigate(company_id)} type="submit" id="add-company" disabled={!submitting} className="btn btn-success m-2">Add</button>
                     </div>
                 </form>
 
