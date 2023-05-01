@@ -61,14 +61,6 @@ const Location = ({ handleLogout }) => {
         }).catch(err => {
             console.log(err);
         });
-        await Axios.post("http://localhost:3001/api/insertLocationHistory",{
-            location_id: location_id, 
-            item_id: item_id, 
-            qty: qty, 
-            date: date
-        }).catch(err => {
-            console.log(err);
-        });
     };
 
     useEffect(() => {

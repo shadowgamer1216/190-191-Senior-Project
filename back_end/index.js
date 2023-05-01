@@ -415,9 +415,12 @@ app.post("/api/insertLocation" , (req, res) =>{
     db.query(sqlInsert, [location_id, item_id, physical_location, location_type, item_owner, notes, qty], (err, result) => {
         console.log(result);
     });
+    const sqlInsert2 = "INSERT INTO location_history (location_id, item_id, qty) VALUES (?,?,?)";
+    db.query(sqlInsert2, [location_id, item_id, qty], (err, result) =>{
+        console.log(result);
+    });
 });
 
-// LOCATION TABLE - GET API <=
 app.get("/api/getLocationHistory", (req, res) =>{
     const location_id = req.body.location_id;
     const item_id = req.body.item_id;
@@ -427,18 +430,6 @@ app.get("/api/getLocationHistory", (req, res) =>{
     db.query("SELECT location_id, item_id, qty, date_added FROM location_history", (err, result) =>{
         if (err) throw err;
         res.send(result);
-    });
-});
-
-// LOCATION PAGE - POST API =>
-app.post("/api/insertLocationHistory", (req, res) =>{
-    const location_id = req.body.location_id;
-    const item_id = req.body.item_id;
-    const qty = req.body.qty;
-
-    const sqlInsert = "INSERT INTO location_history (location_id, item_id, qty) VALUES (?,?,?)";
-    db.query(sqlInsert, [location_id, item_id, qty], (err, result) =>{
-        console.log(result);
     });
 });
 
