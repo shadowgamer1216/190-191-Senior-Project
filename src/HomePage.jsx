@@ -1,10 +1,27 @@
 /*import logo from './absolutemedialogo.png';*/
 import React from 'react';
 import './App.css';
+import { NavLink, useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react';
+
+
 
 import { Link } from "react-router-dom";
 
 function HomePage({ handleLogout }) {
+	const navigate = useNavigate();
+	const routeChange = () => {
+        let path = '/login';
+        navigate(path);
+    };
+    useEffect(() => {
+        let authToken = sessionStorage.getItem('Auth Token')
+
+        if (!authToken) {
+            routeChange()
+        }
+    }, [])
+
 
  	return (
     	<div className='HomePage'>
@@ -12,7 +29,15 @@ function HomePage({ handleLogout }) {
 			<div className='HomePageBar'>
 				<nav className="navbar navbar-dark bg-maroon">
 					<label className="navbar-brand">ABSOLUTE MEDIA, INC.</label>
+					<div>
+
+					<Link to ="signup">
+					<button className="btn btn-outline-light" >Sign Up</button>
+					</Link>
+					</div>
 					<button className="btn btn-outline-light" onClick={handleLogout}>Logout</button>
+					
+
 				</nav>
 			</div>
 

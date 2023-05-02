@@ -632,6 +632,24 @@ app.get("/api/orders", (req, res) =>{
         });
     
 });
+app.post("/api/viewonly", (req, res) => {
+    const user = req.body.user
+    const viewOnly = req.body.viewOnly;
+    var query = "INSERT INTO users (username, viewonly) VALUES (?,?)";
+    db.query(query, [user, viewOnly], (err, result) =>{
+        if (err) throw err;
+    });
+});
+
+app.get("/api/getuser/:user", (req, res) => {
+    const user = req.params.user
+    var query = "SELECT * FROM users WHERE username = '" + user + "'";
+    db.query( query, (err, result) =>{
+        if (err) throw err;
+        res.send(result);
+    });
+});
+
 
 app.get("/api/packingSlip", (req, res) =>{
         db.query("SELECT * FROM shipping", (err, result) =>{

@@ -7,6 +7,17 @@ import Select from "react-select";
 
 const Contact = ({ handleLogout }) => {
     const navigate = useNavigate();
+    const routeChange = () => {
+        let path = '/login';
+        navigate(path);
+    };
+    useEffect(() => {
+        let authToken = sessionStorage.getItem('Auth Token')
+
+        if (!authToken) {
+            routeChange()
+        }
+    }, [])
 
     const [company_id, setCompanyID] = useState(null);
     const [company_name, setCompanyName] = useState(null);

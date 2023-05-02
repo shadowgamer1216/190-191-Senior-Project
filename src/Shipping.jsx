@@ -1,10 +1,21 @@
 import React from "react";
 import './App.css'
 import { Link, useNavigate } from "react-router-dom"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Axios from "axios";
 
 const Shipping = ({ handleLogout }) => {
+  const routeChange = () => {
+    let path = '/login';
+    navigate(path);
+};
+useEffect(() => {
+    let authToken = sessionStorage.getItem('Auth Token')
+
+    if (!authToken) {
+        routeChange()
+    }
+}, [])
   const navigate = useNavigate();
 
   const[company_name, setCompany_name] = useState(null);

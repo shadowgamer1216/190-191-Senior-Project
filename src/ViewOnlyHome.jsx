@@ -1,10 +1,25 @@
 /*import logo from './absolutemedialogo.png';*/
 import React from 'react';
 import './App.css';
+import { useState, useEffect } from 'react';
 
-import { Link } from "react-router-dom";
+
+import { Link, useNavigate } from "react-router-dom";
 
 function HomePage({ handleLogout }) {
+  
+  const navigate = useNavigate();
+	const routeChange = () => {
+    let path = '/login';
+    navigate(path);
+};
+useEffect(() => {
+    let authToken = sessionStorage.getItem('Auth Token')
+
+    if (!authToken) {
+        routeChange()
+    }
+}, [])
   
   return (
     

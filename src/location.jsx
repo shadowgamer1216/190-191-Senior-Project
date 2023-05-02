@@ -27,6 +27,17 @@ const Location = ({ handleLogout }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5;
     const totalPages = Math.ceil(data.length / itemsPerPage);
+    const routeChange = () => {
+        let path = '/login';
+        navigate(path);
+    };
+    useEffect(() => {
+        let authToken = sessionStorage.getItem('Auth Token')
+
+        if (!authToken) {
+            routeChange()
+        }
+    }, [])
 
     const handleFirstPage = () => {
         setCurrentPage(1);

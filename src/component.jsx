@@ -22,7 +22,17 @@ const Component = ({ handleLogout }) => {
     const[owned_by, setOwned_By] = useState(0);
     const[packaging_component, setPackaging_Component] = useState(0);
     const[textBox, setTextBox] = useState(false);
+    const routeChange = () => {
+        let path = '/login';
+        navigate(path);
+    };
+    useEffect(() => {
+        let authToken = sessionStorage.getItem('Auth Token')
 
+        if (!authToken) {
+            routeChange()
+        }
+    }, [])
     useEffect(() => {
         setSubmitting(customer_id && component_type && title);
     }, [customer_id, component_type, title]);

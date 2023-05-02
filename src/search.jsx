@@ -7,6 +7,17 @@ import Axios from "axios";
 
 const Search = () => {
     const navigate = useNavigate();
+    const routeChange = () => {
+        let path = '/login';
+        navigate(path);
+    };
+    useEffect(() => {
+        let authToken = sessionStorage.getItem('Auth Token')
+
+        if (!authToken) {
+            routeChange()
+        }
+    }, [])
 
     const submit = () => {
         //Axios.post("http://localhost:3001/api/insert", {})

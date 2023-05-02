@@ -346,6 +346,17 @@ const Order = ({ handleLogout }) => {
     }, []);
 
     const [componentOptions, setComponentOptions] = useState([]);
+    const routeChange = () => {
+        let path = '/login';
+        navigate(path);
+    };
+    useEffect(() => {
+        let authToken = sessionStorage.getItem('Auth Token')
+
+        if (!authToken) {
+            routeChange()
+        }
+    }, [])
     useEffect(() => {
         Axios.get('http://localhost:3001/api/getComponentData')
         .then(response => {

@@ -102,6 +102,17 @@ const Product = ({ handleLogout }) => {
 
     const Sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
     const [submitting, setSubmitting] = useState(false);
+    const routeChange = () => {
+        let path = '/login';
+        navigate(path);
+    };
+    useEffect(() => {
+        let authToken = sessionStorage.getItem('Auth Token')
+
+        if (!authToken) {
+            routeChange()
+        }
+    }, [])
     const handleSubmit = async (e) => {
         e.preventDefault();
         await Axios.post("http://localhost:3001/api/insertProduct", 

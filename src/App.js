@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route, useNavigate as navigate } from 'react-router-dom';
+import { Routes, Route, useNavigate} from 'react-router-dom';
 import HomePage from './HomePage';
 import ProductPage from './product';
 import ProductViewPage from './product-view';
@@ -15,7 +15,7 @@ import CompanyViewPage from './company-view';
 import ItemCheckInPage from './itemCheckIn';
 import ItemCheckInViewPage from './itemCheckIn-view';
 import Shipping from './Shipping';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Search from './search';
 import SearchCompany from './searchcompany';
 import SearchContact from './searchContact';
@@ -25,27 +25,60 @@ import PackingSlip from './packingSlip';
 import QCInspection from './QC-Inspection';
 import JobOrder from './jobOrder';
 import ScrollToTop from "./scrollToTop";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from './firebase';
+
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isViewOnly, setIsViewOnly] = useState(false);
+
+const [isViewOnly, setIsViewOnly] = useState('');
+const [password, setPassword] = useState('')
+const navigate = useNavigate();
+const routeChange = () => {
+  let path = '/';
+  navigate(path);
+};
+
+useEffect(() => {
+  let authToken = sessionStorage.getItem('Auth Token')
+
+  if (authToken) {
+    routeChange('/')
+  }
+}, [])
 
   const handleLogin = (viewOnly) => {
-    setIsLoggedIn(true);
+    onAuthStateChanged(auth, (user) => {
+      if (user){
+        const uid = user.uid;
+
+
+    //setIsLoggedIn(true);
     setIsViewOnly(viewOnly);
-  };
+    console.log("app view only " , viewOnly)
+      }
+      else{
+        console.log("no user")
+      }
+      });
+    };
+  
 
   const handleLogout = () => {
-    setIsLoggedIn(false);
     navigate('/');
-  
+  sessionStorage.removeItem('Auth Token');
+        navigate('/login')
   };
 
-  return (
+ return (
     <div className="App">
+      {!isViewOnly ? (
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<HomePage handleLogout={handleLogout} />} />
+          <Route path="/login" element={<LoginForm handleLogin={handleLogin} />} />
+          <Route path="/signup" element={<SignupForm />} />
+
         <Route path="/invoice" element={<Invoice />} />
         <Route path="/packingSlip" element={<PackingSlip />} />
         <Route path="/QC-Inspection" element={<QCInspection />} />
@@ -68,17 +101,30 @@ function App() {
         <Route path="/search/searchcompany" element={<SearchCompany />} />
         <Route path="/search/searchContact" element={<SearchContact />} />
       </Routes>
+      ) : (
+        <Routes>
+          <Route path="/" element={<ViewOnlyHome handleLogout={handleLogout} />} />
+          <Route path="/login" element={<LoginForm handleLogin={handleLogin} />} />
+          <Route path="/search" element={<Search />} />
+          <Route path="/search/searchcompany" element={<SearchCompany />} />
+          <Route path="/search/searchContact" element={<SearchContact />} />
+        </Routes>
+      )}
      
     </div>
   );
+ 
+      }
 
-  /*return (
+export default App;
+ /*return (
     <div className="App">
       {isLoggedIn && !isViewOnly ? (
         <Routes>
 
-          <Route path="/invoice" element={<Invoice />} />
+                    <Route path="/invoice" element={<Invoice />} />
           <Route path="/" element={<HomePage handleLogout={handleLogout} />} />
+          <Route path="/login" element={<LoginForm handleLogin={handleLogin} />} />
           <Route path="/product" element={<ProductPage handleLogout={handleLogout}/>} />
           <Route path="/contact" element={<ContactPage handleLogout={handleLogout}/>} />
           <Route path="/component" element={<ComponentPage handleLogout={handleLogout}/>} />
@@ -102,12 +148,12 @@ function App() {
         <Routes>
           <Route path="/" element={<LoginForm handleLogin={handleLogin} />} />
           <Route path="/signup" element={<SignupForm />} />
+          <Route path="/homepage" element={<HomePage handleLogout={handleLogout} />} />
+
+
         </Routes>
       )}
     </div>
   );
 
 }*/
-}
-
-export default App;

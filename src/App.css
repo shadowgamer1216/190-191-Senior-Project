@@ -261,49 +261,26 @@ Link.nav-link {
 .login-button{
   background-color: white; 
   color: #000000;
-  border: 2px solid green;
+  border: 2px solid maroon;
   padding: 10px 28px;
   text-align: center;
   text-decoration-color: #000000;
   display: inline-block;
   font-size: 18px;
   border-radius: 10px;
+  margin-top: 20px;
 
 }
 
 
 .login-button:hover{
-  background-color: darkgray; 
+  background-color: maroon; 
   color: white;
 }
 .login-button:active {
-  background-color: darkgray;
   transform: translateY(4px);
 }
-.signup-button{
-  background-color: white; 
-  color: #000000;
-  border: 2px solid blue;
-  padding: 10px 28px;
-  text-align: center;
-  text-decoration-color: #000000;
-  display: inline-block;
-  font-size: 18px;
-  border-radius: 10px;
-}
-.signup-button2{
-  background-color: white; 
-  color: #000000;
-  border: 2px solid blue;
-  padding: 10px 28px;
-  text-align: center;
-  text-decoration-color: #000000;
-  display: inline-block;
-  font-size: 18px;
-  border-radius: 10px;
-  margin-right: 10px;
 
-}
 
 .cancel-button{
   background-color: white; 
@@ -315,16 +292,9 @@ Link.nav-link {
   display: inline-block;
   font-size: 18px;
   border-radius: 10px;
-  margin-left: 10px;
+  margin-top: 10px;
 }
-.signup-button:hover{
-  background-color: darkgray; 
-  color: white;
-}
-.signup-button:active {
-  background-color: darkgray;
-  transform: translateY(4px);
-}
+
 
 .error-container {
   color: red;
@@ -368,11 +338,10 @@ Link.nav-link {
 
 
 .cancel-button:hover{
-  background-color: darkgray; 
+  background-color: red; 
   color: white;
 }
 .cancel-button:active {
-  background-color: darkgray;
   transform: translateY(4px);
 }
 

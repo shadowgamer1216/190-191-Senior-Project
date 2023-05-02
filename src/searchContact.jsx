@@ -29,6 +29,17 @@ const SearchContact = () => {
     const [fax, setFax] = useState("");
     const [email, setEmail] = useState("");
     const [notes, setNotes] = useState("");
+    const routeChange = () => {
+        let path = '/login';
+        navigate(path);
+    };
+    useEffect(() => {
+        let authToken = sessionStorage.getItem('Auth Token')
+
+        if (!authToken) {
+            routeChange()
+        }
+    }, [])
 
     
     const submit = () => {

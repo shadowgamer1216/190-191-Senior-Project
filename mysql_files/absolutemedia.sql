@@ -354,3 +354,11 @@ CREATE TABLE shipping (
     oem VARCHAR(50),
     product VARCHAR(50)
 );
+
+DROP TABLE IF EXISTS users;
+CREATE TABLE users (
+  userid INT NOT NULL,
+  username VARCHAR(45) NULL,
+  viewonly TINYINT NULL DEFAULT 0,
+  PRIMARY KEY (userid),
+  UNIQUE INDEX username_UNIQUE (username ASC) VISIBLE);

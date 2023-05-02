@@ -10,6 +10,17 @@ const SearchCompany = () => {
     const [data, setData] = useState([]);
     const [company_ID, setCompanyID] = useState(null);
     const [company_Name, setCompanyName] = useState(null);
+    const routeChange = () => {
+        let path = '/login';
+        navigate(path);
+    };
+    useEffect(() => {
+        let authToken = sessionStorage.getItem('Auth Token')
+
+        if (!authToken) {
+            routeChange()
+        }
+    }, [])
 
     const submit = () => {
         Axios.post("http://localhost:3001/api/searchCompany", {company_ID:company_ID, company_Name:company_Name})
