@@ -295,7 +295,7 @@ CREATE TABLE order_item (
 );
 
 CREATE TABLE shipping_table (
-    company_name VARCHAR(100) NOT NULL,
+    company_name VARCHAR(50) NOT NULL,
     contact_name VARCHAR(50) DEFAULT NULL,
     add1 VARCHAR(50) DEFAULT NULL,
     add2 VARCHAR(50) DEFAULT NULL,
@@ -319,7 +319,11 @@ CREATE TABLE shipping_table (
     arrival_ship_date DATE,
     arrival_ship_time VARCHAR(50),
     fob VARCHAR(50) DEFAULT NULL,
-    notes TEXT
+    notes TEXT,
+    shipping_id INT NOT NULL AUTO_INCREMENT,
+    order_id INT DEFAULT NULL,
+    PRIMARY KEY (shipping_id),
+    FOREIGN KEY (order_id) REFERENCES order_table(order_id)
 );
 
 CREATE TABLE orders (
