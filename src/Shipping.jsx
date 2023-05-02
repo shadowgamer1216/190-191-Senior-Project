@@ -136,15 +136,19 @@ const Shipping = ({ handleLogout }) => {
 
             <br></br>
             <div className ="form-row">
-              <label htmlFor="companyName" className="col-md-3 col-form-label">Company Name</label>
+              <label htmlFor="companyName" className="col-md-3 col-form-label">Company Name
+                <span style={{ color: 'red' }}> *</span>
+              </label>
               <div className ="input-group input-group-sm mb-3 col-md-8">
                 <input onChange={(e) => setCompany_name(e.target.value)} className="form-control" 
-                  id="company_name" placeholder="If 'None', please enter N/A."required></input>
+                  id="company_name" required></input>
               </div>
             </div>
 
             <div className ="form-row">
-              <label htmlFor="con-name" className="col-md-3 col-form-label">Contact Name</label>
+              <label htmlFor="con-name" className="col-md-3 col-form-label">Contact Name
+                <span style={{ color: 'red' }}> *</span>
+              </label>
               <div className ="input-group input-group-sm mb-3 col-md-8">
                 <input onChange={(e) => setContact_name(e.target.value)}className="form-control"
                   name="contact_name" required/>
@@ -152,7 +156,9 @@ const Shipping = ({ handleLogout }) => {
             </div>
 
             <div className ="form-row">
-              <label htmlFor="add1" className="col-md-3 col-form-label">Address 1</label>
+              <label htmlFor="add1" className="col-md-3 col-form-label">Address 1
+                <span style={{ color: 'red' }}> *</span>
+              </label>
               <div className ="input-group input-group-sm mb-3 col-md-8">
                 <input onChange={(e) => setAdd1(e.target.value)} className="form-control"
                   name="add1" required/>
@@ -163,12 +169,14 @@ const Shipping = ({ handleLogout }) => {
               <label htmlFor="add2" className="col-md-3 col-form-label">Address 2</label>
               <div className ="input-group input-group-sm mb-3 col-md-8">
                 <input onChange={(e) => setAdd2(e.target.value)} className="form-control"
-                  name="add2" placeholder="If 'None', Please enter N/A." required/>
+                  name="add2" required/>
               </div>
             </div>
 
             <div className ="form-row">
-              <label htmlFor="csz" className="col-md-3 col-form-label">City | State | Zip</label>
+              <label htmlFor="csz" className="col-md-3 col-form-label">City | State | Zip 
+                <span style={{ color: 'red' }}> *</span>
+              </label>
               <div className ="input-group input-group-sm mb-3 col-md-4">
                 <input onChange={(e) => setCity(e.target.value)} className="form-control"
                   name="city" required/>
@@ -241,12 +249,14 @@ const Shipping = ({ handleLogout }) => {
               <label htmlFor="province" className="col-md-3 col-form-label">Province</label>
               <div className ="input-group input-group-sm mb-3 col-md-8">
                 <input onChange={(e) => setProvince(e.target.value)} className="form-control"
-                  name="province" placeholder="If 'None', Please enter N/A." required/>
+                  name="province"/>
               </div>
             </div>
 
             <div className ="form-row">
-              <label htmlFor="country" className="col-md-3 col-form-label">Country</label>
+              <label htmlFor="country" className="col-md-3 col-form-label">Country
+              <span style={{ color: 'red' }}> *</span>
+              </label>
               <div className ="input-group input-group-sm mb-3 col-md-8">
                 <input onChange={(e) => setCountry(e.target.value)} className="form-control"
                   name="country" required/>
@@ -254,7 +264,9 @@ const Shipping = ({ handleLogout }) => {
             </div>
 
             <div className ="form-row">
-              <label htmlFor="phone" className="col-md-3 col-form-label">Phone</label>
+              <label htmlFor="phone" className="col-md-3 col-form-label">Phone
+                <span style={{ color: 'red' }}> *</span> 
+              </label>
               <div className ="input-group input-group-sm mb-3 col-md-8">
                 <input onChange={(e) => setPhone(e.target.value)} className="form-control"
                 name="phone" required/>
@@ -265,12 +277,14 @@ const Shipping = ({ handleLogout }) => {
               <label htmlFor="fax" className="col-md-3 col-form-label">Fax</label>
               <div className ="input-group input-group-sm mb-3 col-md-8">
                 <input onChange={(e) => setFax(e.target.value)} className="form-control"
-                  name="fax" placeholder="If 'None', Please enter N/A." required/>
+                  name="fax"/>
               </div>
             </div>
 
             <div className ="form-row">
-              <label htmlFor="email" className="col-md-3 col-form-label">Email</label>
+              <label htmlFor="email" className="col-md-3 col-form-label">Email
+                <span style={{ color: 'red' }}> *</span>
+              </label>
               <div className ="input-group input-group-sm mb-3 col-md-8">
                 <input onChange={(e) => setEmail(e.target.value)} className="form-control"
                   name="email" required/>
@@ -287,8 +301,7 @@ const Shipping = ({ handleLogout }) => {
             <div className ="form-row">
               <label htmlFor="fedex" className="col-md-3 col-form-label">Fed Ex</label>
               <div className="input-group input-group-sm mb-3 col-md-3">
-                <select onChange={(e) => setFedex(e.target.value)} className="form-control" name="fedex" id="fedex" required>
-                  <option value="">Select Option</option>
+                <select onChange={(e) => setFedex(e.target.value)} className="form-control" name="fedex" id="fedex">
                   <option value="none">None</option>
                   <option value="air-freight">Air Freight</option>
                   <option value="custom-critical-freight">Cusom Critical Freight</option>
@@ -312,8 +325,7 @@ const Shipping = ({ handleLogout }) => {
             <div className ="form-row">
               <label htmlFor="ups" className="col-md-3 col-form-label">UPS</label>
               <div className="input-group input-group-sm mb-3 col-md-3">
-                <select onChange={(e) => setUps(e.target.value)} className="form-control" name="ups" id="ups"required>
-                  <option value="">Select Option</option>
+                <select onChange={(e) => setUps(e.target.value)} className="form-control" name="ups" id="ups">
                   <option value="none">None</option>
                   <option value="2day-air">2 Day Air</option>
                   <option value="2day-airam">2 Day Air AM</option>
@@ -333,8 +345,7 @@ const Shipping = ({ handleLogout }) => {
             <div className ="form-row">
               <label htmlFor="c-w" className="col-md-3 col-form-label">Courier/Will Call</label>
               <div className="input-group input-group-sm mb-3 col-md-3">
-                <select onChange={(e) => setCourier_willcall(e.target.value)} className="form-control" name="courier_willcall" id="c-w"required>
-                  <option value="">Select Option</option>
+                <select onChange={(e) => setCourier_willcall(e.target.value)} className="form-control" name="courier_willcall" id="c-w">
                   <option value="none">None</option>
                   <option value="courier">Courier</option>
                   <option value="willcall">Will Call</option>
@@ -345,8 +356,7 @@ const Shipping = ({ handleLogout }) => {
             <div className ="form-row">
               <label htmlFor="abs" className="col-md-3 col-form-label">ABS Van</label>
               <div className="input-group input-group-sm mb-3 col-md-3">
-                <select onChange={(e) => setAbs(e.target.value)} className="form-control" name="abs" id="abs"required>
-                  <option value="">Select Option</option>
+                <select onChange={(e) => setAbs(e.target.value)} className="form-control" name="abs" id="abs">
                   <option value="none">None</option>
                   <option value="abs-van">ABS Van</option>
                 </select>
@@ -357,12 +367,14 @@ const Shipping = ({ handleLogout }) => {
               <label htmlFor="other-ship" className="col-md-3 col-form-label">Other Ship Method</label>
               <div className ="input-group input-group-sm mb-3 col-md-8">
                 <input onChange={(e) => setOther_ship_method(e.target.value)} className="form-control"
-                  name="other_ship_method" placeholder="If 'None', Please enter N/A." required/>
+                  name="other_ship_method"/>
               </div>
             </div>
 
             <div className ="form-row">
-              <label htmlFor="pay-type" className="col-md-3 col-form-label">Payment Type</label>
+              <label htmlFor="pay-type" className="col-md-3 col-form-label">Payment Type
+                <span style={{ color: 'red' }}>*</span>
+              </label>
               <div className="input-group input-group-sm mb-3 col-md-3">
                 <select onChange={(e) => setPayment_type(e.target.value)} className="form-control" name="payment_type" id="pay-type" placeholder="If 'None, Please enter N/A." required>
                   <option value="">Select Option</option>
@@ -373,7 +385,9 @@ const Shipping = ({ handleLogout }) => {
             </div>
 
             <div className ="form-row">
-              <label htmlFor="acc-num" className="col-md-3 col-form-label">Account Number</label>
+              <label htmlFor="acc-num" className="col-md-3 col-form-label">Account Number
+                <span style={{ color: 'red' }}> *</span>
+              </label>
               <div className ="input-group input-group-sm mb-3 col-md-8" required>
                 <input onChange={(e) => setAccount_number(e.target.value)} className="form-control"
                   name="account_number" />
@@ -381,7 +395,9 @@ const Shipping = ({ handleLogout }) => {
             </div>
 
             <div className ="form-row">
-              <label htmlFor="ship-date" className="col-md-3 col-form-label">Requested Ship Date/Time</label>
+              <label htmlFor="ship-date" className="col-md-3 col-form-label">Requested Ship Date/Time
+              <span style={{ color: 'red' }}> *</span>
+              </label>
               <div className ="input-group input-group-sm mb-3 col-md-3">
                 <input type="datetime-local" className="form-control" onChange={(e) => setRequested_ship_date(e.target.value)}
                   name="request_ship_date" required/>
@@ -406,7 +422,9 @@ const Shipping = ({ handleLogout }) => {
             </div>
 
             <div className ="form-row">
-              <label htmlFor="arr-date" className="col-md-3 col-form-label">Requested Arrival Date/Time</label>
+              <label htmlFor="arr-date" className="col-md-3 col-form-label">Requested Arrival Date/Time
+                <span style={{ color: 'red' }}> *</span>
+              </label>
               <div className ="input-group input-group-sm mb-3 col-md-3">
                 <input type="datetime-local" className="form-control" onChange={(e) => setArrival_ship_date(e.target.value)}
                   name="arrival_ship_date" required/>
@@ -440,7 +458,7 @@ const Shipping = ({ handleLogout }) => {
             <div className ="form-row">
               <label htmlFor="fob" className="col-md-3 col-form-label">FOB</label>
               <div className="input-group input-group-sm mb-3 col-md-3">
-                <select onChange={(e) => setFob(e.target.value)}className="form-control" name="fob" id="fob" required>
+                <select onChange={(e) => setFob(e.target.value)}className="form-control" name="fob" id="fob">
                   <option value="">Select Option</option>
                   <option value="point of shipment">Point of Shipment</option>
                   <option value="none">None</option>
