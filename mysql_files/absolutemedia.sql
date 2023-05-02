@@ -221,7 +221,8 @@ CREATE TABLE order_table (
     order_notes TEXT DEFAULT NULL,
     order_status VARCHAR(100) DEFAULT NULL,
     PRIMARY KEY (order_id),
-	FOREIGN KEY (company_id) REFERENCES company_table(company_id)
+    FOREIGN KEY (product_id) REFERENCES product_table(product_id),
+    FOREIGN KEY (company_id) REFERENCES company_table(company_id)
 );
 
 CREATE TABLE order_nonItem (
@@ -265,7 +266,8 @@ CREATE TABLE order_nonItem (
     non_inventory_unit_price6 FLOAT DEFAULT NULL,
     non_inventory_total_price6 FLOAT DEFAULT NULL,
     PRIMARY KEY (order_id),
-	FOREIGN KEY (company_id) REFERENCES company_table(company_id)
+    FOREIGN KEY (product_id) REFERENCES product_table(product_id),
+    FOREIGN KEY (company_id) REFERENCES company_table(company_id)
 );
 
 CREATE TABLE order_item (
@@ -291,11 +293,14 @@ CREATE TABLE order_item (
     inventory_unit_price3 FLOAT DEFAULT NULL,
     inventory_total_price3 FLOAT DEFAULT NULL,
     PRIMARY KEY (order_id),
-	FOREIGN KEY (company_id) REFERENCES company_table(company_id)
+    FOREIGN KEY (product_id) REFERENCES product_table(product_id),
+    FOREIGN KEY (company_id) REFERENCES company_table(company_id)
 );
 
 CREATE TABLE shipping_table (
-    company_name VARCHAR(50) NOT NULL,
+    shipping_id INT NOT NULL AUTO_INCREMENT,
+    order_id INT DEFAULT NULL,
+    company_name VARCHAR(100) NOT NULL,
     contact_name VARCHAR(50) DEFAULT NULL,
     add1 VARCHAR(50) DEFAULT NULL,
     add2 VARCHAR(50) DEFAULT NULL,
@@ -320,9 +325,7 @@ CREATE TABLE shipping_table (
     arrival_ship_time VARCHAR(50),
     fob VARCHAR(50) DEFAULT NULL,
     notes TEXT,
-    shipping_id INT NOT NULL AUTO_INCREMENT,
-    order_id INT DEFAULT NULL,
-    PRIMARY KEY (shipping_id),
+	PRIMARY KEY (shipping_id),
     FOREIGN KEY (order_id) REFERENCES order_table(order_id)
 );
 
@@ -361,4 +364,5 @@ CREATE TABLE users (
   username VARCHAR(45) NULL,
   viewonly TINYINT NULL DEFAULT 0,
   PRIMARY KEY (userid),
-  UNIQUE INDEX username_UNIQUE (username ASC) VISIBLE);
+  UNIQUE INDEX username_UNIQUE (username ASC) VISIBLE
+);

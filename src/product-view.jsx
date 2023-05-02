@@ -360,7 +360,7 @@ const ProductView = ({ handleLogout }) => {
                                 <label htmlFor="date_code_required" className="col-form-label col-sm-3 float-sm-left pt-1 mb-2">Date Code Required: </label>
                                 
                                 <div className="custom-control custom-checkbox col-sm-6 float-sm-left pt-1 mb-2 ml-2">
-                                    <input checked={date_code_required} disabled type="checkbox" readOnly className="custom-control-input" id="date_code_required" />
+                                    <input checked={date_code_required} type="checkbox" readOnly className="custom-control-input" id="date_code_required" />
                                     <label className="custom-control-label" htmlFor="date_code_required"></label>
                                 </div>
                                         
@@ -396,7 +396,7 @@ const ProductView = ({ handleLogout }) => {
                             <div className="form-row">
                                 <label htmlFor="floodcoat" className="col-form-label col-sm-3 float-sm-left pt-1 mb-2">Floodcoat: </label>
                                 <div className="custom-control custom-checkbox col-sm-6 float-sm-left pt-1 mb-2 ml-2">
-                                    <input checked={floodcoat} disabled type="checkbox" className="custom-control-input" id="floodcoat" />
+                                    <input checked={floodcoat} type="checkbox" readOnly className="custom-control-input" id="floodcoat" />
                                     <label className="custom-control-label" htmlFor="floodcoat"></label>
                                 </div>
                             </div>
@@ -404,7 +404,7 @@ const ProductView = ({ handleLogout }) => {
                             <div className="form-row">
                                 <label htmlFor="rimage_print" className="col-form-label col-sm-3 float-sm-left pt-1 mb-2">Rimage Print: </label>
                                 <div className="custom-control custom-checkbox col-sm-6 float-sm-left pt-1 mb-2 ml-2">
-                                    <input checked={rimage_print} disabled type="checkbox" className="custom-control-input" id="rimage_print" />
+                                    <input checked={rimage_print} type="checkbox" readOnly className="custom-control-input" id="rimage_print" />
                                     <label className="custom-control-label" htmlFor="rimage_print"></label>
                                 </div>
                             </div>

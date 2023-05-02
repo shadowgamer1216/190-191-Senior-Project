@@ -30,9 +30,8 @@ function HomePage({ handleLogout }) {
 				<nav className="navbar navbar-dark bg-maroon">
 					<label className="navbar-brand">ABSOLUTE MEDIA, INC.</label>
 					<div>
-
 					<Link to ="signup">
-					<button className="btn btn-outline-light" >Sign Up</button>
+					<button className="btn btn-outline-light">Sign Up</button>
 					</Link>
 					</div>
 					<button className="btn btn-outline-light" onClick={handleLogout}>Logout</button>

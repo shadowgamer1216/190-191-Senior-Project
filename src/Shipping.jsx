@@ -3,23 +3,73 @@ import './App.css'
 import { Link, useNavigate } from "react-router-dom"
 import { useState, useEffect } from "react";
 import Axios from "axios";
+import Select from "react-select";
 
 const Shipping = ({ handleLogout }) => {
   const routeChange = () => {
     let path = '/login';
     navigate(path);
-};
-useEffect(() => {
+  };
+  useEffect(() => {
     let authToken = sessionStorage.getItem('Auth Token')
-
     if (!authToken) {
-        routeChange()
+      routeChange()
     }
-}, [])
+  }, []);
+
   const navigate = useNavigate();
 
-  const[company_name, setCompany_name] = useState(null);
-  const[contact_name, setContact_name] = useState(null);
+  const [latestShippingId, setShippingId] = useState(null);
+  const nextShippingId = latestShippingId + 1;
+  useEffect(() => {
+    Axios.get('http://localhost:3001/api/getLatestShippingId')
+    .then(response => {
+      setShippingId(response.data[0]['MAX(shipping_id)']);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }, []);
+
+  const [orderOptions, setOrderOptions] = useState([]);
+  useEffect(() => {
+    Axios.get('http://localhost:3001/api/getOrderIdList')
+    .then(response => {
+      const options = response.data.map(option => {
+        return { value: option.order_id, label: option.order_id};
+      });
+      setOrderOptions(options);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }, []);
+
+  const[order_id, setOrderId] = useState(null);
+  const [orderData, setOrderData] = useState(null);
+  useEffect(() => {
+    if(order_id) {
+      Axios.get(`http://localhost:3001/api/order/${order_id}`)
+      .then(response => {
+        setOrderData(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    }
+  }, [order_id]);
+  var company_id = orderData?.company_id ?? '';
+  const[company_name, setCompanyName] = useState(null);
+  useEffect(() => {
+    if(company_id) {
+      Axios.get(`http://localhost:3001/api/company/${company_id}`).then((response) =>{
+        setCompanyName(response.data.company_name);
+      }).catch(err => {
+        console.log(err);
+      });
+    }
+  }, [company_id]); 
+  const[contact_name, setContactName] = useState(null);
   const[add1, setAdd1] = useState(null);
   const[add2, setAdd2] = useState(null);
   const[city, setCity] = useState(null);
@@ -44,9 +94,12 @@ useEffect(() => {
   const[fob, setFob] = useState(null);
   const[notes, setNotes] = useState(null);
 
-  const submit = () => {
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
     Axios.post("http://localhost:3001/api/insertShipping",
     {
+      order_id: order_id,
       company_name: company_name,
       contact_name: contact_name,
       add1: add1,
@@ -72,12 +125,56 @@ useEffect(() => {
       arrival_ship_time: arrival_ship_time,
       fob: fob,
       notes: notes
-    }).then((result) => {
-      console.log(result.data);
+    }).then(()=> {
+      alert('Inserted new shipping');
     }).catch(err => {
       console.log(err);
-    })
+    });
   }
+
+  const Sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+  const [submitting, setSubmitting] = useState(false);
+
+  useEffect(() => { //validate if all required fields have inputs
+    setSubmitting(order_id && contact_name && add1 && city && state && zip && country && phone && email && payment_type && account_number && request_ship_date && request_ship_time && arrival_ship_date && arrival_ship_time);
+  }, [order_id, contact_name, add1, city, state, zip, country, phone, email, payment_type, account_number, request_ship_date, request_ship_time, arrival_ship_date, arrival_ship_time]);
+
+  const handleNavigate = async (id) => {
+    const idPassed = id.toString();
+    await Sleep(2000);
+    navigate(`/shipping/${idPassed}`);
+  };
+
+  const customStyle = {
+    control: base => ({
+      ...base,
+      height: 38,
+      minHeight: 38,
+      fontSize: '16px',
+      backgroundColor: '#E2EAFF',
+    }),
+    valueContainer: (base, state) => ({
+      ...base,
+      borderWidth: 1,
+      borderTopLeftRadius: 4,
+      borderBottomLeftRadius: 4,
+      paddingLeft: 10,
+      paddingBottom: 5,
+    }),
+    option: base => ({
+      ...base,
+      fontSize: '14px',
+    }),
+    menuPortal: (base) => ({
+      ...base,
+      zIndex: 9999,
+    }),
+    placeholder: (base, state) => ({
+      ...base,
+      overflow: 'hidden',
+    }),
+  };
+
 
   return (
     <div className="product-page"> 
@@ -104,7 +201,7 @@ useEffect(() => {
         <script defer ="shippingvalid.js"></script>
         <div id="error"></div>
 
-        <form id="shipping_form" autoComplete="off">
+        <form id="shipping_form" onSubmit={handleSubmit} autoComplete="off">
           <div className ="list-address pt-3">
             <div className="section-headers">
                 <h5>List of Shipping Addresses For</h5>
@@ -140,60 +237,64 @@ useEffect(() => {
             
             <div className="form-row">
               <label htmlFor="order-id" 
-                className="col-md-6 col-form-label"><b>Order ID:</b></label>
+                className="col-md-8 col-form-label"><h4>Order ID: <span style={{ color: 'red' }}>{order_id}</span></h4></label>
               <label htmlFor="date" 
-                className="col-md-6 col-form-label"><b>Date:</b></label>
+                className="col-md-4 col-form-label"><h5>Date:</h5></label>
             </div>
 
-            <br></br>
-            <div className ="form-row">
-              <label htmlFor="companyName" className="col-md-3 col-form-label">Company Name
-                <span style={{ color: 'red' }}> *</span>
-              </label>
-              <div className ="input-group input-group-sm mb-3 col-md-8">
-                <input onChange={(e) => setCompany_name(e.target.value)} className="form-control" 
-                  id="company_name" required></input>
+            <div className="form-row">
+              <label htmlFor="customer-id" className="col-md-3 col-form-label">Choose Order <span style={{ color: 'red' }}>*</span></label>
+              <div className="input-group input-group mb-3 col-md-3">
+                <div className="form-control p-0">
+                  <Select onChange={(e) => setOrderId(e.value)} className="react-select" styles={customStyle} value={orderOptions.filter(function(option) {
+                    return option.value === order_id;
+                  })} id="customer-id" required options={orderOptions}/>
+                </div>
               </div>
             </div>
 
             <div className ="form-row">
-              <label htmlFor="con-name" className="col-md-3 col-form-label">Contact Name
-                <span style={{ color: 'red' }}> *</span>
-              </label>
+              <label htmlFor="company-id" className="col-md-3 col-form-label">Company ID</label>
               <div className ="input-group input-group-sm mb-3 col-md-8">
-                <input onChange={(e) => setContact_name(e.target.value)}className="form-control"
-                  name="contact_name" required/>
+                <input readOnly className="form-control" id="company-id" value={company_id}/>
               </div>
             </div>
 
             <div className ="form-row">
-              <label htmlFor="add1" className="col-md-3 col-form-label">Address 1
-                <span style={{ color: 'red' }}> *</span>
-              </label>
+              <label htmlFor="company-name" className="col-md-3 col-form-label">Company Name</label>
               <div className ="input-group input-group-sm mb-3 col-md-8">
-                <input onChange={(e) => setAdd1(e.target.value)} className="form-control"
-                  name="add1" required/>
+                <input readOnly className="form-control" id="company-name" value={company_name}/>
+              </div>
+            </div>
+
+            <div className ="form-row">
+              <label htmlFor="contact-name" className="col-md-3 col-form-label">Contact Name<span style={{ color: 'red' }}> *</span></label>
+              <div className ="input-group input-group-sm mb-3 col-md-8">
+                <input onChange={(e) => setContactName(e.target.value)} className="form-control" name="contact-name" required/>
+              </div>
+            </div>
+
+            <div className ="form-row">
+              <label htmlFor="add1" className="col-md-3 col-form-label">Address 1 <span style={{ color: 'red' }}>*</span></label>
+              <div className ="input-group input-group-sm mb-3 col-md-8">
+                <input onChange={(e) => setAdd1(e.target.value)} className="form-control" name="add1" required/>
               </div>
             </div>
 
             <div className ="form-row">
               <label htmlFor="add2" className="col-md-3 col-form-label">Address 2</label>
               <div className ="input-group input-group-sm mb-3 col-md-8">
-                <input onChange={(e) => setAdd2(e.target.value)} className="form-control"
-                  name="add2" required/>
+                <input onChange={(e) => setAdd2(e.target.value)} className="form-control" name="add2"/>
               </div>
             </div>
 
             <div className ="form-row">
-              <label htmlFor="csz" className="col-md-3 col-form-label">City | State | Zip 
-                <span style={{ color: 'red' }}> *</span>
-              </label>
+              <label htmlFor="csz" className="col-md-3 col-form-label">City | State | Zip <span style={{ color: 'red' }}> *</span></label>
               <div className ="input-group input-group-sm mb-3 col-md-4">
-                <input onChange={(e) => setCity(e.target.value)} className="form-control"
-                  name="city" required/>
+                <input onChange={(e) => setCity(e.target.value)} className="form-control" name="city" required/>
               </div>
               
-              <div className="input-group inout-group-sm mb-3 col-md-2">
+              <div className="input-group input-group-sm mb-3 col-md-2">
                 <select onChange={(e) => setState(e.target.value)} className="form-control" name="country_state" required>
                   <option value="">Select a State</option>
                   <option value="AL">Alabama</option>
@@ -521,7 +622,8 @@ useEffect(() => {
           </div>
 
           <div className="add">
-            <button onClick = {submit} type="submit" id="add-company" className="btn btn-success m-2">Add</button>
+            {/*onClick={() => handleNavigate(nextShippingId)}*/}
+            <button  disabled={!submitting} type="submit" id="add-company" className="btn btn-success m-2">Add</button>
           </div>
 
         </form>

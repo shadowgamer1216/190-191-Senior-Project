@@ -22,13 +22,12 @@ const ItemCheckIn = ({ handleLogout }) => {
     };
     useEffect(() => {
         let authToken = sessionStorage.getItem('Auth Token')
-
-    const Sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-    const [submitting, setSubmitting] = useState(false);
         if (!authToken) {
             routeChange()
         }
     }, [])
+    const Sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+    const [submitting, setSubmitting] = useState(false);
     const submit = async(e) => {
         e.preventDefault();
         await Axios.post("http://localhost:3001/api/insertItem", {

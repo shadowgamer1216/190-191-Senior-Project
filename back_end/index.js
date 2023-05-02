@@ -74,6 +74,35 @@ app.post("/api/insertContact", (req, res)=> {
     });
 });
 
+// ORDER ID LIST - GET API <=
+app.get("/api/getOrderIdList", (req, res) => {
+    db.query ("SELECT order_id FROM order_table", (err, result) =>{
+        if (err) throw err;
+        res.send(result);
+    });
+});
+
+// LATEST ORDER ID - GET API <=
+app.get("/api/getLatestOrderId", (req, res) => {
+    db.query ("SELECT MAX(order_id) FROM order_table", (err, result) =>{
+        if (err) throw err;
+        res.send(result);
+    });
+});
+
+// ORDER INFO BY ID - GET API <=
+app.get("/api/order/:order_id", (req, res) => {
+    const order_id = req.params.order_id;
+    db.query("SELECT * FROM order_table INNER JOIN order_nonItem ON order_table.order_id = order_nonItem.order_id INNER JOIN order_item ON order_nonItem.order_id = order_item.order_id WHERE order_table.order_id = ?", [order_id], (err, result) =>{
+        if (err) {
+            console.error(err);
+            res.status(500).send('Error retrieving order data');
+        } else {
+            res.send(result[0]);
+        }
+    });
+});
+
 // ORDER PAGE - POST API =>
 app.post("/api/insertOrder", (req, res) => {
     //go to back_end directory in terminal and type 'node index.js'
@@ -252,7 +281,7 @@ app.post("/api/insertOrderItem", (req, res) => {
 // PRODUCT TABLE INFO - GET API <=
 app.get("/api/getProductData", (req, res) => {
     //db.query ("SELECT MAX(product_id), product_category, oem_product_id, product_title FROM product_table", (err, result) =>{
-    db.query ("SELECT product_id, product_title FROM product_table", (err, result) =>{
+    db.query ("SELECT product_id, customer_id, product_title, product_category FROM product_table", (err, result) =>{
         if (err) throw err;
         res.send(result);
     });
@@ -540,8 +569,17 @@ app.post("/api/insertComponent", (req, res) =>{
     /*------------------------------------------ Component Page ------------------------------------------*/
 });
 
+// LATEST SHIPPING ID - GET API <=
+app.get("/api/getLatestShippingId", (req, res) => {
+    db.query ("SELECT MAX(shipping_id) FROM shipping_table", (err, result) =>{
+        if (err) throw err;
+        res.send(result);
+    });
+});
+
 // SHIPPING PAGE - POST API =>
 app.post("/api/insertShipping", (req, res) =>{
+    const order_id = req.body.order_id;
     const company_name = req.body.company_name;
     const contact_name = req.body.contact_name;
     const add1 = req.body.add1;
@@ -568,8 +606,8 @@ app.post("/api/insertShipping", (req, res) =>{
     const fob = req.body.fob;
     const notes = req.body.notes;
 
-    const sqlInsert =  "INSERT INTO shipping_table (company_name, contact_name, add1, add2, city, country_state, zip, province, country, phone, fax, email, fedex, ups, courier_willcall, abs, other_ship_method, payment_type, account_number, request_ship_date, request_ship_time, arrival_ship_date, arrival_ship_time, fob, notes) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-    db.query(sqlInsert, [company_name, contact_name, add1, add2, city, country_state, zip, province, country, phone, fax, email, fedex, ups, courier_willcall, abs, other_ship_method, payment_type, account_number, request_ship_date, request_ship_time, arrival_ship_date, arrival_ship_time, fob, notes], (err, result) => {
+    const sqlInsert =  "INSERT INTO shipping_table (order_id, company_name, contact_name, add1, add2, city, country_state, zip, province, country, phone, fax, email, fedex, ups, courier_willcall, abs, other_ship_method, payment_type, account_number, request_ship_date, request_ship_time, arrival_ship_date, arrival_ship_time, fob, notes) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    db.query(sqlInsert, [order_id, company_name, contact_name, add1, add2, city, country_state, zip, province, country, phone, fax, email, fedex, ups, courier_willcall, abs, other_ship_method, payment_type, account_number, request_ship_date, request_ship_time, arrival_ship_date, arrival_ship_time, fob, notes], (err, result) => {
         console.log(result);
     })
 });
