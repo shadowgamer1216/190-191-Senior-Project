@@ -112,7 +112,7 @@ const Company = ({ handleLogout }) => {
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="CID" className="col-md-3 col-form-label">Company ID <span style={{ color: 'red' }}>*</span></label>
+                            <label htmlFor="CID" className="col-md-3 col-form-label">Company ID (4 characters)<span style={{ color: 'red' }}>*</span></label>
                             <div className="input-group input-group-sm mb-3 col-md-2">
                                 <input type="text" className="form-control" id="CID" onChange={(e) =>{
                                     handleIdChange(e);
