@@ -16,15 +16,14 @@ const ItemCheckIn = ({ handleLogout }) => {
     const [signed_for_by, setSignedForBy] = useState(null);
     const [date_in, setDateIn] = useState(null);
     const [date_complete, setDateComplete] = useState(null);
+    const Sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+    const [submitting, setSubmitting] = useState(false);
     const routeChange = () => {
         let path = '/login';
         navigate(path);
     };
     useEffect(() => {
         let authToken = sessionStorage.getItem('Auth Token')
-
-    const Sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-    const [submitting, setSubmitting] = useState(false);
         if (!authToken) {
             routeChange()
         }

@@ -25,6 +25,8 @@ import PackingSlip from './packingSlip';
 import QCInspection from './QC-Inspection';
 import JobOrder from './jobOrder';
 import ScrollToTop from "./scrollToTop";
+import Login from './LoginForm';
+import Signup from './signupForm';
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from './firebase';
 
@@ -50,12 +52,8 @@ useEffect(() => {
   const handleLogin = (viewOnly) => {
     onAuthStateChanged(auth, (user) => {
       if (user){
-        const uid = user.uid;
-
-
-    //setIsLoggedIn(true);
+    const uid = user.uid;
     setIsViewOnly(viewOnly);
-    console.log("app view only " , viewOnly)
       }
       else{
         console.log("no user")
@@ -73,11 +71,11 @@ useEffect(() => {
  return (
     <div className="App">
       {!isViewOnly ? (
-      <ScrollToTop />
+      //<ScrollToTop />
       <Routes>
         <Route path="/" element={<HomePage handleLogout={handleLogout} />} />
-          <Route path="/login" element={<LoginForm handleLogin={handleLogin} />} />
-          <Route path="/signup" element={<SignupForm />} />
+          <Route path="/login" element={<Login handleLogin={handleLogin} />} />
+          <Route path="/signup" element={<Signup />} />
 
         <Route path="/invoice" element={<Invoice />} />
         <Route path="/packingSlip" element={<PackingSlip />} />
@@ -104,7 +102,7 @@ useEffect(() => {
       ) : (
         <Routes>
           <Route path="/" element={<ViewOnlyHome handleLogout={handleLogout} />} />
-          <Route path="/login" element={<LoginForm handleLogin={handleLogin} />} />
+          <Route path="/login" element={<Login handleLogin={handleLogin} />} />
           <Route path="/search" element={<Search />} />
           <Route path="/search/searchcompany" element={<SearchCompany />} />
           <Route path="/search/searchContact" element={<SearchContact />} />
