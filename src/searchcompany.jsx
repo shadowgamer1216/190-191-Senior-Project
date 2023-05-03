@@ -7,33 +7,58 @@ import Axios from "axios";
 
 const SearchCompany = () => {
     const navigate = useNavigate();
-    const [data, setData] = useState([]);
-    const [company_ID, setCompanyID] = useState(null);
-    const [company_Name, setCompanyName] = useState(null);
+
     const routeChange = () => {
         let path = '/login';
         navigate(path);
     };
     useEffect(() => {
         let authToken = sessionStorage.getItem('Auth Token')
-
         if (!authToken) {
             routeChange()
         }
-    }, [])
+    }, []);
 
-    const submit = () => {
-        Axios.post("http://localhost:3001/api/searchCompany", {company_ID:company_ID, company_Name:company_Name})
-        .then(()=> {
-            alert('searching for company');
+    const [data, setData] = useState([]);
+    const [company_id, setCompanyID] = useState('');
+    const [company_name, setCompanyName] = useState('');
+
+    // search company function
+    const search = (e) => {
+        e.preventDefault();
+        Axios.get(`http://localhost:3001/api/getSearchCompany?company_id=${company_id}&company_name=${company_name}`)
+        .then((response) =>{
+            setData(response.data);
         })
+        .catch(error => {
+            console.log(error);
+        });
     };
 
-    useEffect(() => {
-        Axios.get("http://localhost:3001/api/getSearchCompany").then((response) =>{
-            setData(response.data);
+    const handleView = (e, id) => {
+        e.preventDefault();
+        const idPassed = id.toString();
+        navigate(`/company/${idPassed}`);
+    }
+    
+    // const handleView = (e, id) => {     // create new tab from list, open view (not working, due to firebase)
+    //     e.preventDefault();
+    //     const idPassed = id.toString();
+    //     const url = `/company/${idPassed}`;
+    //     window.open(url, '_blank');
+    // }
+
+    const handleRemove = (e, id) => {
+        e.preventDefault();
+        const idPassed = id.toString();
+        Axios.delete(`http://localhost:3001/api/company/${idPassed}`)
+        .then((response) =>{
+            console.log(response);
+        })
+        .catch(error => {
+            console.log(error);
         });
-    }, []);
+    }
 
     return (
         <div className='page'>
@@ -63,40 +88,58 @@ const SearchCompany = () => {
                 <form>
                     <div className="contact-info pt-3">
                         <div className="form-row">
+                            <label htmlFor="id" className="col-md-0 col-form-label"><b>Company ID</b></label>
+                            <div className="input-group input-group-sm mb-3 col-md-2">
+                                <input type="text" className="form-control" id="id" onChange={(e) =>{
+                                setCompanyID(e.target.value)
+                            }} maxLength = "4"/>
+                            </div>
 
-                            <label htmlFor="id" className="col-sm-0 col-form-label">ID</label>
-                                <div className="input-group input-group-sm mb-3 col-sm-2">
-                                <input type="text" className="form-control" id="CID" onChange={(e) =>{
-                                    setCompanyID(e.target.value)
-                                }} maxLength = "8"/>
-                                </div>
+                            <label htmlFor="name" className="col-md-0 col-form-label"><b>Company Name</b></label>
+                            <div className="input-group input-group-sm mb-3 col-md-4">
+                                <input type="text" className="form-control" id="name" onChange={(e) =>{
+                                setCompanyName(e.target.value)
+                            }} maxLength = "128"/>
+                            </div>
 
-                                <label htmlFor="name" className="col-sm-0 col-form-label">Name</label>
-                                <div className="input-group input-group-sm mb-3 col-sm-3">
-                                <input type="text" className="form-control" id="CName" onChange={(e) =>{
-                                    setCompanyName(e.target.value)
-                                }} maxLength = "128"/>
-                                </div>
-
+                            <div className="input-group input-group mb-3 col-md-1">
+                                <button onClick={(e) => search(e)} id="search-company" className="btn btn-outline-success">Search</button>
+                            </div>
                         </div>
                     </div>
-                    <div className='mb-5'>
-                        <button onClick = {submit} type="submit" id="search-contact" className="btn btn-outline-success">Search</button>
-                    </div>
-                    <table className="table mt-5">
-                                    <thead className="thead-light">
-                                        <tr>
-                                            <th scope ="col">Search Results</th>
+                    {data && (
+                        <>
+                        <div className="section-headers">
+                            <h5>Search Results</h5>
+                        </div>
+                        <div className="table-responsive-md">
+                            <table className="table">
+                                <thead className="thead-light">
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Company ID</th>
+                                        <th scope="col">Company Name</th>
+                                        <th scope="col">VIEW</th>
+                                        <th scope="col">REMOVE</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {data.map((row, index) => (
+                                        <tr key={index}>
+                                            <td>{index+1}</td>
+                                            <td>{row.company_id}</td>
+                                            <td>{row.company_name}</td>
+                                            <td><button className="btn btn-sm btn-outline-info" onClick={(e) => handleView(e, row.company_id)}>OPEN</button></td>
+                                            <td><button className="btn btn-sm btn-danger" onClick={(e) => handleRemove(e, row.company_id)}>DELETE</button></td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        {data.map((row) => (
-                                            <tr key={data.customer_id}>
-                                                <td>{row.customer_id}</td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                    </table>
+                                    ))}
+
+                                </tbody>
+                            </table>
+                        </div>
+                        </>
+                    )}
+                        
                     <div>
                         <button className="btn btn-outline-dark" onClick={() => navigate("../Search")}>Back</button>
                         <button className="btn btn-outline-dark" onClick={() => navigate("/")}>Home</button>
@@ -119,11 +162,7 @@ const SearchCompany = () => {
                     </div>
                 </div>
             </footer>
-      </div>
-
-      
-
-
+        </div>
     );
 };
 

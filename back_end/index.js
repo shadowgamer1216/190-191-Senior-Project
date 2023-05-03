@@ -320,54 +320,80 @@ app.get("/api/getComponentData", (req, res) => {
     });
 });
 
-app.get("/api/getSearchContact", (req, res) =>{
-    const company_id = req.body.company_id;
-    const company_name = req.body.company_name;
+app.get("/api/getSearchCompany", (req, res) =>{
+    const company_id = req.query.company_id;
+    const company_name = req.query.company_name;
+    let query = "SELECT * FROM company_table";
+    let queryParams = [];
 
-    if (!company_name) { //Looking via company id
-        db.query("SELECT * FROM contact_table WHERE company_id = ?", [company_id], (err, result) =>{
-            if (err) throw err;
-            res.send(result);
-        });
-    } else if (!company_id) { //looking via company name
-        db.query("SELECT * FROM contact_table WHERE company_name = ?", [company_name], (err, result) =>{
-            if (err) throw err;
-            res.send(result);
-        });
-    } else if (!company_name && !company_id) { //invalid 
-        const err = new Error('Invalid request');
-        throw err;
-    } else { //search with both criteria 
-        db.query("SELECT * FROM contact_table WHERE company_id = ? AND company_name = ?", [company_id, company_name], (err, result) =>{
-            if (err) throw err;
-            res.send(result);
-        });
+    if (company_id) {
+        query += " WHERE company_id LIKE ?";
+        queryParams.push(`%${company_id}%`);
     }
+    if (company_name) {
+        if (queryParams.length > 0) {
+            query += " AND company_name LIKE ?";
+        } else {
+            query += " WHERE company_name LIKE ?";
+        }
+        queryParams.push(`%${company_name}%`);
+    }
+
+    db.query(query, queryParams, (err, result) =>{
+        if (err) throw err;
+        res.send(result);
+    });
 });
 
-app.get("/api/getSearchCompany", (req, res) =>{
-    const company_id = req.body.company_id;
-    const company_name = req.body.company_name;
+app.get("/api/getSearchContact", (req, res) =>{
+    const company_id = req.query.company_id;
+    const company_name = req.query.company_name;
+    let query = "SELECT * FROM contact_table";
+    let queryParams = [];
 
-    if (!company_name) { //Looking via comapny id
-        db.query("SELECT * FROM company_table WHERE company_id = ?", [company_id], (err, result) =>{
-            if (err) throw err;
-            res.send(result);
-        });
-    } else if (!company_id) { //looking via company name
-        db.query("SELECT * FROM company_table WHERE company_name = ?", [company_name], (err, result) =>{
-            if (err) throw err;
-            res.send(result);
-        });
-    } else if (!company_name && !company_id) { //invalid 
-        const err = new Error('Invalid request');
-        throw err;
-    } else { //search with both criteria 
-        db.query("SELECT * FROM company_table WHERE company_id = ? AND company_name = ?", [company_id, company_name], (err, result) =>{
-            if (err) throw err;
-            res.send(result);
-        });
+    if (company_id) {
+        query += " WHERE company_id LIKE ?";
+        queryParams.push(`%${company_id}%`);
     }
+    if (company_name) {
+        if (queryParams.length > 0) {
+            query += " AND company_name LIKE ?";
+        } else {
+            query += " WHERE company_name LIKE ?";
+        }
+        queryParams.push(`%${company_name}%`);
+    }
+
+    db.query(query, queryParams, (err, result) =>{
+        if (err) throw err;
+        res.send(result);
+    });
+});
+
+// DELETE COMPANY BY ID API
+app.delete("/api/company/:company_id", (req, res) => {
+    const company_id = req.params.company_id;
+    db.query("DELETE FROM company_table WHERE company_id = ?", [company_id], (err, result) => {
+        if (err) {
+            console.log(err);
+            res.status(500).send("Error removing company.");
+        } else {
+            res.status(200).send("Company removed successfully.");
+        }
+    });
+});
+
+// DELETE CONTACT BY ID API
+app.delete("/api/contact/:contact_id", (req, res) => {
+    const contact_id = req.params.contact_id;
+    db.query("DELETE FROM contact_table WHERE contact_id = ?", [contact_id], (err, result) => {
+        if (err) {
+            console.log(err);
+            res.status(500).send("Error removing contact.");
+        } else {
+            res.status(200).send("Contact removed successfully.");
+        }
+    });
 });
 
 // PRODUCT INFO BY ID - GET API <=

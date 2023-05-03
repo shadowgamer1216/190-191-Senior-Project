@@ -7,56 +7,58 @@ import Axios from "axios";
 
 const SearchContact = () => {
     const navigate = useNavigate();
-    const [data, setData] = useState([]);
 
-    const [customer_id, setCustomerID] = useState("");
-    const [company, setCompany] = useState("");
-    const [fname, setFname] = useState(""); 
-    const [lname, setLname] = useState(""); 
-    const [contact_type, setContactType] = useState("");
-    const [title, setTitle] = useState("");
-    const [dept, setDept] = useState("");
-    const [add_1, setAdd_1] = useState("");
-    const [add_2, setAdd_2] = useState("");
-    const [city, setCity] = useState("");
-    const [state_in_country, setState] = useState("");
-    const [zip, setZip] = useState("");
-    const [country, setCountry] = useState("");
-    const [phone, setPhone] = useState("");
-    const [extension, setExtension] = useState("");
-    const [cell_phone_number, setCell] = useState("");
-    const [third_party_company, setThirdParty] = useState("");
-    const [fax, setFax] = useState("");
-    const [email, setEmail] = useState("");
-    const [notes, setNotes] = useState("");
     const routeChange = () => {
         let path = '/login';
         navigate(path);
     };
     useEffect(() => {
         let authToken = sessionStorage.getItem('Auth Token')
-
         if (!authToken) {
             routeChange()
         }
-    }, [])
-
-    
-    const submit = () => {
-        Axios.post("http://localhost:3001/api/searchContact", {customer_id:customer_id, company:company})
-        .then(()=> {
-            alert('searching for contact');
-        })
-    };
-
-    useEffect(() => {
-        Axios.get("http://localhost:3001/api/getSearchContact").then((response) =>{
-            setData(response.data);
-        });
     }, []);
 
-    
+    const [data, setData] = useState([]);
+    const [company_id, setCompanyID] = useState("");
+    const [company_name, setCompanyName] = useState("");
 
+    // search company function
+    const search = (e) => {
+        e.preventDefault();
+        Axios.get(`http://localhost:3001/api/getSearchContact?company_id=${company_id}&company_name=${company_name}`)
+        .then((response) =>{
+            setData(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    };
+
+    const handleView = (e, id) => {
+        e.preventDefault();
+        const idPassed = id.toString();
+        navigate(`/contact/${idPassed}`);
+    }
+    
+    // const handleView = (e, id) => {     // create new tab from list, open view (not working, due to firebase)
+    //     e.preventDefault();
+    //     const idPassed = id.toString();
+    //     const url = `/contact/${idPassed}`;
+    //     window.open(url, '_blank');
+    // }
+
+    const handleRemove = (e, id) => {
+        e.preventDefault();
+        const idPassed = id.toString();
+        Axios.delete(`http://localhost:3001/api/contact/${idPassed}`)
+        .then((response) =>{
+            console.log(response);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    }
 
     return (
         <div className='page'>
@@ -86,47 +88,72 @@ const SearchContact = () => {
                 <form>
                     <div className="contact-info pt-3">
                         <div className="form-row">
+                            <label htmlFor="id" className="col-md-0 col-form-label"><b>Company ID</b></label>
+                            <div className="input-group input-group-sm mb-3 col-md-2">
+                                <input type="text" className="form-control" id="id" onChange={(e) =>{
+                                setCompanyID(e.target.value)
+                            }} maxLength = "4"/>
+                            </div>
 
-                            <label htmlFor="id" className="col-sm-0 col-form-label">Customer ID</label>
-                                <div className="input-group input-group-sm mb-3 col-sm-2">
-                                <input type="text" className="form-control" id="customer-id" onChange={(e) =>{
-                                    setCustomerID(e.target.value)
-                                }}/>
-                                </div>
+                            <label htmlFor="name" className="col-md-0 col-form-label"><b>Company Name</b></label>
+                            <div className="input-group input-group-sm mb-3 col-md-4">
+                                <input type="text" className="form-control" id="name" onChange={(e) =>{
+                                setCompanyName(e.target.value)
+                            }} maxLength = "128"/>
+                            </div>
 
-                                <label htmlFor="name" className="col-sm-0 col-form-label">Company</label>
-                                <div className="input-group input-group-sm mb-3 col-sm-3">
-                                <input type="text" className="form-control" id="company-id" onChange={(e) =>{
-                                    setCompany(e.target.value)
-                                }}/> 
-                                </div>
-
+                            <div className="input-group input-group mb-3 col-md-1">
+                                <button onClick={(e) => search(e)} id="search-company" className="btn btn-outline-success">Search</button>
+                            </div>
                         </div>
                     </div>
-                    <div className='mb-5'>
-                        <button onClick = {submit} type="submit" id="search-contact" className="btn btn-outline-success">Search</button>
-                    </div>
-
-                    <table className="table mt-5">
-                                    <thead className="thead-light">
-                                        <tr>
-                                            <th scope ="col">Search Results</th>
+                    {data && (
+                        <>
+                        <div className="section-headers">
+                            <h5>Search Results</h5>
+                        </div>
+                        <div className="table-responsive-md">
+                            <table className="table">
+                                <thead className="thead-light">
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Company</th>
+                                        <th scope="col">First</th>
+                                        <th scope="col">Last</th>
+                                        <th scope="col">Type</th>
+                                        <th scope="col">Title</th>
+                                        <th scope="col">Dept</th>
+                                        <th scope="col">VIEW</th>
+                                        <th scope="col">DELETE</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {data.map((row, index) => (
+                                        <tr key={index}>
+                                            <td>{index+1}</td>
+                                            <td>{row.company_id}</td>
+                                            <td>{row.company_name}</td>
+                                            <td>{row.fname}</td>
+                                            <td>{row.lname}</td>
+                                            <td>{row.contact_type}</td>
+                                            <td>{row.title}</td>
+                                            <td>{row.dept}</td>
+                                            <td><button className="btn btn-sm btn-outline-info" onClick={(e) => handleView(e, row.contact_id)}>OPEN</button></td>
+                                            <td><button className="btn btn-sm btn-danger" onClick={(e) => handleRemove(e, row.contact_id)}>DELETE</button></td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        {data.map((row) => (
-                                            <tr key={data.customer_id}>
-                                                <td>{row.customer_id}</td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                    </table>
+                                    ))}
 
-                    <div className='mt-5'>
+                                </tbody>
+                            </table>
+                        </div>
+                        </>
+                    )}
+                        
+                    <div>
                         <button className="btn btn-outline-dark" onClick={() => navigate("../Search")}>Back</button>
                         <button className="btn btn-outline-dark" onClick={() => navigate("/")}>Home</button>
                     </div>
-    
                 </form>
             </div>
 
@@ -145,12 +172,7 @@ const SearchContact = () => {
                     </div>
                 </div>
             </footer>
-
-      </div>
-
-      
-
-
+        </div>
     );
 };
 
