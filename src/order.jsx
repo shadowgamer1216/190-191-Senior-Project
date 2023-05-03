@@ -6,6 +6,19 @@ import Axios from 'axios';
 import Select from "react-select";
 
 const Order = ({ handleLogout }) => {
+
+    const routeChange = () => {
+        let path = '/login';
+        navigate(path);
+    };
+    useEffect(() => {
+        let authToken = sessionStorage.getItem('Auth Token')
+
+        if (!authToken) {
+            routeChange()
+        }
+    }, []);
+
     const navigate = useNavigate();
     
     const [productID, setProductID] = useState(null);
@@ -187,7 +200,10 @@ const Order = ({ handleLogout }) => {
     }, [subTotal, taxRate, tax,
         freightCharges]);
 
-    const submit = () => {
+    const Sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+    const [submitting, setSubmitting] = useState(false);
+    const submit = (e) => {
+        e.preventDefault();
         Axios.post("http://localhost:3001/api/insertOrder", {
             productID: productID,
             companyID: companyID,
@@ -312,10 +328,34 @@ const Order = ({ handleLogout }) => {
             itemQuantity3: itemQuantity3,
             itemUnitPrice3: itemUnitPrice3,
             itemTotalPrice3: itemTotalPrice3,
-        }).then(() => {
-            console.log("Success");
-        })
+        }).then(()=> {
+            alert('Inserted new order');
+        }).catch(err => {
+            console.log(err);
+        });
     };
+
+    useEffect(() => {
+        setSubmitting(companyID && productID && factoryOrderQuantity);
+    }, [companyID, productID, factoryOrderQuantity]);
+
+    const handleNavigate = async (id) => {
+        const idPassed = id.toString();
+        await Sleep(2000);
+        navigate(`/order/${idPassed}`);
+    };
+
+    const [latestOrderId, setOrderId] = useState(null);
+    const nextOrderId = latestOrderId + 1;
+    useEffect(() => {
+        Axios.get('http://localhost:3001/api/getLatestOrderId')
+        .then(response => {
+            setOrderId(response.data[0]['MAX(order_id)']);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    }, []);
 
     const [companyOptions, setCompanyOptions] = useState([]);
     useEffect(() => {
@@ -333,49 +373,44 @@ const Order = ({ handleLogout }) => {
 
     const [productOptions, setProductOptions] = useState([]);
     useEffect(() => {
+        setProductID(null);
         Axios.get('http://localhost:3001/api/getProductData')
         .then(response => {
             const options = response.data.map(option => {
-                return { value: option.product_id, label: option.product_id + " — " + option.product_title };
+                if(option.customer_id === companyID) { 
+                    return { value: option.product_id, label: option.product_id + " — " + option.product_title + " (" + option.product_category + ")"};
+                }
+                else { return null; }
             });
-            setProductOptions(options);
+            const filteredOptions = options.filter(option => option !== null);
+            setProductOptions(filteredOptions);
         })
         .catch(error => {
             console.log(error);
         });
-    }, []);
+    }, [companyID]);
 
     const [componentOptions, setComponentOptions] = useState([]);
-    const routeChange = () => {
-        let path = '/login';
-        navigate(path);
-    };
     useEffect(() => {
-        let authToken = sessionStorage.getItem('Auth Token')
-
-        if (!authToken) {
-            routeChange()
-        }
-    }, [])
-    useEffect(() => {
+        setItem1(null);
+        setItem2(null);
+        setItem3(null);
         Axios.get('http://localhost:3001/api/getComponentData')
         .then(response => {
             const options = response.data.map(option => {
-                return { value: option.component_id, label: option.component_id + " — " + option.title };
+                if(option.customer_id === companyID) { 
+                    return { value: option.component_id, label: option.component_id + " — " + option.title + " (" + option.component_type + ")"}; 
+                }
+                else { return null; }
             });
-            setComponentOptions(options);
+            const filteredOptions = options.filter(option => option !== null);
+            setComponentOptions(filteredOptions);
         })
         .catch(error => {
             console.log(error);
         });
-    }, []);
-    
-    // const [checkNum, setCheckNum] = useState(false);
-    // function CheckWholeNumber(num) {
-    //     if(num % 1 !== 0) {
-    //         setCheckNum(true);
-    //     }
-    // }
+        
+    }, [companyID]);
     
     return (
         <div className="page">
@@ -405,104 +440,10 @@ const Order = ({ handleLogout }) => {
                     <div className="section-headers">
                         <h5>ABSO - Absolute Media, Inc.</h5>
                     </div>
-                    
-                    {/* <div className="form-row">
-                        <label className="col-md-6 col-form-label"><b><u>Billing Information</u></b></label>    Contact Page
-                        <label className="col-md-6 col-form-label"><b><u>Product Information</u></b></label>    Product Page
-                    </div> */}
-
-                    {/* <div className="form-row">
-                        <label className="col-md-2 col-form-label"><b>Customer ID:</b></label>
-                        <div className="input-group input-group-sm mb-2 col-md-2">
-                            <input type="text" className="form-control" id="customerID"
-                            onChange = {(e) => {
-                                setCustomerID(e.target.value)
-                            }}/>
-                        </div>
-                        <div className="col-md-2">
-                            <button onClick={getContact} className="btn btn-outline-dark">Get Information</button>
-                        </div>
-                        <label className="col-md-2 col-form-label"><b>Product ID:</b></label>
-                        <div className="input-group input-group-sm mb-2 col-md-2">
-                            <input type="number" className="form-control" id="productID" 
-                            onChange = {(e) => {
-                                setProductID(e.target.value)
-                            }}/>
-                        </div>
-                        <div className="col-md-2">
-                            <button onClick={getProduct} className="btn btn-outline-dark">Get Information</button>
-                        </div>
-                    </div> */}
-
-                    {/* <div className="form-row">
-                        <label className="col-md-6 col-form-label"><b>Company:</b></label>
-                            {customerList.map((val, key) => {
-                                return <div> {val.company} </div>
-                            })}
-                        <label className="col-md-2 col-form-label"><b>Product ID:</b></label>
-                    </div>
-
-                    <div className="form-row">
-                        <label className="col-md-6 col-form-label"><b>Phone:</b></label>
-                            {customerList.map((val, key) => {
-                                return <div> {val.phone} </div>
-                            })}
-                        <label className="col-md-2 col-form-label"><b>Product Category:</b></label>
-                            {productList.map((val, key) => {
-                                return <div> {val.product_category} </div>
-                            })}
-                    </div>
-
-                    <div className="form-row">
-                        <label className="col-md-6 col-form-label"><b>Address 1:</b></label>
-                            {customerList.map((val, key) => {
-                                return <div> {val.add_1} </div>
-                            })}
-                        <label className="col-md-2 col-form-label"><b>OEM Product ID:</b></label>
-                            {productList.map((val, key) => {
-                                return <div> {val.oem_product_id} </div>
-                            })}
-                    </div>
-
-                    <div className="form-row">
-                        <label className="col-md-6 col-form-label"><b>Address 2:</b></label>
-                            {customerList.map((val, key) => {
-                                return <div> {val.add_2} </div>
-                            })}
-                        <label className="col-md-2 col-form-label"><b>Product Title:</b></label>
-                            {productList.map((val, key) => {
-                                return <div> {val.product_title} </div>
-                            })}
-                    </div>
-
-                    <div className="form-row">
-                        <label className="col-md-6 col-form-label"><b>City:</b></label>
-                            {customerList.map((val, key) => {
-                                return <div> {val.city} </div>
-                            })}
-                        <label className="col-md-6 col-form-label"><b>Number of Colors:</b></label>
-                            {productList.map((val, key) => {
-                                return <div> {val.product_category} </div>
-                            })}
-                    </div>
-
-                    <div className="form-row">
-                        <label className="col-md-2 col-form-label"><b>State:</b></label>
-                            {customerList.map((val, key) => {
-                                return <div> {val.state} </div>
-                            })}
-                    </div>
-
-                    <div className="form-row">
-                        <label className="col-md-2 col-form-label"><b>Zip:</b></label>
-                            {customerList.map((val, key) => {
-                                return <div> {val.zip} </div>
-                            })}
-                    </div> */}
 
                     <div className="form-row">
                         <label htmlFor="companyID" className="col-md-3 col-form-label">Company ID <span style={{ color: 'red' }}>*</span></label>
-                        <div className="input-group input-group-sm mb-3 col-md-8">
+                        <div className="input-group input-group mb-3 col-md-8">
                             <div className="form-control p-0">
                                 <Select onChange={(e) => setCompanyID(e.value)} className="react-select" menuPortalTarget={document.body} styles={customStyle} value={companyOptions.filter(function(option) {
                                     return option.value === companyID;
@@ -512,7 +453,7 @@ const Order = ({ handleLogout }) => {
                     </div>
 
                     <div className="form-row">
-                        <label htmlFor="salesPerson" className="col-md-3 col-form-label">SalesPerson</label>
+                        <label htmlFor="salesPerson" className="col-md-3 col-form-label">Salesperson</label>
                         <div className="input-group input-group-sm mb-3 col-md-8">
                             <input type="text" className="form-control" id="salesPerson" 
                             onChange = {(e) => {
@@ -563,7 +504,7 @@ const Order = ({ handleLogout }) => {
 
                     <div className="form-row">
                         <label htmlFor="productID" className="col-md-3 col-form-label">Product ID <span style={{ color: 'red' }}>*</span></label>
-                        <div className="input-group input-group-sm mb-3 col-md-8">
+                        <div className="input-group input-group mb-3 col-md-8">
                             <div className="form-control p-0">
                                 <Select onChange={(e) => setProductID(e.value)} className="react-select" menuPortalTarget={document.body} styles={customStyle} value={productOptions.filter(function(option) {
                                     return option.value === productID;
@@ -952,7 +893,7 @@ const Order = ({ handleLogout }) => {
                     {/* Item #1 */}
                     <div className="form-row">
                         <label htmlFor="item1" className="col-md-3 col-form-label">Inventory Item #1</label>
-                        <div className="input-group input-group-sm mb-3 col-md-8">
+                        <div className="input-group input-group mb-3 col-md-8">
                             <div className="form-control p-0">
                                 <Select onChange={(e) => setItem1(e.value)} className="react-select" menuPortalTarget={document.body} styles={customStyle} value={componentOptions.filter(function(option) {
                                     return option.value === item1;
@@ -1005,7 +946,7 @@ const Order = ({ handleLogout }) => {
                     {/* Item #2 */}
                     <div className="form-row">
                         <label htmlFor="item2" className="col-md-3 col-form-label">Inventory Item #2</label>
-                        <div className="input-group input-group-sm mb-3 col-md-8">
+                        <div className="input-group input-group mb-3 col-md-8">
                             <div className="form-control p-0">
                                 <Select onChange={(e) => setItem2(e.value)} className="react-select" menuPortalTarget={document.body} styles={customStyle} value={componentOptions.filter(function(option) {
                                     return option.value === item2;
@@ -1058,7 +999,7 @@ const Order = ({ handleLogout }) => {
                     {/* Item #3 */}
                     <div className="form-row">
                         <label htmlFor="item3" className="col-md-3 col-form-label">Inventory Item #3</label>
-                        <div className="input-group input-group-sm mb-3 col-md-8">
+                        <div className="input-group input-group mb-3 col-md-8">
                             <div className="form-control p-0">
                                 <Select onChange={(e) => setItem3(e.value)} className="react-select" menuPortalTarget={document.body} styles={customStyle} value={componentOptions.filter(function(option) {
                                     return option.value === item3;
@@ -1403,7 +1344,7 @@ const Order = ({ handleLogout }) => {
                 </div>
 
                 <div className="submit p-3">
-                    <button type="submit" id="add-order" className="btn btn-success">Submit</button>
+                    <button onClick={() => handleNavigate(nextOrderId)} disabled={!submitting} type="submit" id="add-order" className="btn btn-success">Submit</button>
                 </div>
 
             </form>

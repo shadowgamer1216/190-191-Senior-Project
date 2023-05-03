@@ -7,6 +7,19 @@ import Select from "react-select";
 
 
 const Product = ({ handleLogout }) => {
+
+    const routeChange = () => {
+        let path = '/login';
+        navigate(path);
+    };
+    useEffect(() => {
+        let authToken = sessionStorage.getItem('Auth Token')
+
+        if (!authToken) {
+            routeChange()
+        }
+    }, []);
+    
     const navigate = useNavigate();
 
     const [old_abs_id, setOldID] = useState(null);
@@ -102,17 +115,7 @@ const Product = ({ handleLogout }) => {
 
     const Sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
     const [submitting, setSubmitting] = useState(false);
-    const routeChange = () => {
-        let path = '/login';
-        navigate(path);
-    };
-    useEffect(() => {
-        let authToken = sessionStorage.getItem('Auth Token')
-
-        if (!authToken) {
-            routeChange()
-        }
-    }, [])
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
         await Axios.post("http://localhost:3001/api/insertProduct", 

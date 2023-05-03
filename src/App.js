@@ -8,8 +8,9 @@ import ContactViewPage from './contact-view';
 import ComponentPage from './component';
 import ComponentViewPage from './component-view';
 import LocationPage from './location';
-import LocationViewPage from './location-view'
+import LocationViewPage from './location-view';
 import OrderPage from './order';
+import OrderViewPage from './order-view';
 import CompanyPage from './company';
 import CompanyViewPage from './company-view';
 import ItemCheckInPage from './itemCheckIn';

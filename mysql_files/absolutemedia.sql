@@ -57,7 +57,7 @@ CREATE TABLE component_table (
     owned_by INT DEFAULT NULL,
     packaging_component INT DEFAULT NULL,
     PRIMARY KEY (component_id),
-	FOREIGN KEY (customer_id) REFERENCES company_table(company_id)
+	FOREIGN KEY (customer_id) REFERENCES company_table(company_id) ON DELETE CASCADE
 );
 
 CREATE TABLE contact_table (
@@ -82,8 +82,7 @@ CREATE TABLE contact_table (
     fax VARCHAR(50) DEFAULT NULL,
     email VARCHAR(100) DEFAULT NULL,
     notes TEXT,
-    PRIMARY KEY (contact_id),
-	FOREIGN KEY (company_id) REFERENCES company_table(company_id)
+    PRIMARY KEY (contact_id)
 );
 
 CREATE TABLE product_table (
@@ -133,7 +132,7 @@ CREATE TABLE product_table (
     product_notes TEXT,
     product_status VARCHAR(50) DEFAULT NULL,
     PRIMARY KEY (product_id),
-	FOREIGN KEY (customer_id) REFERENCES company_table(company_id)
+	FOREIGN KEY (customer_id) REFERENCES company_table(company_id) ON DELETE CASCADE
 );
 
 CREATE TABLE location_table (
@@ -146,8 +145,7 @@ CREATE TABLE location_table (
     physical_location VARCHAR(50) DEFAULT NULL,
     notes TEXT,
     PRIMARY KEY (id),
-    KEY location_id (location_id),
-	FOREIGN KEY (item_id) REFERENCES component_table(component_id)
+    KEY (location_id)
 );
 
 CREATE TABLE location_history (
@@ -156,8 +154,7 @@ CREATE TABLE location_history (
 	item_id INT NOT NULL DEFAULT '0',
 	qty INT NOT NULL DEFAULT '0',
 	date_added DATE NOT NULL DEFAULT (CURRENT_DATE),
-	PRIMARY KEY (id),
-	FOREIGN KEY (item_id) REFERENCES component_table(component_id)
+	PRIMARY KEY (id)
 );
 
 CREATE TABLE item_check_in_table (
@@ -172,8 +169,7 @@ CREATE TABLE item_check_in_table (
     signed_for_by VARCHAR(50) DEFAULT NULL,
     date_in DATETIME DEFAULT NULL,
     date_complete DATETIME DEFAULT NULL,
-    PRIMARY KEY (id),
-	FOREIGN KEY (item_id) REFERENCES component_table(component_id)
+    PRIMARY KEY (id)
 );
 
 CREATE TABLE order_table (
@@ -220,8 +216,7 @@ CREATE TABLE order_table (
     vendor_notes TEXT DEFAULT NULL,
     order_notes TEXT DEFAULT NULL,
     order_status VARCHAR(100) DEFAULT NULL,
-    PRIMARY KEY (order_id),
-	FOREIGN KEY (company_id) REFERENCES company_table(company_id)
+    PRIMARY KEY (order_id)
 );
 
 CREATE TABLE order_nonItem (
@@ -264,8 +259,7 @@ CREATE TABLE order_nonItem (
     non_inventory_quantity6 INT DEFAULT NULL,
     non_inventory_unit_price6 FLOAT DEFAULT NULL,
     non_inventory_total_price6 FLOAT DEFAULT NULL,
-    PRIMARY KEY (order_id),
-	FOREIGN KEY (company_id) REFERENCES company_table(company_id)
+    PRIMARY KEY (order_id)
 );
 
 CREATE TABLE order_item (
@@ -290,12 +284,13 @@ CREATE TABLE order_item (
     inventory_quantity3 INT DEFAULT NULL,
     inventory_unit_price3 FLOAT DEFAULT NULL,
     inventory_total_price3 FLOAT DEFAULT NULL,
-    PRIMARY KEY (order_id),
-	FOREIGN KEY (company_id) REFERENCES company_table(company_id)
+    PRIMARY KEY (order_id)
 );
 
 CREATE TABLE shipping_table (
-    company_name VARCHAR(50) NOT NULL,
+    shipping_id INT NOT NULL AUTO_INCREMENT,
+    order_id INT DEFAULT NULL,
+    company_name VARCHAR(100) NOT NULL,
     contact_name VARCHAR(50) DEFAULT NULL,
     add1 VARCHAR(50) DEFAULT NULL,
     add2 VARCHAR(50) DEFAULT NULL,
@@ -320,19 +315,17 @@ CREATE TABLE shipping_table (
     arrival_ship_time VARCHAR(50),
     fob VARCHAR(50) DEFAULT NULL,
     notes TEXT,
-    shipping_id INT NOT NULL AUTO_INCREMENT,
-    order_id INT DEFAULT NULL,
-    PRIMARY KEY (shipping_id),
-    FOREIGN KEY (order_id) REFERENCES order_table(order_id)
+	PRIMARY KEY (shipping_id)
 );
 
 CREATE TABLE orders (
-    orderID INT AUTO_INCREMENT PRIMARY KEY,
+    orderID INT NOT NULL AUTO_INCREMENT,
     company VARCHAR(255),
     company_address VARCHAR(255),
     customer VARCHAR(255),
     customer_address VARCHAR(255),
-    date DATE
+    date DATE,
+    PRIMARY KEY (orderID)
 );
 
 CREATE TABLE shipping (
@@ -361,4 +354,5 @@ CREATE TABLE users (
   username VARCHAR(45) NULL,
   viewonly TINYINT NULL DEFAULT 0,
   PRIMARY KEY (userid),
-  UNIQUE INDEX username_UNIQUE (username ASC) VISIBLE);
+  UNIQUE INDEX username_UNIQUE (username ASC) VISIBLE
+);
