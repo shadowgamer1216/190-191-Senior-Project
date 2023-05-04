@@ -25,6 +25,7 @@ import Invoice from './invoice';
 import PackingSlip from './packingSlip';
 import QCInspection from './QC-Inspection';
 import JobOrder from './jobOrder';
+import OutputForms from './outputForms';
 import ScrollToTop from "./scrollToTop";
 import Login from './LoginForm';
 import Signup from './signupForm';
@@ -78,6 +79,7 @@ useEffect(() => {
           <Route path="/login" element={<Login handleLogin={handleLogin} />} />
           <Route path="/signup" element={<Signup />} />
 
+        <Route path="/OutputForms" element={<OutputForms />} />
         <Route path="/invoice" element={<Invoice />} />
         <Route path="/packingSlip" element={<PackingSlip />} />
         <Route path="/QC-Inspection" element={<QCInspection />} />
@@ -91,6 +93,7 @@ useEffect(() => {
         <Route path="/location" element={<LocationPage handleLogout={handleLogout}/>} />
         <Route path="/location/:id" element={<LocationViewPage handleLogout={handleLogout}/>} />
         <Route path="/order" element={<OrderPage handleLogout={handleLogout}/>} />
+        <Route path="/order/:order_id" element={<OrderViewPage handleLogout={handleLogout}/>} />
         <Route path="/company" element={<CompanyPage handleLogout={handleLogout}/>} />
         <Route path="/company/:company_id" element={<CompanyViewPage handleLogout={handleLogout}/>} />
         <Route path="/itemCheckIn" element={<ItemCheckInPage handleLogout={handleLogout}/>} />

@@ -603,6 +603,27 @@ app.get("/api/getLatestShippingId", (req, res) => {
     });
 });
 
+// SHIPPING INFO BY ID - GET API <=
+app.get("/api/shipping/:shipping_id", (req, res) => {
+    const shipping_id = req.params.shipping_id;
+    db.query("SELECT * FROM shipping_table WHERE shipping_id = ?", [shipping_id], (err, result) =>{
+        if (err) {
+            console.error(err);
+            res.status(500).send('Error retrieving shipping data');
+        } else {
+            res.send(result[0]);
+        }
+    });
+});
+
+// SHIPPING TABLE INFO - GET API <=
+app.get("/api/getShippingData", (req, res) => {
+    db.query ("SELECT shipping_id, company_name FROM shipping_table", (err, result) =>{
+        if (err) throw err;
+        res.send(result);
+    });
+});
+
 // SHIPPING PAGE - POST API =>
 app.post("/api/insertShipping", (req, res) =>{
     const order_id = req.body.order_id;
