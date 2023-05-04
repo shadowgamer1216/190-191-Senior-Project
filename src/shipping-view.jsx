@@ -357,11 +357,6 @@ const Shipping = ({ handLogout }) => {
             </div>
           </div>
 
-          <div className="add">
-            {/*onClick={() => handleNavigate(nextShippingId)}*/}
-            <button  disabled={!submitting} type="submit" id="add-company" className="btn btn-success m-2">Add</button>
-          </div>
-
         </form>
         <br></br>
         <button className="btn btn-outline-dark" onClick={() => navigate(-1)}>Home</button>
