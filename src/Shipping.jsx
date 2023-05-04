@@ -69,6 +69,7 @@ const Shipping = ({ handleLogout }) => {
       });
     }
   }, [company_id]); 
+
   const[contact_name, setContactName] = useState(null);
   const[add1, setAdd1] = useState(null);
   const[add2, setAdd2] = useState(null);
@@ -197,9 +198,6 @@ const Shipping = ({ handleLogout }) => {
         <div className="page-headers">
           <h2>ADD SHIPPING</h2>
         </div>
- 
-        <script defer ="shippingvalid.js"></script>
-        <div id="error"></div>
 
         <form id="shipping_form" onSubmit={handleSubmit} autoComplete="off">
           <div className ="list-address pt-3">
@@ -236,8 +234,6 @@ const Shipping = ({ handleLogout }) => {
             </div>
             
             <div className="form-row">
-              <label htmlFor="order-id" 
-                className="col-md-8 col-form-label"><h4>Order ID: <span style={{ color: 'red' }}>{order_id}</span></h4></label>
               <label htmlFor="date" 
                 className="col-md-4 col-form-label"><h5>Date:</h5></label>
             </div>
@@ -502,7 +498,7 @@ const Shipping = ({ handleLogout }) => {
               </label>
               <div className ="input-group input-group-sm mb-3 col-md-8" required>
                 <input onChange={(e) => setAccount_number(e.target.value)} className="form-control"
-                  name="account_number" />
+                  name="account_number"/>
               </div>
             </div>
 
@@ -622,8 +618,7 @@ const Shipping = ({ handleLogout }) => {
           </div>
 
           <div className="add">
-            {/*onClick={() => handleNavigate(nextShippingId)}*/}
-            <button  disabled={!submitting} type="submit" id="add-company" className="btn btn-success m-2">Add</button>
+            <button onClick={() => handleNavigate(nextShippingId)} disabled={!submitting} type="submit" id="add-company" className="btn btn-success m-2">Add</button>
           </div>
 
         </form>
