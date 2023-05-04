@@ -7,17 +7,43 @@ const Shipping = ({ handLogout }) => {
     const navigate = useNavigate()
 
     const { id } = useParams();
-    const [locationData, setLocationData] = useState(null);
+    const [shippingData, setshippingData] = useState(null);
     useEffect(() => {
         Axios.get(`http://localhost:3001/api/shipping/${shipping_id}`)
         .then(response => {
-            setLocationData(response.data);
+            setshippingData(response.data);
         })
         .catch(error => {
             console.log(error);
         });
     }, [shipping_id]);
 
+    var order_id = orderData?.order_id ?? '';
+    var company_name = shippingData?.company_name ?? '';
+    var contact_name = shippingData?.contact_name ?? '';
+    var add1 = shippingData?.add1 ?? '';
+    var add2 = shippingData?.add2 ?? '';
+    var city = shippingData?.city ?? '';
+    var state = shippingData?.state ?? '';
+    var zip = shippingData?.zip ?? '';
+    var province = shippingData?.province ?? '';
+    var country = shippingData?.country ?? '';
+    var phone = shippingData?.phone ?? '';
+    var fax = shippingData?.fax ?? '';
+    var email = shippingData?.email ?? '';
+    var fedex = shippingData?.fedex ?? '';
+    var ups = shippingData?.ups ?? '';
+    var courier_willcall = shippingData?.courier_willcall ?? '';
+    var abs = shippingData?.abs ?? '';
+    var other_ship_method = shippingData?.other_ship_method ?? '';
+    var payment_type = shippingData?.payment_type ?? '';
+    var account_number = shippingData?.account_number ?? '';
+    var request_ship_date = shippingData?.request_ship_date ?? '';
+    var request_ship_time = shippingData?.request_ship_time ?? '';
+    var arrival_ship_date = shippingData?.arrival_ship_date ?? '';
+    var arrival_ship_time = shippingData?.arrival_ship_time ?? '';
+    var fob = shippingData?.fob ?? '';
+    var notes = shippingData?.notes ?? '';
 
     return(
         <div className="product-page"> 
@@ -38,13 +64,10 @@ const Shipping = ({ handLogout }) => {
 
       <div className="container p-5">
         <div className="page-headers">
-          <h2>ADD SHIPPING</h2>
+          <h2>[VIEW] SHIPPING</h2>
         </div>
- 
-        <script defer ="shippingvalid.js"></script>
-        <div id="error"></div>
 
-        <form id="shipping_form" onSubmit={handleSubmit} autoComplete="off">
+        <form id="shipping_form" autoComplete="off">
           <div className ="list-address pt-3">
             <div className="section-headers">
                 <h5>List of Shipping Addresses For</h5>
@@ -89,9 +112,7 @@ const Shipping = ({ handLogout }) => {
               <label htmlFor="customer-id" className="col-md-3 col-form-label">Choose Order <span style={{ color: 'red' }}>*</span></label>
               <div className="input-group input-group mb-3 col-md-3">
                 <div className="form-control p-0">
-                  <Select onChange={(e) => setOrderId(e.value)} className="react-select" styles={customStyle} value={orderOptions.filter(function(option) {
-                    return option.value === order_id;
-                  })} id="customer-id" required options={orderOptions}/>
+                <input type="text" readOnly className="form-control" id="customer-id" value={order_id}/>
                 </div>
               </div>
             </div>
@@ -113,89 +134,36 @@ const Shipping = ({ handLogout }) => {
             <div className ="form-row">
               <label htmlFor="contact-name" className="col-md-3 col-form-label">Contact Name<span style={{ color: 'red' }}> *</span></label>
               <div className ="input-group input-group-sm mb-3 col-md-8">
-                <input onChange={(e) => setContactName(e.target.value)} className="form-control" name="contact-name" readOnly/>
+                <input readOnly className="form-control" id="contact-name" value={contact_name}/>
               </div>
             </div>
 
             <div className ="form-row">
               <label htmlFor="add1" className="col-md-3 col-form-label">Address 1 <span style={{ color: 'red' }}>*</span></label>
               <div className ="input-group input-group-sm mb-3 col-md-8">
-                <input onChange={(e) => setAdd1(e.target.value)} className="form-control" name="add1" readOnly/>
+                <input className="form-control" id="add1" value={add1} readOnly/>
               </div>
             </div>
 
             <div className ="form-row">
               <label htmlFor="add2" className="col-md-3 col-form-label">Address 2</label>
               <div className ="input-group input-group-sm mb-3 col-md-8">
-                <input onChange={(e) => setAdd2(e.target.value)} className="form-control" name="add2" readOnly/>
+                <input className="form-control" value={add2} readOnly/>
               </div>
             </div>
 
             <div className ="form-row">
               <label htmlFor="csz" className="col-md-3 col-form-label">City | State | Zip <span style={{ color: 'red' }}> *</span></label>
               <div className ="input-group input-group-sm mb-3 col-md-4">
-                <input onChange={(e) => setCity(e.target.value)} className="form-control" name="city" readOnly/>
+                <input className="form-control" name="city" id="csz" value={city} readOnly/>
               </div>
               
               <div className="input-group input-group-sm mb-3 col-md-2">
-                <select onChange={(e) => setState(e.target.value)} className="form-control" name="country_state" readOnly>
-                  <option value="">Select a State</option>
-                  <option value="AL">Alabama</option>
-                  <option value="AK">Alaska</option>
-                  <option value="AZ">Arizona</option>
-                  <option value="AR">Arkansas</option>
-                  <option value="CA">California</option>
-                  <option value="CO">Colorado</option>
-                  <option value="CT">Connecticut</option>
-                  <option value="DE">Delaware</option>
-                  <option value="DC">District Of Columbia</option>
-                  <option value="FL">Florida</option>
-                  <option value="GA">Georgia</option>
-                  <option value="HI">Hawaii</option>
-                  <option value="ID">Idaho</option>
-                  <option value="IL">Illinois</option>
-                  <option value="IN">Indiana</option>
-                  <option value="IA">Iowa</option>
-                  <option value="KS">Kansas</option>
-                  <option value="KY">Kentucky</option>
-                  <option value="LA">Louisiana</option>
-                  <option value="ME">Maine</option>
-                  <option value="MD">Maryland</option>
-                  <option value="MA">Massachusetts</option>
-                  <option value="MI">Michigan</option>
-                  <option value="MN">Minnesota</option>
-                  <option value="MS">Mississippi</option>
-                  <option value="MO">Missouri</option>
-                  <option value="MT">Montana</option>
-                  <option value="NE">Nebraska</option>
-                  <option value="NV">Nevada</option>
-                  <option value="NH">New Hampshire</option>
-                  <option value="NJ">New Jersey</option>
-                  <option value="NM">New Mexico</option>
-                  <option value="NY">New York</option>
-                  <option value="NC">North Carolina</option>
-                  <option value="ND">North Dakota</option>
-                  <option value="OH">Ohio</option>
-                  <option value="OK">Oklahoma</option>
-                  <option value="OR">Oregon</option>
-                  <option value="PA">Pennsylvania</option>
-                  <option value="RI">Rhode Island</option>
-                  <option value="SC">South Carolina</option>
-                  <option value="SD">South Dakota</option>
-                  <option value="TN">Tennessee</option>
-                  <option value="TX">Texas</option>
-                  <option value="UT">Utah</option>
-                  <option value="VT">Vermont</option>
-                  <option value="VA">Virginia</option>
-                  <option value="WA">Washington</option>
-                  <option value="WV">West Virginia</option>
-                  <option value="WI">Wisconsin</option>
-                  <option value="WY">Wyoming</option>
-                </select>
+                <input className="form-control" name="country_state" id="csz" value={state} readOnly/>
               </div>
 
               <div className ="input-group input-group-sm mb-3 col-md-2">
-                <input type="text" inputMode="numeric" onChange={(e) => setZip(e.target.value)} className="form-control"
+                <input type="text" value={zip} className="form-control"
                   name="zip" readOnly/>
               </div>
             </div>
@@ -203,8 +171,8 @@ const Shipping = ({ handLogout }) => {
             <div className ="form-row">
               <label htmlFor="province" className="col-md-3 col-form-label">Province</label>
               <div className ="input-group input-group-sm mb-3 col-md-8">
-                <input onChange={(e) => setProvince(e.target.value)} className="form-control"
-                  name="province" readOnly/>
+                <input className="form-control"
+                  name="province" value={province} readOnly/>
               </div>
             </div>
 
@@ -213,8 +181,7 @@ const Shipping = ({ handLogout }) => {
               <span style={{ color: 'red' }}> *</span>
               </label>
               <div className ="input-group input-group-sm mb-3 col-md-8">
-                <input onChange={(e) => setCountry(e.target.value)} className="form-control"
-                  name="country" readOnly/>
+                <input className="form-control" name="country" value={country} readOnly/>
               </div>
             </div>
 
@@ -223,16 +190,15 @@ const Shipping = ({ handLogout }) => {
                 <span style={{ color: 'red' }}> *</span> 
               </label>
               <div className ="input-group input-group-sm mb-3 col-md-8">
-                <input onChange={(e) => setPhone(e.target.value)} className="form-control"
-                name="phone" readOnly/>
+                <input className="form-control" name="phone" value={phone} readOnly/>
               </div>
             </div>
 
             <div className ="form-row">
               <label htmlFor="fax" className="col-md-3 col-form-label">Fax</label>
               <div className ="input-group input-group-sm mb-3 col-md-8">
-                <input onChange={(e) => setFax(e.target.value)} className="form-control"
-                  name="fax" readOnly/>
+                <input className="form-control"
+                  name="fax" value={fax} readOnly/>
               </div>
             </div>
 
@@ -241,8 +207,8 @@ const Shipping = ({ handLogout }) => {
                 <span style={{ color: 'red' }}> *</span>
               </label>
               <div className ="input-group input-group-sm mb-3 col-md-8">
-                <input onChange={(e) => setEmail(e.target.value)} className="form-control"
-                  name="email" readOnly/>
+                <input className="form-control"
+                  name="email" value={email} readOnly/>
               </div>
             </div>
 
@@ -256,73 +222,35 @@ const Shipping = ({ handLogout }) => {
             <div className ="form-row">
               <label htmlFor="fedex" className="col-md-3 col-form-label">Fed Ex</label>
               <div className="input-group input-group-sm mb-3 col-md-3">
-                <select onChange={(e) => setFedex(e.target.value)} className="form-control" name="fedex" id="fedex" readOnly>
-                  <option value="none">None</option>
-                  <option value="air-freight">Air Freight</option>
-                  <option value="custom-critical-freight">Cusom Critical Freight</option>
-                  <option value="express-2day">Express 2 Day</option>
-                  <option value="express-2dayam">Express 2 day AM</option>
-                  <option value="express-saver">Express Saver</option>
-                  <option value="first-overnight">First Overnight</option>
-                  <option value="ground">Ground</option>
-                  <option value="home">Home</option>
-                  <option value="international-first">International First</option>
-                  <option value="international-economy">International Economy</option>
-                  <option value="international-priority">International Priority</option>
-                  <option value="priority-overnight">Priority Overnight</option>
-                  <option value="standard-overnight">Standard Overnight</option>
-                  <option value="truck-freight-economy">Truck Freight Economy</option>
-                  <option value="truck-freight-priority">Truck Freight Economy</option>
-                </select>
+                <inout className="form-control" name="fedex" id="fedex" value={fedex} readOnly/>
               </div>
             </div>
 
             <div className ="form-row">
               <label htmlFor="ups" className="col-md-3 col-form-label">UPS</label>
               <div className="input-group input-group-sm mb-3 col-md-3">
-                <select onChange={(e) => setUps(e.target.value)} className="form-control" name="ups" id="ups" readOnly>
-                  <option value="none">None</option>
-                  <option value="2day-air">2 Day Air</option>
-                  <option value="2day-airam">2 Day Air AM</option>
-                  <option value="3day-select">3 Day Select</option>
-                  <option value="ground">Ground</option>
-                  <option value="nextday-air">Next Day Air</option>
-                  <option value="nextday-air-early">Next Day Air Early</option>
-                  <option value="nextday-air-saver">Next Day Air Saver</option>
-                  <option value="overnight-priority">Overnight Priority</option>
-                  <option value="worldwide-expedited"> Worldwide Expedited</option>
-                  <option value="worldwide-saver">Worldwide Saver</option>
-                  <option value="worldwide-Express-plus">Worldwide Express Plus</option>
-                </select>
+                <input className="form-control" name="ups" id="ups" value={ups} readOnly/>
               </div>
             </div>
 
             <div className ="form-row">
               <label htmlFor="c-w" className="col-md-3 col-form-label">Courier/Will Call</label>
               <div className="input-group input-group-sm mb-3 col-md-3">
-                <select onChange={(e) => setCourier_willcall(e.target.value)} className="form-control" name="courier_willcall" id="c-w" readOnly>
-                  <option value="none">None</option>
-                  <option value="courier">Courier</option>
-                  <option value="willcall">Will Call</option>
-                </select>
+                <input className="form-control" name="courier_willcall" id="c-w" value={courier_willcall} readOnly/>
               </div>
             </div>
 
             <div className ="form-row">
               <label htmlFor="abs" className="col-md-3 col-form-label">ABS Van</label>
               <div className="input-group input-group-sm mb-3 col-md-3">
-                <select onChange={(e) => setAbs(e.target.value)} className="form-control" name="abs" id="abs" readOnly>
-                  <option value="none">None</option>
-                  <option value="abs-van">ABS Van</option>
-                </select>
+                <input className="form-control" name="abs" id="abs" value={abs} readOnly/>
               </div>
             </div>
 
             <div className ="form-row">
               <label htmlFor="other-ship" className="col-md-3 col-form-label">Other Ship Method</label>
               <div className ="input-group input-group-sm mb-3 col-md-8">
-                <input onChange={(e) => setOther_ship_method(e.target.value)} className="form-control"
-                  name="other_ship_method" readOnly/>
+                <input className="form-control" name="other_ship_method" value={other_ship_method} readOnly/>
               </div>
             </div>
 
@@ -331,11 +259,7 @@ const Shipping = ({ handLogout }) => {
                 <span style={{ color: 'red' }}>*</span>
               </label>
               <div className="input-group input-group-sm mb-3 col-md-3">
-                <select onChange={(e) => setPayment_type(e.target.value)} className="form-control" name="payment_type" id="pay-type" placeholder="If 'None, Please enter N/A." readOnly>
-                  <option value="">Select Option</option>
-                  <option value="credit">Credit</option>
-                  <option value="debit">Debit</option>
-                </select>
+                <input className="form-control" name="payment_type" id="pay-type" value={payment_type} readOnly/>
               </div>
             </div>
 
@@ -344,8 +268,7 @@ const Shipping = ({ handLogout }) => {
                 <span style={{ color: 'red' }}> *</span>
               </label>
               <div className ="input-group input-group-sm mb-3 col-md-8" required>
-                <input onChange={(e) => setAccount_number(e.target.value)} className="form-control"
-                  name="account_number" readOnly/>
+                <input className="form-control" name="account_number" value={account_number} readOnly/>
               </div>
             </div>
 
@@ -354,25 +277,12 @@ const Shipping = ({ handLogout }) => {
               <span style={{ color: 'red' }}> *</span>
               </label>
               <div className ="input-group input-group-sm mb-3 col-md-3">
-                <input type="datetime-local" className="form-control" onChange={(e) => setRequested_ship_date(e.target.value)}
-                  name="request_ship_date" readOnly/>
+                <input type="datetime-local" className="form-control"
+                  name="request_ship_date" value={requested_ship_date} readOnly/>
               </div>
 
               <div className="input-group input-group-sm mb-3 col-md-3">
-                <select onChange={(e) => setRequested_ship_time(e.target.value)} className="form-control" name="request_ship_time" id="ship-time" readOnly>
-                  <option value="">Select Time</option>
-                  <option value="9am">9:00am</option>
-                  <option value="10am">10:00am</option>
-                  <option value="11am">11:00am</option>
-                  <option value="12pm">12:00pm</option>
-                  <option value="1pm">1:00pm</option>
-                  <option value="2pm">3:00pm</option>
-                  <option value="3pm">3:00m</option>
-                  <option value="4pm">4:00pm</option>
-                  <option value="5pm">5:00pm</option>
-                  <option value="6pm">6:00pm</option>
-                  <option value="7pm">7:00pm</option>
-                </select>
+                <input className="form-control" name="request_ship_time" id="ship-time" value={requested_ship_time} readOnly/>
               </div>
             </div>
 
@@ -381,25 +291,12 @@ const Shipping = ({ handLogout }) => {
                 <span style={{ color: 'red' }}> *</span>
               </label>
               <div className ="input-group input-group-sm mb-3 col-md-3">
-                <input type="datetime-local" className="form-control" onChange={(e) => setArrival_ship_date(e.target.value)}
+                <input type="datetime-local" className="form-control" value={arrival_ship_date} 
                   name="arrival_ship_date" readOnly/>
               </div>
 
               <div className="input-group input-group-sm mb-3 col-md-3">
-                <select onChange={(e) => setArrival_ship_time(e.target.value)}className="form-control" name="arrival_ship_time" id="arrival-time" readOnly>
-                  <option value="">Select Time</option>
-                  <option value="9am">9:00am</option>
-                  <option value="10am">10:00am</option>
-                  <option value="11am">11:00am</option>
-                  <option value="12pm">12:00pm</option>
-                  <option value="1pm">1:00pm</option>
-                  <option value="2pm">3:00pm</option>
-                  <option value="3pm">3:00m</option>
-                  <option value="4pm">4:00pm</option>
-                  <option value="5pm">5:00pm</option>
-                  <option value="6pm">6:00pm</option>
-                  <option value="7pm">7:00pm</option>
-                </select>
+                <input className="form-control" name="arrival_ship_time" id="arrival-time" value={arrival_ship_time} readOnly/>
               </div>
 
               <div className="input-group input-group-sm col-md-3 pl-3">
@@ -413,18 +310,14 @@ const Shipping = ({ handLogout }) => {
             <div className ="form-row">
               <label htmlFor="fob" className="col-md-3 col-form-label">FOB</label>
               <div className="input-group input-group-sm mb-3 col-md-3">
-                <select onChange={(e) => setFob(e.target.value)}className="form-control" name="fob" id="fob" readOnly>
-                  <option value="">Select Option</option>
-                  <option value="point of shipment">Point of Shipment</option>
-                  <option value="none">None</option>
-                </select>
+                <input className="form-control" name="fob" id="fob" value={fob} readOnly/>
               </div>
             </div>
 
             <div className="form-row">
               <label htmlFor="notes" className="col-md-3 col-form-label">Notes</label>
               <div className="input-group input-group-sm mb-3 col-md-8">
-                <textarea onChange={(e) => setNotes(e.target.value)} rows="4" cols="50" className="form-control" name="notes" id="custom-area" readOnly/>
+                <textarea rows="4" cols="50" className="form-control" name="notes" id="custom-area"  value={notes} readOnly/>
               </div>
             </div>
           </div>
