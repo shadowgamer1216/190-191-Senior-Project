@@ -11,9 +11,9 @@
 
 
 
-## **Currently unimplemented features**:
+## **Current implemented features**:
 ### - Ability to Edit/View forms
-### - Insertion into database (no available data yet)
+### - Insertion into database 
 ### - Submitting forms
 ![Edit Page](/public/unimplementedfeatures.png "Edit")
 ![View Page](/public/unimplementedfeatures3.png "View")
@@ -29,7 +29,7 @@
 ## **Deployment instructions**:
   1. To be established (product is in the midst of being completed)
 ## **Developer instructions**:
- 1. "npm start" in terminal (or "Run" in VSCode)
+ 1. "npm run app" in terminal (or "Run" in VSCode)
  2. Click buttons to access all pages
  3. Changes to your pages should be committed to our github repo
 ## **Timeline**:
