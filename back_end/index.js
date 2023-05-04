@@ -83,12 +83,12 @@ app.get("/api/getOrderIdList", (req, res) => {
 });
 
 // LATEST ORDER ID - GET API <=
-app.get("/api/getLatestOrderId", (req, res) => {
+/*app.get("/api/getLatestOrderId", (req, res) => {
     db.query ("SELECT MAX(order_id) FROM order_table", (err, result) =>{
         if (err) throw err;
         res.send(result);
     });
-});
+});*/
 
 // ORDER INFO BY ID - GET API <=
 app.get("/api/order/:order_id", (req, res) => {
@@ -157,6 +157,8 @@ app.post("/api/insertOrder", (req, res) => {
     const vendorNotes = req.body.vendorNotes;
     const orderNotes = req.body.orderNotes;
     const orderStatus = req.body.orderStatus;
+
+    var orderRes;
     
     db.query(
         "INSERT INTO order_table (product_id, company_id, salesperson, requestor, customer_contact, re_order, \
@@ -171,9 +173,32 @@ app.post("/api/insertOrder", (req, res) => {
             invoiceDate, invoiceDatePaid, invoiceNotes,
             ABSOrder, customerOrder, customerPODate, customerPONumber, creditChecked, daysTurn, dateCodePrinting, customerProvidedMaterial, customerMaterialETA, customerNotes, vendorNotes, orderNotes, orderStatus]
             , (err, result) => {
+                orderRes = result;
                 console.log(result);
         }
     );
+    var companyResult;
+    db.query('SELECT company_name, addr1, city, state, country, zip FROM company_table WHERE company_id = ?' [companyID], (err, result) => {
+        companyResult = result;
+        console.log(err)
+    });
+    var productRes;
+    db.query('Select oem_product_id, product_title FROM product_table WHERE product_id = ?'[
+        productID], (err, result) => {
+            console.log(err)
+
+            productRes = result;
+        })
+    db.query(
+        "INSERT INTO invoice (customer, customer_address, customer_city, customer_state, customer_country, customer_zip, invoice_date, order_num, product_id, product_title, oem_pn, quantity1, price1, totPrice1) \
+        VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+        [companyResult[0].company_name, companyResult[0].add1, companyResult[0].city, companyResult[0].state, companyResult[0].country, companyResult[0].zip,
+    invoiceDate, orderRes[0].order_id, productID, productRes[0].productTitle, productRes[0].oem_product_id, customQuantity, customUnitPrice, customTotalPrice],
+    (err, result) => {
+        console.log(err)
+
+    }
+    )
 });
 
 // ORDER PAGE(NON-ITEM) - POST API =>
