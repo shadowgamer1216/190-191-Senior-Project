@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom"
 import Axios from "axios";
 
 
-const SearchCompany = () => {
+const SearchComponent = () => {
     const navigate = useNavigate();
 
     const routeChange = () => {
@@ -20,13 +20,16 @@ const SearchCompany = () => {
     }, []);
 
     const [data, setData] = useState([]);
-    const [company_id, setCompanyID] = useState('');
-    const [company_name, setCompanyName] = useState('');
+    const [component_id, setComponentID] = useState("");
+    const [customer_id, setCustomerID] = useState("");
+    const [component_type, setComponentType] = useState("");
+    const [title, setTitle] = useState("");
 
-    // search company function
+
+    // search component function
     const search = (e) => {
         e.preventDefault();
-        Axios.get(`http://localhost:3001/api/getSearchCompany?company_id=${company_id}&company_name=${company_name}`)
+        Axios.get(`http://localhost:3001/api/getSearchComponent?component_id=${component_id}&customer_id=${customer_id}&component_type=${component_type}&title=${title}`)
         .then((response) =>{
             setData(response.data);
         })
@@ -38,20 +41,13 @@ const SearchCompany = () => {
     const handleView = (e, id) => {
         e.preventDefault();
         const idPassed = id.toString();
-        navigate(`/company/${idPassed}`);
+        navigate(`/component/${idPassed}`);
     }
     
-    // const handleView = (e, id) => {     // create new tab from list, open view (not working, due to firebase)
-    //     e.preventDefault();
-    //     const idPassed = id.toString();
-    //     const url = `/company/${idPassed}`;
-    //     window.open(url, '_blank');
-    // }
-
     const handleRemove = (e, id) => {
         e.preventDefault();
         const idPassed = id.toString();
-        Axios.delete(`http://localhost:3001/api/company/${idPassed}`)
+        Axios.delete(`http://localhost:3001/api/component/${idPassed}`)
         .then((response) =>{
             console.log(response);
         })
@@ -83,26 +79,43 @@ const SearchCompany = () => {
 
             <div className="search-container p-5">
                 <div className="page-headers">
-                    <h2>SEARCH COMPANY</h2>
+                    <h2>SEARCH COMPONENT</h2>
                 </div>
                 <form autoComplete="off">
-                    <div className="contact-info p-4 col-md-6">
+                    <div className="component-info p-4 col-md-6">
                         <div className="form-row">
-                            <label htmlFor="id" className="col-md-0 col-form-label"><b>Company ID</b></label>
-                            <div className="input-group input-group-sm mb-3 col-md-2">
-                                <input type="text" className="form-control" id="id" onChange={(e) =>{
-                                setCompanyID(e.target.value)
-                            }} maxLength = "4"/>
+                            <label htmlFor="customer-id" className="col-md-3 col-form-label"><b>Customer ID</b></label>
+                            <div className="input-group input-group-sm mb-3 col-md-3">
+                                <input type="text" className="form-control" id="customer-id" onChange={(e) =>{
+                                setCustomerID(e.target.value)
+                                }} maxLength = "128"/>
+                            </div>
+                        </div>
+                        <div className="form-row">
+                            <label htmlFor="component-id" className="col-md-3 col-form-label"><b>Component ID</b></label>
+                            <div className="input-group input-group-sm mb-3 col-md-3">
+                                <input type="text" className="form-control" id="component-id" onChange={(e) =>{
+                                setComponentID(e.target.value)
+                                }} maxLength = "4"/>
+                            </div>
+                        </div>
+                        <div className="form-row">
+                            <label htmlFor="title" className="col-md-3 col-form-label"><b>Component Title</b></label>
+                            <div className="input-group input-group-sm mb-3 col-md-6">
+                                <input type="text" className="form-control" id="title" onChange={(e) =>{
+                                setTitle(e.target.value)
+                                }} maxLength = "128"/>
+                            </div>
+                        </div>
+                        <div className="form-row">
+                            <label htmlFor="component-type" className="col-md-3 col-form-label"><b>Component Type</b></label>
+                            <div className="input-group input-group-sm mb-3 col-md-6">
+                                <input type="text" className="form-control" id="component-type" onChange={(e) =>{
+                                setComponentType(e.target.value)
+                                }} maxLength = "128"/>
                             </div>
 
-                            <label htmlFor="name" className="col-md-0 col-form-label"><b>Company Name</b></label>
-                            <div className="input-group input-group-sm mb-3 col-md-4">
-                                <input type="text" className="form-control" id="name" onChange={(e) =>{
-                                setCompanyName(e.target.value)
-                            }} maxLength = "128"/>
-                            </div>
-
-                            <div className="input-group input-group mb-3 col-md-1">
+                            <div className="input-group input-group mb-3 col-md-3 d-flex justify-content-end">
                                 <button onClick={(e) => search(e)} id="search-company" className="btn btn-outline-success">Search</button>
                             </div>
                         </div>
@@ -117,20 +130,26 @@ const SearchCompany = () => {
                                 <thead className="thead-light">
                                     <tr>
                                         <th scope="col">#</th>
-                                        <th scope="col">Company ID</th>
-                                        <th scope="col">Company Name</th>
+                                        <th scope="col">Customer ID</th>
+                                        <th scope="col">Component Type</th>
+                                        <th scope="col">Title</th>
+                                        <th scope="col">OEM P/N</th>
+                                        <th scope="col">Description</th>
                                         <th scope="col">VIEW</th>
-                                        <th scope="col">REMOVE</th>
+                                        <th scope="col">DELETE</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {data.map((row, index) => (
                                         <tr key={index}>
                                             <td>{index+1}</td>
-                                            <td>{row.company_id}</td>
-                                            <td>{row.company_name}</td>
-                                            <td><button className="btn btn-sm btn-outline-info" onClick={(e) => handleView(e, row.company_id)}>OPEN</button></td>
-                                            <td><button className="btn btn-sm btn-danger" onClick={(e) => handleRemove(e, row.company_id)}>DELETE</button></td>
+                                            <td>{row.customer_id}</td>
+                                            <td>{row.component_type}</td>
+                                            <td>{row.title}</td>
+                                            <td>{row.oem_pn}</td>
+                                            <td>{row.description}</td>
+                                            <td><button className="btn btn-sm btn-outline-info" onClick={(e) => handleView(e, row.component_id)}>OPEN</button></td>
+                                            <td><button className="btn btn-sm btn-danger" onClick={(e) => handleRemove(e, row.component_id)}>DELETE</button></td>
                                         </tr>
                                     ))}
 
@@ -166,4 +185,4 @@ const SearchCompany = () => {
     );
 };
 
-export default SearchCompany;
+export default SearchComponent;

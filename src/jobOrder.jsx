@@ -1,197 +1,387 @@
-import React, { useState, useEffect } from 'react';
-import Axios from 'axios';
-import jsPDF from 'jspdf';
-import 'jspdf-autotable';
-import { Page, Text, View, Document, StyleSheet, PDFViewer } from '@react-pdf/renderer';
-const styles = StyleSheet.create({
-  page: {
-    backgroundColor: "white",
-    color: "black",
-  },
-  section: {
-    margin: 10,
-    padding: 10,
-  },
-  viewer: {
-    width: window.innerWidth, //the pdf viewer will take up all of the width and height
-    height: window.innerHeight,
-  },
-});
+    import React, { useState, useEffect } from 'react';
+    import Axios from 'axios';
+    import pdfMake from 'pdfmake/build/pdfmake';
+    import pdfFonts from 'pdfmake/build/vfs_fonts';
+    pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
+    function JobOrder({ match }) {
 
+      const shipping_id = 2;
 
-function JobOrder({ match }) {
-
-  const [jobOrderData, setJobOrderData] = useState(null);
-  const [numPages, setNumPages] = useState(null);
-  const [showPdf, setShowPdf] = useState(false);
-  const fetchJobOrderData = async () => {
-   
-
-    try {
-        const response = await Axios.get('http://localhost:3001/api/orders');
-        const orders = response.data;
+      const [shippingData, setShippingData] = useState(null);
+      useEffect(() => {
+        Axios.get(`http://localhost:3001/api/shipping/${shipping_id}`)
+          .then(response => {
+            setShippingData(response.data);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      }, []);
     
-        const doc = new jsPDF();
-        
-        doc.setFontSize(15);
-        doc.text('ABSOLUTE MEDIA, INC.', 73, 10);
-
-        doc.setFontSize(25);
-        doc.text('Job Order Sheet', 70, 20);
-
-        doc.setFontSize(12);
-        doc.text('Date, Time', 93, 25);
-
-        doc.rect(20,30, 35, 7);
-        doc.setFontSize(10);
-        doc.text('ABS FG Product PN', 21, 35);
-        doc.rect(55,30, 50, 7);
-        doc.rect(105,30, 35, 7);
-        doc.text('Order Master ID', 106, 35);
-        doc.rect(140,30, 50, 7);
-
-        doc.rect(20, 37, 35, 7);
-        doc.text('FG Product Title', 21, 42);
-        doc.rect(55, 37, 135, 7);
-
-        doc.rect(20, 44, 35, 14);
-        doc.text('FG Product Category', 21, 49);
-        doc.text('/ Type', 21, 56);
-        doc.rect(55, 44, 50, 14);
-        doc.rect(105, 44, 35, 7);
-        doc.rect(105, 51, 35, 7);
-        doc.rect(140, 44, 25, 14);
-        doc.text('Production', 143, 49);
-        doc.rect(165, 44, 25, 14);
-        doc.text('First Article', 168, 49);
-
-        //CheckBox
-        doc.rect(150, 52, 3, 3);
-        doc.rect(175, 52, 3, 3);
-
-        doc.rect(20, 58, 35, 14);
-        doc.text('Order Quantity', 21, 65);
-        doc.rect(55, 58, 25, 14);
-        doc.text('Customer', 56, 63);
-        doc.rect(80, 58, 25, 14);
-        doc.text('Factory', 81, 63);
-        doc.rect(105, 58, 35, 7);
-        doc.text('OEM product ID', 106, 63);
-        doc.rect(105, 65, 35, 7);
-        doc.text('Customer Name', 106, 70);
-        doc.rect(140, 58, 50, 7);
-        doc.rect(140, 65, 50, 7);
-
-        const textWidth = doc.getTextWidth('Customer');
-        doc.line(56, 64, 56 + textWidth, 64);
-        const textWidth1 = doc.getTextWidth('Factory');
-        doc.line(81, 64, 81 + textWidth1, 64);
-
-        doc.rect(20, 72, 35, 14);
-        doc.text('Scheduled Ship', 21, 77);
-        doc.text('Date / Time', 21, 84);
-        doc.rect(55, 72, 25, 14);
-        doc.rect(80, 72, 25, 14);
-        doc.text('CD-ROM ETA', 81, 77);
-        doc.rect(105, 72, 35, 7);
-        doc.text('Customer PO #', 106, 77);
-        doc.rect(105, 79, 35, 7);
-        doc.text('CD Manufacturer', 106, 84);
-        doc.rect(140, 72, 50, 7);
-        doc.rect(140, 79, 50, 7);
-
-        const textWidth2 = doc.getTextWidth('CD-ROM ETA:');
-        doc.line(81, 78, 81 + textWidth2, 78);
-
-        doc.rect(20, 86, 35, 7);
-        doc.text('OEM ID', 21, 91);
-        doc.rect(55, 86, 135, 7);
-
-        doc.rect(20, 93, 35, 21);
-        doc.text('Packaging', 21, 103);
-        doc.rect(55, 93, 135, 21);
-        doc.setFont('helvetica', 'bold');
-        doc.text('Product Packaging Information', 56, 98);
-
-        const textWidth3 = doc.getTextWidth('Product Packaging Information');
-        doc.line(56, 99, 56 + textWidth3, 99);
-
-        doc.setFont('helvetica', 'normal');
-
-        doc.rect(20, 114, 35, 7);
-        doc.text('Packaging Notes', 21, 119);
-        doc.rect(55, 114, 135, 7);
-
-        doc.rect(20, 121, 35, 14);
-        doc.text('Shipping', 21, 126);
-        doc.text('Instructions', 21, 133);
-        doc.rect(55, 121, 85, 14);
-        doc.rect(140, 121, 25, 14);
-        doc.text('Ship Via', 141, 130);
-        doc.rect(165, 121, 25, 14);
-
-        doc.rect(20, 135, 170, 7);
-        doc.text('Job Order Notes', 95, 140);
-
-        doc.rect(20, 142, 170, 7);
-
-        doc.rect(20, 149, 85, 14);
-        doc.rect(105, 149, 85, 14);
-
-        doc.rect(20, 163, 85, 14);
-        doc.rect(105, 163, 85, 14);
-
-        doc.rect(20, 177, 85, 14);
-        doc.rect(105, 177, 85, 14);
-
-        doc.rect(20, 191, 85, 14);
-        doc.rect(105, 191, 85, 14);
-
-        doc.rect(20, 205, 85, 14);
-        doc.rect(105, 205, 85, 14);
-
-        doc.rect(20, 219, 85, 14);
-        doc.rect(105, 219, 85, 14);
-
-
-        doc.rect(20, 233, 85, 14);
-        doc.rect(105, 233, 85, 14);
-
-
-        doc.rect(20, 247, 85, 14);
-        doc.rect(105, 247, 85, 14);
-
-
-
-        //doc.rect();
-        
-        // doc.autoTable({
-        //   head: [['Order ID', 'Company', 'Company Address', 'Customer', 'Customer Address', 'Date']],
-        //   body: orders.map(({ orderID, company, company_address, customer, customer_address, date }) => [orderID, company, company_address, customer, customer_address, date]),
-        // margin: { top: 30}
-        // });
-
-
-        const pdfURL = doc.output('bloburl');
-        const pdfWindow = window.open();
-        pdfWindow.location.href = pdfURL;
-      } catch (error) {
-        console.error(error);
+      var order_id = shippingData?.shipping_id ?? '';
+      console.log(order_id);
+      const [orderData, setOrderData] = useState(null);
+      useEffect(() => {
+        Axios.get(`http://localhost:3001/api/order/${order_id}`)
+          .then(response => {
+            setOrderData(response.data);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      }, [order_id]);
+    
+      var product_id = orderData?.product_id ?? '';
+      console.log(product_id);
+      const [productData, setProductData] = useState('');
+      useEffect(() => {
+        if (product_id) {
+          Axios.get(`http://localhost:3001/api/product/${product_id}`).then((response) => {
+            setProductData(response.data);
+          }).catch(err => {
+            console.log(err);
+          });
+        }
+      }, [product_id]);
+    
+      const productTitle = productData?.product_title ?? '';
+      const productCategory = productData?.product_category ?? '';
+      const customerOrderQuantity = orderData?.custom_quantity ?? '';
+      const factoryOrderQuantity = orderData?.factory_order_quantity ?? '';
+      const oemProductID = productData?.oem_product_id ?? '';
+      const companyName = shippingData?.company_name ?? '';
+      //const companyNameSlice = companyName.slice(0, 18);
+      const shipDate = shippingData?.request_ship_date ?? '';
+      const shipDateSlice = shipDate.slice(0, 10);
+      const shipTime = shippingData?.request_ship_time ?? '';
+    
+      const productPackagingNotes = productData?.product_notes ?? '';
+      const productNotesSlice = productPackagingNotes.slice(0, 210);
+      const maxLength = 70;
+      const splitStrings = [];
+      for (let i = 0; i < productNotesSlice.length; i += maxLength) {
+        splitStrings.push(productNotesSlice.substr(i, maxLength));
       }
-    };
-
-  
-
-  return (
+      // const productNotes1 = splitStrings[0];
+      // const productNotes2 = splitStrings[1];
+      // const productNotes3 = splitStrings[2];
     
-      <div className='block7'>
-        <button type='button' onClick={fetchJobOrderData} className='HomePageButton'>
-          Fetch Job Orders
-        </button>
-      </div>
-    
-  );
-}
+      const packagingNotes = productData?.packaging_notes ?? '';
+      //const packagingNotesSlice = packagingNotes.slice(0, 70);
 
-export default JobOrder;
+      const fetchJobOrderData = async () => {
+      
+          try {
+
+          var docDefinition = {
+            content: [
+              {
+                alignment: 'justify',
+                columns:[
+              {
+                fontSize: 18,
+                bold: true,
+                text: 'ABSOLUTE MEDIA, INC.',
+              },
+              {
+                fontSize: 18,
+                bold: true,
+                text: 'Job Order Sheet',
+              },
+            ]
+          },
+
+          {
+            table: {
+              widths: ['*', '*', '*', '*', '*'],
+              heights: [0, 0, 12, 12, 0, 0, 0, 0, 0, 0, 75],
+              body: [
+                [ //First Row
+                  {
+                    bold: true,
+                    text: 'ABS FG Product PN',
+                  },
+                  {
+                    text: product_id,
+                    margin: [0, 0, 0, 0]
+                  },
+                  {
+                    bold: true,
+                    text: 'Order Master ID'
+                  },
+                  {
+                    colSpan: 2,
+                    text: order_id,
+                    margin: [0, 0, 0, 0]
+                  },
+                  ''
+                ],
+                [ //Second Row
+                  {
+                    bold: true,
+                    text: 'FG Product Title'
+                  },
+                  {
+                    colSpan: 4,
+                    text: productTitle,
+                    margin: [0, 0, 0, 0]
+                  },
+                  '',
+                  '',
+                  ''
+                ],
+                [ //Third Row
+                  {
+                    bold: true,
+                    rowSpan: 2,
+                    text: 'FG Product Category / Type'
+                  },
+                  {
+                    rowSpan: 2,
+                    text: productCategory,
+                    margin: [0, 0, 0, 0]
+                  },
+                  {
+                    text: ''
+                  },
+                  {
+                    bold: true,
+                    rowSpan: 2,
+                    text: 'Production ',
+                  },
+                  {
+                    bold: true,
+                    rowSpan: 2,
+                    text: 'First Article '
+                  }
+                ],
+                [ //Fourth Row
+                  '', '', { text: '' }, '', ''
+                ],
+                [ //Fifth Row
+                  {
+                    bold: true,
+                    rowSpan: 2,
+                    text: 'Order Quantity'
+                  },
+                  {
+                    border: [true, true, true, false],
+                    bold: true,
+                    decoration: 'underline',
+                    text: 'Customer'
+                  },
+                  {
+                    border: [true, true, true, false],
+                    bold: true,
+                    decoration: 'underline',
+                    text: 'Factory'
+                  },
+                  {
+                    bold: true,
+                    text: 'OEM Product ID'
+                  },
+                  {
+                    text: oemProductID,
+                    margin: [0, 0, 0, 0]
+                  }
+                ],
+                [ //Sixth Row
+                  '',
+                  {
+                    border: [true, false, true, true],
+                    text: customerOrderQuantity,
+                    margin: [0, 0, 0, 0]
+                  },
+                  {
+                    border: [true, false, true, true],
+                    text: factoryOrderQuantity,
+                    margin: [0, 0, 0, 0]
+                  },
+                  {
+                    bold: true,
+                    text: 'Customer Name'
+                  },
+                  {
+                    text: companyName,
+                    margin: [0, 0, 0, 0]
+                  }
+                ],
+                [ //Seventh Row
+                  {
+                    bold: true,
+                    rowSpan: 2,
+                    text: 'Scheduled Ship Date / Time'
+                  },
+                  {
+                    border: [true, true, true, false],
+                    text: shipDateSlice,
+                    margin: [0, 0, 0, 0]
+                  },
+                  {
+                    border: [true, true, true, false],
+                    bold: true,
+                    rowSpan: 2,
+                    decoration: 'underline',
+                    text: 'CD-ROM ETA:'
+                  },
+                  {
+                    bold: true,
+                    text: 'Customer PO #'
+                  },
+                  {
+                    text: '',
+                    margin: [0, 0, 0, 0]
+                  }
+                ],
+                [ //Eighth Row
+                  '',
+                  {
+                    border: [true, false, true, true],
+                    text: shipTime,
+                    margin: [0, 0, 0, 0]
+                  },
+                  '',
+                  {
+                    bold: true,
+                    text: 'CD Manufacturer'
+                  },
+                  {
+                    text: '',
+                    margin: [0, 0, 0, 0]
+                  }
+                ],
+                [ //Ninth Row
+                  {
+                    bold: true,
+                    text: 'OEM ID'
+                  },
+                  {
+                    colSpan: 4,
+                    text: '',
+                    margin: [0, 0, 0, 0]
+                  },
+                  '',
+                  '',
+                  ''
+                ],
+                [ //Tenth Row
+                  {
+                    bold: true,
+                    rowSpan: 2,
+                    text: 'Packaging',
+                  },
+                  {
+                    border: [true, true, true, false],
+                    bold: true,
+                    decoration: 'underline',
+                    colSpan: 4,
+                    text: 'Product Packaging Information'
+                  },
+                  '',
+                  '',
+                  '',
+                ],
+                [ //Eleventh Row
+                  '',
+                  {
+                    border: [true, false, true, true],
+                    colSpan: 4,
+                    text: productPackagingNotes,
+                    margin: [0, 0, 0, 0],
+                  },
+                  '',
+                  '',
+                  '',
+                ],
+                [ //Twelvth Row
+                  {
+                    bold: true,
+                    text: 'Packaging Notes'
+                  },
+                  {
+                    colSpan: 4,
+                    text: packagingNotes,
+                    margin: [0, 0, 0, 0,]
+                  },
+                  '',
+                  '',
+                  ''
+                ],
+                [ //Thirteenth Row
+                  {
+                    bold: true,
+                    text: 'Shipping Instructions',
+                    margin: [0, 0, 0, 0]
+                  },
+                  {
+                    colSpan: 2,
+                    text: '',
+                    margin: [0, 0, 0, 0]
+                  },
+                  '',
+                  {
+                    bold: true,
+                    text: 'Ship Via'
+                  },
+                  {
+                    text: '',
+                    margin: [0, 0, 0, 0]
+                  }
+                ],
+                [ //Fourteenth Row
+                  {
+                    alignment: 'center',
+                    bold: true,
+                    colSpan: 5,
+                    text: 'Job Order Notes'
+                  },
+                  '',
+                  '',
+                  '',
+                  ''
+                ]
+              ],
+            }
+          },
+          {
+            table: {
+              widths: ['*', '*'],
+              heights: [25, 25, 25, 25, 25, 25, 25, 25, 25, 25],
+              body: [
+                [ { text: '' }, { text: '' } ],
+                [ { text: '' }, { text: '' } ],
+                [ { text: '' }, { text: '' } ],
+                [ { text: '' }, { text: '' } ],
+                [ { text: '' }, { text: '' } ],
+                [ { text: '' }, { text: '' } ],
+                [ { text: '' }, { text: '' } ],
+                [ { text: '' }, { text: '' } ],
+                [ { text: '' }, { text: '' } ],
+                [ { text: '' }, { text: '' } ]
+              ]
+            }
+          }
+        ],
+        }
+
+
+          pdfMake.createPdf(docDefinition).open();
+
+        } catch (error) {
+          console.error(error);
+        }
+      };
+
+      return (
+        
+          <div className='block7'>
+            <button type='button' onClick={fetchJobOrderData} className='HomePageButton'>
+              Fetch Job Orders
+            </button>
+          </div>
+        
+      );
+    }
+
+    export default JobOrder;

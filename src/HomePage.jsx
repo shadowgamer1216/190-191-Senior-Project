@@ -1,11 +1,8 @@
-/*import logo from './absolutemedialogo.png';*/
+import logo from './absolutemedialogo.png';
 import React from 'react';
 import './App.css';
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react';
-
-
-
 import { Link } from "react-router-dom";
 
 function HomePage({ handleLogout }) {
@@ -28,18 +25,17 @@ function HomePage({ handleLogout }) {
       		{/*<img src={logo} className="App-logo" alt="logo" />*/}
 			<div className='HomePageBar'>
 				<nav className="navbar navbar-dark bg-maroon">
-					<label className="navbar-brand">ABSOLUTE MEDIA, INC.</label>
+					<label className="navbar-brand"><img src={logo} alt="Absolute Media Inc."/></label>
 					<div>
 					<Link to ="signup">
 					<button className="btn btn-outline-light">Sign Up</button>
 					</Link>
 					</div>
 					<button className="btn btn-outline-light" onClick={handleLogout}>Logout</button>
-					
-
 				</nav>
 			</div>
 
+			<br></br>
 			<div className='block1'>
 				<Link to = "Company">
 					<button type="button" id="Add Company" className="HomePageButton">Add Company</button>
@@ -76,18 +72,16 @@ function HomePage({ handleLogout }) {
 				</Link>
 			</div>
 
-			<div className='block5'>
-				{/*<Link to = "Edit">*/}
-					<button type="Edit" id="Edit" className="InactiveHomePageButton">Edit</button>
-				{/*</Link>*/}
-				{/*<Link to = "View">*/}
-					<button type="View" id="View" className="InactiveHomePageButton">View</button>
-				{/*</Link>*/}
-			</div>
-
-			<div className="block6">
+			<br></br>
+			<div className="block5">
 				<Link to = "Search">
 					<button type="Search" id="Search" className="HomePageButton" >Search</button>
+				</Link>
+			</div>
+			
+			<div className="block6">
+				<Link to = "outputForms">
+					<button type="Search" id="Search" className="HomePageButton" >Output Forms</button>
 				</Link>
 			</div>
 
@@ -98,7 +92,7 @@ function HomePage({ handleLogout }) {
 			</div>
 			
 			<div className="block8">
-				<Link to = "PackingSlip">
+				<Link to = "PackingSlipEdit">
 					<button type="Search" id="Search" className="HomePageButton" >Packing Slip</button>
 				</Link>
 			</div>

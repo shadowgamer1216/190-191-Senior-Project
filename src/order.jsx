@@ -21,76 +21,146 @@ const Order = ({ handleLogout }) => {
 
     const navigate = useNavigate();
     
-    const [productID, setProductID] = useState(null);
     const [companyID, setCompanyID] = useState(null);
+    const [companyName, setCompanyName] = useState(null);
+
+    const [productID, setProductID] = useState(null);
+    const [productName, setProductName] = useState(null);
+    const [productType, setProductType] = useState(null);
+
+    useEffect(() => {
+        if(productID) {
+            Axios.get(`http://localhost:3001/api/product/${productID}`).then((response) =>{
+                setProductName(response.data.product_title);
+                setProductType(response.data.product_category);
+            }).catch(err => {
+                console.log(err);
+            });
+        }
+    }, [productID]); 
+
+    useEffect(() => {
+        if(companyID) {
+            Axios.get(`http://localhost:3001/api/company/${companyID}`).then((response) =>{
+                setCompanyName(response.data.company_name);
+            }).catch(err => {
+                console.log(err);
+            });
+        }
+    }, [companyID]); 
 
     const [salesPerson, setSalesPerson] = useState(null);
     const [requestor, setRequestor] = useState(null);
     const [customerContact, setCustomerContact] = useState(null);
-    const [reOrder, setReOrder] = useState(false);
+    const [reOrder, setReOrder] = useState(0);
 
     // Custom Product
     const [factoryOrderQuantity, setFactoryOrderQuantity] = useState(0);
-    const [customInvoice, setCustomInvoice] = useState(false);
-    const [customPackingSlip, setCustomPackingSlip] = useState(false);
+    const [customInvoice, setCustomInvoice] = useState(0);
+    const [customPackingSlip, setCustomPackingSlip] = useState(0);
     const [customQuantity, setCustomQuantity] = useState(0);
     const [customUnitPrice, setCustomUnitPrice] = useState(0);
     const [customTotalPrice, setCustomTotalPrice] = useState(customQuantity * customUnitPrice);
 
     // Non-Inventory Line Items
     const [nonItem1, setNonItem1] = useState(null);
-    const [nonItemInvoice1, setNonItemInvoice1] = useState(false);
-    const [nonItemPackingSlip1, setNonItemPackingSlip1] = useState(false);
+    const [nonItemInvoice1, setNonItemInvoice1] = useState(0);
+    const [nonItemPackingSlip1, setNonItemPackingSlip1] = useState(0);
     const [nonItemQuantity1, setNonItemQuantity1] = useState(0);
     const [nonItemUnitPrice1, setNonItemUnitPrice1] = useState(0);
     const [nonItemTotalPrice1, setNonItemTotalPrice1] = useState(nonItemQuantity1 * nonItemUnitPrice1);
     const [nonItem2, setNonItem2] = useState(null);
-    const [nonItemInvoice2, setNonItemInvoice2] = useState(false);
-    const [nonItemPackingSlip2, setNonItemPackingSlip2] = useState(false);
+    const [nonItemInvoice2, setNonItemInvoice2] = useState(0);
+    const [nonItemPackingSlip2, setNonItemPackingSlip2] = useState(0);
     const [nonItemQuantity2, setNonItemQuantity2] = useState(0);
     const [nonItemUnitPrice2, setNonItemUnitPrice2] = useState(0);
     const [nonItemTotalPrice2, setNonItemTotalPrice2] = useState(nonItemQuantity2 * nonItemUnitPrice2);
     const [nonItem3, setNonItem3] = useState(null);
-    const [nonItemInvoice3, setNonItemInvoice3] = useState(false);
-    const [nonItemPackingSlip3, setNonItemPackingSlip3] = useState(false);
+    const [nonItemInvoice3, setNonItemInvoice3] = useState(0);
+    const [nonItemPackingSlip3, setNonItemPackingSlip3] = useState(0);
     const [nonItemQuantity3, setNonItemQuantity3] = useState(0);
     const [nonItemUnitPrice3, setNonItemUnitPrice3] = useState(0);
     const [nonItemTotalPrice3, setNonItemTotalPrice3] = useState(nonItemQuantity3 * nonItemUnitPrice3);
     const [nonItem4, setNonItem4] = useState(null);
-    const [nonItemInvoice4, setNonItemInvoice4] = useState(false);
-    const [nonItemPackingSlip4, setNonItemPackingSlip4] = useState(false);
+    const [nonItemInvoice4, setNonItemInvoice4] = useState(0);
+    const [nonItemPackingSlip4, setNonItemPackingSlip4] = useState(0);
     const [nonItemQuantity4, setNonItemQuantity4] = useState(0);
     const [nonItemUnitPrice4, setNonItemUnitPrice4] = useState(0);
     const [nonItemTotalPrice4, setNonItemTotalPrice4] = useState(nonItemQuantity4 * nonItemUnitPrice4);
     const [nonItem5, setNonItem5] = useState(null);
-    const [nonItemInvoice5, setNonItemInvoice5] = useState(false);
-    const [nonItemPackingSlip5, setNonItemPackingSlip5] = useState(false);
+    const [nonItemInvoice5, setNonItemInvoice5] = useState(0);
+    const [nonItemPackingSlip5, setNonItemPackingSlip5] = useState(0);
     const [nonItemQuantity5, setNonItemQuantity5] = useState(0);
     const [nonItemUnitPrice5, setNonItemUnitPrice5] = useState(0);
     const [nonItemTotalPrice5, setNonItemTotalPrice5] = useState(nonItemQuantity5 * nonItemUnitPrice5);
     const [nonItem6, setNonItem6] = useState(null);
-    const [nonItemInvoice6, setNonItemInvoice6] = useState(false);
-    const [nonItemPackingSlip6, setNonItemPackingSlip6] = useState(false);
+    const [nonItemInvoice6, setNonItemInvoice6] = useState(0);
+    const [nonItemPackingSlip6, setNonItemPackingSlip6] = useState(0);
     const [nonItemQuantity6, setNonItemQuantity6] = useState(0);
     const [nonItemUnitPrice6, setNonItemUnitPrice6] = useState(0);
     const [nonItemTotalPrice6, setNonItemTotalPrice6] = useState(nonItemQuantity6 * nonItemUnitPrice6);
 
     // Inventory Items
     const [item1, setItem1] = useState(null);
-    const [itemInvoice1, setItemInvoice1] = useState(false);
-    const [itemPackingSlip1, setItemPackingSlip1] = useState(false);
+    var item1String = item1?.value ?? null;
+
+    const [itemName1, setItemName1] = useState(null);
+    const [itemType1, setItemType1] = useState(null);
+    useEffect(() => {
+        if(item1String) {
+            Axios.get(`http://localhost:3001/api/component/${item1String}`).then((response) =>{
+                setItemName1(response.data.title);
+                setItemType1(response.data.component_type);
+            }).catch(err => {
+                console.log(err);
+            });
+        }
+    }, [item1String]); 
+
+    const [itemInvoice1, setItemInvoice1] = useState(0);
+    const [itemPackingSlip1, setItemPackingSlip1] = useState(0);
     const [itemQuantity1, setItemQuantity1] = useState(0);
     const [itemUnitPrice1, setItemUnitPrice1] = useState(0);
     const [itemTotalPrice1, setItemTotalPrice1] = useState(itemQuantity1 * itemUnitPrice1);
     const [item2, setItem2] = useState(null);
-    const [itemInvoice2, setItemInvoice2] = useState(false);
-    const [itemPackingSlip2, setItemPackingSlip2] = useState(false);
+    var item2String = item2?.value ?? null;
+
+    const [itemName2, setItemName2] = useState(null);
+    const [itemType2, setItemType2] = useState(null);
+    useEffect(() => {
+        if(item2String) {
+            Axios.get(`http://localhost:3001/api/component/${item2String}`).then((response) =>{
+                setItemName2(response.data.title);
+                setItemType2(response.data.component_type);
+            }).catch(err => {
+                console.log(err);
+            });
+        }
+    }, [item2String]); 
+
+    const [itemInvoice2, setItemInvoice2] = useState(0);
+    const [itemPackingSlip2, setItemPackingSlip2] = useState(0);
     const [itemQuantity2, setItemQuantity2] = useState(0);
     const [itemUnitPrice2, setItemUnitPrice2] = useState(0);
     const [itemTotalPrice2, setItemTotalPrice2] = useState(itemQuantity2 * itemUnitPrice2);
     const [item3, setItem3] = useState(null);
-    const [itemInvoice3, setItemInvoice3] = useState(false);
-    const [itemPackingSlip3, setItemPackingSlip3] = useState(false);
+    var item3String = item3?.value ?? null;
+
+    const [itemName3, setItemName3] = useState(null);
+    const [itemType3, setItemType3] = useState(null);
+    useEffect(() => {
+        if(item3String) {
+            Axios.get(`http://localhost:3001/api/component/${item3String}`).then((response) =>{
+                setItemName3(response.data.title);
+                setItemType3(response.data.component_type);
+            }).catch(err => {
+                console.log(err);
+            });
+        }
+    }, [item3String]); 
+
+    const [itemInvoice3, setItemInvoice3] = useState(0);
+    const [itemPackingSlip3, setItemPackingSlip3] = useState(0);
     const [itemQuantity3, setItemQuantity3] = useState(0);
     const [itemUnitPrice3, setItemUnitPrice3] = useState(0);
     const [itemTotalPrice3, setItemTotalPrice3] = useState(itemQuantity3 * itemUnitPrice3);
@@ -202,146 +272,149 @@ const Order = ({ handleLogout }) => {
 
     const Sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
     const [submitting, setSubmitting] = useState(false);
-    const submit = (e) => {
+    const submit = async(e) => {
         e.preventDefault();
-        Axios.post("http://localhost:3001/api/insertOrder", {
-            productID: productID,
-            companyID: companyID,
+        try {
+            const result = await Promise.all([
+            Axios.post("http://localhost:3001/api/insertOrder", {
+                companyID: companyID,
+                companyName: companyName,
 
-            salesPerson: salesPerson,
-            requestor: requestor,
-            customerContact: customerContact,
-            reOrder: reOrder,
+                productID: productID,
+                productName: productName,
+                productType: productType,
 
-            // Custom Product
-            factoryOrderQuantity: factoryOrderQuantity,
-            customInvoice: customInvoice,
-            customPackingSlip: customPackingSlip,
-            customQuantity: customQuantity,
-            customUnitPrice: customUnitPrice,
-            customTotalPrice: customTotalPrice,
+                salesPerson: salesPerson,
+                requestor: requestor,
+                customerContact: customerContact,
+                reOrder: reOrder,
 
-            // Billing Information
-            assemblyChargesQuantity: assemblyChargesQuantity,
-            assemblyChargesUnitPrice: assemblyChargesUnitPrice,
-            assemblyChargesTotalPrice: assemblyChargesTotalPrice,
-            printingChargesQuantity: printingChargesQuantity,
-            printingChargesUnitPrice: printingChargesUnitPrice,
-            printingChargesTotalPrice: printingChargesTotalPrice,
-            setupCharge: setupCharge,
-            numberOfScreens: numberOfScreens,
-            screensPrice: screensPrice,
-            subTotal: subTotal,
-            taxRate: taxRate,
-            tax: tax,
-            freightCharges: freightCharges,
-            priceTotal: priceTotal,
+                // Custom Product
+                factoryOrderQuantity: factoryOrderQuantity,
+                customInvoice: customInvoice,
+                customPackingSlip: customPackingSlip,
+                customQuantity: customQuantity,
+                customUnitPrice: customUnitPrice,
+                customTotalPrice: customTotalPrice,
 
-            // Invoice Information
-            invoiceDate: invoiceDate,
-            invoiceDatePaid: invoiceDatePaid,
-            invoiceNotes: invoiceNotes,
+                // Non-Inventory Items
+                nonItem1: nonItem1,
+                nonItemInvoice1: nonItemInvoice1,
+                nonItemPackingSlip1: nonItemPackingSlip1,
+                nonItemQuantity1: nonItemQuantity1,
+                nonItemUnitPrice1: nonItemUnitPrice1,
+                nonItemTotalPrice1: nonItemTotalPrice1,
+                nonItem2: nonItem2,
+                nonItemInvoice2: nonItemInvoice2,
+                nonItemPackingSlip2: nonItemPackingSlip2,
+                nonItemQuantity2: nonItemQuantity2,
+                nonItemUnitPrice2: nonItemUnitPrice2,
+                nonItemTotalPrice2: nonItemTotalPrice2,
+                nonItem3: nonItem3,
+                nonItemInvoice3: nonItemInvoice3,
+                nonItemPackingSlip3: nonItemPackingSlip3,
+                nonItemQuantity3: nonItemQuantity3,
+                nonItemUnitPrice3: nonItemUnitPrice3,
+                nonItemTotalPrice3: nonItemTotalPrice3,
+                nonItem4: nonItem4,
+                nonItemInvoice4: nonItemInvoice4,
+                nonItemPackingSlip4: nonItemPackingSlip4,
+                nonItemQuantity4: nonItemQuantity4,
+                nonItemUnitPrice4: nonItemUnitPrice4,
+                nonItemTotalPrice4: nonItemTotalPrice4,
+                nonItem5: nonItem5,
+                nonItemInvoice5: nonItemInvoice5,
+                nonItemPackingSlip5: nonItemPackingSlip5,
+                nonItemQuantity5: nonItemQuantity5,
+                nonItemUnitPrice5: nonItemUnitPrice5,
+                nonItemTotalPrice5: nonItemTotalPrice5,
+                nonItem6: nonItem6,
+                nonItemInvoice6: nonItemInvoice6,
+                nonItemPackingSlip6: nonItemPackingSlip6,
+                nonItemQuantity6: nonItemQuantity6,
+                nonItemUnitPrice6: nonItemUnitPrice6,
+                nonItemTotalPrice6: nonItemTotalPrice6,
+                
+                // Inventory Items
+                item1: item1String,
+                itemName1: itemName1,
+                itemType1: itemType1,
+                itemInvoice1: itemInvoice1,
+                itemPackingSlip1: itemPackingSlip1,
+                itemQuantity1: itemQuantity1,
+                itemUnitPrice1: itemUnitPrice1,
+                itemTotalPrice1: itemTotalPrice1,
+                item2: item2String,
+                itemName2: itemName2,
+                itemType2: itemType2,
+                itemInvoice2: itemInvoice2,
+                itemPackingSlip2: itemPackingSlip2,
+                itemQuantity2: itemQuantity2,
+                itemUnitPrice2: itemUnitPrice2,
+                itemTotalPrice2: itemTotalPrice2,
+                item3: item3String,
+                itemName3: itemName3,
+                itemType3: itemType3,
+                itemInvoice3: itemInvoice3,
+                itemPackingSlip3: itemPackingSlip3,
+                itemQuantity3: itemQuantity3,
+                itemUnitPrice3: itemUnitPrice3,
+                itemTotalPrice3: itemTotalPrice3,
 
-            // Job Information
-            ABSOrder: ABSOrder,
-            customerOrder: customerOrder,
-            customerPODate: customerPODate,
-            customerPONumber: customerPONumber,
-            creditChecked: creditChecked,
-            daysTurn: daysTurn,
-            dateCodePrinting: dateCodePrinting,
-            customerProvidedMaterial: customerProvidedMaterial,
-            customerMaterialETA: customerMaterialETA,
-            customerNotes: customerNotes,
-            vendorNotes: vendorNotes,
-            orderNotes: orderNotes,
-            orderStatus: orderStatus
-        }).then(() => {
-            console.log("Success");
-        })
+                // Billing Information
+                assemblyChargesQuantity: assemblyChargesQuantity,
+                assemblyChargesUnitPrice: assemblyChargesUnitPrice,
+                assemblyChargesTotalPrice: assemblyChargesTotalPrice,
+                printingChargesQuantity: printingChargesQuantity,
+                printingChargesUnitPrice: printingChargesUnitPrice,
+                printingChargesTotalPrice: printingChargesTotalPrice,
+                setupCharge: setupCharge,
+                numberOfScreens: numberOfScreens,
+                screensPrice: screensPrice,
+                subTotal: subTotal,
+                taxRate: taxRate,
+                tax: tax,
+                freightCharges: freightCharges,
+                priceTotal: priceTotal,
 
-        Axios.post("http://localhost:3001/api/insertOrderNonItem", {
-            productID: productID,
-            companyID: companyID,
+                // Invoice Information
+                invoiceDate: invoiceDate,
+                invoiceDatePaid: invoiceDatePaid,
+                invoiceNotes: invoiceNotes,
 
-            // Non-Inventory Items
-            nonItem1: nonItem1,
-            nonItemInvoice1: nonItemInvoice1,
-            nonItemPackingSlip1: nonItemPackingSlip1,
-            nonItemQuantity1: nonItemQuantity1,
-            nonItemUnitPrice1: nonItemUnitPrice1,
-            nonItemTotalPrice1: nonItemTotalPrice1,
-            nonItem2: nonItem2,
-            nonItemInvoice2: nonItemInvoice2,
-            nonItemPackingSlip2: nonItemPackingSlip2,
-            nonItemQuantity2: nonItemQuantity2,
-            nonItemUnitPrice2: nonItemUnitPrice2,
-            nonItemTotalPrice2: nonItemTotalPrice2,
-            nonItem3: nonItem3,
-            nonItemInvoice3: nonItemInvoice3,
-            nonItemPackingSlip3: nonItemPackingSlip3,
-            nonItemQuantity3: nonItemQuantity3,
-            nonItemUnitPrice3: nonItemUnitPrice3,
-            nonItemTotalPrice3: nonItemTotalPrice3,
-            nonItem4: nonItem4,
-            nonItemInvoice4: nonItemInvoice4,
-            nonItemPackingSlip4: nonItemPackingSlip4,
-            nonItemQuantity4: nonItemQuantity4,
-            nonItemUnitPrice4: nonItemUnitPrice4,
-            nonItemTotalPrice4: nonItemTotalPrice4,
-            nonItem5: nonItem5,
-            nonItemInvoice5: nonItemInvoice5,
-            nonItemPackingSlip5: nonItemPackingSlip5,
-            nonItemQuantity5: nonItemQuantity5,
-            nonItemUnitPrice5: nonItemUnitPrice5,
-            nonItemTotalPrice5: nonItemTotalPrice5,
-            nonItem6: nonItem6,
-            nonItemInvoice6: nonItemInvoice6,
-            nonItemPackingSlip6: nonItemPackingSlip6,
-            nonItemQuantity6: nonItemQuantity6,
-            nonItemUnitPrice6: nonItemUnitPrice6,
-            nonItemTotalPrice6: nonItemTotalPrice6,
-        }).then(() => {
-            console.log("Success");
-        })
-
-        Axios.post("http://localhost:3001/api/insertOrderItem", {
-            productID: productID,
-            companyID: companyID,
-
-            // Inventory Items
-            item1: item1,
-            itemInvoice1: itemInvoice1,
-            itemPackingSlip1: itemPackingSlip1,
-            itemQuantity1: itemQuantity1,
-            itemUnitPrice1: itemUnitPrice1,
-            itemTotalPrice1: itemTotalPrice1,
-            item2: item2,
-            itemInvoice2: itemInvoice2,
-            itemPackingSlip2: itemPackingSlip2,
-            itemQuantity2: itemQuantity2,
-            itemUnitPrice2: itemUnitPrice2,
-            itemTotalPrice2: itemTotalPrice2,
-            item3: item3,
-            itemInvoice3: itemInvoice3,
-            itemPackingSlip3: itemPackingSlip3,
-            itemQuantity3: itemQuantity3,
-            itemUnitPrice3: itemUnitPrice3,
-            itemTotalPrice3: itemTotalPrice3,
-        }).then(()=> {
-            alert('Inserted new order');
-        }).catch(err => {
-            console.log(err);
-        });
-    };
+                // Job Information
+                ABSOrder: ABSOrder,
+                customerOrder: customerOrder,
+                customerPODate: customerPODate,
+                customerPONumber: customerPONumber,
+                creditChecked: creditChecked,
+                daysTurn: daysTurn,
+                dateCodePrinting: dateCodePrinting,
+                customerProvidedMaterial: customerProvidedMaterial,
+                customerMaterialETA: customerMaterialETA,
+                customerNotes: customerNotes,
+                vendorNotes: vendorNotes,
+                orderNotes: orderNotes,
+                orderStatus: orderStatus
+            })
+        ]);
+        console.log(result);
+        alert('Success!');
+        } catch (error) {
+            console.error(error);
+            alert('Submission failed');
+        }
+    }
 
     useEffect(() => {
         setSubmitting(companyID && productID && factoryOrderQuantity);
     }, [companyID, productID, factoryOrderQuantity]);
 
+    const [loadingButton, setLoadingButton] = useState(false);
     const handleNavigate = async (id) => {
         const idPassed = id.toString();
-        await Sleep(2000);
+        setLoadingButton(true);
+        await Sleep(4000);
         navigate(`/order/${idPassed}`);
     };
 
@@ -409,9 +482,119 @@ const Order = ({ handleLogout }) => {
         .catch(error => {
             console.log(error);
         });
-        
     }, [companyID]);
-    
+
+    const [disableRowNonItem1, setRowNonItem1] = useState(true);
+    useEffect(() => {
+        if(nonItem1 && nonItem1.length > 0) {
+            setRowNonItem1(false);
+        } else {
+            setRowNonItem1(true);
+            setNonItemInvoice1(false);
+            setNonItemPackingSlip1(false);
+            setNonItemQuantity1(0);
+            setNonItemUnitPrice1(0);
+        }
+    }, [nonItem1]);
+    const [disableRowNonItem2, setRowNonItem2] = useState(true);
+    useEffect(() => {
+        if(nonItem2 && nonItem2.length > 0) {
+            setRowNonItem2(false);
+        } else {
+            setRowNonItem2(true);
+            setNonItemInvoice2(false);
+            setNonItemPackingSlip2(false);
+            setNonItemQuantity2(0);
+            setNonItemUnitPrice2(0);
+        }
+    }, [nonItem2]);
+    const [disableRowNonItem3, setRowNonItem3] = useState(true);
+    useEffect(() => {
+        if(nonItem3 && nonItem3.length > 0) {
+            setRowNonItem3(false);
+        } else {
+            setRowNonItem3(true);
+            setNonItemInvoice3(false);
+            setNonItemPackingSlip3(false);
+            setNonItemQuantity3(0);
+            setNonItemUnitPrice3(0);
+        }
+    }, [nonItem3]);
+    const [disableRowNonItem4, setRowNonItem4] = useState(true);
+    useEffect(() => {
+        if(nonItem4 && nonItem4.length > 0) {
+            setRowNonItem4(false);
+        } else {
+            setRowNonItem4(true);
+            setNonItemInvoice4(false);
+            setNonItemPackingSlip4(false);
+            setNonItemQuantity4(0);
+            setNonItemUnitPrice4(0);
+        }
+    }, [nonItem4]);
+    const [disableRowNonItem5, setRowNonItem5] = useState(true);
+    useEffect(() => {
+        if(nonItem5 && nonItem5.length > 0) {
+            setRowNonItem5(false);
+        } else {
+            setRowNonItem5(true);
+            setNonItemInvoice5(false);
+            setNonItemPackingSlip5(false);
+            setNonItemQuantity5(0);
+            setNonItemUnitPrice5(0);
+        }
+    }, [nonItem5]);
+    const [disableRowNonItem6, setRowNonItem6] = useState(true);
+    useEffect(() => {
+        if(nonItem6) {
+            setRowNonItem6(false);
+        } else {
+            setRowNonItem6(true);
+            setNonItemInvoice6(false);
+            setNonItemPackingSlip6(false);
+            setNonItemQuantity6(0);
+            setNonItemUnitPrice6(0);
+        }
+    }, [nonItem6]);
+
+    const [disableRowItem1, setRowItem1] = useState(true);
+    useEffect(() => {
+        if(item1) {
+            setRowItem1(false);
+        } else {
+            setRowItem1(true);
+            setItemInvoice1(false);
+            setItemPackingSlip1(false);
+            setItemQuantity1(0);
+            setItemUnitPrice1(0);
+        }
+    }, [item1]);
+    const [disableRowItem2, setRowItem2] = useState(true);
+    useEffect(() => {
+        if(item2) {
+            setRowItem2(false);
+        } else {
+            setRowItem2(true);
+            setItemInvoice2(false);
+            setItemPackingSlip2(false);
+            setItemQuantity2(0);
+            setItemUnitPrice2(0);
+        }
+    }, [item2]);
+    const [disableRowItem3, setRowItem3] = useState(true);
+    useEffect(() => {
+        if(item3) {
+            setRowItem3(false);
+        } else {
+            setRowItem3(true);
+            setItemInvoice3(false);
+            setItemPackingSlip3(false);
+            setItemQuantity3(0);
+            setItemUnitPrice3(0);
+        }
+    }, [item3]);
+
+
     return (
         <div className="page">
             <nav className="navbar navbar-expand-lg navbar-dark bg-maroon">
@@ -483,14 +666,10 @@ const Order = ({ handleLogout }) => {
                     </div>
 
                     <div className="form-row">
-                        <label htmlFor="reOrder" className="col-md-3 col-form-label">Re-Order?</label>
-                        <div className="input-group input-group-sm col-md-2 pl-5">
-                            <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" checked={reOrder} className="custom-control-input" id="reOrder"
-                                onChange = {() =>  {setReOrder((prev) => !prev) }}/>
-                                <label htmlFor="reOrder" className="custom-control-label"></label>
-                                {/* {reOrder ? "Selected" : "Unchecked"} */}
-                            </div>
+                        <label htmlFor="reorder" className="col-form-label col-sm-3 float-sm-left pt-1 mb-2">Re-Order?</label>
+                        <div className="custom-control custom-checkbox col-sm-6 float-sm-left pt-1 mb-2 ml-2">
+                            <input onChange={(prev) => setReOrder(prev => !prev)} checked={reOrder} type="checkbox" className="custom-control-input" id="reorder" />
+                            <label className="custom-control-label" htmlFor="reorder"></label>
                         </div>
                     </div>
                         
@@ -586,7 +765,7 @@ const Order = ({ handleLogout }) => {
                         <label className="col-md-2.5 col-form-label">Invoice</label>
                         <div className="input-group input-group-sm mb-3 col-md-1">
                             <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" checked={nonItemInvoice1} className="custom-control-input" id="nonItemInvoice1"
+                                <input type="checkbox" checked={nonItemInvoice1} className="custom-control-input" id="nonItemInvoice1" disabled={disableRowNonItem1}
                                 onChange = {() => setNonItemInvoice1((prev) => !prev) }/>
                                 <label htmlFor="nonItemInvoice1" className="custom-control-label"></label>
                             </div>
@@ -595,7 +774,7 @@ const Order = ({ handleLogout }) => {
                         <label className="col-md-2.5 col-form-label">Packing Slip</label>
                         <div className="input-group input-group-sm mb-3 col-md-1">
                             <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" checked ={nonItemPackingSlip1} className="custom-control-input" id="nonItemPackingSlip1"
+                                <input type="checkbox" checked={nonItemPackingSlip1} className="custom-control-input" id="nonItemPackingSlip1" disabled={disableRowNonItem1}
                                 onChange = {() => setNonItemPackingSlip1((prev) => !prev)} />
                                 <label htmlFor="nonItemPackingSlip1" className="custom-control-label"></label>
                             </div>
@@ -603,7 +782,7 @@ const Order = ({ handleLogout }) => {
 
                         <label className="col-md-2.5 col-form-label">Quantity</label>
                         <div className="input-group input-group-sm mb-3 col-md-1">
-                            <input type="number" className="form-control" id="nonItemQuantity1" pattern="[0-9]*"
+                            <input type="number" className="form-control" id="nonItemQuantity1" pattern="[0-9]*" disabled={disableRowNonItem1} value={nonItemQuantity1}
                             onChange = {(e) => {
                                 setNonItemQuantity1(+e.target.value)
                             }}/>
@@ -611,7 +790,7 @@ const Order = ({ handleLogout }) => {
 
                         <label className="col-md-2.5 col-form-label">Unit Price $</label>
                         <div className="input-group input-group-sm mb-3 col-md-1">
-                            <input type="number" className="form-control" id="nonItemUnitPrice1" step="0.01"
+                            <input type="number" className="form-control" id="nonItemUnitPrice1" step="0.01" disabled={disableRowNonItem1} value={nonItemUnitPrice1}
                             onChange = {(e) => {
                                 setNonItemUnitPrice1(+e.target.value)
                             }}/>
@@ -638,7 +817,7 @@ const Order = ({ handleLogout }) => {
                         <label className="col-md-2.5 col-form-label">Invoice</label>
                         <div className="input-group input-group-sm mb-3 col-md-1">
                             <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" checked={nonItemInvoice2} className="custom-control-input" id="nonItemInvoice2"
+                                <input type="checkbox" checked={nonItemInvoice2} className="custom-control-input" id="nonItemInvoice2" disabled={disableRowNonItem2}
                                 onChange = {() => setNonItemInvoice2((prev) => !prev) }/>
                                 <label htmlFor="nonItemInvoice2" className="custom-control-label"></label>
                             </div>
@@ -647,7 +826,7 @@ const Order = ({ handleLogout }) => {
                         <label className="col-md-2.5 col-form-label">Packing Slip</label>
                         <div className="input-group input-group-sm mb-3 col-md-1">
                             <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" checked ={nonItemPackingSlip2} className="custom-control-input" id="nonItemPackingSlip2"
+                                <input type="checkbox" checked ={nonItemPackingSlip2} className="custom-control-input" id="nonItemPackingSlip2" disabled={disableRowNonItem2}
                                 onChange = {() => setNonItemPackingSlip2((prev) => !prev)} />
                                 <label htmlFor="nonItemPackingSlip2" className="custom-control-label"></label>
                             </div>
@@ -655,7 +834,7 @@ const Order = ({ handleLogout }) => {
 
                         <label className="col-md-2.5 col-form-label">Quantity</label>
                         <div className="input-group input-group-sm mb-3 col-md-1">
-                            <input type="number" className="form-control" id="nonItemQuantity2" pattern="[0-9]*"
+                            <input type="number" className="form-control" id="nonItemQuantity2" pattern="[0-9]*" disabled={disableRowNonItem2} value={nonItemQuantity2}
                             onChange = {(e) => {
                                 setNonItemQuantity2(+e.target.value)
                             }}/>
@@ -663,7 +842,7 @@ const Order = ({ handleLogout }) => {
 
                         <label className="col-md-2.5 col-form-label">Unit Price $</label>
                         <div className="input-group input-group-sm mb-3 col-md-1">
-                            <input type="number" className="form-control" id="nonItemUnitPrice2" step="0.01"
+                            <input type="number" className="form-control" id="nonItemUnitPrice2" step="0.01" disabled={disableRowNonItem2} value={nonItemUnitPrice2}
                             onChange = {(e) => {
                                 setNonItemUnitPrice2(+e.target.value)
                             }}/>
@@ -690,7 +869,7 @@ const Order = ({ handleLogout }) => {
                         <label className="col-md-2.5 col-form-label">Invoice</label>
                         <div className="input-group input-group-sm mb-3 col-md-1">
                             <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" checked={nonItemInvoice3} className="custom-control-input" id="nonItemInvoice3"
+                                <input type="checkbox" checked={nonItemInvoice3} className="custom-control-input" id="nonItemInvoice3" disabled={disableRowNonItem3}
                                 onChange = {() => setNonItemInvoice3((prev) => !prev) }/>
                                 <label htmlFor="nonItemInvoice3" className="custom-control-label"></label>
                             </div>
@@ -699,7 +878,7 @@ const Order = ({ handleLogout }) => {
                         <label className="col-md-2.5 col-form-label">Packing Slip</label>
                         <div className="input-group input-group-sm mb-3 col-md-1">
                             <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" checked ={nonItemPackingSlip3} className="custom-control-input" id="nonItemPackingSlip3"
+                                <input type="checkbox" checked ={nonItemPackingSlip3} className="custom-control-input" id="nonItemPackingSlip3" disabled={disableRowNonItem3}
                                 onChange = {() => setNonItemPackingSlip3((prev) => !prev)} />
                                 <label htmlFor="nonItemPackingSlip3" className="custom-control-label"></label>
                             </div>
@@ -707,7 +886,7 @@ const Order = ({ handleLogout }) => {
 
                         <label className="col-md-2.5 col-form-label">Quantity</label>
                         <div className="input-group input-group-sm mb-3 col-md-1">
-                            <input type="number" className="form-control" id="nonItemQuantity3" pattern="[0-9]*"
+                            <input type="number" className="form-control" id="nonItemQuantity3" pattern="[0-9]*" disabled={disableRowNonItem3} value={nonItemQuantity3}
                             onChange = {(e) => {
                                 setNonItemQuantity3(+e.target.value)
                             }}/>
@@ -715,7 +894,7 @@ const Order = ({ handleLogout }) => {
 
                         <label className="col-md-2.5 col-form-label">Unit Price $</label>
                         <div className="input-group input-group-sm mb-3 col-md-1">
-                            <input type="number" className="form-control" id="nonItemUnitPrice3" step="0.01"
+                            <input type="number" className="form-control" id="nonItemUnitPrice3" step="0.01" disabled={disableRowNonItem3} value={nonItemUnitPrice3}
                             onChange = {(e) => {
                                 setNonItemUnitPrice3(+e.target.value)
                             }}/>
@@ -742,7 +921,7 @@ const Order = ({ handleLogout }) => {
                         <label className="col-md-2.5 col-form-label">Invoice</label>
                         <div className="input-group input-group-sm mb-3 col-md-1">
                             <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" checked={nonItemInvoice4} className="custom-control-input" id="nonItemInvoice4"
+                                <input type="checkbox" checked={nonItemInvoice4} className="custom-control-input" id="nonItemInvoice4" disabled={disableRowNonItem4}
                                 onChange = {() => setNonItemInvoice4((prev) => !prev) }/>
                                 <label htmlFor="nonItemInvoice4" className="custom-control-label"></label>
                             </div>
@@ -751,7 +930,7 @@ const Order = ({ handleLogout }) => {
                         <label className="col-md-2.5 col-form-label">Packing Slip</label>
                         <div className="input-group input-group-sm mb-3 col-md-1">
                             <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" checked ={nonItemPackingSlip4} className="custom-control-input" id="nonItemPackingSlip4"
+                                <input type="checkbox" checked ={nonItemPackingSlip4} className="custom-control-input" id="nonItemPackingSlip4" disabled={disableRowNonItem4}
                                 onChange = {() => setNonItemPackingSlip4((prev) => !prev)} />
                                 <label htmlFor="nonItemPackingSlip4" className="custom-control-label"></label>
                             </div>
@@ -759,7 +938,7 @@ const Order = ({ handleLogout }) => {
 
                         <label className="col-md-2.5 col-form-label">Quantity</label>
                         <div className="input-group input-group-sm mb-3 col-md-1">
-                            <input type="number" className="form-control" id="nonItemQuantity4" pattern="[0-9]*"
+                            <input type="number" className="form-control" id="nonItemQuantity4" pattern="[0-9]*" disabled={disableRowNonItem4} value={nonItemQuantity4}
                             onChange = {(e) => {
                                 setNonItemQuantity4(+e.target.value)
                             }}/>
@@ -767,7 +946,7 @@ const Order = ({ handleLogout }) => {
 
                         <label className="col-md-2.5 col-form-label">Unit Price $</label>
                         <div className="input-group input-group-sm mb-3 col-md-1">
-                            <input type="number" className="form-control" id="nonItemUnitPrice4" step="0.01"
+                            <input type="number" className="form-control" id="nonItemUnitPrice4" step="0.01" disabled={disableRowNonItem4} value={nonItemUnitPrice4}
                             onChange = {(e) => {
                                 setNonItemUnitPrice4(+e.target.value)
                             }}/>
@@ -794,7 +973,7 @@ const Order = ({ handleLogout }) => {
                         <label className="col-md-2.5 col-form-label">Invoice</label>
                         <div className="input-group input-group-sm mb-3 col-md-1">
                             <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" checked={nonItemInvoice5} className="custom-control-input" id="nonItemInvoice5"
+                                <input type="checkbox" checked={nonItemInvoice5} className="custom-control-input" id="nonItemInvoice5" disabled={disableRowNonItem5}
                                 onChange = {() => setNonItemInvoice5((prev) => !prev) }/>
                                 <label htmlFor="nonItemInvoice5" className="custom-control-label"></label>
                             </div>
@@ -803,7 +982,7 @@ const Order = ({ handleLogout }) => {
                         <label className="col-md-2.5 col-form-label">Packing Slip</label>
                         <div className="input-group input-group-sm mb-3 col-md-1">
                             <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" checked ={nonItemPackingSlip5} className="custom-control-input" id="nonItemPackingSlip5"
+                                <input type="checkbox" checked ={nonItemPackingSlip5} className="custom-control-input" id="nonItemPackingSlip5" disabled={disableRowNonItem5}
                                 onChange = {() => setNonItemPackingSlip5((prev) => !prev)} />
                                 <label htmlFor="nonItemPackingSlip5" className="custom-control-label"></label>
                             </div>
@@ -811,7 +990,7 @@ const Order = ({ handleLogout }) => {
 
                         <label className="col-md-2.5 col-form-label">Quantity</label>
                         <div className="input-group input-group-sm mb-3 col-md-1">
-                            <input type="number" className="form-control" id="nonItemQuantity5" pattern="[0-9]*"
+                            <input type="number" className="form-control" id="nonItemQuantity5" pattern="[0-9]*" disabled={disableRowNonItem5} value={nonItemQuantity5}
                             onChange = {(e) => {
                                 setNonItemQuantity5(+e.target.value)
                             }}/>
@@ -819,7 +998,7 @@ const Order = ({ handleLogout }) => {
 
                         <label className="col-md-2.5 col-form-label">Unit Price $</label>
                         <div className="input-group input-group-sm mb-3 col-md-1">
-                            <input type="number" className="form-control" id="nonItemUnitPrice5" step="0.01"
+                            <input type="number" className="form-control" id="nonItemUnitPrice5" step="0.01" disabled={disableRowNonItem5} value={nonItemUnitPrice5}
                             onChange = {(e) => {
                                 setNonItemUnitPrice5(+e.target.value)
                             }}/>
@@ -846,7 +1025,7 @@ const Order = ({ handleLogout }) => {
                         <label className="col-md-2.5 col-form-label">Invoice</label>
                         <div className="input-group input-group-sm mb-3 col-md-1">
                             <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" checked={nonItemInvoice6} className="custom-control-input" id="nonItemInvoice6"
+                                <input type="checkbox" checked={nonItemInvoice6} className="custom-control-input" id="nonItemInvoice6" disabled={disableRowNonItem6}
                                 onChange = {() => setNonItemInvoice6((prev) => !prev) }/>
                                 <label htmlFor="nonItemInvoice6" className="custom-control-label"></label>
                             </div>
@@ -855,7 +1034,7 @@ const Order = ({ handleLogout }) => {
                         <label className="col-md-2.5 col-form-label">Packing Slip</label>
                         <div className="input-group input-group-sm mb-3 col-md-1">
                             <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" checked ={nonItemPackingSlip6} className="custom-control-input" id="nonItemPackingSlip6"
+                                <input type="checkbox" checked ={nonItemPackingSlip6} className="custom-control-input" id="nonItemPackingSlip6" disabled={disableRowNonItem6}
                                 onChange = {() => setNonItemPackingSlip6((prev) => !prev)} />
                                 <label htmlFor="nonItemPackingSlip6" className="custom-control-label"></label>
                             </div>
@@ -863,7 +1042,7 @@ const Order = ({ handleLogout }) => {
 
                         <label className="col-md-2.5 col-form-label">Quantity</label>
                         <div className="input-group input-group-sm mb-3 col-md-1">
-                            <input type="number" className="form-control" id="nonItemQuantity6" pattern="[0-9]*"
+                            <input type="number" className="form-control" id="nonItemQuantity6" pattern="[0-9]*" disabled={disableRowNonItem6} value={nonItemQuantity6}
                             onChange = {(e) => {
                                 setNonItemQuantity6(+e.target.value)
                             }}/>
@@ -871,7 +1050,7 @@ const Order = ({ handleLogout }) => {
 
                         <label className="col-md-2.5 col-form-label">Unit Price $</label>
                         <div className="input-group input-group-sm mb-3 col-md-1">
-                            <input type="number" className="form-control" id="nonItemUnitPrice6" step="0.01"
+                            <input type="number" className="form-control" id="nonItemUnitPrice6" step="0.01" disabled={disableRowNonItem6} value={nonItemUnitPrice6}
                             onChange = {(e) => {
                                 setNonItemUnitPrice6(+e.target.value)
                             }}/>
@@ -895,9 +1074,7 @@ const Order = ({ handleLogout }) => {
                         <label htmlFor="item1" className="col-md-3 col-form-label">Inventory Item #1</label>
                         <div className="input-group input-group mb-3 col-md-8">
                             <div className="form-control p-0">
-                                <Select onChange={(e) => setItem1(e.value)} className="react-select" menuPortalTarget={document.body} styles={customStyle} value={componentOptions.filter(function(option) {
-                                    return option.value === item1;
-                                })} id="item1" options={componentOptions}/>
+                                <Select onChange={setItem1} className="react-select" menuPortalTarget={document.body} styles={customStyle} isClearable value={item1} id="item1" options={componentOptions}/>
                             </div>
                         </div>
                     </div>
@@ -906,7 +1083,7 @@ const Order = ({ handleLogout }) => {
                         <label className="col-md-2.5 col-form-label">Invoice</label>
                         <div className="input-group input-group-sm mb-3 col-md-1">
                             <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" checked={itemInvoice1} className="custom-control-input" id="itemInvoice1"
+                                <input type="checkbox" checked={itemInvoice1} className="custom-control-input" id="itemInvoice1" disabled={disableRowItem1}
                                 onChange = {() => setItemInvoice1((prev) => !prev) }/>
                                 <label htmlFor="itemInvoice1" className="custom-control-label"></label>
                             </div>
@@ -915,7 +1092,7 @@ const Order = ({ handleLogout }) => {
                         <label className="col-md-2.5 col-form-label">Packing Slip</label>
                         <div className="input-group input-group-sm mb-3 col-md-1">
                             <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" checked ={itemPackingSlip1} className="custom-control-input" id="itemPackingSlip1"
+                                <input type="checkbox" checked ={itemPackingSlip1} className="custom-control-input" id="itemPackingSlip1" disabled={disableRowItem1}
                                 onChange = {() => setItemPackingSlip1((prev) => !prev)} />
                                 <label htmlFor="itemPackingSlip1" className="custom-control-label"></label>
                             </div>
@@ -923,7 +1100,7 @@ const Order = ({ handleLogout }) => {
 
                         <label className="col-md-2.5 col-form-label">Quantity</label>
                         <div className="input-group input-group-sm mb-3 col-md-1">
-                            <input type="number" className="form-control" id="itemQuantity1" pattern="[0-9]*"
+                            <input type="number" className="form-control" id="itemQuantity1" pattern="[0-9]*" disabled={disableRowItem1} value={itemQuantity1}
                             onChange = {(e) => {
                                 setItemQuantity1(+e.target.value)
                             }}/>
@@ -931,7 +1108,7 @@ const Order = ({ handleLogout }) => {
 
                         <label className="col-md-2.5 col-form-label">Unit Price $</label>
                         <div className="input-group input-group-sm mb-3 col-md-1">
-                            <input type="number" className="form-control" id="itemUnitPrice1" step="0.01"
+                            <input type="number" className="form-control" id="itemUnitPrice1" step="0.01" disabled={disableRowItem1} value={itemUnitPrice1}
                             onChange = {(e) => {
                                 setItemUnitPrice1(+e.target.value)
                             }}/>
@@ -948,9 +1125,7 @@ const Order = ({ handleLogout }) => {
                         <label htmlFor="item2" className="col-md-3 col-form-label">Inventory Item #2</label>
                         <div className="input-group input-group mb-3 col-md-8">
                             <div className="form-control p-0">
-                                <Select onChange={(e) => setItem2(e.value)} className="react-select" menuPortalTarget={document.body} styles={customStyle} value={componentOptions.filter(function(option) {
-                                    return option.value === item2;
-                                })} id="item2" options={componentOptions}/>
+                                <Select onChange={setItem2} className="react-select" menuPortalTarget={document.body} styles={customStyle} isClearable value={item2} id="item2" options={componentOptions}/>
                             </div>
                         </div>
                     </div>
@@ -959,7 +1134,7 @@ const Order = ({ handleLogout }) => {
                         <label className="col-md-2.5 col-form-label">Invoice</label>
                         <div className="input-group input-group-sm mb-3 col-md-1">
                             <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" checked={itemInvoice2} className="custom-control-input" id="itemInvoice2"
+                                <input type="checkbox" checked={itemInvoice2} className="custom-control-input" id="itemInvoice2" disabled={disableRowItem2}
                                 onChange = {() => setItemInvoice2((prev) => !prev) }/>
                                 <label htmlFor="itemInvoice2" className="custom-control-label"></label>
                             </div>
@@ -968,7 +1143,7 @@ const Order = ({ handleLogout }) => {
                         <label className="col-md-2.5 col-form-label">Packing Slip</label>
                         <div className="input-group input-group-sm mb-3 col-md-1">
                             <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" checked ={itemPackingSlip2} className="custom-control-input" id="itemPackingSlip2"
+                                <input type="checkbox" checked ={itemPackingSlip2} className="custom-control-input" id="itemPackingSlip2" disabled={disableRowItem2}
                                 onChange = {() => setItemPackingSlip2((prev) => !prev)} />
                                 <label htmlFor="itemPackingSlip2" className="custom-control-label"></label>
                             </div>
@@ -976,7 +1151,7 @@ const Order = ({ handleLogout }) => {
 
                         <label className="col-md-2.5 col-form-label">Quantity</label>
                         <div className="input-group input-group-sm mb-3 col-md-1">
-                            <input type="number" className="form-control" id="itemQuantity2" pattern="[0-9]*"
+                            <input type="number" className="form-control" id="itemQuantity2" pattern="[0-9]*" disabled={disableRowItem2} value={itemQuantity2}
                             onChange = {(e) => {
                                 setItemQuantity2(+e.target.value)
                             }}/>
@@ -984,7 +1159,7 @@ const Order = ({ handleLogout }) => {
 
                         <label className="col-md-2.5 col-form-label">Unit Price $</label>
                         <div className="input-group input-group-sm mb-3 col-md-1">
-                            <input type="number" className="form-control" id="itemUnitPrice2" step="0.01"
+                            <input type="number" className="form-control" id="itemUnitPrice2" step="0.01" disabled={disableRowItem2} value={itemUnitPrice2}
                             onChange = {(e) => {
                                 setItemUnitPrice2(+e.target.value)
                             }}/>
@@ -1001,9 +1176,7 @@ const Order = ({ handleLogout }) => {
                         <label htmlFor="item3" className="col-md-3 col-form-label">Inventory Item #3</label>
                         <div className="input-group input-group mb-3 col-md-8">
                             <div className="form-control p-0">
-                                <Select onChange={(e) => setItem3(e.value)} className="react-select" menuPortalTarget={document.body} styles={customStyle} value={componentOptions.filter(function(option) {
-                                    return option.value === item3;
-                                })} id="item3" options={componentOptions}/>
+                                <Select onChange={setItem3} className="react-select" menuPortalTarget={document.body} styles={customStyle} isClearable value={item3} id="item3" options={componentOptions}/>
                             </div>
                         </div>
                     </div>
@@ -1012,7 +1185,7 @@ const Order = ({ handleLogout }) => {
                         <label className="col-md-2.5 col-form-label">Invoice</label>
                         <div className="input-group input-group-sm mb-3 col-md-1">
                             <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" checked={itemInvoice3} className="custom-control-input" id="itemInvoice3"
+                                <input type="checkbox" checked={itemInvoice3} className="custom-control-input" id="itemInvoice3" disabled={disableRowItem3}
                                 onChange = {() => setItemInvoice3((prev) => !prev) }/>
                                 <label htmlFor="itemInvoice3" className="custom-control-label"></label>
                             </div>
@@ -1021,7 +1194,7 @@ const Order = ({ handleLogout }) => {
                         <label className="col-md-2.5 col-form-label">Packing Slip</label>
                         <div className="input-group input-group-sm mb-3 col-md-1">
                             <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" checked ={itemPackingSlip3} className="custom-control-input" id="itemPackingSlip3"
+                                <input type="checkbox" checked ={itemPackingSlip3} className="custom-control-input" id="itemPackingSlip3" disabled={disableRowItem3}
                                 onChange = {() => setItemPackingSlip3((prev) => !prev)} />
                                 <label htmlFor="itemPackingSlip3" className="custom-control-label"></label>
                             </div>
@@ -1029,7 +1202,7 @@ const Order = ({ handleLogout }) => {
 
                         <label className="col-md-2.5 col-form-label">Quantity</label>
                         <div className="input-group input-group-sm mb-3 col-md-1">
-                            <input type="number" className="form-control" id="itemQuantity3" pattern="[0-9]*"
+                            <input type="number" className="form-control" id="itemQuantity3" pattern="[0-9]*" disabled={disableRowItem3} value={itemQuantity3}
                             onChange = {(e) => {
                                 setItemQuantity3(+e.target.value)
                             }}/>
@@ -1037,7 +1210,7 @@ const Order = ({ handleLogout }) => {
 
                         <label className="col-md-2.5 col-form-label">Unit Price $</label>
                         <div className="input-group input-group-sm mb-3 col-md-1">
-                            <input type="number" className="form-control" id="itemUnitPrice3" step="0.01"
+                            <input type="number" className="form-control" id="itemUnitPrice3" step="0.01" disabled={disableRowItem3} value={itemUnitPrice3}
                             onChange = {(e) => {
                                 setItemUnitPrice3(+e.target.value)
                             }}/>
@@ -1244,13 +1417,10 @@ const Order = ({ handleLogout }) => {
                     </div>
 
                     <div className="form-row">
-                        <label htmlFor="creditChecked" className="col-md-3 col-form-label">Credit Checked?</label>
-                        <div className="input-group input-group-sm col-md-3 pl-5">
-                            <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" checked={creditChecked} className="custom-control-input" id="creditChecked"
-                                onChange = {() => setCreditChecked((prev) => !prev)} />
-                                <label htmlFor="creditChecked" className="custom-control-label"></label>
-                            </div>
+                        <label htmlFor="creditChecked" className="col-form-label col-sm-3 float-sm-left pt-1 mb-2">Credit Checked?</label>
+                        <div className="custom-control custom-checkbox col-sm-6 float-sm-left pt-1 mb-2 ml-2">
+                            <input onChange={(prev) => setCreditChecked(prev => !prev)} checked={creditChecked} type="checkbox" className="custom-control-input" id="creditChecked"/>
+                            <label className="custom-control-label" htmlFor="creditChecked"></label>
                         </div>
                     </div>
 
@@ -1331,7 +1501,8 @@ const Order = ({ handleLogout }) => {
                             onChange = {(e) => {
                                 setOrderStatus(e.target.value)
                             }}>
-                                <option defaultValue="Submitted">Submitted</option>
+                                <option value="">Select Option</option>
+                                <option value="Submitted">Submitted</option>
                                 <option value="Entered">Entered</option>
                                 <option value="Partial Shipped">Partial Shipped</option>
                                 <option value="Complete Shipped">Complete Shipped</option>
@@ -1344,7 +1515,8 @@ const Order = ({ handleLogout }) => {
                 </div>
 
                 <div className="submit p-3">
-                    <button onClick={() => handleNavigate(nextOrderId)} disabled={!submitting} type="submit" id="add-order" className="btn btn-success">Submit</button>
+                    {loadingButton === true ? <button className="btn btn-primary"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"> </span> Loading...</button>
+                    : <button onClick={() => handleNavigate(nextOrderId)} disabled={!submitting} id="add-order" className="btn btn-success">Add Order</button>}
                 </div>
 
             </form>

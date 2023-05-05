@@ -1,3 +1,7 @@
+* {
+  font-family: sans-serif;
+}
+
 .App {
   text-align: center;
 }
@@ -5,6 +9,11 @@
 .App-logo {
   height: 125px;
   pointer-events: none;
+}
+
+img {
+  max-width: 330px;
+  max-height: 26px;
 }
 
 /*@media (prefers-reduced-motion: no-preference) {
@@ -70,11 +79,13 @@ div.form-row {
 .page {
   width: 100%;
   text-align: center;
-  background-color: ghostwhite;
+  background-color: gainsboro;
 }
 
 .container {
-  background-color: white;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
   position: relative;
   min-height: 100%;
   overflow: hidden;
@@ -112,6 +123,8 @@ body {
 .section-headers {
   background-color: red;
   color: white;
+  border-radius: 5px;
+  padding-top: 5px;
 }
 
 .product-location {
@@ -159,11 +172,15 @@ Link.nav-link {
   border-radius: 20px;
   /*table-layout: fixed;*/
   /*border-collapse: collapse;*/
+  
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
 }
 
 .HomePageButton:hover {
   background-color: red;
   color: white;
+  transform: translateY(-5px);
 }
 
 
@@ -402,6 +419,19 @@ Link.nav-link {
   font-size: 14px;
 }
 
+.component-info, .product-info, .contact-info, .company-info {
+  background-color: #f9f9f9;
+  background-image: linear-gradient(to bottom right, #f9f9f9, #fff);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 20px;
+  margin: 20px;
+  font-family: sans-serif;
+  transition: transform 0.2s ease-in-out;
+}
 
+.navButtons {
+  margin-top: 16%;
+}
 
 

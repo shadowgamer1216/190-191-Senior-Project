@@ -62,12 +62,15 @@ const Product = ({ handleLogout }) => {
     };
     const [color_notes, setColorNotes] = useState(null);
     const [componentList, setComponentList] = useState([{ component: "" }]); 
+    const [componentNames, setComponentNames] = useState([{ name: "" }]);
     const [numOfComponents, setNumOfComponents] = useState(1);
     const handleComponentAdd = () => {
         setComponentList([...componentList, { component: "" }]);
         setNumOfComponents(numOfComponents => numOfComponents + 1);
 
         setSelectedComponent([...selectedComponent, { value: "", label: "" }]);
+
+        setComponentNames([...componentNames, { name: "" }]);
     };
     const handleComponentRemove = (index) => {
         const list = [...componentList];
@@ -80,6 +83,11 @@ const Product = ({ handleLogout }) => {
         list2.splice(index, 1);
         setSelectedComponent(list2);
         //console.log(list2);
+
+        const list3 = [...componentNames];
+        list2.splice(index, 1);
+        setComponentNames(list3);
+        console.log(list3);
     };
     const handleComponentChange = (e, index) => {
         const list = [...componentList];
@@ -92,10 +100,17 @@ const Product = ({ handleLogout }) => {
         list2[index]["label"] = e.label;
         setSelectedComponent(list2);
         //console.log(list2);
+
+        const list3 = [...componentNames];
+        list3[index]["name"] = e.label;
+        setComponentNames(list3);
+        console.log(list3);
     };
     const [packaging_notes, setPackNotes] = useState(null);
     const [product_notes, setProductNotes] = useState(null);
     const [product_status, setProductStatus] = useState(null);
+    
+
     
     useEffect(() => {
         const allColorsHave = colorList.length > 0 && colorList.every((item) => {
@@ -143,6 +158,7 @@ const Product = ({ handleLogout }) => {
             numOfColors: numOfColors,
             color_notes: color_notes,
             componentList: componentList,
+            componentNames: componentNames,
             numOfComponents: numOfComponents,
             packaging_notes: packaging_notes,
             product_notes: product_notes,
