@@ -12,6 +12,7 @@ const PackingSlipEdit = ({ handleLogout }) => {
     const [city, setCity] = useState(null);
     const [state, setState] = useState(null);
     const [zip, setZip] = useState(null);
+    const [country, setCountry] = useState(null);
     const [order_id, setOrderID] = useState(null);
     const [ship_date, setShipDate] = useState(null);
     const [order_date, setOrderDate] = useState(null);
@@ -31,6 +32,7 @@ const PackingSlipEdit = ({ handleLogout }) => {
         e.preventDefault();
         if(company_id){
             setPackingSlipID(company_id);
+
         }
         await Axios.post("http://localhost:3001/api/insertPackingSlip", {
             company_name: company_name,
@@ -39,6 +41,7 @@ const PackingSlipEdit = ({ handleLogout }) => {
             city: city,
             state: state,
             zip: zip,
+            country: country,
             order_id: order_id,
             ship_date: ship_date,
             order_date: order_date,
@@ -73,6 +76,11 @@ const PackingSlipEdit = ({ handleLogout }) => {
             console.log(error);
         });
     }, []);
+
+    const [submitting, setSubmitting] = useState(false);
+    useEffect(() => {
+        setSubmitting(ship_date && order_date && company_name && order_id);
+    }, [ship_date, order_date, company_name, order_id]); 
 
     const customStyle = {
         control: base => ({
@@ -130,6 +138,7 @@ const PackingSlipEdit = ({ handleLogout }) => {
               setState(response.data.country_state);
               setZip(response.data.zip);
               setShipDate(response.data.request_ship_date);
+              setCountry(response.data.country_state);
             })
             .catch((error) => {
               console.error(error);
@@ -167,7 +176,7 @@ const PackingSlipEdit = ({ handleLogout }) => {
                         </div>
                        
                         <div className="form-row">
-                            <label htmlFor="company-name" className="col-md-3 col-form-label">Company Name</label>
+                            <label htmlFor="company-name" className="col-md-3 col-form-label">Company Name <span style={{ color: 'red' }}>*</span></label>
                             <div className="input-group input-group mb-3 col-md-8">
                                 <div className="form-control p-0">
                                     <Select onChange={(e) => setCompanyName(e.value)} className="react-select" styles={customStyle} value={companyOptions.filter(function(option) {
@@ -276,7 +285,16 @@ const PackingSlipEdit = ({ handleLogout }) => {
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="order-id" className="col-md-3 col-form-label">Order ID</label>
+                            <label htmlFor="country" className="col-md-3 col-form-label">Country</label>
+                            <div className="input-group input-group-sm mb-3 col-md-3">
+                                <input type="text" className="form-control" id="country" value={country} onChange={(e) =>{
+                                    setCountry(e.target.value)
+                                }} maxLength = "50"/> 
+                            </div>
+                        </div>
+
+                        <div className="form-row">
+                            <label htmlFor="order-id" className="col-md-3 col-form-label">Order ID <span style={{ color: 'red' }}>*</span></label>
                             <div className="input-group input-group-sm mb-3 col-md-2">
                                 <input type="number" className="form-control" id="order-id" onChange={(e) =>{
                                     setOrderID(e.target.value)
@@ -285,7 +303,7 @@ const PackingSlipEdit = ({ handleLogout }) => {
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="ship-date" className="col-md-3 col-form-label">Ship Date</label>
+                            <label htmlFor="ship-date" className="col-md-3 col-form-label">Ship Date <span style={{ color: 'red' }}>*</span></label>
                             <div className="input-group input-group-sm mb-3 col-md-3">
                                 <input type="date" className="form-control" name="ship-date" id="ship-date" value={ship_date} onChange={(e) =>{
                                     setShipDate(e.target.value)
@@ -294,7 +312,7 @@ const PackingSlipEdit = ({ handleLogout }) => {
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="order-date" className="col-md-3 col-form-label">Order Date</label>
+                            <label htmlFor="order-date" className="col-md-3 col-form-label">Order Date <span style={{ color: 'red' }}>*</span></label>
                             <div className="input-group input-group-sm mb-3 col-md-3">
                                 <input type="date" className="form-control" name="order-date" id="order-date" onChange={(e) =>{
                                     setOrderDate(e.target.value)
@@ -383,7 +401,7 @@ const PackingSlipEdit = ({ handleLogout }) => {
                     </div>
 
                     <div className="submit p-3">
-                        <button onClick={() => handleNavigate(nextPackingSlipId)} type="submit" id="add-packing-slip" className="btn btn-success">Save Packing Slip And Print</button>
+                        <button onClick={() => handleNavigate(nextPackingSlipId)} disabled={!submitting}  id="add-packing-slip" className="btn btn-success">Save Packing Slip And Print</button>
                     </div>
 
                 </form>

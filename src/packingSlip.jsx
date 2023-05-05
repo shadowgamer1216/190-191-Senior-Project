@@ -57,15 +57,12 @@ function PackingSlip({ match }) {
                             ],
                         },
                         {
-                            text: 'Packing Slip # \n',
+                            text: 'Packing Slip',
                             fontSize: 22,
                             bold: true,
                             alignment: 'right',
                             margin: [0, 0, 0, 10],
                             width: '*',
-                        },
-                        {
-                            text: packingSlipData.packing_slip_id,
                         },
                     ],
                 },
@@ -79,10 +76,10 @@ function PackingSlip({ match }) {
                         {
                             stack:[
                                 {
-                                    text: packingSlipData.company_name,
+                                    text: packingSlipData?.company_name ?? 'N/A',
                                 },
                                 {
-                                    text: packingSlipData.address,
+                                    text: (packingSlipData?.address ?? 'N/A'),
                                 },
                                 {
                                     text: packingSlipData.city + (packingSlipData.state ? ", " + packingSlipData.state : "") + " " + packingSlipData.zip,
@@ -94,7 +91,7 @@ function PackingSlip({ match }) {
                         {   
                             stack: [
                                 {
-                                    text: "Order Master ID: " + packingSlipData.order_id,
+                                    text: "Order Master ID: " + (packingSlipData?.order_id ?? 'N/A'),
                                 },
                                 {
                                     text: "Ship Date: " + packingSlipData.ship_date.slice(0,10),
@@ -103,13 +100,13 @@ function PackingSlip({ match }) {
                                     text: "Order Date: " + packingSlipData.order_date.slice(0,10),
                                 },
                                 {
-                                    text: "P.O. " + packingSlipData.po,
+                                    text: "P.O. " + (packingSlipData?.po ?? 'N/A'),
                                 },
                                 {
-                                    text: "Saturday Delivery? " + packingSlipData.saturday_delivery,
+                                    text: "Saturday Delivery? " + (packingSlipData?.saturday_delivery ?? 'N/A'),
                                 },
                                 {
-                                    text: "Packing Slip Notes: " + packingSlipData.notes,
+                                    text: "Packing Slip Notes: " + (packingSlipData?.notes ?? 'N/A'),
                                 },
                             ],
                         }

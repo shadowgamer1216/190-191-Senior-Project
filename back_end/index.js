@@ -752,6 +752,7 @@ app.post("/api/insertPackingSlip" , (req, res) =>{
     const city = req.body.city;
     const state = req.body.state;
     const zip = req.body.zip;
+    const country = req.body.country;
     const order_id = req.body.order_id;
     const ship_date = req.body.ship_date;
     const order_date = req.body.order_date;
@@ -765,8 +766,8 @@ app.post("/api/insertPackingSlip" , (req, res) =>{
     const oem = req.body.oem;
     const packing_slip_id = req.body.packing_slip_id;
 
-    const sqlInsert = "INSERT INTO packing_slip_table (company_name, contact_name, address, city, state, zip, order_id, ship_date, order_date, po, ship_via, saturday_delivery, notes, abspn, product_title, quantity, oem, packing_slip_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-    db.query(sqlInsert, [company_name, contact_name, address, city, state, zip, order_id, ship_date, order_date, po, ship_via, saturday_delivery, notes, abspn, product_title, quantity, oem, packing_slip_id], (err, result) => {
+    const sqlInsert = "INSERT INTO packing_slip_table (company_name, contact_name, address, city, state, zip, country, order_id, ship_date, order_date, po, ship_via, saturday_delivery, notes, abspn, product_title, quantity, oem, packing_slip_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    db.query(sqlInsert, [company_name, contact_name, address, city, state, zip, country, order_id, ship_date, order_date, po, ship_via, saturday_delivery, notes, abspn, product_title, quantity, oem, packing_slip_id], (err, result) => {
         console.log(result);
     });
 });

@@ -337,6 +337,7 @@ CREATE TABLE packing_slip_table (
     city VARCHAR(50) DEFAULT NULL,
     state VARCHAR(50) DEFAULT NULL,
     zip VARCHAR(50) DEFAULT NULL,
+    country VARCHAR(50) DEFAULT NULL,
     order_id INT DEFAULT NULL,
     ship_date DATE DEFAULT NULL,
     order_date DATE DEFAULT NULL,
@@ -349,7 +350,7 @@ CREATE TABLE packing_slip_table (
     product_title VARCHAR(50) DEFAULT NULL,
     oem VARCHAR(50) DEFAULT NULL,
     product VARCHAR(50) DEFAULT NULL,
-    PRIMARY KEY (packing_slip_master_id),
+    PRIMARY KEY (packing_slip_master_id)
 );
 
 DROP TABLE IF EXISTS users;

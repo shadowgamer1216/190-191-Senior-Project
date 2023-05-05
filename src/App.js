@@ -78,8 +78,8 @@ useEffect(() => {
         <ScrollToTop />
         <Routes>
           <Route path="/" element={<HomePage handleLogout={handleLogout} />} />
-          <Route path="/login" element={<LoginForm handleLogin={handleLogin} />} />
-          <Route path="/signup" element={<SignupForm />} />
+          <Route path="/login" element={<Login handleLogin={handleLogin} />} />
+          <Route path="/signup" element={<Signup />} />
           <Route path="/OutputForms" element={<OutputForms />} />
           <Route path="/invoice" element={<Invoice />} />
           <Route path="/packingSlipEdit" element={<PackingSlipEdit />} />
