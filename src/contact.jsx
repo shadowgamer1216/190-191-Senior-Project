@@ -238,9 +238,7 @@ const Contact = ({ handleLogout }) => {
                                 }} maxLength = "50"/> 
                             </div>
                         </div>
-                    </div>
 
-                    <div className="contact-location pt-3">
                         <div className="section-headers">
                             <h5>Contact Location</h5>
                         </div>
@@ -352,9 +350,7 @@ const Contact = ({ handleLogout }) => {
                                 }} maxLength = "50"/> 
                             </div>
                         </div>
-                    </div>
-
-                    <div className="contact-other pt-3">
+                        
                         <div className="section-headers">
                             <h5>Contact Information</h5>
                         </div>

@@ -81,28 +81,29 @@ const SearchContact = () => {
 
             </div>
 
-            <div className="container p-5">
+            <div className="search-container p-5">
                 <div className="page-headers">
                     <h2>SEARCH CONTACT</h2>
                 </div>
                 <form>
-                    <div className="contact-info pt-3">
+                    <div className="contact-info p-4 col-md-6">
                         <div className="form-row">
-                            <label htmlFor="id" className="col-md-0 col-form-label"><b>Company ID</b></label>
-                            <div className="input-group input-group-sm mb-3 col-md-2">
+                            <label htmlFor="id" className="col-md-3 col-form-label"><b>Company ID</b></label>
+                            <div className="input-group input-group-sm mb-3 col-md-3">
                                 <input type="text" className="form-control" id="id" onChange={(e) =>{
                                 setCompanyID(e.target.value)
                             }} maxLength = "4"/>
                             </div>
-
-                            <label htmlFor="name" className="col-md-0 col-form-label"><b>Company Name</b></label>
-                            <div className="input-group input-group-sm mb-3 col-md-4">
+                        </div>
+                        <div className="form-row">
+                            <label htmlFor="name" className="col-md-3 col-form-label"><b>Company Name</b></label>
+                            <div className="input-group input-group-sm mb-3 col-md-6">
                                 <input type="text" className="form-control" id="name" onChange={(e) =>{
                                 setCompanyName(e.target.value)
                             }} maxLength = "128"/>
                             </div>
 
-                            <div className="input-group input-group mb-3 col-md-1">
+                            <div className="input-group input-group mb-3 col-md-3 d-flex justify-content-end">
                                 <button onClick={(e) => search(e)} id="search-company" className="btn btn-outline-success">Search</button>
                             </div>
                         </div>
@@ -150,7 +151,7 @@ const SearchContact = () => {
                         </>
                     )}
                         
-                    <div>
+                    <div className="navButtons">
                         <button className="btn btn-outline-dark" onClick={() => navigate("../Search")}>Back</button>
                         <button className="btn btn-outline-dark" onClick={() => navigate("/")}>Home</button>
                     </div>

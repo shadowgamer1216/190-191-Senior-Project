@@ -1,12 +1,13 @@
-import { useState, useEffect } from "react";
+import React from "react";
 import './App.css'
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
+import { useState, useEffect } from "react";
 import Axios from "axios";
 
-const Shipping = ({ handLogout }) => {
+const Shipping = ({ handleLogout }) => {
     const navigate = useNavigate()
 
-    const { id } = useParams();
+    const { shipping_id } = useParams();
     const [shippingData, setshippingData] = useState(null);
     useEffect(() => {
         Axios.get(`http://localhost:3001/api/shipping/${shipping_id}`)
@@ -18,7 +19,8 @@ const Shipping = ({ handLogout }) => {
         });
     }, [shipping_id]);
 
-    var order_id = orderData?.order_id ?? '';
+    var order_id = shippingData?.order_id ?? '';
+    var company_id = shippingData?.company_id ?? '';
     var company_name = shippingData?.company_name ?? '';
     var contact_name = shippingData?.contact_name ?? '';
     var add1 = shippingData?.add1 ?? '';
@@ -46,7 +48,7 @@ const Shipping = ({ handLogout }) => {
     var notes = shippingData?.notes ?? '';
 
     return(
-        <div className="product-page"> 
+        <div className="page"> 
       <nav className="navbar navbar-expand-lg navbar-dark bg-maroon">
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
@@ -277,12 +279,12 @@ const Shipping = ({ handLogout }) => {
               <span style={{ color: 'red' }}> *</span>
               </label>
               <div className ="input-group input-group-sm mb-3 col-md-3">
-                <input type="datetime-local" className="form-control"
-                  name="request_ship_date" value={requested_ship_date} readOnly/>
+                <input type="date" className="form-control"
+                  name="request_ship_date" value={request_ship_date.slice(0,10)} readOnly/>
               </div>
 
               <div className="input-group input-group-sm mb-3 col-md-3">
-                <input className="form-control" name="request_ship_time" id="ship-time" value={requested_ship_time} readOnly/>
+                <input className="form-control" name="request_ship_time" id="ship-time" value={request_ship_time} readOnly/>
               </div>
             </div>
 
@@ -291,7 +293,7 @@ const Shipping = ({ handLogout }) => {
                 <span style={{ color: 'red' }}> *</span>
               </label>
               <div className ="input-group input-group-sm mb-3 col-md-3">
-                <input type="datetime-local" className="form-control" value={arrival_ship_date} 
+                <input type="datetime-local" className="form-control" value={arrival_ship_date.slice(0,10)} 
                   name="arrival_ship_date" readOnly/>
               </div>
 
@@ -379,3 +381,4 @@ const Shipping = ({ handLogout }) => {
     </div>
     )
 }
+export default Shipping;

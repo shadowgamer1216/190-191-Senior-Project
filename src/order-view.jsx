@@ -14,44 +14,18 @@ const Order = ({ handleLogout }) => {
         .then(response => {
             setOrderData(response.data);
         })
-        .catch(error => {
-            console.log(error);
+        .catch((error) => {
+          console.log(error);
         });
     }, [order_id]);
 
-    var productID = orderData?.product_id ?? '';
-    console.log(productID);
-    const [productName, setProductName] = useState('');
-    useEffect(() => {
-        if(productID) {
-            Axios.get(`http://localhost:3001/api/product/${productID}`).then((response) =>{
-                setProductName(response.data.product_title);
-            }).catch(err => {
-                console.log(err);
-            });
-        }
-    }, [productID]);
-    const [productCategory, setProductCategory] = useState('');
-    useEffect(() => {
-        if(productID) {
-            Axios.get(`http://localhost:3001/api/product/${productID}`).then((response) =>{
-                setProductCategory(response.data.product_category);
-            }).catch(err => {
-                console.log(err);
-            });
-        }
-    }, [productID]);
     var companyID = orderData?.company_id ?? '';
-    const [companyName, setCompanyName] = useState('');
-    useEffect(() => {
-        if(companyID) {
-            Axios.get(`http://localhost:3001/api/company/${companyID}`).then((response) =>{
-                setCompanyName(response.data.company_name);
-            }).catch(err => {
-                console.log(err);
-            });
-        }
-    }, [companyID]);
+    var companyName = orderData?.company_name ?? '';
+
+    var productID = orderData?.product_id ?? '';
+    var productName = orderData?.product_name ?? '';
+    var productType = orderData?.product_type ?? '';
+
     var salesPerson = orderData?.salesperson ?? '';
     var requestor = orderData?.requestor ?? '';
     var customerContact = orderData?.customer_contact ?? '';
@@ -110,18 +84,24 @@ const Order = ({ handleLogout }) => {
 
     // Inventory Items
     var item1 = orderData?.inventory_item1 ?? '';
+    var itemName1 = orderData?.inventory_item1_name ?? '';
+    var itemType1 = orderData?.inventory_item1_type ?? '';
     var itemInvoice1 = orderData?.inventory_invoice1 ?? 0;
     var itemPackingSlip1 = orderData?.inventory_packing_slip1 ?? 0;
     var itemQuantity1 = orderData?.inventory_quantity1 ?? '';
     var itemUnitPrice1 = orderData?.inventory_unit_price1 ?? '';
     var itemTotalPrice1 = orderData?.inventory_total_price1 ?? '';
     var item2 = orderData?.inventory_item2 ?? '';
+    var itemName2 = orderData?.inventory_item2_name ?? '';
+    var itemType2 = orderData?.inventory_item2_type ?? '';
     var itemInvoice2 = orderData?.inventory_invoice2 ?? 0;
     var itemPackingSlip2 = orderData?.inventory_packing_slip2 ?? 0;
     var itemQuantity2 = orderData?.inventory_quantity2 ?? '';
     var itemUnitPrice2 = orderData?.inventory_unit_price2 ?? '';
     var itemTotalPrice2 = orderData?.inventory_total_price2 ?? '';
     var item3 = orderData?.inventory_item3 ?? '';
+    var itemName3 = orderData?.inventory_item3_name ?? '';
+    var itemType3 = orderData?.inventory_item3_type ?? '';
     var itemInvoice3 = orderData?.inventory_invoice3 ?? 0;
     var itemPackingSlip3 = orderData?.inventory_packing_slip3 ?? 0;
     var itemQuantity3 = orderData?.inventory_quantity3 ?? '';
@@ -230,12 +210,10 @@ const Order = ({ handleLogout }) => {
                     </div>
 
                     <div className="form-row">
-                        <label htmlFor="reOrder" className="col-md-3 col-form-label">Re-Order?</label>
-                        <div className="input-group input-group-sm col-md-2 pl-5">
-                            <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" checked={reOrder} readOnly className="custom-control-input" id="reOrder"/>
-                                <label htmlFor="reOrder" className="custom-control-label"></label>
-                            </div>
+                        <label htmlFor="reorder" className="col-form-label col-sm-3 float-sm-left pt-1 mb-2">Re-Order?</label>
+                        <div className="custom-control custom-checkbox col-sm-6 float-sm-left pt-1 mb-2 ml-2">
+                            <input checked={reOrder} type="checkbox" readOnly className="custom-control-input" id="reorder"/>
+                            <label className="custom-control-label" htmlFor="reorder"></label>
                         </div>
                     </div>
                         
@@ -264,7 +242,7 @@ const Order = ({ handleLogout }) => {
                     <div className="form-row">
                         <label htmlFor="productCategory" className="col-md-3 col-form-label">Product Category</label>
                         <div className="input-group input-group-sm mb-3 col-md-8">
-                            <input type="text" readOnly className="form-control" id="productCategory" value={productCategory}/>
+                            <input type="text" readOnly className="form-control" id="productCategory" value={productType}/>
                         </div>
                     </div>
 
@@ -575,6 +553,20 @@ const Order = ({ handleLogout }) => {
                             <input type="text" readOnly className="form-control" id="item1" value={item1}/>
                         </div>
                     </div>
+
+                    <div className="form-row">
+                        <label htmlFor="item-name-1" className="col-md-3 col-form-label">Item Name</label>
+                        <div className="input-group input-group-sm mb-3 col-md-8">
+                            <input type="text" readOnly className="form-control" id="item-name-1" value={itemName1}/>
+                        </div>
+                    </div>
+
+                    <div className="form-row">
+                        <label htmlFor="item-type-1" className="col-md-3 col-form-label">Item Type</label>
+                        <div className="input-group input-group-sm mb-3 col-md-8">
+                            <input type="text" readOnly className="form-control" id="item-type-1" value={itemType1}/>
+                        </div>
+                    </div>
                     
                     <div className="form-row">
                         <label className="col-md-2.5 col-form-label">Invoice</label>
@@ -618,6 +610,20 @@ const Order = ({ handleLogout }) => {
                     </div>
 
                     <div className="form-row">
+                        <label htmlFor="item-name-2" className="col-md-3 col-form-label">Name</label>
+                        <div className="input-group input-group-sm mb-3 col-md-8">
+                            <input type="text" readOnly className="form-control" id="item-name-2" value={itemName2}/>
+                        </div>
+                    </div>
+
+                    <div className="form-row">
+                        <label htmlFor="item-type-2" className="col-md-3 col-form-label">Type</label>
+                        <div className="input-group input-group-sm mb-3 col-md-8">
+                            <input type="text" readOnly className="form-control" id="item-type-2" value={itemType2}/>
+                        </div>
+                    </div>
+
+                    <div className="form-row">
                         <label className="col-md-2.5 col-form-label">Invoice</label>
                         <div className="input-group input-group-sm mb-3 col-md-1">
                             <div className="form-group custom-control custom-checkbox">
@@ -655,6 +661,20 @@ const Order = ({ handleLogout }) => {
                         <label htmlFor="item3" className="col-md-3 col-form-label">Inventory Item #3</label>
                         <div className="input-group input-group-sm mb-3 col-md-8">
                             <input type="text" readOnly className="form-control" id="item3" value={item3}/>
+                        </div>
+                    </div>
+
+                    <div className="form-row">
+                        <label htmlFor="item-name-3" className="col-md-3 col-form-label">Name</label>
+                        <div className="input-group input-group-sm mb-3 col-md-8">
+                            <input type="text" readOnly className="form-control" id="item-name-3" value={itemName3}/>
+                        </div>
+                    </div>
+
+                    <div className="form-row">
+                        <label htmlFor="item-type-3" className="col-md-3 col-form-label">Type</label>
+                        <div className="input-group input-group-sm mb-3 col-md-8">
+                            <input type="text" readOnly className="form-control" id="item-type-3" value={itemType3}/>
                         </div>
                     </div>
 
@@ -836,12 +856,10 @@ const Order = ({ handleLogout }) => {
                     </div>
 
                     <div className="form-row">
-                        <label htmlFor="creditChecked" className="col-md-3 col-form-label">Credit Checked?</label>
-                        <div className="input-group input-group-sm col-md-3 pl-5">
-                            <div className="form-group custom-control custom-checkbox">
-                                <input type="checkbox" checked={creditChecked} readOnly className="custom-control-input" id="creditChecked"/>
-                                <label htmlFor="creditChecked" className="custom-control-label"></label>
-                            </div>
+                        <label htmlFor="creditChecked" className="col-form-label col-sm-3 float-sm-left pt-1 mb-2">Credit Checked?</label>
+                        <div className="custom-control custom-checkbox col-sm-6 float-sm-left pt-1 mb-2 ml-2">
+                            <input checked={creditChecked} type="checkbox" readOnly className="custom-control-input" id="creditChecked"/>
+                            <label className="custom-control-label" htmlFor="creditChecked"></label>
                         </div>
                     </div>
 

@@ -166,7 +166,7 @@ const Location = ({ handleLogout }) => {
                 </div>
 
                 <form onSubmit={submit} autoComplete="off">
-                    <div className="product-info pt-3">
+                    <div className="location-info pt-3">
                         <div className="section-headers">
                             <h5>Location Information</h5>
                         </div>
@@ -260,7 +260,7 @@ const Location = ({ handleLogout }) => {
                 </form>
 
                 <form>
-                    <div className="product-info pt-3">
+                    <div className="location-history pt-3">
                         <div className="section-headers">
                             <h5>Location History</h5>
                         </div>

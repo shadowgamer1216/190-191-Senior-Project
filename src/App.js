@@ -1,5 +1,8 @@
 import React from 'react';
 import { Routes, Route, useNavigate} from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from './firebase';
 import HomePage from './HomePage';
 import ProductPage from './product';
 import ProductViewPage from './product-view';
@@ -15,17 +18,17 @@ import CompanyPage from './company';
 import CompanyViewPage from './company-view';
 import ItemCheckInPage from './itemCheckIn';
 import ItemCheckInViewPage from './itemCheckIn-view';
-import Shipping from './Shipping';
-import { useState, useEffect } from 'react';
+import ShippingPage from './Shipping';
+import ShippingViewPage from './shipping-view';
 import Search from './search';
 import SearchCompany from './searchCompany';
 import SearchContact from './searchContact';
-import SearchShipping from './searchShipping';
 import SearchComponent from './searchComponent';
-import SearchLocation from './searchLocation';
-import SearchOrder from './searchOrder';
 import SearchProduct from './searchProduct';
-import SearchItemCheckIn from './searchItemCheckIn';
+// import SearchLocation from './searchLocation';
+// import SearchItemCheckIn from './searchItemCheckIn';
+// import SearchOrder from './searchOrder';
+// import SearchShipping from './searchShipping';
 import ViewOnlyHome from './ViewOnlyHome';
 import Invoice from './invoice';
 import PackingSlipEdit from './packingSlipEdit';
@@ -36,8 +39,6 @@ import OutputForms from './outputForms';
 import ScrollToTop from "./scrollToTop";
 import Login from './LoginForm';
 import Signup from './signupForm';
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from './firebase';
 
 
 function App() {
@@ -106,31 +107,32 @@ useEffect(() => {
           <Route path="/company/:company_id" element={<CompanyViewPage handleLogout={handleLogout}/>} />
           <Route path="/itemCheckIn" element={<ItemCheckInPage handleLogout={handleLogout}/>} />
           <Route path="/itemCheckIn/:id" element={<ItemCheckInViewPage handleLogout={handleLogout}/>} />
-          <Route path="/shipping" element={<Shipping handleLogout={handleLogout}/>} />
+          <Route path="/shipping" element={<ShippingPage handleLogout={handleLogout}/>} />
+          <Route path="/shipping/:shipping_id" element={<ShippingViewPage handleLogout={handleLogout}/>} />
           <Route path="/search" element={<Search />} />
           <Route path="/search/searchCompany" element={<SearchCompany />} />
           <Route path="/search/searchContact" element={<SearchContact />} />
-          <Route path="/search/searchShipping" element={<SearchShipping />} />
-        <Route path="/search/searchComponent" element={<SearchComponent />} />
-        <Route path="/search/searchLocation" element={<SearchLocation />} />
-        <Route path="/search/searchOrder" element={<SearchOrder />} />
-        <Route path="/search/searchProduct" element={<SearchProduct />} />
-        <Route path="/search/searchItemCheckIn" element={<SearchItemCheckIn />} />
-      </Routes>
+          <Route path="/search/searchComponent" element={<SearchComponent />} />
+          <Route path="/search/searchProduct" element={<SearchProduct />} />
+          {/* <Route path="/search/searchLocation" element={<SearchLocation />} />
+          <Route path="/search/searchItemCheckIn" element={<SearchItemCheckIn />} />
+          <Route path="/search/searchOrder" element={<SearchOrder />} />
+          <Route path="/search/searchShipping" element={<SearchShipping />} /> */}
+        </Routes>
       </>
       ) : (
         <Routes>
           <Route path="/" element={<ViewOnlyHome handleLogout={handleLogout} />} />
           <Route path="/login" element={<Login handleLogin={handleLogin} />} />
           <Route path="/search" element={<Search />} />
-          <Route path="/search/searchcompany" element={<SearchCompany />} />
+          <Route path="/search/searchCompany" element={<SearchCompany />} />
           <Route path="/search/searchContact" element={<SearchContact />} />
-          <Route path="/search/searchShipping" element={<SearchShipping />} />
           <Route path="/search/searchComponent" element={<SearchComponent />} />
-          <Route path="/search/searchLocation" element={<SearchLocation />} />
-          <Route path="/search/searchOrder" element={<SearchOrder />} />
           <Route path="/search/searchProduct" element={<SearchProduct />} />
+          {/* <Route path="/search/searchLocation" element={<SearchLocation />} />
           <Route path="/search/searchItemCheckIn" element={<SearchItemCheckIn />} />
+          <Route path="/search/searchOrder" element={<SearchOrder />} />
+          <Route path="/search/searchShipping" element={<SearchShipping />} /> */}
         </Routes>
       )}
      
