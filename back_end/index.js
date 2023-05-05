@@ -464,6 +464,31 @@ app.get("/api/getSearchLocation", (req, res) =>{
     });
 });
 
+app.get("/api/getItemCheckIn", (req, res) =>{
+    const customer_id = req.query.customer_id;
+    const item_id = req.query.item_id;
+    let query = "SELECT * FROM item_check_in_table";
+    let queryParams = [];
+
+    if (customer_id) {
+        query += " WHERE customer_id LIKE ?";
+        queryParams.push(`%${customer_id}%`);
+    }
+    if (item_id) {
+        if (queryParams.length > 0) {
+            query += " AND item_id LIKE ?";
+        } else {
+            query += " WHERE item_id LIKE ?";
+        }
+        queryParams.push(`%${item_id}%`);
+    }
+
+    db.query(query, queryParams, (err, result) =>{
+        if (err) throw err;
+        res.send(result);
+    });
+});
+
 // DELETE COMPANY BY ID API
 app.delete("/api/company/:company_id", (req, res) => {
     const company_id = req.params.company_id;
@@ -525,6 +550,19 @@ app.delete("/api/location/:location_id", (req, res) => {
             res.status(500).send("Error removing location.");
         } else {
             res.status(200).send("Component removed successfully.");
+        }
+    });
+});
+
+// DELETE ITEM CHECK IN BY ID API
+app.delete("/api/itemcheckin/:customer_id", (req, res) => {
+    const customer_id = req.params.customer_id;
+    db.query("DELETE FROM location_table WHERE customer_id = ?", [customer_id], (err, result) => {
+        if (err) {
+            console.log(err);
+            res.status(500).send("Error removing item.");
+        } else {
+            res.status(200).send("Item removed successfully.");
         }
     });
 });
