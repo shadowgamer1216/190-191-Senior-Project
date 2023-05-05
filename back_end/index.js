@@ -514,6 +514,22 @@ app.get("/api/getOrder", (req, res) =>{
     });
 });
 
+app.get("/api/getShipping", (req, res) =>{
+    const order_id = req.query.order_id;
+    let query = "SELECT * FROM shipping_table";
+    let queryParams = [];
+
+    if (order_id) {
+        query += " WHERE order_id LIKE ?";
+        queryParams.push(`%${order_id}%`);
+    }
+
+    db.query(query, queryParams, (err, result) =>{
+        if (err) throw err;
+        res.send(result);
+    });
+});
+
 // DELETE COMPANY BY ID API
 app.delete("/api/company/:company_id", (req, res) => {
     const company_id = req.params.company_id;
@@ -601,6 +617,19 @@ app.delete("/api/order/:order_id", (req, res) => {
             res.status(500).send("Error removing item.");
         } else {
             res.status(200).send("Order removed successfully.");
+        }
+    });
+});
+
+// DELETE SHIPPING BY ID API
+app.delete("/api/shipping/:shipping_id", (req, res) => {
+    const shipping_id = req.params.shipping_id;
+    db.query("DELETE FROM shipping_table WHERE shipping_id = ?", [shipping_id], (err, result) => {
+        if (err) {
+            console.log(err);
+            res.status(500).send("Error removing shipping.");
+        } else {
+            res.status(200).send("Shipping removed successfully.");
         }
     });
 });
