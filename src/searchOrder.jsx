@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom"
 import Axios from "axios";
 
 
-const SearchLocation = () => {
+const SearchOrder = () => {
     const navigate = useNavigate();
 
     const routeChange = () => {
@@ -20,15 +20,13 @@ const SearchLocation = () => {
     }, []);
 
     const [data, setData] = useState([]);
-    const [location_id, setLocationID] = useState("");
-    const [location_type, setLocationType] = useState("");
-    const [item_id, setItemID] = useState("");
-    const [physical_location, setPhysicalLocation] = useState("");
+    const [order_id, setOrderID] = useState("");
+    const [product_id, setProductID] = useState("");
 
-    // search location function
+    // search order function
     const search = (e) => {
         e.preventDefault();
-        Axios.get(`http://localhost:3001/api/getSearchLocation?location_id=${location_id}&location_type=${location_type}&item_id=${item_id}&physical_location=${physical_location}`)
+        Axios.get(`http://localhost:3001/api/getSearchOrder?order_id=${order_id}&product_id=${product_id}`)
         .then((response) =>{
             setData(response.data);
         })
@@ -40,13 +38,13 @@ const SearchLocation = () => {
     const handleView = (e, id) => {
         e.preventDefault();
         const idPassed = id.toString();
-        navigate(`/contact/${idPassed}`);
+        navigate(`/order/${idPassed}`);
     }
 
     const handleRemove = (e, id) => {
         e.preventDefault();
         const idPassed = id.toString();
-        Axios.delete(`http://localhost:3001/api/location/${idPassed}`)
+        Axios.delete(`http://localhost:3001/api/order/${idPassed}`)
         .then((response) =>{
             console.log(response);
         })
@@ -78,36 +76,22 @@ const SearchLocation = () => {
 
             <div className="container p-5">
                 <div className="page-headers">
-                    <h2>SEARCH LOCATION</h2>
+                    <h2>SEARCH ORDER</h2>
                 </div>
                 <form>
                     <div className="contact-info pt-3">
                         <div className="form-row">
-                            <label htmlFor="id" className="col-md-0 col-form-label"><b>Location ID</b></label>
+                            <label htmlFor="id" className="col-md-0 col-form-label"><b>Order ID</b></label>
                             <div className="input-group input-group-sm mb-3 col-md-2">
-                                <input type="text" className="form-control" id="location-id" onChange={(e) =>{
-                                setLocationID(e.target.value)
+                                <input type="text" className="form-control" id="order-id" onChange={(e) =>{
+                                setOrderID(e.target.value)
                             }} maxLength = "128"/>
                             </div>
 
-                            <label htmlFor="name" className="col-md-0 col-form-label"><b>Location Type</b></label>
+                            <label htmlFor="name" className="col-md-0 col-form-label"><b>Product ID</b></label>
                             <div className="input-group input-group-sm mb-3 col-md-4">
-                                <input type="text" className="form-control" id="location-type" onChange={(e) =>{
-                                setLocationType(e.target.value)
-                            }} maxLength = "128"/>
-                            </div>
-
-                            <label htmlFor="name" className="col-md-0 col-form-label"><b>Item ID</b></label>
-                            <div className="input-group input-group-sm mb-3 col-md-4">
-                                <input type="text" className="form-control" id="item-id" onChange={(e) =>{
-                                setItemID(e.target.value)
-                            }} maxLength = "128"/>
-                            </div>
-
-                            <label htmlFor="name" className="col-md-0 col-form-label"><b>Physical Location</b></label>
-                            <div className="input-group input-group-sm mb-3 col-md-4">
-                                <input type="text" className="form-control" id="physical-location" onChange={(e) =>{
-                                setPhysicalLocation(e.target.value)
+                                <input type="text" className="form-control" id="product-id" onChange={(e) =>{
+                                setProductID(e.target.value)
                             }} maxLength = "128"/>
                             </div>
 
@@ -126,13 +110,10 @@ const SearchLocation = () => {
                                 <thead className="thead-light">
                                     <tr>
                                         <th scope="col">#</th>
-                                        <th scope="col">Location ID</th>
-                                        <th scope="col">Type</th>
-                                        <th scope="col">Item ID</th>
-                                        <th scope="col">Quantity</th>
-                                        <th scope="col">Item Owner</th>
-                                        <th scope="col">Physical Location</th>
-                                        <th scope="col">Notes</th>
+                                        <th scope="col">Order ID</th>
+                                        <th scope="col">Company ID</th>
+                                        <th scope="col">Product ID</th>
+                                        <th scope="col">Factor Order Quantity</th>
                                         <th scope="col">VIEW</th>
                                         <th scope="col">DELETE</th>
                                     </tr>
@@ -141,15 +122,12 @@ const SearchLocation = () => {
                                     {data.map((row, index) => (
                                         <tr key={index}>
                                             <td>{index+1}</td>
-                                            <td>{row.location_id}</td>
-                                            <td>{row.type}</td>
-                                            <td>{row.item_id}</td>
-                                            <td>{row.qty}</td>
-                                            <td>{row.item_owner}</td>
-                                            <td>{row.physical_location}</td>
-                                            <td>{row.notes}</td>
-                                            <td><button className="btn btn-sm btn-outline-info" onClick={(e) => handleView(e, row.location_id)}>OPEN</button></td>
-                                            <td><button className="btn btn-sm btn-danger" onClick={(e) => handleRemove(e, row.location_id)}>DELETE</button></td>
+                                            <td>{row.order_id}</td>
+                                            <td>{row.company_id}</td>
+                                            <td>{row.product_id}</td>
+                                            <td>{row.factor_order_quantity}</td>
+                                            <td><button className="btn btn-sm btn-outline-info" onClick={(e) => handleView(e, row.order_id)}>OPEN</button></td>
+                                            <td><button className="btn btn-sm btn-danger" onClick={(e) => handleRemove(e, row.order_id)}>DELETE</button></td>
                                         </tr>
                                     ))}
 
@@ -185,4 +163,4 @@ const SearchLocation = () => {
     );
 };
 
-export default SearchLocation;
+export default SearchOrder;

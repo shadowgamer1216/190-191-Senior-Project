@@ -489,6 +489,31 @@ app.get("/api/getItemCheckIn", (req, res) =>{
     });
 });
 
+app.get("/api/getOrder", (req, res) =>{
+    const order_id = req.query.order_id;
+    const product_id = req.query.product_id;
+    let query = "SELECT * FROM order_table";
+    let queryParams = [];
+
+    if (order_id) {
+        query += " WHERE order_id LIKE ?";
+        queryParams.push(`%${order_id}%`);
+    }
+    if (product_id) {
+        if (queryParams.length > 0) {
+            query += " AND product_id LIKE ?";
+        } else {
+            query += " WHERE product_id LIKE ?";
+        }
+        queryParams.push(`%${product_id}%`);
+    }
+
+    db.query(query, queryParams, (err, result) =>{
+        if (err) throw err;
+        res.send(result);
+    });
+});
+
 // DELETE COMPANY BY ID API
 app.delete("/api/company/:company_id", (req, res) => {
     const company_id = req.params.company_id;
@@ -557,12 +582,25 @@ app.delete("/api/location/:location_id", (req, res) => {
 // DELETE ITEM CHECK IN BY ID API
 app.delete("/api/itemcheckin/:customer_id", (req, res) => {
     const customer_id = req.params.customer_id;
-    db.query("DELETE FROM location_table WHERE customer_id = ?", [customer_id], (err, result) => {
+    db.query("DELETE FROM item_check_in_table WHERE customer_id = ?", [customer_id], (err, result) => {
         if (err) {
             console.log(err);
             res.status(500).send("Error removing item.");
         } else {
             res.status(200).send("Item removed successfully.");
+        }
+    });
+});
+
+// DELETE ORDER BY ID API
+app.delete("/api/order/:order_id", (req, res) => {
+    const order_id = req.params.order_id;
+    db.query("DELETE FROM order_table WHERE order_id = ?", [order_id], (err, result) => {
+        if (err) {
+            console.log(err);
+            res.status(500).send("Error removing item.");
+        } else {
+            res.status(200).send("Order removed successfully.");
         }
     });
 });
