@@ -104,7 +104,7 @@ function HomePage({ handleLogout }) {
 			</div>
 			
 			<div className="block8">
-				<Link to = "PackingSlip">
+				<Link to = "PackingSlipEdit">
 					<button type="Search" id="Search" className="HomePageButton" >Packing Slip</button>
 				</Link>
 			</div>

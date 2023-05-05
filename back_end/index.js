@@ -737,9 +737,70 @@ app.get("/api/getuser/:user", (req, res) => {
 
 
 app.get("/api/packingSlip", (req, res) =>{
-        db.query("SELECT * FROM shipping", (err, result) =>{
+        db.query("SELECT * FROM packing_slip_table", (err, result) =>{
             if (err) throw err;
             res.send(result);
         });
     
+});
+
+// PACKING SLIP TABLE PAGE - POST API =>
+app.post("/api/insertPackingSlip" , (req, res) =>{
+    const company_name = req.body.company_name;
+    const contact_name = req.body.contact_name;
+    const address = req.body.address;
+    const city = req.body.city;
+    const state = req.body.state;
+    const zip = req.body.zip;
+    const order_id = req.body.order_id;
+    const ship_date = req.body.ship_date;
+    const order_date = req.body.order_date;
+    const po = req.body.po;
+    const ship_via = req.body.ship_via;
+    const saturday_delivery = req.body.saturday_delivery;
+    const notes = req.body.notes;
+    const abspn = req.body.abspn;
+    const product_title = req.body.product_title;
+    const quantity = req.body.quantity;
+    const oem = req.body.oem;
+    const packing_slip_id = req.body.packing_slip_id;
+
+    const sqlInsert = "INSERT INTO packing_slip_table (company_name, contact_name, address, city, state, zip, order_id, ship_date, order_date, po, ship_via, saturday_delivery, notes, abspn, product_title, quantity, oem, packing_slip_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    db.query(sqlInsert, [company_name, contact_name, address, city, state, zip, order_id, ship_date, order_date, po, ship_via, saturday_delivery, notes, abspn, product_title, quantity, oem, packing_slip_id], (err, result) => {
+        console.log(result);
+    });
+});
+
+// LATEST PACKING SLIP ID - GET API <=
+app.get("/api/getLatestPackingSlipId", (req, res) => {
+    db.query ("SELECT MAX(packing_slip_master_id) FROM packing_slip_table", (err, result) =>{
+        if (err) throw err;
+        res.send(result);
+    });
+});
+
+// PACKING SLIP INFO BY ID - GET API <=
+app.get("/api/packingSlip/:packing_slip_master_id", (req, res) => {
+    const packing_slip_master_id = req.params.packing_slip_master_id;
+    db.query("SELECT * FROM packing_slip_table WHERE packing_slip_master_id = ?", [packing_slip_master_id], (err, result) =>{
+        if (err) {
+            console.error(err);
+            res.status(500).send('Error retrieving packing slip data');
+        } else {
+            res.send(result[0]);
+        }
+    });
+});
+
+// SHIPPING INFO BY COMPANY NAME - GET API <=
+app.get("/api/shippingDetails/:company_name", (req, res) => {
+    const company_name = req.params.company_name;
+    db.query("SELECT * FROM shipping_table WHERE company_name = ?", [company_name], (err, result) =>{
+        if (err) {
+            console.error(err);
+            res.status(500).send('Error shipping slip data');
+        } else {
+            res.send(result[0]);
+        }
+    });
 });
