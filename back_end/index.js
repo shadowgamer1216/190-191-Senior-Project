@@ -421,6 +421,49 @@ app.get("/api/getSearchProduct", (req, res) =>{
     });
 });
 
+app.get("/api/getSearchLocation", (req, res) =>{
+    const location_id = req.query.location_id;
+    const location_type = req.query.location_type;
+    const item_id = req.query.item_id;
+    const physical_location = req.query.physical_location;
+    let query = "SELECT * FROM location_table";
+    let queryParams = [];
+
+    if (location_id) {
+        query += " WHERE location_id LIKE ?";
+        queryParams.push(`%${location_id}%`);
+    }
+    if (location_type) {
+        if (queryParams.length > 0) {
+            query += " AND location_type LIKE ?";
+        } else {
+            query += " WHERE location_type LIKE ?";
+        }
+        queryParams.push(`%${location_type}%`);
+    }
+    if (item_id) {
+        if (queryParams.length > 0) {
+            query += " AND item_id LIKE ?";
+        } else {
+            query += " WHERE item_id LIKE ?";
+        }
+        queryParams.push(`%${item_id}%`);
+    }
+    if (physical_location) {
+        if (queryParams.length > 0) {
+            query += " AND physical_location LIKE ?";
+        } else {
+            query += " WHERE physical_location LIKE ?";
+        }
+        queryParams.push(`%${physical_location}%`);
+    }
+
+    db.query(query, queryParams, (err, result) =>{
+        if (err) throw err;
+        res.send(result);
+    });
+});
+
 // DELETE COMPANY BY ID API
 app.delete("/api/company/:company_id", (req, res) => {
     const company_id = req.params.company_id;
@@ -454,6 +497,32 @@ app.delete("/api/component/:component_id", (req, res) => {
         if (err) {
             console.log(err);
             res.status(500).send("Error removing component.");
+        } else {
+            res.status(200).send("Component removed successfully.");
+        }
+    });
+});
+
+// DELETE PRODUCT BY ID API
+app.delete("/api/product/:product_id", (req, res) => {
+    const product_id = req.params.product_id;
+    db.query("DELETE FROM product_table WHERE product_id = ?", [product_id], (err, result) => {
+        if (err) {
+            console.log(err);
+            res.status(500).send("Error removing product.");
+        } else {
+            res.status(200).send("Company removed successfully.");
+        }
+    });
+});
+
+// DELETE LOCATION BY ID API
+app.delete("/api/location/:location_id", (req, res) => {
+    const location_id = req.params.location_id;
+    db.query("DELETE FROM location_table WHERE location_id = ?", [location_id], (err, result) => {
+        if (err) {
+            console.log(err);
+            res.status(500).send("Error removing location.");
         } else {
             res.status(200).send("Component removed successfully.");
         }
