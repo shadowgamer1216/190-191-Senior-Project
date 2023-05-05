@@ -90,6 +90,12 @@ function HomePage({ handleLogout }) {
 					<button type="Search" id="Search" className="HomePageButton" >Search</button>
 				</Link>
 			</div>
+			
+			<div className="block11">
+				<Link to = "outputForms">
+					<button type="Search" id="Search" className="HomePageButton" >Output Forms</button>
+				</Link>
+			</div>
 
 			<div className="block7">
 				<Link to = "Invoice">
@@ -98,7 +104,7 @@ function HomePage({ handleLogout }) {
 			</div>
 			
 			<div className="block8">
-				<Link to = "PackingSlip">
+				<Link to = "PackingSlipEdit">
 					<button type="Search" id="Search" className="HomePageButton" >Packing Slip</button>
 				</Link>
 			</div>

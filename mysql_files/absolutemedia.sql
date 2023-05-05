@@ -13,7 +13,7 @@ DROP TABLE IF EXISTS order_nonItem;
 DROP TABLE IF EXISTS order_item;
 DROP TABLE IF EXISTS shipping_table;
 DROP TABLE IF EXISTS orders;
-DROP TABLE IF EXISTS shipping;
+DROP TABLE IF EXISTS packing_slip;
 SET foreign_key_checks = 1;
 
 CREATE TABLE company_table (
@@ -328,24 +328,28 @@ CREATE TABLE orders (
     PRIMARY KEY (orderID)
 );
 
-CREATE TABLE shipping (
-    company VARCHAR(50),
-    address VARCHAR(50),
-    city VARCHAR(50),
-    state VARCHAR(50),
-    zip VARCHAR(50),
-    orderMaster VARCHAR(50),
-    shipDate VARCHAR(50),
-    orderDate VARCHAR(50),
-    po VARCHAR(50),
-    saturdayDelivery VARCHAR(50),
-    notes VARCHAR(50),
-    quantity VARCHAR(50),
-    abspn VARCHAR(50),
-    description VARCHAR(50),
-    productTitle VARCHAR(50),
-    oem VARCHAR(50),
-    product VARCHAR(50)
+CREATE TABLE packing_slip_table (
+    packing_slip_master_id int NOT NULL auto_increment,
+    packing_slip_id VARCHAR(15) DEFAULT NULL,
+    company_name VARCHAR(50) DEFAULT NULL,
+    contact_name VARCHAR(50) DEFAULT NULL,
+    address VARCHAR(50) DEFAULT NULL,
+    city VARCHAR(50) DEFAULT NULL,
+    state VARCHAR(50) DEFAULT NULL,
+    zip VARCHAR(50) DEFAULT NULL,
+    order_id INT DEFAULT NULL,
+    ship_date DATE DEFAULT NULL,
+    order_date DATE DEFAULT NULL,
+    po VARCHAR(50) DEFAULT NULL,
+    ship_via VARCHAR(50) DEFAULT NULL,
+    saturday_delivery VARCHAR(50) DEFAULT NULL,
+    notes VARCHAR(50) DEFAULT NULL,
+    quantity VARCHAR(50) DEFAULT NULL,
+    abspn VARCHAR(50) DEFAULT NULL,
+    product_title VARCHAR(50) DEFAULT NULL,
+    oem VARCHAR(50) DEFAULT NULL,
+    product VARCHAR(50) DEFAULT NULL,
+    PRIMARY KEY (packing_slip_master_id),
 );
 
 DROP TABLE IF EXISTS users;

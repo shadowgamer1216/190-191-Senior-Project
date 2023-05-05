@@ -28,9 +28,11 @@ import SearchProduct from './searchProduct';
 import SearchItemCheckIn from './searchItemCheckIn';
 import ViewOnlyHome from './ViewOnlyHome';
 import Invoice from './invoice';
+import PackingSlipEdit from './packingSlipEdit';
 import PackingSlip from './packingSlip';
 import QCInspection from './QC-Inspection';
 import JobOrder from './jobOrder';
+import OutputForms from './outputForms';
 import ScrollToTop from "./scrollToTop";
 import Login from './LoginForm';
 import Signup from './signupForm';
@@ -78,40 +80,44 @@ useEffect(() => {
  return (
     <div className="App">
       {!isViewOnly ? (
-      //<ScrollToTop />
-      <Routes>
-        <Route path="/" element={<HomePage handleLogout={handleLogout} />} />
-          <Route path="/login" element={<Login handleLogin={handleLogin} />} />
-          <Route path="/signup" element={<Signup />} />
-
-        <Route path="/invoice" element={<Invoice />} />
-        <Route path="/packingSlip" element={<PackingSlip />} />
-        <Route path="/QC-Inspection" element={<QCInspection />} />
-        <Route path="/jobOrder" element={<JobOrder />} />
-        <Route path="/product" element={<ProductPage handleLogout={handleLogout}/>} />
-        <Route path="/product/:product_id" element={<ProductViewPage handleLogout={handleLogout}/>} />
-        <Route path="/contact" element={<ContactPage handleLogout={handleLogout}/>} />
-        <Route path="/contact/:contact_id" element={<ContactViewPage handleLogout={handleLogout}/>} />
-        <Route path="/component" element={<ComponentPage handleLogout={handleLogout}/>} />
-        <Route path="/component/:component_id" element={<ComponentViewPage handleLogout={handleLogout}/>} />
-        <Route path="/location" element={<LocationPage handleLogout={handleLogout}/>} />
-        <Route path="/location/:id" element={<LocationViewPage handleLogout={handleLogout}/>} />
-        <Route path="/order" element={<OrderPage handleLogout={handleLogout}/>} />
-        <Route path="/company" element={<CompanyPage handleLogout={handleLogout}/>} />
-        <Route path="/company/:company_id" element={<CompanyViewPage handleLogout={handleLogout}/>} />
-        <Route path="/itemCheckIn" element={<ItemCheckInPage handleLogout={handleLogout}/>} />
-        <Route path="/itemCheckIn/:id" element={<ItemCheckInViewPage handleLogout={handleLogout}/>} />
-        <Route path="/shipping" element={<Shipping handleLogout={handleLogout}/>} />
-        <Route path="/search" element={<Search />} />
-        <Route path="/search/searchCompany" element={<SearchCompany />} />
-        <Route path="/search/searchContact" element={<SearchContact />} />
-        <Route path="/search/searchShipping" element={<SearchShipping />} />
+      <>
+        <ScrollToTop />
+        <Routes>
+          <Route path="/" element={<HomePage handleLogout={handleLogout} />} />
+          <Route path="/login" element={<LoginForm handleLogin={handleLogin} />} />
+          <Route path="/signup" element={<SignupForm />} />
+          <Route path="/OutputForms" element={<OutputForms />} />
+          <Route path="/invoice" element={<Invoice />} />
+          <Route path="/packingSlipEdit" element={<PackingSlipEdit />} />
+          <Route path="/packingSlip/:packing_slip_master_id" element={<PackingSlip handleLogout={handleLogout}/>} />
+          <Route path="/QC-Inspection" element={<QCInspection />} />
+          <Route path="/jobOrder" element={<JobOrder />} />
+          <Route path="/product" element={<ProductPage handleLogout={handleLogout}/>} />
+          <Route path="/product/:product_id" element={<ProductViewPage handleLogout={handleLogout}/>} />
+          <Route path="/contact" element={<ContactPage handleLogout={handleLogout}/>} />
+          <Route path="/contact/:contact_id" element={<ContactViewPage handleLogout={handleLogout}/>} />
+          <Route path="/component" element={<ComponentPage handleLogout={handleLogout}/>} />
+          <Route path="/component/:component_id" element={<ComponentViewPage handleLogout={handleLogout}/>} />
+          <Route path="/location" element={<LocationPage handleLogout={handleLogout}/>} />
+          <Route path="/location/:id" element={<LocationViewPage handleLogout={handleLogout}/>} />
+          <Route path="/order" element={<OrderPage handleLogout={handleLogout}/>} />
+          <Route path="/order/:order_id" element={<OrderViewPage handleLogout={handleLogout}/>} />
+          <Route path="/company" element={<CompanyPage handleLogout={handleLogout}/>} />
+          <Route path="/company/:company_id" element={<CompanyViewPage handleLogout={handleLogout}/>} />
+          <Route path="/itemCheckIn" element={<ItemCheckInPage handleLogout={handleLogout}/>} />
+          <Route path="/itemCheckIn/:id" element={<ItemCheckInViewPage handleLogout={handleLogout}/>} />
+          <Route path="/shipping" element={<Shipping handleLogout={handleLogout}/>} />
+          <Route path="/search" element={<Search />} />
+          <Route path="/search/searchCompany" element={<SearchCompany />} />
+          <Route path="/search/searchContact" element={<SearchContact />} />
+          <Route path="/search/searchShipping" element={<SearchShipping />} />
         <Route path="/search/searchComponent" element={<SearchComponent />} />
         <Route path="/search/searchLocation" element={<SearchLocation />} />
         <Route path="/search/searchOrder" element={<SearchOrder />} />
         <Route path="/search/searchProduct" element={<SearchProduct />} />
         <Route path="/search/searchItemCheckIn" element={<SearchItemCheckIn />} />
       </Routes>
+      </>
       ) : (
         <Routes>
           <Route path="/" element={<ViewOnlyHome handleLogout={handleLogout} />} />

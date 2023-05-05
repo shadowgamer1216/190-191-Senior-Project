@@ -183,11 +183,11 @@ const Order = ({ handleLogout }) => {
 
     //Calculate SubTotal
     useEffect (() => {
-        const totalScreens = numberOfScreens * screensPrice;
-        setSubTotal(customTotalPrice + 
+        const totalScreens = Number((numberOfScreens * screensPrice).toFixed(2));
+        setSubTotal(Number((customTotalPrice + 
             nonItemTotalPrice1 + nonItemTotalPrice2 + nonItemTotalPrice3 + nonItemTotalPrice4 + nonItemTotalPrice5 + nonItemTotalPrice6 + 
             itemTotalPrice1 + itemTotalPrice2+ itemTotalPrice3 +
-            assemblyChargesTotalPrice + printingChargesTotalPrice + setupCharge + totalScreens)
+            assemblyChargesTotalPrice + printingChargesTotalPrice + setupCharge + totalScreens).toFixed(2)));
     },[customTotalPrice,
         nonItemTotalPrice1, nonItemTotalPrice2, nonItemTotalPrice3, nonItemTotalPrice4, nonItemTotalPrice5, nonItemTotalPrice6,
         itemTotalPrice1, itemTotalPrice2, itemTotalPrice3,
