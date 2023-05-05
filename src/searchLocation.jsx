@@ -25,7 +25,8 @@ const SearchLocation = () => {
     const [item_id, setItemID] = useState("");
     const [physical_location, setPhysicalLocation] = useState("");
 
-    // search location function
+
+    // search component function
     const search = (e) => {
         e.preventDefault();
         Axios.get(`http://localhost:3001/api/getSearchLocation?location_id=${location_id}&location_type=${location_type}&item_id=${item_id}&physical_location=${physical_location}`)
@@ -40,9 +41,9 @@ const SearchLocation = () => {
     const handleView = (e, id) => {
         e.preventDefault();
         const idPassed = id.toString();
-        navigate(`/contact/${idPassed}`);
+        navigate(`/location/${idPassed}`);
     }
-
+    
     const handleRemove = (e, id) => {
         e.preventDefault();
         const idPassed = id.toString();
@@ -76,42 +77,45 @@ const SearchLocation = () => {
 
             </div>
 
-            <div className="container p-5">
+            <div className="search-container p-5">
                 <div className="page-headers">
                     <h2>SEARCH LOCATION</h2>
                 </div>
-                <form>
-                    <div className="contact-info pt-3">
+                <form autoComplete="off">
+                    <div className="component-info p-4 col-md-6">
                         <div className="form-row">
-                            <label htmlFor="id" className="col-md-0 col-form-label"><b>Location ID</b></label>
-                            <div className="input-group input-group-sm mb-3 col-md-2">
+                            <label htmlFor="customer-id" className="col-md-3 col-form-label"><b>Location ID</b></label>
+                            <div className="input-group input-group-sm mb-3 col-md-3">
                                 <input type="text" className="form-control" id="location-id" onChange={(e) =>{
                                 setLocationID(e.target.value)
-                            }} maxLength = "128"/>
+                                }} maxLength = "128"/>
                             </div>
-
-                            <label htmlFor="name" className="col-md-0 col-form-label"><b>Location Type</b></label>
-                            <div className="input-group input-group-sm mb-3 col-md-4">
+                        </div>
+                        <div className="form-row">
+                            <label htmlFor="component-id" className="col-md-3 col-form-label"><b>Location Type</b></label>
+                            <div className="input-group input-group-sm mb-3 col-md-3">
                                 <input type="text" className="form-control" id="location-type" onChange={(e) =>{
                                 setLocationType(e.target.value)
-                            }} maxLength = "128"/>
+                                }} maxLength = "128"/>
                             </div>
-
-                            <label htmlFor="name" className="col-md-0 col-form-label"><b>Item ID</b></label>
-                            <div className="input-group input-group-sm mb-3 col-md-4">
-                                <input type="text" className="form-control" id="item-id" onChange={(e) =>{
+                        </div>
+                        <div className="form-row">
+                            <label htmlFor="title" className="col-md-3 col-form-label"><b>Item ID</b></label>
+                            <div className="input-group input-group-sm mb-3 col-md-6">
+                                <input type="text" className="form-control" id="title" onChange={(e) =>{
                                 setItemID(e.target.value)
-                            }} maxLength = "128"/>
+                                }} maxLength = "128"/>
                             </div>
-
-                            <label htmlFor="name" className="col-md-0 col-form-label"><b>Physical Location</b></label>
-                            <div className="input-group input-group-sm mb-3 col-md-4">
-                                <input type="text" className="form-control" id="physical-location" onChange={(e) =>{
+                        </div>
+                        <div className="form-row">
+                            <label htmlFor="component-type" className="col-md-3 col-form-label"><b>Physical Location</b></label>
+                            <div className="input-group input-group-sm mb-3 col-md-6">
+                                <input type="text" className="form-control" id="component-type" onChange={(e) =>{
                                 setPhysicalLocation(e.target.value)
-                            }} maxLength = "128"/>
+                                }} maxLength = "128"/>
                             </div>
 
-                            <div className="input-group input-group mb-3 col-md-1">
+                            <div className="input-group input-group mb-3 col-md-3 d-flex justify-content-end">
                                 <button onClick={(e) => search(e)} id="search-company" className="btn btn-outline-success">Search</button>
                             </div>
                         </div>
@@ -142,12 +146,10 @@ const SearchLocation = () => {
                                         <tr key={index}>
                                             <td>{index+1}</td>
                                             <td>{row.location_id}</td>
-                                            <td>{row.type}</td>
-                                            <td>{row.item_id}</td>
-                                            <td>{row.qty}</td>
-                                            <td>{row.item_owner}</td>
-                                            <td>{row.physical_location}</td>
-                                            <td>{row.notes}</td>
+                                            <td>{row.component_type}</td>
+                                            <td>{row.title}</td>
+                                            <td>{row.oem_pn}</td>
+                                            <td>{row.description}</td>
                                             <td><button className="btn btn-sm btn-outline-info" onClick={(e) => handleView(e, row.location_id)}>OPEN</button></td>
                                             <td><button className="btn btn-sm btn-danger" onClick={(e) => handleRemove(e, row.location_id)}>DELETE</button></td>
                                         </tr>
@@ -159,7 +161,7 @@ const SearchLocation = () => {
                         </>
                     )}
                         
-                    <div>
+                    <div className="navButtons">
                         <button className="btn btn-outline-dark" onClick={() => navigate("../Search")}>Back</button>
                         <button className="btn btn-outline-dark" onClick={() => navigate("/")}>Home</button>
                     </div>
