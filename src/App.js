@@ -18,8 +18,14 @@ import ItemCheckInViewPage from './itemCheckIn-view';
 import Shipping from './Shipping';
 import { useState, useEffect } from 'react';
 import Search from './search';
-import SearchCompany from './searchcompany';
+import SearchCompany from './searchCompany';
 import SearchContact from './searchContact';
+import SearchShipping from './searchShipping';
+import SearchComponent from './searchComponent';
+import SearchLocation from './searchLocation';
+import SearchOrder from './searchOrder';
+import SearchProduct from './searchProduct';
+import SearchItemCheckIn from './searchItemCheckIn';
 import ViewOnlyHome from './ViewOnlyHome';
 import Invoice from './invoice';
 import PackingSlipEdit from './packingSlipEdit';
@@ -102,9 +108,15 @@ useEffect(() => {
           <Route path="/itemCheckIn/:id" element={<ItemCheckInViewPage handleLogout={handleLogout}/>} />
           <Route path="/shipping" element={<Shipping handleLogout={handleLogout}/>} />
           <Route path="/search" element={<Search />} />
-          <Route path="/search/searchcompany" element={<SearchCompany />} />
+          <Route path="/search/searchCompany" element={<SearchCompany />} />
           <Route path="/search/searchContact" element={<SearchContact />} />
-        </Routes>
+          <Route path="/search/searchShipping" element={<SearchShipping />} />
+        <Route path="/search/searchComponent" element={<SearchComponent />} />
+        <Route path="/search/searchLocation" element={<SearchLocation />} />
+        <Route path="/search/searchOrder" element={<SearchOrder />} />
+        <Route path="/search/searchProduct" element={<SearchProduct />} />
+        <Route path="/search/searchItemCheckIn" element={<SearchItemCheckIn />} />
+      </Routes>
       </>
       ) : (
         <Routes>
@@ -113,6 +125,12 @@ useEffect(() => {
           <Route path="/search" element={<Search />} />
           <Route path="/search/searchcompany" element={<SearchCompany />} />
           <Route path="/search/searchContact" element={<SearchContact />} />
+          <Route path="/search/searchShipping" element={<SearchShipping />} />
+          <Route path="/search/searchComponent" element={<SearchComponent />} />
+          <Route path="/search/searchLocation" element={<SearchLocation />} />
+          <Route path="/search/searchOrder" element={<SearchOrder />} />
+          <Route path="/search/searchProduct" element={<SearchProduct />} />
+          <Route path="/search/searchItemCheckIn" element={<SearchItemCheckIn />} />
         </Routes>
       )}
      
