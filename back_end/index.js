@@ -370,6 +370,49 @@ app.get("/api/getSearchContact", (req, res) =>{
     });
 });
 
+app.get("/api/getSearchComponent", (req, res) =>{
+    const component_id = req.query.component_id;
+    const customer_id = req.query.customer_id;
+    const component_type = req.query.component_type;
+    const title = req.query.title;
+    let query = "SELECT * FROM component_table";
+    let queryParams = [];
+
+    if (component_id) {
+        query += " WHERE component_id LIKE ?";
+        queryParams.push(`%${component_id}%`);
+    }
+    if (customer_id) {
+        if (queryParams.length > 0) {
+            query += " AND customer_id LIKE ?";
+        } else {
+            query += " WHERE customer_id LIKE ?";
+        }
+        queryParams.push(`%${customer_id}%`);
+    }
+    if (component_type) {
+        if (queryParams.length > 0) {
+            query += " AND component_type LIKE ?";
+        } else {
+            query += " WHERE component_type LIKE ?";
+        }
+        queryParams.push(`%${component_type}%`);
+    }
+    if (title) {
+        if (queryParams.length > 0) {
+            query += " AND title LIKE ?";
+        } else {
+            query += " WHERE title LIKE ?";
+        }
+        queryParams.push(`%${title}%`);
+    }
+
+    db.query(query, queryParams, (err, result) =>{
+        if (err) throw err;
+        res.send(result);
+    });
+});
+
 // DELETE COMPANY BY ID API
 app.delete("/api/company/:company_id", (req, res) => {
     const company_id = req.params.company_id;
@@ -392,6 +435,19 @@ app.delete("/api/contact/:contact_id", (req, res) => {
             res.status(500).send("Error removing contact.");
         } else {
             res.status(200).send("Contact removed successfully.");
+        }
+    });
+});
+
+// DELETE COMPONENT BY ID API
+app.delete("/api/component/:component_id", (req, res) => {
+    const component_id = req.params.component_id;
+    db.query("DELETE FROM component_table WHERE component_id = ?", [component_id], (err, result) => {
+        if (err) {
+            console.log(err);
+            res.status(500).send("Error removing component.");
+        } else {
+            res.status(200).send("Component removed successfully.");
         }
     });
 });

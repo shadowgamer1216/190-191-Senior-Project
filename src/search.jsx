@@ -5,7 +5,8 @@ import { Link, useNavigate } from "react-router-dom"
 import Axios from "axios";
 
 
-const Search = () => {
+//const Search = () => {
+function Search({ handleLogout }) {
     const navigate = useNavigate();
     const routeChange = () => {
         let path = '/login';
@@ -19,40 +20,53 @@ const Search = () => {
         }
     }, [])
 
-    const submit = () => {
-        //Axios.post("http://localhost:3001/api/insert", {})
-        //.then(()=> {
-            //alert('inserted');
-        //})
-    };
-
     return (
         <div className='SearchPage'>
 
-            <div className='HomePageBar'>
-                <nav className="navbar navbar-expand-lg navbar-dark bg-maroon">
-                    <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                        <span className="navbar-toggler-icon"></span>
-                    </button>
+<div className='HomePageBar'>
+				<nav className="navbar navbar-dark bg-maroon">
+					<label className="navbar-brand">ABSOLUTE MEDIA, INC.</label>
+					<div>
+					<Link to ="signup">
+					<button className="btn btn-outline-light">Sign Up</button>
+					</Link>
+					</div>
+					<button className="btn btn-outline-light" onClick={handleLogout}>Logout</button>
+					
 
-                    <label className="navbar-brand">ABSOLUTE MEDIA, INC.</label>
-
-                    <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-                        <div className="navbar-nav">
-                            <Link className="nav-link" to="/">Home</Link>
-                        </div>
-                    </div>
-
-                    <button className="btn btn-outline-light">Sign In</button>
-                </nav>
-            </div>
+				</nav>
+                </div>
 
             <div className='block1'>
                 <Link to = "SearchCompany">
-                    <button type="button" id="Add Company" className="HomePageButton">Search Company</button>
+                    <button type="button" id="Search Company" className="HomePageButton">Search Company</button>
+                </Link>
+                <Link to = "SearchShipping">
+                    <button type="button" id="Search Shipping" className="HomePageButton">Search Shipping</button>
+                </Link>
+            </div>
+            <div className='block2'>
+                <Link to = "SearchComponent">
+                    <button type="button" id="Search Component" className="HomePageButton">Search Component</button>
                 </Link>
                 <Link to = "SearchContact">
-                    <button type="button" id="Add Company" className="HomePageButton">Search Contact</button>
+                    <button type="button" id="Search Contact" className="HomePageButton">Search Contact</button>
+                </Link>
+            </div>
+            <div className='block3'>
+                <Link to = "SearchLocation">
+                    <button type="button" id="Search Location" className="HomePageButton">Search Location</button>
+                </Link>
+                <Link to = "SearchOrder">
+                    <button type="button" id="Search Order" className="HomePageButton">Search Order</button>
+                </Link>
+            </div>
+            <div className='block4'>
+                <Link to = "SearchProduct">
+                    <button type="button" id="Search Product" className="HomePageButton">Search Product</button>
+                </Link>
+                <Link to = "SearchItemCheckIn">
+                    <button type="button" id="Search ItemCheckIn" className="HomePageButton">Search Item Check In</button>
                 </Link>
             </div>
 
