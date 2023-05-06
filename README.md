@@ -15,6 +15,8 @@
 ### - Ability to Edit/View forms
 ### - Insertion into database 
 ### - Submitting forms
+### - Output forms
+### - Ability to Search forms
 ![Edit Page](/public/unimplementedfeatures.png "Edit")
 ![View Page](/public/unimplementedfeatures3.png "View")
 
@@ -48,4 +50,37 @@
     - enable client to be self-sufficient
  8. Data analysis/trends
     - most common customers and trends in purchases
-
+    
+ ## **Contributions**:
+ ### Team Members
+ Mea Miller
+ - Email address: meamiller@csus.edu
+ - Phone number: (916) 333-8036
+ 
+ Jarod Shavor
+ - Email address: jarodshavor@csus.edu
+ - Phone number: (916) 895-8316
+ 
+ Ethan Ha
+ - Email address: nicholasha@csus.edu
+ - Phone number: (916) 838-7196
+ 
+ Jared Roque
+ - Email address: jroque@csus.edu
+ - Phone number: (209) 601-2848
+ 
+ Nataly Avalos
+ - Email address: navalos2@csus.edu
+ - Phone number: (661) 428-8777
+ 
+ Victor Dumaslan
+ - Email address: vdumanslan@csus.edu
+ - Phone number: (916) 385-9428
+ 
+ Mark Chavez
+ - Email address: markchavez@csus.edu
+ - Phone number: (707) 319-6108
+ 
+ Kyler Ng
+ - Email address: kylerng@csus.edu
+ - Phone number: (925) 785-8632
