@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import './App.css'
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useNavigate, useLocation } from "react-router-dom"
 import Axios from "axios";
 import Select from "react-select";
 
@@ -12,10 +12,10 @@ const PackingSlipEdit = ({ handleLogout }) => {
     const [city, setCity] = useState(null);
     const [state, setState] = useState(null);
     const [zip, setZip] = useState(null);
-    const [country, setCountry] = useState(null);
+    const [country, setCountry] = useState('United States');
     const [order_id, setOrderID] = useState(null);
-    const [ship_date, setShipDate] = useState(null);
-    const [order_date, setOrderDate] = useState(null);
+    const [ship_date, setShipDate] = useState('2023-01-01');
+    const [order_date, setOrderDate] = useState('2023-01-01');
     const [po, setPO] = useState(null);
     const [ship_via, setShipVia] = useState(null);
     const [saturday_delivery, setSaturdayDelivery] = useState(null);
@@ -27,6 +27,10 @@ const PackingSlipEdit = ({ handleLogout }) => {
     const Sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
     const [company_id, setCompanyID] = useState(null);
     const [packing_slip_id, setPackingSlipID] = useState(null);
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search);
+    const shippingId = searchParams.get('shipping_id' || '');
+    const orderId = searchParams.get('order_id' || '');
 
     const submit = async(e) => {
         e.preventDefault();
@@ -117,7 +121,6 @@ const PackingSlipEdit = ({ handleLogout }) => {
         Axios.get('http://localhost:3001/api/getCompanyData')
         .then(response => {
             const options = response.data.map(option => {
-                //return { value: option.company_id, label: option.company_name };
                 return { value: option.company_name, label: option.company_name };
             });
             setCompanyOptions(options);
@@ -128,23 +131,58 @@ const PackingSlipEdit = ({ handleLogout }) => {
         });
     }, []);
 
+    // useEffect(() => {
+    //     if (company_name) {
+    //       Axios.get(`http://localhost:3001/api/shippingDetails/${company_name}`)
+    //         .then((response) => {
+    //           setContactName(response.data.contact_name);
+    //           setAddress(response.data.add1);
+    //           setCity(response.data.city);
+    //           setState(response.data.country_state);
+    //           setZip(response.data.zip);
+    //           setShipDate(response.data.request_ship_date);
+    //           setCountry(response.data.country_state);
+    //         })
+    //         .catch((error) => {
+    //           console.error(error);
+    //         });
+    //     }
+    // }, [company_name]);
+
     useEffect(() => {
-        if (company_name) {
-          Axios.get(`http://localhost:3001/api/shippingDetails/${company_name}`)
+        if (shippingId) {
+          Axios.get(`http://localhost:3001/api/shipping/${shippingId}`)
             .then((response) => {
+              setCompanyName(response.data.company_name);
               setContactName(response.data.contact_name);
+              setShipDate(response.data.request_ship_date.slice(0,10));
               setAddress(response.data.add1);
               setCity(response.data.city);
               setState(response.data.country_state);
               setZip(response.data.zip);
-              setShipDate(response.data.request_ship_date);
-              setCountry(response.data.country_state);
+              setCountry(response.data.country);
             })
             .catch((error) => {
               console.error(error);
             });
         }
-      }, [company_name]);
+        if (orderId) {
+          Axios.get(`http://localhost:3001/api/order/${orderId}`)
+            .then((response) => {
+              setOrderID(response.data.order_id);
+              setProductTitle(response.data.product_name);
+              setABSPN(response.data.product_id);
+              setPO(response.data.customer_po_number);
+              setOrderDate(response.data.customer_order_date);
+              console.log('order date: ' + order_date);
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        }
+        console.log("ship date2: " + ship_date);
+    }, [shippingId, orderId]);
+      
 
     return (
         <div className="page">
@@ -296,7 +334,7 @@ const PackingSlipEdit = ({ handleLogout }) => {
                         <div className="form-row">
                             <label htmlFor="order-id" className="col-md-3 col-form-label">Order ID <span style={{ color: 'red' }}>*</span></label>
                             <div className="input-group input-group-sm mb-3 col-md-2">
-                                <input type="number" className="form-control" id="order-id" onChange={(e) =>{
+                                <input type="number" className="form-control" id="order-id" value={order_id} onChange={(e) =>{
                                     setOrderID(e.target.value)
                                 }} maxLength="50"/>
                             </div>
@@ -314,7 +352,7 @@ const PackingSlipEdit = ({ handleLogout }) => {
                         <div className="form-row">
                             <label htmlFor="order-date" className="col-md-3 col-form-label">Order Date <span style={{ color: 'red' }}>*</span></label>
                             <div className="input-group input-group-sm mb-3 col-md-3">
-                                <input type="date" className="form-control" name="order-date" id="order-date" onChange={(e) =>{
+                                <input type="date" className="form-control" name="order-date" id="order-date" value={order_date} onChange={(e) =>{
                                     setOrderDate(e.target.value)
                                 }}/>
                             </div>
@@ -323,7 +361,7 @@ const PackingSlipEdit = ({ handleLogout }) => {
                         <div className="form-row">
                             <label htmlFor="po" className="col-md-3 col-form-label">P.O.</label>
                             <div className="input-group input-group-sm mb-3 col-md-3">
-                                <input type="text" className="form-control" id="po" onChange={(e) =>{
+                                <input type="text" className="form-control" id="po" value={po} onChange={(e) =>{
                                     setPO(e.target.value)
                                 }} maxLength="50"/>
                             </div>
@@ -365,7 +403,7 @@ const PackingSlipEdit = ({ handleLogout }) => {
                         <div className="form-row">
                             <label htmlFor="abspn" className="col-md-3 col-form-label">ABS P/N</label>
                             <div className="input-group input-group-sm mb-3 col-md-2">
-                                <input type="number" className="form-control" id="abspn" onChange={(e) =>{
+                                <input type="number" className="form-control" id="abspn" value={abspn} onChange={(e) =>{
                                     setABSPN(e.target.value)
                                 }}/>
                             </div>
@@ -374,7 +412,7 @@ const PackingSlipEdit = ({ handleLogout }) => {
                         <div className="form-row">
                             <label htmlFor="product-title" className="col-md-3 col-form-label">Product Title</label>
                             <div className="input-group input-group-sm mb-3 col-md-3">
-                                <input type="text" className="form-control" id="product-title" onChange={(e) =>{
+                                <input type="text" className="form-control" id="product-title" value={product_title} onChange={(e) =>{
                                     setProductTitle(e.target.value)
                                 }}/>
                             </div>
@@ -383,7 +421,7 @@ const PackingSlipEdit = ({ handleLogout }) => {
                         <div className="form-row">
                             <label htmlFor="quantity" className="col-md-3 col-form-label">Quantity</label>
                             <div className="input-group input-group-sm mb-3 col-md-1">
-                                <input type="number" className="form-control" id="quantity" onChange={(e) =>{
+                                <input type="number" className="form-control" id="quantity" value={quantity} onChange={(e) =>{
                                     setQuantity(e.target.value)
                                 }} placeholder="0"/>
                             </div>
