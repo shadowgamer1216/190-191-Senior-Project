@@ -79,7 +79,7 @@ const SearchOrder = () => {
                     <h2>SEARCH ORDER</h2>
                 </div>
                 <form>
-                    <div className="contact-info p-4 col-md-6">
+                    <div className="search-info p-4 col-md-6">
                         <div className="form-row">
                             <label htmlFor="id" className="col-md-3 col-form-label"><b>Order ID</b></label>
                             <div className="input-group input-group-sm mb-3 col-md-3">

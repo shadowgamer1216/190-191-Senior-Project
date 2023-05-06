@@ -419,7 +419,7 @@ app.get("/api/getSearchProduct", (req, res) =>{
         }
         queryParams.push(`%${product_type}%`);
     }
-    if (title) {
+    if (product_title) {
         if (queryParams.length > 0) {
             query += " AND product_title LIKE ?";
         } else {

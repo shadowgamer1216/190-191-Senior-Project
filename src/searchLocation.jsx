@@ -82,7 +82,7 @@ const SearchLocation = () => {
                     <h2>SEARCH LOCATION</h2>
                 </div>
                 <form autoComplete="off">
-                    <div className="component-info p-4 col-md-6">
+                    <div className="search-info p-4 col-md-6">
                         <div className="form-row">
                             <label htmlFor="customer-id" className="col-md-3 col-form-label"><b>Location ID</b></label>
                             <div className="input-group input-group-sm mb-3 col-md-3">

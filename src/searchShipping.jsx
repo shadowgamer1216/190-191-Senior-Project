@@ -79,16 +79,16 @@ const SearchShipping = () => {
                     <h2>SEARCH SHIPPING</h2>
                 </div>
                 <form autoComplete="off">
-                    <div className="component-info p-4 col-md-6">
+                    <div className="search-info p-4 col-md-6">
                         <div className="form-row">
-                            <label htmlFor="customer-id" className="col-md-3 col-form-label"><b>Order ID</b></label>
+                            <label htmlFor="order-id" className="col-md-3 col-form-label"><b>Order ID</b></label>
                             <div className="input-group input-group-sm mb-3 col-md-3">
                                 <input type="text" className="form-control" id="order-id" onChange={(e) =>{
                                 setOrderID(e.target.value)
                                 }} maxLength = "128"/>
                             </div>
                             <div className="input-group input-group mb-3 col-md-3 d-flex justify-content-end">
-                                <button onClick={(e) => search(e)} id="search-company" className="btn btn-outline-success">Search</button>
+                                <button onClick={(e) => search(e)} id="search-order" className="btn btn-outline-success">Search</button>
                             </div>
                         </div>
 

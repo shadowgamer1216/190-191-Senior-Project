@@ -1,8 +1,8 @@
 import logo from './absolutemedialogo.png';
 import React from 'react';
 import './App.css';
-import { NavLink, useNavigate } from 'react-router-dom'
-import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'
+import { useEffect } from 'react';
 import { Link } from "react-router-dom";
 
 function HomePage({ handleLogout }) {
@@ -22,7 +22,6 @@ function HomePage({ handleLogout }) {
 
  	return (
     	<div className='HomePage'>
-      		{/*<img src={logo} className="App-logo" alt="logo" />*/}
 			<div className='HomePageBar'>
 				<nav className="navbar navbar-dark bg-maroon">
 					<label className="navbar-brand"><img src={logo} alt="Absolute Media Inc."/></label>

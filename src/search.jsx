@@ -1,8 +1,8 @@
+import logo from './absolutemedialogo.png';
 import React from "react";
-import {useState, useEffect} from "react";
+import { useEffect } from "react";
 import './App.css'
 import { Link, useNavigate } from "react-router-dom"
-import Axios from "axios";
 
 
 //const Search = () => {
@@ -23,20 +23,19 @@ function Search({ handleLogout }) {
     return (
         <div className='SearchPage'>
 
-<div className='HomePageBar'>
+            <div className='HomePageBar'>
 				<nav className="navbar navbar-dark bg-maroon">
-					<label className="navbar-brand">ABSOLUTE MEDIA, INC.</label>
-					<div>
-					<Link to ="signup">
-					<button className="btn btn-outline-light">Sign Up</button>
-					</Link>
-					</div>
+					<label className="navbar-brand"><img src={logo} alt="Absolute Media Inc."/></label>
+                        <div>
+                            <Link to ="signup">
+                            <button className="btn btn-outline-light">Sign Up</button>
+                            </Link>
+                        </div>
 					<button className="btn btn-outline-light" onClick={handleLogout}>Logout</button>
-					
-
 				</nav>
-                </div>
+			</div>
 
+            <br></br>
             <div className='block1'>
                 <Link to = "SearchCompany">
                     <button type="button" id="Search Company" className="HomePageButton">Search Company</button>
@@ -70,13 +69,10 @@ function Search({ handleLogout }) {
                 </Link>
             </div>
 
+            <br></br>
             <button className="HomePageButton" onClick={() => navigate("../")}>Home</button>
 
-      </div>
-
-      
-
-
+        </div>
     );
 };
 

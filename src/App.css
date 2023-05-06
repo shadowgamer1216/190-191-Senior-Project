@@ -79,7 +79,8 @@ div.form-row {
 .page {
   width: 100%;
   text-align: center;
-  background-color: gainsboro;
+  background-color: ghostwhite;
+  min-height: 96vh;
 }
 
 .container {
@@ -419,7 +420,7 @@ Link.nav-link {
   font-size: 14px;
 }
 
-.component-info, .product-info, .contact-info, .company-info {
+.search-info {
   background-color: #f9f9f9;
   background-image: linear-gradient(to bottom right, #f9f9f9, #fff);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);

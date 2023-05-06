@@ -82,7 +82,7 @@ const SearchProduct = () => {
                     <h2>SEARCH PRODUCT</h2>
                 </div>
                 <form autoComplete="off">
-                    <div className="product-info p-4 col-md-6">
+                    <div className="search-info p-4 col-md-6">
                         <div className="form-row">
                             <label htmlFor="product-id" className="col-md-3 col-form-label"><b>Product ID</b></label>
                             <div className="input-group input-group-sm mb-3 col-md-3">
