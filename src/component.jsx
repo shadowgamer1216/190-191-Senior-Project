@@ -22,6 +22,37 @@ const Component = ({ handleLogout }) => {
     const[owned_by, setOwned_By] = useState(0);
     const[packaging_component, setPackaging_Component] = useState(0);
     const[textBox, setTextBox] = useState(false);
+    const[locationData, setLocationData] = useState([]);
+
+    useEffect(() => {
+       Axios.get("http://localhost:3001/api/getLocationData").then((response) => {
+        setLocationData(response.data);
+       })
+      }, []);
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 5;
+    const totalPages = Math.ceil(locationData.length / itemsPerPage);
+    const handleFirstPage = () => {
+        setCurrentPage(1);
+    };
+
+    const handlePrevPage = () => {
+        setCurrentPage((prevPage) => prevPage - 1);
+    };
+
+    const handleNextPage = () => {
+        setCurrentPage((prevPage) => prevPage + 1);
+    };
+
+    const handleLastPage = () => {
+        setCurrentPage(totalPages);
+    };
+
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const currentData = locationData.slice(startIndex, endIndex);
+
     const routeChange = () => {
         let path = '/login';
         navigate(path);
@@ -324,7 +355,8 @@ const Component = ({ handleLogout }) => {
                         <div className="section-headers">
                             <h5>List of Inventory Locations</h5>
                         </div>
-
+                        {currentData.length > 0 && ( 
+                            <>
                         <div className="table-responsive-md">
                             <table className="table">
                                 <thead className="thead-light">
@@ -337,14 +369,30 @@ const Component = ({ handleLogout }) => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>No records</td>
+                                    {currentData.map(row => (
+                                    <tr key={row.item_id}>
+                                        <td>{row.item_id}</td>
+                                        <td>{row.location_id}</td>
+                                        <td>{row.location_type}</td>
+                                        <td>{row.physical_location}</td>
+                                        <td>{row.qty}</td>
                                     </tr>
+                                    ))}
                                 </tbody>
                             </table>
-                        </div>
+                            <div className="d-flex justify-content-center align-items-center">
+                                    <button type="button" className="btn btn-dark mr-2" onClick={handleFirstPage} disabled={currentPage === 1}>First</button>
+                                    <button type="button" className="btn btn-dark mr-2" onClick={handlePrevPage} disabled={currentPage === 1}>Prev</button>
+                                    <span class="text-center">
+                                        Page {currentPage} of {totalPages}
+                                    </span>
+                                    <button type="button" className="btn btn-dark ml-2" onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
+                                    <button type="button" className="btn btn-dark ml-2" onClick={handleLastPage} disabled={currentPage === totalPages}>Last</button>
+                                </div>
+                            </div>
+                            </>
+                        )}
                     </div>
-
                 </form>
 
                 {/* <div className="product-location m-3 p-3">

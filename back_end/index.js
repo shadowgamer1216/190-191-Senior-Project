@@ -849,6 +849,16 @@ app.post("/api/insertComponent", (req, res) =>{
     /*------------------------------------------ Component Page ------------------------------------------*/
 });
 
+// COMPONENT PAGE LOCATION INVENTORY TABLE - GET API <=
+app.get("/api/getLocationData", (req, res) => {
+    const sqlSelect = "SELECT item_id, location_id, location_type, physical_location, qty FROM location_table";
+
+    db.query(sqlSelect, (err, result) => {
+        if (err) throw err;
+        res.send(result);
+    });
+});
+
 // LATEST SHIPPING ID - GET API <=
 app.get("/api/getLatestShippingId", (req, res) => {
     db.query ("SELECT MAX(shipping_id) FROM shipping_table", (err, result) =>{
