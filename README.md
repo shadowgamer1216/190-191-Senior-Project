@@ -5,6 +5,8 @@
 ###   template, as well as provide our client with the necessary functionality they no longer
 ###   have.
 
+## **Project Logo**:
+![Project Logo](/src/absolutemedialogo.png "Project/Company Logo")
 
 ## **Home Page**:
 ![Home Page](/public/homepage.png "Home Page")
@@ -27,13 +29,38 @@
 ![Product Page](/public/addproduct.png "Add Product Page")
 
 ## **Testing instructions**:
-  1. To be established (no current data to test with, nor is backend up and functional)
+  1. No Current Data Set, however, things are tested through submitting information into the database and using that information to test other functionalities.
+  2. Testing is done by going through the pages and adding information one by one (or by page) and seeing if they are being sent into the database and whether or not we are able to pull that information for viewing/editing or other functionalities based on the specific page. 
+
 ## **Deployment instructions**:
-  1. To be established (product is in the midst of being completed)
+  1. Prerequisite: 
+Ensure that clients have Node.js and npm (Node Package Manager) installed on their machine. 
+
+2. Project Setup: 
+Extract the ZIP file or clone the Git repository to a location on their local machine, remember this directory.
+Rename the project to something else rather than 190-191-Senior-Project, lets say it is named as 'absolutemedia.'
+
+3. Terminal Setup: 
+Open a terminal or command prompt on the respective operating system.
+- For Windows, use the Command Prompt or Windows PowerShell.
+- For macOS, use the built-in Terminal application.
+- For Linux, use the default terminal emulator or a preferred one.
+
+4. Navigate to Project Directory:
+Type in cd command in terminal to navigate to the directory where the project was extracted. (e.g. cd ...\absolutemedia)
+
+5. Install Dependencies:
+Once at the root of the directory (e.g. '...\absolutemedia'), run the following command in the terminal to install the project dependencies: 'npm install'
+This will install all dependency packages needed to run the application.
+
+6. Launch Application:
+Then finally, run the command: 'npm run app'
+
 ## **Developer instructions**:
  1. "npm run app" in terminal (or "Run" in VSCode)
  2. Click buttons to access all pages
  3. Changes to your pages should be committed to our github repo
+
 ## **Timeline**:
 ### Phase 1 (finish by mid-Februrary):
  1. Create tables in database
