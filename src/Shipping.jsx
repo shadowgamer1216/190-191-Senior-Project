@@ -59,11 +59,12 @@ const Shipping = ({ handleLogout }) => {
     }
   }, [order_id]);
   var company_id = orderData?.company_id ?? '';
-  const [company_name, setCompanyName] = useState(null);
+  var company_name = orderData?.company_name ?? ''
+  const [contactData, setContactData] = useState(null);
   useEffect(() => {
     if (company_id) {
-      Axios.get(`http://localhost:3001/api/company/${company_id}`).then((response) => {
-        setCompanyName(response.data.company_name);
+      Axios.get(`http://localhost:3001/api/contact1/${company_id}`).then((response) => {
+        setContactData(response.data);
       }).catch(err => {
         console.log(err);
       });
@@ -96,6 +97,17 @@ const Shipping = ({ handleLogout }) => {
   const [fob, setFob] = useState(null);
   const [notes, setNotes] = useState(null);
 
+  useEffect(() => {
+    setContactName((contactData?.fname ?? '') + " " + (contactData?.lname ?? ''));
+    setAdd1((contactData?.add_1 ?? ''));
+    setAdd2((contactData?.add_2 ?? ''));
+    setCity((contactData?.city ?? ''));
+    setState((contactData?.state_in_country ?? ''));
+    setZip((contactData?.zip ?? ''));
+    setCountry((contactData?.country ?? ''));
+    setPhone((contactData?.phone ?? ''));
+    setEmail((contactData?.email ?? ''));
+  }, [contactData]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -179,7 +191,13 @@ const Shipping = ({ handleLogout }) => {
     }),
   };
 
-
+  function handlePhoneChange(event) {
+    setPhone(event.target.value);
+  }
+  function handleEmailChange(event) {
+    setEmail(event.target.value);
+  }
+  
   return (
 
     <div className="page">
@@ -280,32 +298,37 @@ const Shipping = ({ handleLogout }) => {
             <div className="form-row">
               <label htmlFor="contact_name" className="col-md-3 col-form-label">Contact Name<span style={{ color: 'red' }}> *</span></label>
               <div className="input-group input-group-sm mb-3 col-md-8">
-                <input onChange={(e) => setContactName(e.target.value)} className="form-control" id="contact_name" required />
+                {/* <input onChange={(e) => setContactName(e.target.value)} className="form-control" id="contact_name" required /> */}
+                <input readOnly className="form-control" id="contact_name" value={contact_name} />
               </div>
             </div>
 
             <div className="form-row">
               <label htmlFor="add1" className="col-md-3 col-form-label">Address 1 <span style={{ color: 'red' }}>*</span></label>
               <div className="input-group input-group-sm mb-3 col-md-8">
-                <input onChange={(e) => setAdd1(e.target.value)} className="form-control" id="add1" required />
+                {/* <input onChange={(e) => setAdd1(e.target.value)} className="form-control" id="add1" required /> */}
+                <input readOnly className="form-control" id="ad1" value={add1} required />
               </div>
             </div>
 
             <div className="form-row">
               <label htmlFor="add2" className="col-md-3 col-form-label">Address 2</label>
               <div className="input-group input-group-sm mb-3 col-md-8">
-                <input onChange={(e) => setAdd2(e.target.value)} className="form-control" id="add2" />
+                {/* <input onChange={(e) => setAdd2(e.target.value)} className="form-control" id="add2" /> */}
+                <input readOnly className="form-control" id="add2" value={add2} />
               </div>
             </div>
 
             <div className="form-row">
               <label htmlFor="csz" className="col-md-3 col-form-label">City | State | Zip <span style={{ color: 'red' }}> *</span></label>
               <div className="input-group input-group-sm mb-3 col-md-4">
-                <input onChange={(e) => setCity(e.target.value)} className="form-control" id="city" required />
+                {/* <input onChange={(e) => setCity(e.target.value)} className="form-control" id="city" required /> */}
+                <input readOnly className="form-control" id="city" value={city} required />
               </div>
 
               <div className="input-group input-group-sm mb-3 col-md-2">
-                <select onChange={(e) => setState(e.target.value)} className="form-control" id="state" required>
+                {/* <select onChange={(e) => setState(e.target.value)} className="form-control" id="state" required> */}
+                <select readOnly className="form-control" id="state" value={state} required>
                   <option value="">Select State</option>
                   <option value="AL">AL</option>
                   <option value="AK">AK</option>
@@ -362,8 +385,9 @@ const Shipping = ({ handleLogout }) => {
               </div>
 
               <div className="input-group input-group-sm mb-3 col-md-2">
-                <input type="text" inputMode="numeric" onChange={(e) => setZip(e.target.value)} className="form-control"
-                  id="zip" required />
+                {/* <input type="text" inputMode="numeric" onChange={(e) => setZip(e.target.value)} className="form-control"
+                  id="zip" required /> */}
+                  <input readOnly className="form-control" id="zip" value={zip} required />
               </div>
             </div>
 
@@ -380,8 +404,9 @@ const Shipping = ({ handleLogout }) => {
                 <span style={{ color: 'red' }}> *</span>
               </label>
               <div className="input-group input-group-sm mb-3 col-md-8">
-                <input onChange={(e) => setCountry(e.target.value)} className="form-control"
-                  id="country" required />
+                {/* <input onChange={(e) => setCountry(e.target.value)} className="form-control"
+                  id="country" required /> */}
+                  <input readOnly className="form-control" id="country" value={country} required />
               </div>
             </div>
 
@@ -390,8 +415,9 @@ const Shipping = ({ handleLogout }) => {
                 <span style={{ color: 'red' }}> *</span>
               </label>
               <div className="input-group input-group-sm mb-3 col-md-8">
-                <input onChange={(e) => setPhone(e.target.value)} className="form-control"
-                  id="phone" required />
+                {/* <input onChange={(e) => setPhone(e.target.value)} className="form-control"
+                  id="phone" required /> */}
+                  <input className="form-control" id="phone" value={phone} onChange={handlePhoneChange} required />
               </div>
             </div>
 
@@ -408,8 +434,9 @@ const Shipping = ({ handleLogout }) => {
                 <span style={{ color: 'red' }}> *</span>
               </label>
               <div className="input-group input-group-sm mb-3 col-md-8">
-                <input onChange={(e) => setEmail(e.target.value)} className="form-control"
-                  id="email" required />
+                {/* <input onChange={(e) => setEmail(e.target.value)} className="form-control"
+                  id="email" required /> */}
+                  <input className="form-control" id="email" value={email} onChange={handleEmailChange} required />
               </div>
             </div>
 

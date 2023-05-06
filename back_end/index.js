@@ -42,6 +42,19 @@ app.get("/api/contact/:contact_id", (req, res) => {
     });
 });
 
+// CONTACT INFO BY COMPANY ID - GET API <=
+app.get("/api/contact1/:company_id", (req, res) => {
+    const company_id = req.params.company_id;
+    db.query("SELECT * FROM contact_table WHERE company_id = ?", [company_id], (err, result) =>{
+        if (err) {
+            console.error(err);
+            res.status(500).send('Error retrieving contact data');
+        } else {
+            res.send(result[0]);
+        }
+    });
+});
+
 // CONTACT PAGE - POST API =>
 app.post("/api/insertContact", (req, res)=> {
     const company_id = req.body.company_id;

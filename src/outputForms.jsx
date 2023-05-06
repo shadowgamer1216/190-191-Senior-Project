@@ -110,7 +110,7 @@ const OutputForms = ({ handleLogout }) => {
     const packagingNotes = productData?.packaging_notes ?? '';
     const packagingNotesSlice = packagingNotes.slice(0, 80);
     const shippingInstructions = shippingData?.notes ?? '';
-    const shippingInstructionsSlice= shippingInstructions(0, 50);
+    const shippingInstructionsSlice= shippingInstructions.slice(0, 50);
 
     /*--------------------------------------------------------------- Job Order ---------------------------------------------------------------*/
     const fetchJobOrderData = async () => {
