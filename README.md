@@ -18,7 +18,7 @@
 ### - Output forms
 ### - Ability to Search forms
 ![Edit Page](/public/SearchFeature1.png "Search Selection")
-![View Page](/public/SearchFeature1.png "Search Company")
+![View Page](/public/SearchFeature2.png "Search Company")
 
 
 
