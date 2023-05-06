@@ -335,7 +335,7 @@ CREATE TABLE shipping_table (
     fob VARCHAR(50) DEFAULT NULL,
     notes TEXT,
     PRIMARY KEY (shipping_id),
-    FOREIGN KEY (order_id) REFERENCE order_table(order_id) ON DELETE CASCADE
+    FOREIGN KEY (order_id) REFERENCES order_table(order_id) ON DELETE CASCADE
 );
 
 CREATE TABLE orders (
