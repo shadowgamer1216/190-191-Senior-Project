@@ -42,6 +42,19 @@ app.get("/api/contact/:contact_id", (req, res) => {
     });
 });
 
+// CONTACT INFO BY COMPANY ID - GET API <=
+app.get("/api/contact1/:company_id", (req, res) => {
+    const company_id = req.params.company_id;
+    db.query("SELECT * FROM contact_table WHERE company_id = ?", [company_id], (err, result) =>{
+        if (err) {
+            console.error(err);
+            res.status(500).send('Error retrieving contact data');
+        } else {
+            res.send(result[0]);
+        }
+    });
+});
+
 // CONTACT PAGE - POST API =>
 app.post("/api/insertContact", (req, res)=> {
     const company_id = req.body.company_id;
@@ -60,7 +73,7 @@ app.post("/api/insertContact", (req, res)=> {
     const phone = req.body.phone;
     const extension = req.body.extension;
     const fax = req.body.fax;
-    const email = req.body.fax;
+    const email = req.body.email;
     const cell_phone_number = req.body.cell_phone_number;
     const third_party_company = req.body.third_party_company;
     const notes = req.body.notes;
@@ -519,9 +532,11 @@ app.get("/api/getShipping", (req, res) =>{
     let query = "SELECT * FROM shipping_table";
     let queryParams = [];
 
+    //I think we need to handle ints differently from varchars
     if (order_id) {
-        query += " WHERE order_id LIKE ?";
-        queryParams.push(`%${order_id}%`);
+        query += " WHERE order_id = ?";
+        //queryParams.push(`%${order_id}%`);
+        queryParams.push(order_id);
     }
 
     db.query(query, queryParams, (err, result) =>{
@@ -914,11 +929,12 @@ app.post("/api/insertShipping", (req, res) =>{
     const request_ship_time = req.body.request_ship_time;
     const arrival_ship_date = req.body.arrival_ship_date;
     const arrival_ship_time = req.body.arrival_ship_time;
+    const saturday = req.body.saturday;
     const fob = req.body.fob;
     const notes = req.body.notes;
 
-    const sqlInsert =  "INSERT INTO shipping_table (order_id, company_name, contact_name, add1, add2, city, state, zip, province, country, phone, fax, email, fedex, ups, courier_willcall, abs, other_ship_method, payment_type, account_number, request_ship_date, request_ship_time, arrival_ship_date, arrival_ship_time, fob, notes) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-    db.query(sqlInsert, [order_id, company_name, contact_name, add1, add2, city, state, zip, province, country, phone, fax, email, fedex, ups, courier_willcall, abs, other_ship_method, payment_type, account_number, request_ship_date, request_ship_time, arrival_ship_date, arrival_ship_time, fob, notes], (err, result) => {
+    const sqlInsert =  "INSERT INTO shipping_table (order_id, company_name, contact_name, add1, add2, city, state, zip, province, country, phone, fax, email, fedex, ups, courier_willcall, abs, other_ship_method, payment_type, account_number, request_ship_date, request_ship_time, arrival_ship_date, arrival_ship_time, saturday, fob, notes) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    db.query(sqlInsert, [order_id, company_name, contact_name, add1, add2, city, state, zip, province, country, phone, fax, email, fedex, ups, courier_willcall, abs, other_ship_method, payment_type, account_number, request_ship_date, request_ship_time, arrival_ship_date, arrival_ship_time, saturday, fob, notes], (err, result) => {
         console.log(result);
     })
 });

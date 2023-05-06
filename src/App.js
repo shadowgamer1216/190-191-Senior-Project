@@ -16,6 +16,7 @@ import CompanyViewPage from './company-view';
 import ItemCheckInPage from './itemCheckIn';
 import ItemCheckInViewPage from './itemCheckIn-view';
 import Shipping from './Shipping';
+import ShippingViewPage from './shipping-view';
 import { useState, useEffect } from 'react';
 import Search from './search';
 import SearchCompany from './searchCompany';
@@ -107,6 +108,7 @@ useEffect(() => {
           <Route path="/itemCheckIn" element={<ItemCheckInPage handleLogout={handleLogout}/>} />
           <Route path="/itemCheckIn/:id" element={<ItemCheckInViewPage handleLogout={handleLogout}/>} />
           <Route path="/shipping" element={<Shipping handleLogout={handleLogout}/>} />
+          <Route path="/shipping/:shipping_id" element={<Shipping handleLogout={handleLogout}/>} />
           <Route path="/search" element={<Search />} />
           <Route path="/search/searchCompany" element={<SearchCompany />} />
           <Route path="/search/searchContact" element={<SearchContact />} />

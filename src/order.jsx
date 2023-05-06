@@ -1515,7 +1515,7 @@ const Order = ({ handleLogout }) => {
                 </div>
 
                 <div className="submit p-3">
-                    {loadingButton === true ? <button className="btn btn-primary"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"> </span> Loading...</button>
+                    {loadingButton === true ? <button className="btn btn-primary"><span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"> </span> Loading...</button>
                     : <button onClick={() => handleNavigate(nextOrderId)} disabled={!submitting} id="add-order" className="btn btn-success">Add Order</button>}
                 </div>
 

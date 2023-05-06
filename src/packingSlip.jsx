@@ -32,11 +32,28 @@ function PackingSlip({ match }) {
     const [showPdf, setShowPdf] = useState(false);
     const { packing_slip_master_id } = useParams();
 
-    const fetchPackingSlipData = async () => {
-        try {
-            const response = await Axios.get(`http://localhost:3001/api/packingSlip/${packing_slip_master_id}`);
+    useEffect(() => {
+        const fetchPackingSlipData = async () => {
+          try {
+            const response = await Axios.get(
+              `http://localhost:3001/api/packingSlip/${packing_slip_master_id}`
+            );
             const packingSlipData = response.data;
+            setPackingSlipData(packingSlipData);
+          } catch (error) {
+            console.log(error);
+          }
+        };
+        fetchPackingSlipData();
+        
+        if (packingSlipData) {
+          generatePDF();
+        }
+    }, [packing_slip_master_id, packingSlipData]);
+    
 
+    const generatePDF = async () => {
+        try {
             var docDefinition = {
                 content: [
                 {
@@ -57,12 +74,21 @@ function PackingSlip({ match }) {
                             ],
                         },
                         {
-                            text: 'Packing Slip',
-                            fontSize: 22,
-                            bold: true,
-                            alignment: 'right',
-                            margin: [0, 0, 0, 10],
-                            width: '*',
+                            stack: [
+                                {
+                                    text: 'Packing Slip #',
+                                    fontSize: 22,
+                                    bold: true,
+                                    alignment: 'right',
+                                    margin: [0, 0, 0, 10],
+                                    width: '*',
+                                },
+                                {
+                                    text: "ABSO -" + packingSlipData.packing_slip_master_id,
+                                    alignment: 'right',
+                                    margin: [0, 0, 0, 10]
+                                },
+                            ],
                         },
                     ],
                 },
@@ -97,7 +123,7 @@ function PackingSlip({ match }) {
                                     text: "Ship Date: " + packingSlipData.ship_date.slice(0,10),
                                 },
                                 {
-                                    text: "Order Date: " + packingSlipData.order_date.slice(0,10),
+                                    text: "Order Date: " + packingSlipData.order_date.slice(0,10), 
                                 },
                                 {
                                     text: "P.O. " + (packingSlipData?.po ?? 'N/A'),
@@ -113,7 +139,7 @@ function PackingSlip({ match }) {
                     ],
                 },
                 {
-                    text: 'Details',
+                    text: '\n\nDetails',
                     fontSize: 18,
                     bold: true,
                     margin: [0, 20, 0, 10],
@@ -142,29 +168,6 @@ function PackingSlip({ match }) {
                                 ],
                             },
                 },
-                // {
-                //     table: {
-                //         headerRows: 1,
-                //         widths: [50, '*', '*', '*', '*'],
-                //         body: [
-                //             [
-                //                 { text: 'Quantity', bold: true },
-                //                 { text: 'ABS P/N', bold: true },
-                //                 { text: 'Product Title', bold: true },
-                //                 { text: 'OEM P/N', bold: true },
-                //                 { text: 'Product', bold: true },
-                //             ],
-                //             ...packingSlipData.map((packingSlipData) => [
-                //                 packingSlipData.quantity,
-                //                 packingSlipData.abspn,
-                //                 packingSlipData.productTitle,
-                //                 packingSlipData.oem,
-                //                 packingSlipData.product,
-                //             ]),
-                //         ],
-                //     },
-                //     margin: [0, 0, 0, 40],
-                // },
                 {
                     text: "=============================================================================\n\n\n",
                     margin: [0, 300 * 0.67, 0, 0],
@@ -184,15 +187,7 @@ function PackingSlip({ match }) {
             console.log(error);
         }  
     };
-
-    return (
-        <div className='block8'>
-          <button type='button' onClick={fetchPackingSlipData} className='HomePageButton'>
-            Fetch Orders
-          </button>
-        </div>
-      );
-    }
+}
 
 // const  PackingSlip = ({ match }) => { 
 //     const [orders, setOrders] = useState(null);

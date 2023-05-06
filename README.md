@@ -17,8 +17,8 @@
 ### - Submitting forms
 ### - Output forms
 ### - Ability to Search forms
-![Edit Page](/public/unimplementedfeatures.png "Edit")
-![View Page](/public/unimplementedfeatures3.png "View")
+![Edit Page](/public/SearchFeature1.png "Search Selection")
+![View Page](/public/SearchFeature2.png "Search Company")
 
 
 

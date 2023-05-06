@@ -110,7 +110,7 @@ const OutputForms = ({ handleLogout }) => {
     const packagingNotes = productData?.packaging_notes ?? '';
     const packagingNotesSlice = packagingNotes.slice(0, 80);
     const shippingInstructions = shippingData?.notes ?? '';
-    const shippingInstructionsSlice= shippingInstructions(0, 50);
+    const shippingInstructionsSlice= shippingInstructions.slice(0, 50);
 
     /*--------------------------------------------------------------- Job Order ---------------------------------------------------------------*/
     const fetchJobOrderData = async () => {
@@ -1178,6 +1178,12 @@ const OutputForms = ({ handleLogout }) => {
 
                 <div className='QCInspection'>
                     <button type='button' onClick={fetchQCInspectionData} className='HomePageButton'>QC Inspection</button>
+                </div>
+
+                <div className="PackingSlipEdit">
+                    <Link to={{pathname: '/packingSlipEdit',search: `?shipping_id=${shippingData?.shipping_id}&order_id=${orderData?.order_id}`,}}>
+                        <button type="button" className="HomePageButton">Packing Slip</button>
+                    </Link>
                 </div>
 
                 <button className="btn btn-outline-dark" onClick={() => navigate(-1)}>Home</button>

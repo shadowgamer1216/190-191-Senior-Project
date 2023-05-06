@@ -308,13 +308,13 @@ CREATE TABLE order_table (
 
 CREATE TABLE shipping_table (
     shipping_id INT NOT NULL AUTO_INCREMENT,
-    order_id VARCHAR(10) NOT NULL,
+    order_id INT DEFAULT NULL,
     company_name VARCHAR(100) NOT NULL,
     contact_name VARCHAR(50) DEFAULT NULL,
     add1 VARCHAR(50) DEFAULT NULL,
     add2 VARCHAR(50) DEFAULT NULL,
     city VARCHAR(50) DEFAULT NULL,
-    state VARCHAR(5) DEFAULT NULL,
+    state VARCHAR(50) DEFAULT NULL,
     zip INT DEFAULT NULL,
     province VARCHAR(50) DEFAULT NULL,
     country VARCHAR(50) DEFAULT NULL,
@@ -332,6 +332,7 @@ CREATE TABLE shipping_table (
     request_ship_time VARCHAR(50),
     arrival_ship_date DATE DEFAULT NULL,
     arrival_ship_time VARCHAR(50),
+    saturday INT DEFAULT NULL,
     fob VARCHAR(50) DEFAULT NULL,
     notes TEXT,
     PRIMARY KEY (shipping_id),

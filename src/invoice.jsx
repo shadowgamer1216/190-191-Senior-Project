@@ -4,14 +4,145 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
-function Invoice({ match }) {
-  const [invoiceData, setInvoiceData] = useState(null);
-  const [showPdf, setShowPdf] = useState(false);
+function Invoice({ orderID }) {
+  var tableRows = [];
+  
+  var rows = [];
 
   const fetchInvoiceData = async () => {
     try {
-      const response = await Axios.get('http://localhost:3001/api/orders');
+      const response = await Axios.get('http://localhost:3001/api/invoice');///' + orderID.toString());
       const orders = response.data;
+      orders[0].customer ??= ''
+      orders[0].customer_address ??= ''
+      orders[0].customer_city ??= ''
+      orders[0].customer_state ??= ''
+      orders[0].customer_zip ??= ''
+      orders[0].shipping ??= ''
+      orders[0].shipping_address ??= ''
+      orders[0].shipping_city ??= ''
+      orders[0].shipping_state ??= ''
+      orders[0].shipping_zip ??= ''
+      orders[0].invoice_date ??= ''
+      orders[0].terms ??= ''
+      orders[0].fob ??= ''
+      orders[0].ship_via ??= ''
+      orders[0].ship_date ??= ''
+      orders[0].po ??= ''
+      orders[0].product_id ??= ''
+      orders[0].product_title ??= ''
+      orders[0].oem_pn ??= ''
+      orders[0].quantity1 ??= ''
+      orders[0].quantity2 ??= ''
+      orders[0].quantity3 ??= ''
+      orders[0].quantity4 ??= ''
+      orders[0].quantity5 ??= ''
+      orders[0].quantity6 ??= ''
+      orders[0].quantity7 ??= ''
+      orders[0].quantity8 ??= ''
+      orders[0].quantity9 ??= ''
+      orders[0].quantity10 ??= ''
+      orders[0].desctiption1 ??= ''
+      orders[0].desctiption2 ??= ''
+      orders[0].desctiption3 ??= ''
+      orders[0].desctiption4 ??= ''
+      orders[0].desctiption5 ??= ''
+      orders[0].desctiption6 ??= ''
+      orders[0].desctiption7 ??= ''
+      orders[0].desctiption8 ??= ''
+      orders[0].desctiption9 ??= ''
+      orders[0].desctiption10 ??= ''
+      orders[0].price1 ??= ''
+      orders[0].price2 ??= ''
+      orders[0].price3 ??= ''
+      orders[0].price4 ??= ''
+      orders[0].price5 ??= ''
+      orders[0].price6 ??= ''
+      orders[0].price7 ??= ''
+      orders[0].price8 ??= ''
+      orders[0].price9 ??= ''
+      orders[0].price10 ??= ''
+      orders[0].totPrice1 ??= ''
+      orders[0].totPrice2 ??= ''
+      orders[0].totPrice3 ??= ''
+      orders[0].totPrice4 ??= ''
+      orders[0].totPrice5 ??= ''
+      orders[0].totPrice6 ??= ''
+      orders[0].totPrice7 ??= ''
+      orders[0].totPrice8 ??= ''
+      orders[0].totPrice9 ??= ''
+      orders[0].totPrice10 ??= ''
+
+      var tableTitle = [{ text: 'Quantity', colSpan: 1}, { text: 'Item Description', colSpan: 1},{text: 'Unit Price', colSpan: 1},{ text: 'Total Price', colSpan: 1}]
+
+
+      if(orders[0].product_id){
+        var title = [['ABS Product ID: ' + orders[0].product_id + '\nProduct Title: ' + orders[0].product_title + '\nOEM P/N: ' + orders[0].oem_pn + '\nProduct: ' + orders[0].desctiption1]]
+        rows = [orders[0].quantity1, title, orders[0].price1, orders[0].totPrice1]
+        tableRows.push(rows);
+      }
+      if(orders[0].quantity2){
+        rows = [orders[0].quantity2, orders[0].desctiption2, orders[0].price2, orders[0].totPrice2]
+        tableRows.push(rows)
+      }
+
+      if(orders[0].quantity3){
+        rows = [orders[0].quantity3, orders[0].desctiption3, orders[0].price3, orders[0].totPrice3]
+        tableRows.push(rows)
+      }
+      if(orders[0].quantity4){
+        rows = [orders[0].quantity4, orders[0].desctiption4, orders[0].price4, orders[0].totPrice4]
+        tableRows.push(rows)
+      }
+      if(orders[0].quantity5){
+        rows = [orders[0].quantity5, orders[0].desctiption5, orders[0].price5, orders[0].totPrice5]
+        tableRows.push(rows)
+
+      }
+      if(orders[0].quantity6){
+        rows = [orders[0].quantity6, orders[0].desctiption6, orders[0].price6, orders[0].totPrice6]
+        tableRows.push(rows)
+
+        
+      }
+      if(orders[0].quantity7){
+        rows = [orders[0].quantity7, orders[0].desctiption7, orders[0].price7, orders[0].totPrice7]
+        tableRows.push(rows)
+
+      }
+      if(orders[0].quantity8){
+        rows = [orders[0].quantity8, orders[0].desctiption8, orders[0].price8, orders[0].totPrice8]
+        tableRows.push(rows)
+
+      }
+      if(orders[0].quantity9){
+        rows = [orders[0].quantity9, orders[0].desctiption9, orders[0].price9, orders[0].totPrice9]
+        tableRows.push(rows)
+
+      }
+      if(orders[0].quantity10){
+        rows = [orders[0].quantity10, orders[0].desctiption10, orders[0].price10, orders[0].totPrice10]
+        tableRows.push(rows)
+
+      }
+      var customerCity = '';
+      var shippingCity = '';
+      if(orders[0].customer_city){
+      customerCity = orders[0].customer_city + ","
+      }
+      if(orders[0].shipping_city){
+      var shippingCity = orders[0].shipping_city + ","
+      }
+
+
+    
+
+
+
+
+
+
+
 
       var docDefinition = {
         content: [
@@ -23,7 +154,7 @@ function Invoice({ match }) {
             style: 'header',
           },
           {
-            text: 'Invoice # ABSO-' + orders[0].orderID,
+            text: 'Invoice # ABSO-' + orders[0].invoiceID,
             style: 'header',
           },
         ]
@@ -55,12 +186,12 @@ function Invoice({ match }) {
             columns: [
 
               {
-                text: `${orders[0].company}\n${orders[0].company_address}`,
+                text: `${orders[0].customer}\n${orders[0].customer_address}\n${customerCity} ${orders[0].customer_state} ${orders[0].customer_zip}`,
                 style: 'body',
                 },
              
               {
-                text: `${orders[0].customer}\n${orders[0].customer_address}\n\n`,
+                text: `${orders[0].shipping}\n${orders[0].shipping_address}\n${shippingCity} ${orders[0].shipping_state} ${orders[0].shipping_zip}`,
                 style: 'body'
               }
             ],
@@ -82,7 +213,7 @@ function Invoice({ match }) {
                   },
                   {
                     border: [false, false, false, false],
-                    text: 'Invoice Date here'
+                    text: orders[0].invoice_date
                   },
                   {
                     border: [false, false, false, false],
@@ -92,7 +223,7 @@ function Invoice({ match }) {
                   },
                   {
                     border: [false, false, false, false],
-                    text: 'PO here'
+                    text: orders[0].po
                   },
                 ],
                 [
@@ -104,7 +235,7 @@ function Invoice({ match }) {
                   },
                   {
                     border: [false, false, false, false],
-                    text: 'Terms here'
+                    text: orders[0].terms
                   },
                   {
                     border: [false, false, false, false],
@@ -114,7 +245,7 @@ function Invoice({ match }) {
                   },
                   {
                     border: [false, false, false, false],
-                    text: 'ABS Order Number'
+                    text: orders[0].order_num
                   },
                 ],
                 [
@@ -126,7 +257,7 @@ function Invoice({ match }) {
                   },
                   {
                     border: [false, false, false, false],
-                    text: 'FOB here'
+                    text: orders[0].fob
                   },
                   {
                     border: [false, false, false, false],
@@ -188,33 +319,12 @@ function Invoice({ match }) {
           },
           {
             table: {
+              widths: [ '*', '*', '*', '*' ],
               body: [
-                [
-                  {
-                  bold: true,
-                  text: 'Quantity'
-                  },
-                  {
-                  bold: true,
-                  text: 'Item Description'
-                  },
-                  {
-                  bold: true,
-                  text: 'Unit Price'
-                  },
-                  {
-                  bold: true,
-                  text: 'Total Price'
-                  }
-                  
-                ],
-                [
-                  'quantity goes here',
-                  'Item description here',
-                  'prices for items',
-                  'total here',
-                ],
-                [
+                
+                tableTitle,
+                ...tableRows,
+               [
                   {
                     border: [true, true, false, true],
                     text: ''
@@ -231,8 +341,11 @@ function Invoice({ match }) {
                       border: [false, true, true, true],
                       table: {
                         body: [
-                          ['Subtotal', 'subtotal here'],
-                          ['Grand Total', 'grandtotal here'],
+                          
+                          [{text: 'Subtotal'},
+                          {text: 'subtotal here'}],
+                          [{text: 'Grand Total'}, 
+                          {text: 'grandtotal here'}],
                         ],
                       },
                     },
@@ -269,3 +382,5 @@ function Invoice({ match }) {
 
 export default Invoice;
 
+
+ 

@@ -74,28 +74,29 @@ const SearchItemCheckIn = () => {
 
             </div>
 
-            <div className="container p-5">
+            <div className="search-container p-5">
                 <div className="page-headers">
                     <h2>SEARCH ITEM</h2>
                 </div>
                 <form>
-                    <div className="contact-info pt-3">
+                    <div className="contact-info p-4 col-md-6">
                         <div className="form-row">
-                            <label htmlFor="id" className="col-md-0 col-form-label"><b>Customer ID</b></label>
-                            <div className="input-group input-group-sm mb-3 col-md-2">
-                                <input type="text" className="form-control" id="customer-id" onChange={(e) =>{
+                            <label htmlFor="id" className="col-md-3 col-form-label"><b>Customer ID</b></label>
+                            <div className="input-group input-group-sm mb-3 col-md-3">
+                                <input type="text" className="form-control" id="id" onChange={(e) =>{
                                 setCustomerID(e.target.value)
                             }} maxLength = "4"/>
                             </div>
-
-                            <label htmlFor="name" className="col-md-0 col-form-label"><b>Item ID</b></label>
-                            <div className="input-group input-group-sm mb-3 col-md-4">
-                                <input type="text" className="form-control" id="item-id" onChange={(e) =>{
+                        </div>
+                        <div className="form-row">
+                            <label htmlFor="name" className="col-md-3 col-form-label"><b>Item ID</b></label>
+                            <div className="input-group input-group-sm mb-3 col-md-6">
+                                <input type="text" className="form-control" id="name" onChange={(e) =>{
                                 setItemID(e.target.value)
                             }} maxLength = "128"/>
                             </div>
 
-                            <div className="input-group input-group mb-3 col-md-1">
+                            <div className="input-group input-group mb-3 col-md-3 d-flex justify-content-end">
                                 <button onClick={(e) => search(e)} id="search-company" className="btn btn-outline-success">Search</button>
                             </div>
                         </div>
@@ -115,7 +116,7 @@ const SearchItemCheckIn = () => {
                                         <th scope="col">MFR PN</th>
                                         <th scope="col">Description</th>
                                         <th scope="col">Carrier</th>
-                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Qty</th>
                                         <th scope="col">Disposition</th>
                                         <th scope="col">VIEW</th>
                                         <th scope="col">DELETE</th>
@@ -132,8 +133,8 @@ const SearchItemCheckIn = () => {
                                             <td>{row.carrier}</td>
                                             <td>{row.quantity}</td>
                                             <td>{row.disposition}</td>
-                                            <td><button className="btn btn-sm btn-outline-info" onClick={(e) => handleView(e, row.customer_id)}>OPEN</button></td>
-                                            <td><button className="btn btn-sm btn-danger" onClick={(e) => handleRemove(e, row.customer_id)}>DELETE</button></td>
+                                            <td><button className="btn btn-sm btn-outline-info" onClick={(e) => handleView(e, row.company_id)}>OPEN</button></td>
+                                            <td><button className="btn btn-sm btn-danger" onClick={(e) => handleRemove(e, row.company_id)}>DELETE</button></td>
                                         </tr>
                                     ))}
 
@@ -143,7 +144,7 @@ const SearchItemCheckIn = () => {
                         </>
                     )}
                         
-                    <div>
+                    <div className="navButtons">
                         <button className="btn btn-outline-dark" onClick={() => navigate("../Search")}>Back</button>
                         <button className="btn btn-outline-dark" onClick={() => navigate("/")}>Home</button>
                     </div>
