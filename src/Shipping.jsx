@@ -69,7 +69,7 @@ const Shipping = ({ handleLogout }) => {
       });
     }
   }, [company_id]);
-  
+
   const [contact_name, setContactName] = useState(null);
   const [add1, setAdd1] = useState(null);
   const [add2, setAdd2] = useState(null);
@@ -92,6 +92,7 @@ const Shipping = ({ handleLogout }) => {
   const [request_ship_time, setRequested_ship_time] = useState(null);
   const [arrival_ship_date, setArrival_ship_date] = useState(null);
   const [arrival_ship_time, setArrival_ship_time] = useState(null);
+  const [saturday, setSaturday] = useState(0);
   const [fob, setFob] = useState(null);
   const [notes, setNotes] = useState(null);
 
@@ -101,6 +102,7 @@ const Shipping = ({ handleLogout }) => {
     Axios.post("http://localhost:3001/api/insertShipping",
       {
         order_id: order_id,
+        company_id: company_id,
         company_name: company_name,
         contact_name: contact_name,
         add1: add1,
@@ -124,6 +126,7 @@ const Shipping = ({ handleLogout }) => {
         request_ship_time: request_ship_time,
         arrival_ship_date: arrival_ship_date,
         arrival_ship_time: arrival_ship_time,
+        saturday: saturday,
         fob: fob,
         notes: notes
       }).then(() => {
@@ -178,6 +181,7 @@ const Shipping = ({ handleLogout }) => {
 
 
   return (
+
     <div className="page">
       <nav className="navbar navbar-expand-lg navbar-dark bg-maroon">
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -194,6 +198,7 @@ const Shipping = ({ handleLogout }) => {
         <button className="btn btn-outline-light" onClick={handleLogout}>Logout</button>
       </nav>
 
+
       <div className="container p-5">
         <div className="page-headers">
           <h2>ADD SHIPPING</h2>
@@ -204,7 +209,8 @@ const Shipping = ({ handleLogout }) => {
             <div className="section-headers">
               <h5>List of Shipping Addresses For</h5>
             </div>
-            <div className="table-responsive-md">
+
+            <div className="form-row">
               <table className="table">
                 <thead className="thead-light">
                   <tr>
@@ -226,6 +232,7 @@ const Shipping = ({ handleLogout }) => {
                 </tbody>
               </table>
             </div>
+
           </div>
 
           <div className="customer-info pt-3">
@@ -253,6 +260,13 @@ const Shipping = ({ handleLogout }) => {
                     return option.value === order_id;
                   })} id="order_id" required options={orderOptions} />
                 </div>
+              </div>
+            </div>
+
+            <div className="form-row">
+              <label htmlFor="company-id" className="col-md-3 col-form-label">Company ID</label>
+              <div className="input-group input-group-sm mb-3 col-md-8">
+                <input readOnly className="form-control" id="company-id" value={company_id} />
               </div>
             </div>
 
@@ -547,22 +561,29 @@ const Shipping = ({ handleLogout }) => {
                 </select>
               </div>
 
-              <div className="form-row">
-                <label htmlFor="fob" className="col-md-3 col-form-label">FOB</label>
-                <div className="input-group input-group-sm mb-3 col-md-3">
-                  <select onChange={(e) => setFob(e.target.value)} className="form-control" id="fob">
-                    <option value="">Select Option</option>
-                    <option value="point of shipment">Point of Shipment</option>
-                    <option value="none">None</option>
-                  </select>
+              <div className="input-group input-group-sm col-sm-3 pl-5">
+                <div className="form-group custom-control custom-checkbox">
+                  <input onChange={(prev) => setSaturday(prev => !prev)} checked={saturday} type="checkbox" className="custom-control-input" id="saturday" />
+                  <label htmlFor="saturday" className="custom-control-label">Saturday?</label>
                 </div>
               </div>
+            </div>
 
-              <div className="form-row">
-                <label htmlFor="notes" className="col-md-3 col-form-label">Notes</label>
-                <div className="input-group input-group-sm mb-3 col-md-8">
-                  <textarea onChange={(e) => setNotes(e.target.value)} rows="4" cols="50" className="form-control" id="custom-area" />
-                </div>
+            <div className="form-row">
+              <label htmlFor="fob" className="col-md-3 col-form-label">FOB</label>
+              <div className="input-group input-group-sm mb-3 col-md-3">
+                <select onChange={(e) => setFob(e.target.value)} className="form-control" id="fob">
+                  <option value="">Select Option</option>
+                  <option value="point of shipment">Point of Shipment</option>
+                  <option value="none">None</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="form-row">
+              <label htmlFor="notes" className="col-md-3 col-form-label">Notes</label>
+              <div className="input-group input-group-sm mb-3 col-md-8">
+                <textarea onChange={(e) => setNotes(e.target.value)} rows="4" cols="50" className="form-control" id="custom-area" />
               </div>
             </div>
 
