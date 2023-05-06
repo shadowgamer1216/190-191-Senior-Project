@@ -74,28 +74,29 @@ const SearchOrder = () => {
 
             </div>
 
-            <div className="container p-5">
+            <div className="search-container p-5">
                 <div className="page-headers">
                     <h2>SEARCH ORDER</h2>
                 </div>
                 <form>
-                    <div className="contact-info pt-3">
+                    <div className="contact-info p-4 col-md-6">
                         <div className="form-row">
-                            <label htmlFor="id" className="col-md-0 col-form-label"><b>Order ID</b></label>
-                            <div className="input-group input-group-sm mb-3 col-md-2">
-                                <input type="text" className="form-control" id="order-id" onChange={(e) =>{
+                            <label htmlFor="id" className="col-md-3 col-form-label"><b>Order ID</b></label>
+                            <div className="input-group input-group-sm mb-3 col-md-3">
+                                <input type="text" className="form-control" id="id" onChange={(e) =>{
                                 setOrderID(e.target.value)
                             }} maxLength = "128"/>
                             </div>
-
-                            <label htmlFor="name" className="col-md-0 col-form-label"><b>Product ID</b></label>
-                            <div className="input-group input-group-sm mb-3 col-md-4">
-                                <input type="text" className="form-control" id="product-id" onChange={(e) =>{
+                        </div>
+                        <div className="form-row">
+                            <label htmlFor="name" className="col-md-3 col-form-label"><b>Product ID</b></label>
+                            <div className="input-group input-group-sm mb-3 col-md-6">
+                                <input type="text" className="form-control" id="name" onChange={(e) =>{
                                 setProductID(e.target.value)
                             }} maxLength = "128"/>
                             </div>
 
-                            <div className="input-group input-group mb-3 col-md-1">
+                            <div className="input-group input-group mb-3 col-md-3 d-flex justify-content-end">
                                 <button onClick={(e) => search(e)} id="search-company" className="btn btn-outline-success">Search</button>
                             </div>
                         </div>
@@ -113,7 +114,7 @@ const SearchOrder = () => {
                                         <th scope="col">Order ID</th>
                                         <th scope="col">Company ID</th>
                                         <th scope="col">Product ID</th>
-                                        <th scope="col">Factor Order Quantity</th>
+                                        <th scope="col">Factory Order Qty</th>
                                         <th scope="col">VIEW</th>
                                         <th scope="col">DELETE</th>
                                     </tr>
@@ -126,8 +127,8 @@ const SearchOrder = () => {
                                             <td>{row.company_id}</td>
                                             <td>{row.product_id}</td>
                                             <td>{row.factor_order_quantity}</td>
-                                            <td><button className="btn btn-sm btn-outline-info" onClick={(e) => handleView(e, row.order_id)}>OPEN</button></td>
-                                            <td><button className="btn btn-sm btn-danger" onClick={(e) => handleRemove(e, row.order_id)}>DELETE</button></td>
+                                            <td><button className="btn btn-sm btn-outline-info" onClick={(e) => handleView(e, row.company_id)}>OPEN</button></td>
+                                            <td><button className="btn btn-sm btn-danger" onClick={(e) => handleRemove(e, row.company_id)}>DELETE</button></td>
                                         </tr>
                                     ))}
 
@@ -137,7 +138,7 @@ const SearchOrder = () => {
                         </>
                     )}
                         
-                    <div>
+                    <div className="navButtons">
                         <button className="btn btn-outline-dark" onClick={() => navigate("../Search")}>Back</button>
                         <button className="btn btn-outline-dark" onClick={() => navigate("/")}>Home</button>
                     </div>
