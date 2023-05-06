@@ -23,122 +23,122 @@ const Shipping = ({ handleLogout }) => {
   const nextShippingId = latestShippingId + 1;
   useEffect(() => {
     Axios.get('http://localhost:3001/api/getLatestShippingId')
-    .then(response => {
-      setShippingId(response.data[0]['MAX(shipping_id)']);
-    })
-    .catch(error => {
-      console.log(error);
-    });
+      .then(response => {
+        setShippingId(response.data[0]['MAX(shipping_id)']);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }, []);
 
   const [orderOptions, setOrderOptions] = useState([]);
   useEffect(() => {
     Axios.get('http://localhost:3001/api/getOrderIdList')
-    .then(response => {
-      const options = response.data.map(option => {
-        return { value: option.order_id, label: option.order_id};
-      });
-      setOrderOptions(options);
-    })
-    .catch(error => {
-      console.log(error);
-    });
-  }, []);
-
-  const[order_id, setOrderId] = useState(null);
-  const [orderData, setOrderData] = useState(null);
-  useEffect(() => {
-    if(order_id) {
-      Axios.get(`http://localhost:3001/api/order/${order_id}`)
       .then(response => {
-        setOrderData(response.data);
+        const options = response.data.map(option => {
+          return { value: option.order_id, label: option.order_id };
+        });
+        setOrderOptions(options);
       })
       .catch(error => {
         console.log(error);
       });
+  }, []);
+
+  const [order_id, setOrderId] = useState(null);
+  const [orderData, setOrderData] = useState(null);
+  useEffect(() => {
+    if (order_id) {
+      Axios.get(`http://localhost:3001/api/order/${order_id}`)
+        .then(response => {
+          setOrderData(response.data);
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
   }, [order_id]);
   var company_id = orderData?.company_id ?? '';
-  const[company_name, setCompanyName] = useState(null);
+  const [company_name, setCompanyName] = useState(null);
   useEffect(() => {
-    if(company_id) {
-      Axios.get(`http://localhost:3001/api/company/${company_id}`).then((response) =>{
+    if (company_id) {
+      Axios.get(`http://localhost:3001/api/company/${company_id}`).then((response) => {
         setCompanyName(response.data.company_name);
       }).catch(err => {
         console.log(err);
       });
     }
-  }, [company_id]); 
-
-  const[contact_name, setContactName] = useState(null);
-  const[add1, setAdd1] = useState(null);
-  const[add2, setAdd2] = useState(null);
-  const[city, setCity] = useState(null);
-  const[state, setState] = useState(null);
-  const[zip, setZip] = useState(null);
-  const[province, setProvince] = useState(null);
-  const[country, setCountry] = useState(null);
-  const[phone, setPhone] = useState(null);
-  const[fax, setFax] = useState(null);
-  const[email, setEmail] = useState(null);
-  const[fedex, setFedex] = useState(null);
-  const[ups, setUps] = useState(null);
-  const[courier_willcall, setCourier_willcall] = useState(null);
-  const[abs, setAbs] = useState(null);
-  const[other_ship_method, setOther_ship_method] = useState(null);
-  const[payment_type, setPayment_type] = useState(null);
-  const[account_number, setAccount_number] = useState(null);
-  const[request_ship_date, setRequested_ship_date] = useState(null);
-  const[request_ship_time, setRequested_ship_time] = useState(null);
-  const[arrival_ship_date, setArrival_ship_date] = useState(null);
-  const[arrival_ship_time, setArrival_ship_time] = useState(null);
-  const[fob, setFob] = useState(null);
-  const[notes, setNotes] = useState(null);
+  }, [company_id]);
+  
+  const [contact_name, setContactName] = useState(null);
+  const [add1, setAdd1] = useState(null);
+  const [add2, setAdd2] = useState(null);
+  const [city, setCity] = useState(null);
+  const [state, setState] = useState(null);
+  const [zip, setZip] = useState(null);
+  const [province, setProvince] = useState(null);
+  const [country, setCountry] = useState(null);
+  const [phone, setPhone] = useState(null);
+  const [fax, setFax] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [fedex, setFedex] = useState(null);
+  const [ups, setUps] = useState(null);
+  const [courier_willcall, setCourier_willcall] = useState(null);
+  const [abs, setAbs] = useState(null);
+  const [other_ship_method, setOther_ship_method] = useState(null);
+  const [payment_type, setPayment_type] = useState(null);
+  const [account_number, setAccount_number] = useState(null);
+  const [request_ship_date, setRequested_ship_date] = useState(null);
+  const [request_ship_time, setRequested_ship_time] = useState(null);
+  const [arrival_ship_date, setArrival_ship_date] = useState(null);
+  const [arrival_ship_time, setArrival_ship_time] = useState(null);
+  const [fob, setFob] = useState(null);
+  const [notes, setNotes] = useState(null);
 
 
   const handleSubmit = (e) => {
     e.preventDefault();
     Axios.post("http://localhost:3001/api/insertShipping",
-    {
-      order_id: order_id,
-      company_name: company_name,
-      contact_name: contact_name,
-      add1: add1,
-      add2: add2,
-      city: city,
-      state: state,
-      zip: zip,
-      province: province,
-      country: country,
-      phone: phone,
-      fax: fax,
-      email: email,
-      fedex: fedex,
-      ups: ups,
-      courier_willcall: courier_willcall,
-      abs: abs,
-      other_ship_method: other_ship_method,
-      payment_type: payment_type,
-      account_number: account_number,
-      request_ship_date: request_ship_date,
-      request_ship_time: request_ship_time,
-      arrival_ship_date: arrival_ship_date,
-      arrival_ship_time: arrival_ship_time,
-      fob: fob,
-      notes: notes
-    }).then(()=> {
-      alert('Inserted new shipping');
-    }).catch(err => {
-      console.log(err);
-    });
+      {
+        order_id: order_id,
+        company_name: company_name,
+        contact_name: contact_name,
+        add1: add1,
+        add2: add2,
+        city: city,
+        state: state,
+        zip: zip,
+        province: province,
+        country: country,
+        phone: phone,
+        fax: fax,
+        email: email,
+        fedex: fedex,
+        ups: ups,
+        courier_willcall: courier_willcall,
+        abs: abs,
+        other_ship_method: other_ship_method,
+        payment_type: payment_type,
+        account_number: account_number,
+        request_ship_date: request_ship_date,
+        request_ship_time: request_ship_time,
+        arrival_ship_date: arrival_ship_date,
+        arrival_ship_time: arrival_ship_time,
+        fob: fob,
+        notes: notes
+      }).then(() => {
+        alert('Inserted new shipping');
+      }).catch(err => {
+        console.log(err);
+      });
   }
 
   const Sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => { //validate if all required fields have inputs
-    setSubmitting(order_id && contact_name && add1 && city && state && zip && country && phone && email && payment_type && account_number && request_ship_date && request_ship_time && arrival_ship_date && arrival_ship_time);
-  }, [order_id, contact_name, add1, city, state, zip, country, phone, email, payment_type, account_number, request_ship_date, request_ship_time, arrival_ship_date, arrival_ship_time]);
+    setSubmitting(order_id && contact_name && add1 && city && state && zip && country && phone && email);
+  }, [order_id, contact_name, add1, city, state, zip, country, phone, email]);
 
   const handleNavigate = async (id) => {
     const idPassed = id.toString();
@@ -178,7 +178,7 @@ const Shipping = ({ handleLogout }) => {
 
 
   return (
-    <div className="page"> 
+    <div className="page">
       <nav className="navbar navbar-expand-lg navbar-dark bg-maroon">
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
@@ -200,13 +200,13 @@ const Shipping = ({ handleLogout }) => {
         </div>
 
         <form id="shipping_form" onSubmit={handleSubmit} autoComplete="off">
-          <div className ="list-address pt-3">
+          <div className="list-address pt-3">
             <div className="section-headers">
-                <h5>List of Shipping Addresses For</h5>
+              <h5>List of Shipping Addresses For</h5>
             </div>
             <div className="table-responsive-md">
               <table className="table">
-                <thead className= "thead-light">
+                <thead className="thead-light">
                   <tr>
                     <th scope="col">Edit</th>
                     <th scope="col">Company</th>
@@ -228,188 +228,188 @@ const Shipping = ({ handleLogout }) => {
             </div>
           </div>
 
-          <div className ="customer-info pt-3">
+          <div className="customer-info pt-3">
             <div className="section-headers">
               <h5>Customer Shipping Information</h5>
             </div>
-            
+
             <div className="form-row">
-              <label htmlFor="date" 
+              <label htmlFor="date"
                 className="col-md-4 col-form-label"><h5>Date:</h5></label>
             </div>
 
             <div className="form-row">
-              <label htmlFor="customer-id" className="col-md-3 col-form-label">Choose Order <span style={{ color: 'red' }}>*</span></label>
+              <label htmlFor="shipping_id" className="col-3 col-form-label">Shipping ID</label>
+              <div className="input-group input-group-sm mb-3 col-md-2">
+                <input tabIndex="-1" readOnly type="text" className="form-control" id="shipping_id" value={nextShippingId} />
+              </div>
+            </div>
+
+            <div className="form-row">
+              <label htmlFor="order_id" className="col-md-3 col-form-label">Choose Order <span style={{ color: 'red' }}>*</span></label>
               <div className="input-group input-group mb-3 col-md-3">
                 <div className="form-control p-0">
-                  <Select onChange={(e) => setOrderId(e.value)} className="react-select" styles={customStyle} value={orderOptions.filter(function(option) {
+                  <Select onChange={(e) => setOrderId(e.value)} className="react-select" styles={customStyle} value={orderOptions.filter(function (option) {
                     return option.value === order_id;
-                  })} id="customer-id" required options={orderOptions}/>
+                  })} id="order_id" required options={orderOptions} />
                 </div>
               </div>
             </div>
 
-            <div className ="form-row">
-              <label htmlFor="company-id" className="col-md-3 col-form-label">Company ID</label>
-              <div className ="input-group input-group-sm mb-3 col-md-8">
-                <input readOnly className="form-control" id="company-id" value={company_id}/>
+            <div className="form-row">
+              <label htmlFor="company_name" className="col-md-3 col-form-label">Company Name</label>
+              <div className="input-group input-group-sm mb-3 col-md-8">
+                <input readOnly className="form-control" id="company_name" value={company_name} />
               </div>
             </div>
 
-            <div className ="form-row">
-              <label htmlFor="company-name" className="col-md-3 col-form-label">Company Name</label>
-              <div className ="input-group input-group-sm mb-3 col-md-8">
-                <input readOnly className="form-control" id="company-name" value={company_name}/>
+            <div className="form-row">
+              <label htmlFor="contact_name" className="col-md-3 col-form-label">Contact Name<span style={{ color: 'red' }}> *</span></label>
+              <div className="input-group input-group-sm mb-3 col-md-8">
+                <input onChange={(e) => setContactName(e.target.value)} className="form-control" id="contact_name" required />
               </div>
             </div>
 
-            <div className ="form-row">
-              <label htmlFor="contact-name" className="col-md-3 col-form-label">Contact Name<span style={{ color: 'red' }}> *</span></label>
-              <div className ="input-group input-group-sm mb-3 col-md-8">
-                <input onChange={(e) => setContactName(e.target.value)} className="form-control" name="contact-name" required/>
-              </div>
-            </div>
-
-            <div className ="form-row">
+            <div className="form-row">
               <label htmlFor="add1" className="col-md-3 col-form-label">Address 1 <span style={{ color: 'red' }}>*</span></label>
-              <div className ="input-group input-group-sm mb-3 col-md-8">
-                <input onChange={(e) => setAdd1(e.target.value)} className="form-control" name="add1" required/>
+              <div className="input-group input-group-sm mb-3 col-md-8">
+                <input onChange={(e) => setAdd1(e.target.value)} className="form-control" id="add1" required />
               </div>
             </div>
 
-            <div className ="form-row">
+            <div className="form-row">
               <label htmlFor="add2" className="col-md-3 col-form-label">Address 2</label>
-              <div className ="input-group input-group-sm mb-3 col-md-8">
-                <input onChange={(e) => setAdd2(e.target.value)} className="form-control" name="add2"/>
+              <div className="input-group input-group-sm mb-3 col-md-8">
+                <input onChange={(e) => setAdd2(e.target.value)} className="form-control" id="add2" />
               </div>
             </div>
 
-            <div className ="form-row">
+            <div className="form-row">
               <label htmlFor="csz" className="col-md-3 col-form-label">City | State | Zip <span style={{ color: 'red' }}> *</span></label>
-              <div className ="input-group input-group-sm mb-3 col-md-4">
-                <input onChange={(e) => setCity(e.target.value)} className="form-control" name="city" required/>
+              <div className="input-group input-group-sm mb-3 col-md-4">
+                <input onChange={(e) => setCity(e.target.value)} className="form-control" id="city" required />
               </div>
-              
+
               <div className="input-group input-group-sm mb-3 col-md-2">
-                <select onChange={(e) => setState(e.target.value)} className="form-control" name="country_state" required>
-                  <option value="">Select a State</option>
-                  <option value="AL">Alabama</option>
-                  <option value="AK">Alaska</option>
-                  <option value="AZ">Arizona</option>
-                  <option value="AR">Arkansas</option>
-                  <option value="CA">California</option>
-                  <option value="CO">Colorado</option>
-                  <option value="CT">Connecticut</option>
-                  <option value="DE">Delaware</option>
-                  <option value="DC">District Of Columbia</option>
-                  <option value="FL">Florida</option>
-                  <option value="GA">Georgia</option>
-                  <option value="HI">Hawaii</option>
-                  <option value="ID">Idaho</option>
-                  <option value="IL">Illinois</option>
-                  <option value="IN">Indiana</option>
-                  <option value="IA">Iowa</option>
-                  <option value="KS">Kansas</option>
-                  <option value="KY">Kentucky</option>
-                  <option value="LA">Louisiana</option>
-                  <option value="ME">Maine</option>
-                  <option value="MD">Maryland</option>
-                  <option value="MA">Massachusetts</option>
-                  <option value="MI">Michigan</option>
-                  <option value="MN">Minnesota</option>
-                  <option value="MS">Mississippi</option>
-                  <option value="MO">Missouri</option>
-                  <option value="MT">Montana</option>
-                  <option value="NE">Nebraska</option>
-                  <option value="NV">Nevada</option>
-                  <option value="NH">New Hampshire</option>
-                  <option value="NJ">New Jersey</option>
-                  <option value="NM">New Mexico</option>
-                  <option value="NY">New York</option>
-                  <option value="NC">North Carolina</option>
-                  <option value="ND">North Dakota</option>
-                  <option value="OH">Ohio</option>
-                  <option value="OK">Oklahoma</option>
-                  <option value="OR">Oregon</option>
-                  <option value="PA">Pennsylvania</option>
-                  <option value="RI">Rhode Island</option>
-                  <option value="SC">South Carolina</option>
-                  <option value="SD">South Dakota</option>
-                  <option value="TN">Tennessee</option>
-                  <option value="TX">Texas</option>
-                  <option value="UT">Utah</option>
-                  <option value="VT">Vermont</option>
-                  <option value="VA">Virginia</option>
-                  <option value="WA">Washington</option>
-                  <option value="WV">West Virginia</option>
-                  <option value="WI">Wisconsin</option>
-                  <option value="WY">Wyoming</option>
+                <select onChange={(e) => setState(e.target.value)} className="form-control" id="state" required>
+                  <option value="">Select State</option>
+                  <option value="AL">AL</option>
+                  <option value="AK">AK</option>
+                  <option value="AR">AR</option>
+                  <option value="AZ">AZ</option>
+                  <option value="CA">CA</option>
+                  <option value="CO">CO</option>
+                  <option value="CT">CT</option>
+                  <option value="DC">DC</option>
+                  <option value="DE">DE</option>
+                  <option value="FL">FL</option>
+                  <option value="GA">GA</option>
+                  <option value="HI">HI</option>
+                  <option value="IA">IA</option>
+                  <option value="ID">ID</option>
+                  <option value="IL">IL</option>
+                  <option value="IN">IN</option>
+                  <option value="KS">KS</option>
+                  <option value="KY">KY</option>
+                  <option value="LA">LA</option>
+                  <option value="MA">MA</option>
+                  <option value="MD">MD</option>
+                  <option value="ME">ME</option>
+                  <option value="MI">MI</option>
+                  <option value="MN">MN</option>
+                  <option value="MO">MO</option>
+                  <option value="MS">MS</option>
+                  <option value="MT">MT</option>
+                  <option value="NC">NC</option>
+                  <option value="NE">NE</option>
+                  <option value="NH">NH</option>
+                  <option value="NJ">NJ</option>
+                  <option value="NM">NM</option>
+                  <option value="NV">NV</option>
+                  <option value="NY">NY</option>
+                  <option value="ND">ND</option>
+                  <option value="OH">OH</option>
+                  <option value="OK">OK</option>
+                  <option value="OR">OR</option>
+                  <option value="PA">PA</option>
+                  <option value="RI">RI</option>
+                  <option value="SC">SC</option>
+                  <option value="SD">SD</option>
+                  <option value="TN">TN</option>
+                  <option value="TX">TX</option>
+                  <option value="UT">UT</option>
+                  <option value="VT">VT</option>
+                  <option value="VA">VA</option>
+                  <option value="WA">WA</option>
+                  <option value="WI">WI</option>
+                  <option value="WV">WV</option>
+                  <option value="WY">WY</option>
                 </select>
               </div>
 
-              <div className ="input-group input-group-sm mb-3 col-md-2">
+              <div className="input-group input-group-sm mb-3 col-md-2">
                 <input type="text" inputMode="numeric" onChange={(e) => setZip(e.target.value)} className="form-control"
-                  name="zip" required/>
+                  id="zip" required />
               </div>
             </div>
 
-            <div className ="form-row">
+            <div className="form-row">
               <label htmlFor="province" className="col-md-3 col-form-label">Province</label>
-              <div className ="input-group input-group-sm mb-3 col-md-8">
+              <div className="input-group input-group-sm mb-3 col-md-8">
                 <input onChange={(e) => setProvince(e.target.value)} className="form-control"
-                  name="province"/>
+                  id="province" />
               </div>
             </div>
 
-            <div className ="form-row">
+            <div className="form-row">
               <label htmlFor="country" className="col-md-3 col-form-label">Country
-              <span style={{ color: 'red' }}> *</span>
+                <span style={{ color: 'red' }}> *</span>
               </label>
-              <div className ="input-group input-group-sm mb-3 col-md-8">
+              <div className="input-group input-group-sm mb-3 col-md-8">
                 <input onChange={(e) => setCountry(e.target.value)} className="form-control"
-                  name="country" required/>
+                  id="country" required />
               </div>
             </div>
 
-            <div className ="form-row">
+            <div className="form-row">
               <label htmlFor="phone" className="col-md-3 col-form-label">Phone
-                <span style={{ color: 'red' }}> *</span> 
+                <span style={{ color: 'red' }}> *</span>
               </label>
-              <div className ="input-group input-group-sm mb-3 col-md-8">
+              <div className="input-group input-group-sm mb-3 col-md-8">
                 <input onChange={(e) => setPhone(e.target.value)} className="form-control"
-                name="phone" required/>
+                  id="phone" required />
               </div>
             </div>
 
-            <div className ="form-row">
+            <div className="form-row">
               <label htmlFor="fax" className="col-md-3 col-form-label">Fax</label>
-              <div className ="input-group input-group-sm mb-3 col-md-8">
+              <div className="input-group input-group-sm mb-3 col-md-8">
                 <input onChange={(e) => setFax(e.target.value)} className="form-control"
-                  name="fax"/>
+                  id="fax" />
               </div>
             </div>
 
-            <div className ="form-row">
+            <div className="form-row">
               <label htmlFor="email" className="col-md-3 col-form-label">Email
                 <span style={{ color: 'red' }}> *</span>
               </label>
-              <div className ="input-group input-group-sm mb-3 col-md-8">
+              <div className="input-group input-group-sm mb-3 col-md-8">
                 <input onChange={(e) => setEmail(e.target.value)} className="form-control"
-                  name="email" required/>
+                  id="email" required />
               </div>
             </div>
 
           </div>
 
-          <div className ="shipment-info pt-3">
+          <div className="shipment-info pt-3">
             <div className="section-headers">
               <h5>Shipment Information</h5>
             </div>
-            
-            <div className ="form-row">
+
+            <div className="form-row">
               <label htmlFor="fedex" className="col-md-3 col-form-label">Fed Ex</label>
               <div className="input-group input-group-sm mb-3 col-md-3">
-                <select onChange={(e) => setFedex(e.target.value)} className="form-control" name="fedex" id="fedex">
+                <select onChange={(e) => setFedex(e.target.value)} className="form-control" id="fedex">
                   <option value="none">None</option>
                   <option value="air-freight">Air Freight</option>
                   <option value="custom-critical-freight">Cusom Critical Freight</option>
@@ -430,10 +430,10 @@ const Shipping = ({ handleLogout }) => {
               </div>
             </div>
 
-            <div className ="form-row">
+            <div className="form-row">
               <label htmlFor="ups" className="col-md-3 col-form-label">UPS</label>
               <div className="input-group input-group-sm mb-3 col-md-3">
-                <select onChange={(e) => setUps(e.target.value)} className="form-control" name="ups" id="ups">
+                <select onChange={(e) => setUps(e.target.value)} className="form-control" id="ups">
                   <option value="none">None</option>
                   <option value="2day-air">2 Day Air</option>
                   <option value="2day-airam">2 Day Air AM</option>
@@ -450,10 +450,10 @@ const Shipping = ({ handleLogout }) => {
               </div>
             </div>
 
-            <div className ="form-row">
-              <label htmlFor="c-w" className="col-md-3 col-form-label">Courier/Will Call</label>
+            <div className="form-row">
+              <label htmlFor="courier_willcall" className="col-md-3 col-form-label">Courier/Will Call</label>
               <div className="input-group input-group-sm mb-3 col-md-3">
-                <select onChange={(e) => setCourier_willcall(e.target.value)} className="form-control" name="courier_willcall" id="c-w">
+                <select onChange={(e) => setCourier_willcall(e.target.value)} className="form-control" id="courier_willcall">
                   <option value="none">None</option>
                   <option value="courier">Courier</option>
                   <option value="willcall">Will Call</option>
@@ -461,30 +461,28 @@ const Shipping = ({ handleLogout }) => {
               </div>
             </div>
 
-            <div className ="form-row">
+            <div className="form-row">
               <label htmlFor="abs" className="col-md-3 col-form-label">ABS Van</label>
               <div className="input-group input-group-sm mb-3 col-md-3">
-                <select onChange={(e) => setAbs(e.target.value)} className="form-control" name="abs" id="abs">
+                <select onChange={(e) => setAbs(e.target.value)} className="form-control" id="abs">
                   <option value="none">None</option>
                   <option value="abs-van">ABS Van</option>
                 </select>
               </div>
             </div>
 
-            <div className ="form-row">
-              <label htmlFor="other-ship" className="col-md-3 col-form-label">Other Ship Method</label>
-              <div className ="input-group input-group-sm mb-3 col-md-8">
+            <div className="form-row">
+              <label htmlFor="other_ship_method" className="col-md-3 col-form-label">Other Ship Method</label>
+              <div className="input-group input-group-sm mb-3 col-md-8">
                 <input onChange={(e) => setOther_ship_method(e.target.value)} className="form-control"
-                  name="other_ship_method"/>
+                  id="other_ship_method" />
               </div>
             </div>
 
-            <div className ="form-row">
-              <label htmlFor="pay-type" className="col-md-3 col-form-label">Payment Type
-                <span style={{ color: 'red' }}>*</span>
-              </label>
+            <div className="form-row">
+              <label htmlFor="payment_type" className="col-md-3 col-form-label">Payment Type</label>
               <div className="input-group input-group-sm mb-3 col-md-3">
-                <select onChange={(e) => setPayment_type(e.target.value)} className="form-control" name="payment_type" id="pay-type" placeholder="If 'None, Please enter N/A." required>
+                <select onChange={(e) => setPayment_type(e.target.value)} className="form-control" id="payment_type">
                   <option value="">Select Option</option>
                   <option value="credit">Credit</option>
                   <option value="debit">Debit</option>
@@ -492,27 +490,23 @@ const Shipping = ({ handleLogout }) => {
               </div>
             </div>
 
-            <div className ="form-row">
-              <label htmlFor="acc-num" className="col-md-3 col-form-label">Account Number
-                <span style={{ color: 'red' }}> *</span>
+            <div className="form-row">
+              <label htmlFor="account_number" className="col-md-3 col-form-label">Account Number
               </label>
-              <div className ="input-group input-group-sm mb-3 col-md-8" required>
+              <div className="input-group input-group-sm mb-3 col-md-8" required>
                 <input onChange={(e) => setAccount_number(e.target.value)} className="form-control"
-                  name="account_number"/>
+                  id="account_number" />
               </div>
             </div>
 
-            <div className ="form-row">
-              <label htmlFor="ship-date" className="col-md-3 col-form-label">Requested Ship Date/Time
-              <span style={{ color: 'red' }}> *</span>
-              </label>
-              <div className ="input-group input-group-sm mb-3 col-md-3">
-                <input type="datetime-local" className="form-control" onChange={(e) => setRequested_ship_date(e.target.value)}
-                  name="request_ship_date" required/>
+            <div className="form-row">
+              <label htmlFor="request_ship_date" className="col-md-3 col-form-label">Requested Ship Date/Time</label>
+              <div className="input-group input-group-sm mb-3 col-md-3">
+                <input type="datetime-local" className="form-control" onChange={(e) => setRequested_ship_date(e.target.value)} />
               </div>
 
               <div className="input-group input-group-sm mb-3 col-md-3">
-                <select onChange={(e) => setRequested_ship_time(e.target.value)} className="form-control" name="request_ship_time" id="ship-time" required>
+                <select onChange={(e) => setRequested_ship_time(e.target.value)} className="form-control" id="request_ship_time" >
                   <option value="">Select Time</option>
                   <option value="9am">9:00am</option>
                   <option value="10am">10:00am</option>
@@ -529,17 +523,15 @@ const Shipping = ({ handleLogout }) => {
               </div>
             </div>
 
-            <div className ="form-row">
-              <label htmlFor="arr-date" className="col-md-3 col-form-label">Requested Arrival Date/Time
-                <span style={{ color: 'red' }}> *</span>
-              </label>
-              <div className ="input-group input-group-sm mb-3 col-md-3">
+            <div className="form-row">
+              <label htmlFor="arrival_ship_date" className="col-md-3 col-form-label">Requested Arrival Date/Time</label>
+              <div className="input-group input-group-sm mb-3 col-md-3">
                 <input type="datetime-local" className="form-control" onChange={(e) => setArrival_ship_date(e.target.value)}
-                  name="arrival_ship_date" required/>
+                  name="arrival_ship_date" />
               </div>
 
               <div className="input-group input-group-sm mb-3 col-md-3">
-                <select onChange={(e) => setArrival_ship_time(e.target.value)}className="form-control" name="arrival_ship_time" id="arrival-time" required>
+                <select onChange={(e) => setArrival_ship_time(e.target.value)} className="form-control" id="arrival_ship_time">
                   <option value="">Select Time</option>
                   <option value="9am">9:00am</option>
                   <option value="10am">10:00am</option>
@@ -555,72 +547,64 @@ const Shipping = ({ handleLogout }) => {
                 </select>
               </div>
 
-              <div className="input-group input-group-sm col-md-3 pl-3">
-                <div className="form-group custom-control custom-checkbox">
-                  <input type="checkbox" className="custom-control-input" name="saturday_deliv" />
-                  <label htmlFor="saturday" className="custom-control-label">Saturday?</label>
+              <div className="form-row">
+                <label htmlFor="fob" className="col-md-3 col-form-label">FOB</label>
+                <div className="input-group input-group-sm mb-3 col-md-3">
+                  <select onChange={(e) => setFob(e.target.value)} className="form-control" id="fob">
+                    <option value="">Select Option</option>
+                    <option value="point of shipment">Point of Shipment</option>
+                    <option value="none">None</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="form-row">
+                <label htmlFor="notes" className="col-md-3 col-form-label">Notes</label>
+                <div className="input-group input-group-sm mb-3 col-md-8">
+                  <textarea onChange={(e) => setNotes(e.target.value)} rows="4" cols="50" className="form-control" id="custom-area" />
                 </div>
               </div>
             </div>
 
-            <div className ="form-row">
-              <label htmlFor="fob" className="col-md-3 col-form-label">FOB</label>
-              <div className="input-group input-group-sm mb-3 col-md-3">
-                <select onChange={(e) => setFob(e.target.value)}className="form-control" name="fob" id="fob">
-                  <option value="">Select Option</option>
-                  <option value="point of shipment">Point of Shipment</option>
-                  <option value="none">None</option>
-                </select>
-              </div>
-            </div>
-
-            <div className="form-row">
-              <label htmlFor="notes" className="col-md-3 col-form-label">Notes</label>
-              <div className="input-group input-group-sm mb-3 col-md-8">
-                <textarea onChange={(e) => setNotes(e.target.value)} rows="4" cols="50" className="form-control" name="notes" id="custom-area" />
-              </div>
-            </div>
-          </div>
-
-          <div className ="list-address pt-3">
-            <div className="section-headers">
+            <div className="list-address pt-3">
+              <div className="section-headers">
                 <h5>Order Details</h5>
-            </div>
-          </div>
-
-          <div className="order-detail">
-            <div className="form-row">
-              <div className="input-group input-group-sm mb-3 col-md-3">
-                <div className="col">
-                  <label htmlFor="item">Item</label>
-                  <input type="text" className="form-control" id="search-dir" readOnly></input>
-                </div>
-              </div>
-              <div className="input-group input-group-sm mb-3 col-md-3">
-                <div className="col">
-                  <label htmlFor="total-order">Total of Order</label>
-                  <input type="text" className="form-control" id="search-dir" readOnly></input>
-                </div>
-              </div>
-              <div className="input-group input-group-sm mb-3 col-md-3">
-                <div className="col">
-                  <label htmlFor="already-ordered">Already Ordered</label>
-                  <input type="text" className="form-control" id="search-dir" readOnly></input>
-                </div>
-              </div>
-              <div className="input-group input-group-sm mb-3 col-md-3">
-                <div className="col">
-                  <label htmlFor="ship-to-address">Ship to This Address</label>
-                  <input type="text" className="form-control" id="search-dir" readOnly></input>
-                </div>
               </div>
             </div>
-          </div>
 
-          <div className="add">
-            <button onClick={() => handleNavigate(nextShippingId)} disabled={!submitting} type="submit" id="add-company" className="btn btn-success m-2">Add</button>
-          </div>
+            <div className="order-detail">
+              <div className="form-row">
+                <div className="input-group input-group-sm mb-3 col-md-3">
+                  <div className="col">
+                    <label htmlFor="item">Item</label>
+                    <input type="text" className="form-control" id="search_dir" readOnly></input>
+                  </div>
+                </div>
+                <div className="input-group input-group-sm mb-3 col-md-3">
+                  <div className="col">
+                    <label htmlFor="total_order">Total of Order</label>
+                    <input type="text" className="form-control" id="search_dir" readOnly></input>
+                  </div>
+                </div>
+                <div className="input-group input-group-sm mb-3 col-md-3">
+                  <div className="col">
+                    <label htmlFor="already_ordered">Already Ordered</label>
+                    <input type="text" className="form-control" id="search_dir" readOnly></input>
+                  </div>
+                </div>
+                <div className="input-group input-group-sm mb-3 col-md-3">
+                  <div className="col">
+                    <label htmlFor="ship_to_address">Ship to This Address</label>
+                    <input type="text" className="form-control" id="search_dir" readOnly></input>
+                  </div>
+                </div>
+              </div>
+            </div>
 
+            <div className="submit">
+              <button type="submit" onClick={() => handleNavigate(nextShippingId)} disabled={!submitting} id="submit_company" className="btn btn-success">Submit</button>
+            </div>
+          </div>
         </form>
         <br></br>
         <button className="btn btn-outline-dark" onClick={() => navigate(-1)}>Home</button>
@@ -644,3 +628,4 @@ const Shipping = ({ handleLogout }) => {
   )
 }
 export default Shipping;
+
