@@ -332,6 +332,7 @@ CREATE TABLE shipping_table (
     request_ship_time VARCHAR(50),
     arrival_ship_date DATE DEFAULT NULL,
     arrival_ship_time VARCHAR(50),
+    saturday INT DEFAULT NULL,
     fob VARCHAR(50) DEFAULT NULL,
     notes TEXT,
     PRIMARY KEY (shipping_id),
