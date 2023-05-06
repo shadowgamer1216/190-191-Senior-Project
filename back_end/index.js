@@ -906,11 +906,12 @@ app.post("/api/insertShipping", (req, res) =>{
     const request_ship_time = req.body.request_ship_time;
     const arrival_ship_date = req.body.arrival_ship_date;
     const arrival_ship_time = req.body.arrival_ship_time;
+    const saturday = req.body.saturday;
     const fob = req.body.fob;
     const notes = req.body.notes;
 
-    const sqlInsert =  "INSERT INTO shipping_table (order_id, company_name, contact_name, add1, add2, city, state, zip, province, country, phone, fax, email, fedex, ups, courier_willcall, abs, other_ship_method, payment_type, account_number, request_ship_date, request_ship_time, arrival_ship_date, arrival_ship_time, fob, notes) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-    db.query(sqlInsert, [order_id, company_name, contact_name, add1, add2, city, state, zip, province, country, phone, fax, email, fedex, ups, courier_willcall, abs, other_ship_method, payment_type, account_number, request_ship_date, request_ship_time, arrival_ship_date, arrival_ship_time, fob, notes], (err, result) => {
+    const sqlInsert =  "INSERT INTO shipping_table (order_id, company_name, contact_name, add1, add2, city, state, zip, province, country, phone, fax, email, fedex, ups, courier_willcall, abs, other_ship_method, payment_type, account_number, request_ship_date, request_ship_time, arrival_ship_date, arrival_ship_time, saturday, fob, notes) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    db.query(sqlInsert, [order_id, company_name, contact_name, add1, add2, city, state, zip, province, country, phone, fax, email, fedex, ups, courier_willcall, abs, other_ship_method, payment_type, account_number, request_ship_date, request_ship_time, arrival_ship_date, arrival_ship_time, saturday, fob, notes], (err, result) => {
         console.log(result);
     })
 });
