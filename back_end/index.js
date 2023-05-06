@@ -60,7 +60,7 @@ app.post("/api/insertContact", (req, res)=> {
     const phone = req.body.phone;
     const extension = req.body.extension;
     const fax = req.body.fax;
-    const email = req.body.fax;
+    const email = req.body.email;
     const cell_phone_number = req.body.cell_phone_number;
     const third_party_company = req.body.third_party_company;
     const notes = req.body.notes;
@@ -519,9 +519,11 @@ app.get("/api/getShipping", (req, res) =>{
     let query = "SELECT * FROM shipping_table";
     let queryParams = [];
 
+    //I think we need to handle ints differently from varchars
     if (order_id) {
-        query += " WHERE order_id LIKE ?";
-        queryParams.push(`%${order_id}%`);
+        query += " WHERE order_id = ?";
+        //queryParams.push(`%${order_id}%`);
+        queryParams.push(order_id);
     }
 
     db.query(query, queryParams, (err, result) =>{

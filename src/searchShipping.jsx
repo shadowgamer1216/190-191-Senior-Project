@@ -26,7 +26,7 @@ const SearchShipping = () => {
     // search shipping function
     const search = (e) => {
         e.preventDefault();
-        Axios.get(`http://localhost:3001/api/getSearchShipiing?order_id=${order_id}`)
+        Axios.get(`http://localhost:3001/api/getSearchShipping?order_id=${order_id}`)
         .then((response) =>{
             setData(response.data);
         })

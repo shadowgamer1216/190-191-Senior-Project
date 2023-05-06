@@ -20,8 +20,8 @@ const SearchCompany = () => {
     }, []);
 
     const [data, setData] = useState([]);
-    const [company_id, setCompanyID] = useState('');
-    const [company_name, setCompanyName] = useState('');
+    const [company_id, setCompanyID] = useState("");
+    const [company_name, setCompanyName] = useState("");
 
     // search company function
     const search = (e) => {
@@ -40,13 +40,6 @@ const SearchCompany = () => {
         const idPassed = id.toString();
         navigate(`/company/${idPassed}`);
     }
-    
-    // const handleView = (e, id) => {     // create new tab from list, open view (not working, due to firebase)
-    //     e.preventDefault();
-    //     const idPassed = id.toString();
-    //     const url = `/company/${idPassed}`;
-    //     window.open(url, '_blank');
-    // }
 
     const handleRemove = (e, id) => {
         e.preventDefault();
@@ -85,24 +78,25 @@ const SearchCompany = () => {
                 <div className="page-headers">
                     <h2>SEARCH COMPANY</h2>
                 </div>
-                <form autoComplete="off">
+                <form>
                     <div className="contact-info p-4 col-md-6">
                         <div className="form-row">
-                            <label htmlFor="id" className="col-md-0 col-form-label"><b>Company ID</b></label>
-                            <div className="input-group input-group-sm mb-3 col-md-2">
+                            <label htmlFor="id" className="col-md-3 col-form-label"><b>Company ID</b></label>
+                            <div className="input-group input-group-sm mb-3 col-md-3">
                                 <input type="text" className="form-control" id="id" onChange={(e) =>{
                                 setCompanyID(e.target.value)
                             }} maxLength = "4"/>
                             </div>
-
-                            <label htmlFor="name" className="col-md-0 col-form-label"><b>Company Name</b></label>
-                            <div className="input-group input-group-sm mb-3 col-md-4">
+                        </div>
+                        <div className="form-row">
+                            <label htmlFor="name" className="col-md-3 col-form-label"><b>Company Name</b></label>
+                            <div className="input-group input-group-sm mb-3 col-md-6">
                                 <input type="text" className="form-control" id="name" onChange={(e) =>{
                                 setCompanyName(e.target.value)
                             }} maxLength = "128"/>
                             </div>
 
-                            <div className="input-group input-group mb-3 col-md-1">
+                            <div className="input-group input-group mb-3 col-md-3 d-flex justify-content-end">
                                 <button onClick={(e) => search(e)} id="search-company" className="btn btn-outline-success">Search</button>
                             </div>
                         </div>
@@ -120,7 +114,7 @@ const SearchCompany = () => {
                                         <th scope="col">Company ID</th>
                                         <th scope="col">Company Name</th>
                                         <th scope="col">VIEW</th>
-                                        <th scope="col">REMOVE</th>
+                                        <th scope="col">DELETE</th>
                                     </tr>
                                 </thead>
                                 <tbody>
