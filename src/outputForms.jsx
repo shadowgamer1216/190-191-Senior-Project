@@ -4,6 +4,7 @@ import './App.css'
 import { Link, useNavigate } from "react-router-dom"
 import Axios from "axios";
 import Select from "react-select";
+import Invoice from "./invoice";
 
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
@@ -1178,6 +1179,11 @@ const OutputForms = ({ handleLogout }) => {
 
                 <div className='QCInspection'>
                     <button type='button' onClick={fetchQCInspectionData} className='HomePageButton'>QC Inspection</button>
+                </div>
+                <div className='block7'>
+                    <button type='button' onClick={Invoice({orderID:17})} className='HomePageButton'>
+                        Fetch Orders
+                    </button>
                 </div>
 
                 <div className="PackingSlipEdit">

@@ -88,7 +88,7 @@ useEffect(() => {
           <Route path="/login" element={<Login handleLogin={handleLogin} />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/OutputForms" element={<OutputForms />} />
-          <Route path="/invoice" element={<Invoice />} />
+          <Route path="/invoice" element={<Invoice orderID={17}/>} />
           <Route path="/packingSlipEdit" element={<PackingSlipEdit />} />
           <Route path="/packingSlip/:packing_slip_master_id" element={<PackingSlip handleLogout={handleLogout}/>} />
           <Route path="/QC-Inspection" element={<QCInspection />} />

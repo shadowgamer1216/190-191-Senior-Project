@@ -250,10 +250,118 @@ app.post("/api/insertOrder", (req, res) => {
         " date_code_printing_charges_quantity, date_code_printing_charges_unit_price, date_code_printing_charges_total_price, date_code_setup_charge, number_of_screens, art_manipulation, sub_total, tax_rate, tax, freight_charges, order_price_total, invoice_date," +
         " invoice_date_paid, invoice_notes, abs_sales_order_date, customer_order_date, customer_po_date, customer_po_number, credit_checked, days_turn, date_code_printing, customer_provided_material, customer_material_eta, customer_notes, vendor_notes, order_notes," +
         " order_status) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
-        [companyID, companyName, productID, productName, productType, salesPerson, requestor, customerContact, reOrder, factoryOrderQuantity, customInvoice, customPackingSlip, customQuantity, customUnitPrice, customTotalPrice, nonItem1, nonItemInvoice1, nonItemPackingSlip1, nonItemQuantity1, nonItemUnitPrice1, nonItemTotalPrice1, nonItem2, nonItemInvoice2, nonItemPackingSlip2, nonItemQuantity2, nonItemUnitPrice2, nonItemTotalPrice2, nonItem3, nonItemInvoice3, nonItemPackingSlip3, nonItemQuantity3, nonItemUnitPrice3, nonItemTotalPrice3, nonItem4, nonItemInvoice4, nonItemPackingSlip4, nonItemQuantity4, nonItemUnitPrice4, nonItemTotalPrice4, nonItem5, nonItemInvoice5, nonItemPackingSlip5, nonItemQuantity5, nonItemUnitPrice5, nonItemTotalPrice5, nonItem6, nonItemInvoice6, nonItemPackingSlip6, nonItemQuantity6, nonItemUnitPrice6, nonItemTotalPrice6, item1, itemName1, itemType1, itemInvoice1, itemPackingSlip1, itemQuantity1, itemUnitPrice1, itemTotalPrice1, item2, itemName2, itemType2,  itemInvoice2, itemPackingSlip2, itemQuantity2, itemUnitPrice2, itemTotalPrice2, item3, itemName3, itemType3, itemInvoice3, itemPackingSlip3, itemQuantity3, itemUnitPrice3, itemTotalPrice3, assemblyChargesQuantity, assemblyChargesUnitPrice, assemblyChargesTotalPrice, printingChargesQuantity, printingChargesUnitPrice, printingChargesTotalPrice, setupCharge, numberOfScreens, screensPrice, subTotal, taxRate, tax, freightCharges, priceTotal, invoiceDate, invoiceDatePaid, invoiceNotes,ABSOrder, customerOrder, customerPODate, customerPONumber, creditChecked, daysTurn, dateCodePrinting, customerProvidedMaterial, customerMaterialETA, customerNotes, vendorNotes, orderNotes, orderStatus], (err, result) => {
+        [companyID, companyName, productID, productName, productType, salesPerson, requestor, customerContact, reOrder, factoryOrderQuantity, customInvoice, customPackingSlip, 
+            customQuantity, customUnitPrice, customTotalPrice, 
+            nonItem1, nonItemInvoice1, nonItemPackingSlip1, nonItemQuantity1, nonItemUnitPrice1, nonItemTotalPrice1, 
+            nonItem2, nonItemInvoice2, nonItemPackingSlip2, nonItemQuantity2, nonItemUnitPrice2, nonItemTotalPrice2, 
+            nonItem3, nonItemInvoice3, nonItemPackingSlip3, nonItemQuantity3, nonItemUnitPrice3, nonItemTotalPrice3, 
+            nonItem4, nonItemInvoice4, nonItemPackingSlip4, nonItemQuantity4, nonItemUnitPrice4, nonItemTotalPrice4, 
+            nonItem5, nonItemInvoice5, nonItemPackingSlip5, nonItemQuantity5, nonItemUnitPrice5, nonItemTotalPrice5, 
+            nonItem6, nonItemInvoice6, nonItemPackingSlip6, nonItemQuantity6, nonItemUnitPrice6, nonItemTotalPrice6, 
+            item1, itemName1, itemType1, itemInvoice1, itemPackingSlip1, itemQuantity1, itemUnitPrice1, itemTotalPrice1, 
+            item2, itemName2, itemType2,  itemInvoice2, itemPackingSlip2, itemQuantity2, itemUnitPrice2, itemTotalPrice2, 
+            item3, itemName3, itemType3, itemInvoice3, itemPackingSlip3, itemQuantity3, itemUnitPrice3, itemTotalPrice3, 
+            assemblyChargesQuantity, assemblyChargesUnitPrice, assemblyChargesTotalPrice, printingChargesQuantity, printingChargesUnitPrice, printingChargesTotalPrice, 
+            setupCharge, numberOfScreens, screensPrice, subTotal, taxRate, tax, freightCharges, priceTotal, invoiceDate, invoiceDatePaid, invoiceNotes,
+            ABSOrder, customerOrder, customerPODate, customerPONumber, creditChecked, daysTurn, dateCodePrinting, customerProvidedMaterial, customerMaterialETA, 
+            customerNotes, vendorNotes, orderNotes, orderStatus], (err, result) => {
             console.log(result);
-        }
-    );
+            if(customInvoice || nonItemInvoice1 || nonItemInvoice2 || nonItemInvoice3 || nonItemInvoice4 || nonItemInvoice5 || nonItemInvoice6 ||
+                itemInvoice1 || itemInvoice2 || itemInvoice3){
+            var companyResult;
+            var orderRes = result;
+            console.log(productID);
+            db.query('SELECT company_name, addr1, city, state, country, zip FROM company_table WHERE company_id = ?', [companyID], (err, result) => {
+                companyResult = result;
+
+                console.log(err)
+            
+                var productRes;
+                db.query('Select oem_product_id, product_title FROM product_table WHERE product_id = ?',[
+                    productID], (err, result) => {
+                        console.log(err)
+        
+                        productRes = result;
+                
+                        db.query(
+                             "INSERT INTO invoice (customer, customer_address, customer_city, customer_state, customer_country, customer_zip, invoice_date, order_num)\
+                             VALUES(?,?,?,?,?,?,?,?)",
+                            [companyResult[0].company_name, companyResult[0].add1, companyResult[0].city, companyResult[0].state, companyResult[0].country, companyResult[0].zip,
+                            invoiceDate, orderRes.insertId],
+                            (err, result) => {
+                            console.log(err)
+                                if(customInvoice){
+                                    db.query("UPDATE invoice SET product_id = ?, product_title = ?, oem_pn = ?, quantity1 = ?, price1 = ?, totPrice1 = ? WHERE order_num = ?", 
+                                    [productID, productRes[0].productTitle, productRes[0].oem_product_id, customQuantity, customUnitPrice, customTotalPrice, orderRes.insertId],
+                                    (err, result)=> {
+
+                                    });
+                                }
+                                if(nonItemInvoice1){
+                                    db.query("UPDATE invoice SET quantity2 = ?, description2 = ?, price2 = ?, totPrice2 = ? WHERE order_num = ?",
+                                    [nonItemQuantity1, nonItem1, nonItemUnitPrice1, nonItemTotalPrice1, orderRes.insertId],
+                                    (err, result)=>{
+                                    });
+                                }
+                                if(nonItemInvoice2){
+                                    db.query("UPDATE invoice SET quantity3 = ?, description3 = ?, price3 = ?, totPrice3 = ? WHERE order_num = ?",
+                                    [nonItemQuantity2, nonItem2, nonItemUnitPrice2, nonItemTotalPrice2, orderRes.insertId],
+                                    (err, result)=>{
+                                    });
+                                }
+                                if(nonItemInvoice3){
+                                    db.query("UPDATE invoice SET quantity4 = ?, description4 = ?, price4 = ?, totPrice4 = ? WHERE order_num = ?",
+                                    [nonItemQuantity3, nonItem3, nonItemUnitPrice3, nonItemTotalPrice3, orderRes.insertId],
+                                    (err, result)=>{
+                                    });
+                                }
+                                if(nonItemInvoice4){
+                                    db.query("UPDATE invoice SET quantity5 = ?, description5 = ?, price5 = ?, totPrice5 = ? WHERE order_num = ?",
+                                    [nonItemQuantity4, nonItem4, nonItemUnitPrice4, nonItemTotalPrice4, orderRes.insertId],
+                                    (err, result)=>{
+                                    });
+                                }
+                                if(nonItemInvoice5){
+                                    db.query("UPDATE invoice SET quantity6 = ?, description6 = ?, price6 = ?, totPrice6 = ? WHERE order_num = ?",
+                                    [nonItemQuantity5, nonItem5, nonItemUnitPrice5, nonItemTotalPrice5, orderRes.insertId],
+                                    (err, result)=>{
+                                    });
+                                }
+                                if(nonItemInvoice6){
+                                    db.query("UPDATE invoice SET quantity7 = ?, description7 = ?, price7 = ?, totPrice7 = ? WHERE order_num = ?",
+                                    [nonItemQuantity6, nonItem6, nonItemUnitPrice6, nonItemTotalPrice6, orderRes.insertId],
+                                    (err, result)=>{
+                                    });
+                                }
+                                if(nonItemInvoice6){
+                                    db.query("UPDATE invoice SET quantity7 = ?, description7 = ?, price7 = ?, totPrice7 = ? WHERE order_num = ?",
+                                    [nonItemQuantity6, nonItem6, nonItemUnitPrice6, nonItemTotalPrice6, orderRes.insertId],
+                                    (err, result)=>{
+                                    });
+                                }
+                                if(itemInvoice1){
+                                    db.query("UPDATE invoice SET quantity8 = ?, description8 = ?, price8 = ?, totPrice8 = ? WHERE order_num = ?",
+                                    [itemQuantity1, itemName1, itemUnitPrice1, itemTotalPrice1, orderRes.insertId],
+                                    (err, result)=>{
+                                    });
+                                }
+                                if(itemInvoice2){
+                                    db.query("UPDATE invoice SET quantity9 = ?, description9 = ?, price9 = ?, totPrice9 = ? WHERE order_num = ?",
+                                    [itemQuantity2, itemName2, itemUnitPrice2, itemTotalPrice2, orderRes.insertId],
+                                    (err, result)=>{
+                                    });
+                                }
+                                if(itemInvoice3){
+                                    db.query("UPDATE invoice SET quantity10 = ?, description10 = ?, price10 = ?, totPrice10 = ? WHERE order_num = ?",
+                                    [itemQuantity3, itemName3, itemUnitPrice3, itemTotalPrice3, orderRes.insertId],
+                                    (err, result)=>{
+                                    });
+                                }
+                        });
+                    });
+             });
+            }
+        });
 });
 
 // PRODUCT TABLE INFO - GET API <=
@@ -987,12 +1095,14 @@ app.post("/api/insertCompany" , (req, res) =>{
 //----------------end of Company page------------------
 
 
-app.get("/api/orders", (req, res) =>{
-    const customer_id = req.body.customer_id;
-    const company = req.body.company;
+app.get("/api/invoice", (req, res) =>{
+    const orderID = req.body.order_num;
+    
+   
 
-        db.query("SELECT * FROM orders", (err, result) =>{
-            if (err) throw err;
+        db.query("SELECT * FROM invoice WHERE order_num = 17", (err, result) =>{
+            if (err) {throw err;}
+            console.log(result)
             res.send(result);
         });
     
