@@ -17,7 +17,7 @@ const Login = ({handleLogin}) => {
         handleLogin(user[0].viewonly);
       }
       catch (error) {
-        console.error(error);
+        console.log(error);
       }
 
     };
