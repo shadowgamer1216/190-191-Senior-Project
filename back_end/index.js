@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 const db = mysql.createPool({
     user: "root",
-    host: "localhost",
+    host: "34.83.190.86",
     password: "password",
     database: "absolutemedia",
 });

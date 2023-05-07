@@ -1,20 +1,21 @@
-#CREATE SCHEMA absolutemedia; /* schema for entire DB */
+-- CREATE SCHEMA absolutemedia; /* create schema for entire DB */
 
-SET foreign_key_checks = 0;
-DROP TABLE IF EXISTS company_table;
-DROP TABLE IF EXISTS component_table;
-DROP TABLE IF EXISTS contact_table;
-DROP TABLE IF EXISTS product_table;
-DROP TABLE IF EXISTS location_table;
-DROP TABLE IF EXISTS location_history;
-DROP TABLE IF EXISTS item_check_in_table;
-DROP TABLE IF EXISTS order_table;
-DROP TABLE IF EXISTS order_nonItem;
-DROP TABLE IF EXISTS order_item;
-DROP TABLE IF EXISTS shipping_table;
-DROP TABLE IF EXISTS orders;
-DROP TABLE IF EXISTS packing_slip;
-SET foreign_key_checks = 1;
+-- SET foreign_key_checks = 0;              /* drop table commands, for recreating tables */
+-- DROP TABLE IF EXISTS company_table;
+-- DROP TABLE IF EXISTS component_table;
+-- DROP TABLE IF EXISTS contact_table;
+-- DROP TABLE IF EXISTS product_table;
+-- DROP TABLE IF EXISTS location_table;
+-- DROP TABLE IF EXISTS location_history;
+-- DROP TABLE IF EXISTS item_check_in_table;
+-- DROP TABLE IF EXISTS order_table;
+-- DROP TABLE IF EXISTS order_nonItem;
+-- DROP TABLE IF EXISTS order_item;
+-- DROP TABLE IF EXISTS shipping_table;
+-- DROP TABLE IF EXISTS orders;
+-- DROP TABLE IF EXISTS packing_slip;
+-- DROP TABLE IF EXISTS users;
+-- SET foreign_key_checks = 1;
 
 CREATE TABLE company_table (
     company_id VARCHAR(8) NOT NULL DEFAULT '',
@@ -374,7 +375,6 @@ CREATE TABLE packing_slip_table (
     PRIMARY KEY (packing_slip_master_id)
 );
 
-DROP TABLE IF EXISTS users;
 CREATE TABLE users (
   userid INT NOT NULL,
   username VARCHAR(45) NULL,
