@@ -150,8 +150,8 @@ const Shipping = ({ handleLogout }) => {
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => { //validate if all required fields have inputs
-    setSubmitting(order_id && contact_name && add1 && city && state && zip && country && phone && email);
-  }, [order_id, contact_name, add1, city, state, zip, country, phone, email]);
+    setSubmitting(order_id && contact_name && add1 && city && state && zip && country && phone && email && request_ship_date && arrival_ship_date);
+  }, [order_id, contact_name, add1, city, state, zip, country, phone, email, request_ship_date, arrival_ship_date]);
 
   const handleNavigate = async (id) => {
     const idPassed = id.toString();
@@ -532,7 +532,7 @@ const Shipping = ({ handleLogout }) => {
             </div>
 
             <div className="form-row">
-              <label htmlFor="request_ship_date" className="col-md-3 col-form-label">Requested Ship Date/Time</label>
+              <label htmlFor="request_ship_date" className="col-md-3 col-form-label">Requested Ship Date/Time<span style={{ color: 'red' }}> *</span></label>
               <div className="input-group input-group-sm mb-3 col-md-3">
                 <input type="datetime-local" className="form-control" onChange={(e) => setRequested_ship_date(e.target.value)} />
               </div>
@@ -556,7 +556,7 @@ const Shipping = ({ handleLogout }) => {
             </div>
 
             <div className="form-row">
-              <label htmlFor="arrival_ship_date" className="col-md-3 col-form-label">Requested Arrival Date/Time</label>
+              <label htmlFor="arrival_ship_date" className="col-md-3 col-form-label">Requested Arrival Date/Time<span style={{ color: 'red' }}> *</span></label>
               <div className="input-group input-group-sm mb-3 col-md-3">
                 <input type="datetime-local" className="form-control" onChange={(e) => setArrival_ship_date(e.target.value)}
                   name="arrival_ship_date" />
