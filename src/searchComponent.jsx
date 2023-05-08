@@ -154,7 +154,7 @@ const SearchComponent = () => {
                                             <td>{row.oem_pn}</td>
                                             <td>{row.description}</td>
                                             <td><button className="btn btn-sm btn-outline-info" onClick={(e) => handleView(e, row.component_id)}>OPEN</button></td>
-                                            <td><button disabled={setDeleteButtonDisabled} className="btn btn-sm btn-danger" onClick={(e) => handleRemove(e, row.component_id)}>DELETE</button></td>
+                                            <td><button disabled={deleteButtonDisabled} className="btn btn-sm btn-danger" onClick={(e) => handleRemove(e, row.component_id)}>DELETE</button></td>
                                         </tr>
                                     ))}
 

@@ -133,7 +133,7 @@ const SearchOrder = () => {
                                             <td>{row.product_id}</td>
                                             <td>{row.factor_order_quantity}</td>
                                             <td><button className="btn btn-sm btn-outline-info" onClick={(e) => handleView(e, row.company_id)}>OPEN</button></td>
-                                            <td><button disabled={setDeleteButtonDisabled} className="btn btn-sm btn-danger" onClick={(e) => handleRemove(e, row.company_id)}>DELETE</button></td>
+                                            <td><button disabled={deleteButtonDisabled} className="btn btn-sm btn-danger" onClick={(e) => handleRemove(e, row.company_id)}>DELETE</button></td>
                                         </tr>
                                     ))}
 
