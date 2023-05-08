@@ -31,8 +31,9 @@
 ## **Testing instructions**:
   1. No Current Data Set, however, things are tested through submitting test information into the database and using that information to test other functionalities.
   2. Testing is done by going through the pages and adding information one by one (or by page) and seeing if they are being sent into the database and whether or not we are able to pull and populate the test information for viewing/editing or other functionalities based on the specific page. 
-  3. To verify if the test information if being pulled correctly, each specific page will contain a primary key. to autopopulate or pull the test information, a user will need to use the drop down menu and select the correct key (ID).
+  3. To verify if the test information if being pulled correctly, each specific page will contain a primary key. To autopopulate or pull the test information, a user will need to use the drop down menu and select the correct key (ID).
   4. The first page to start testing will be the the Company page. Most tables will pull the Company ID, as it will store the information about the Company(Address, Contacts, etc.). I will also store products that the company will mainly purchase from Absolute Media.
+  5. The next pages to test out will be the component page and product page because they contain fields like component ID and product ID which the other pages may need. 
 ## **Deployment instructions**:
   1. Prerequisite: 
 Ensure that clients have Node.js and npm (Node Package Manager) installed on their machine. 
