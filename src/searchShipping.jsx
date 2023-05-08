@@ -6,6 +6,8 @@ import Axios from "axios";
 
 
 const SearchShipping = () => {
+    const [deleteButtonDisabled, setDeleteButtonDisabled] = useState(true);
+
     const navigate = useNavigate();
 
     const routeChange = () => {
@@ -13,7 +15,12 @@ const SearchShipping = () => {
         navigate(path);
     };
     useEffect(() => {
-        let authToken = sessionStorage.getItem('Auth Token')
+        let authToken = sessionStorage.getItem('Auth Token');
+        
+        if(sessionStorage.getItem('currentUser') === "absolutemediafirebase@gmail.com"){
+			setDeleteButtonDisabled(false);
+		}
+		
         if (!authToken) {
             routeChange()
         }
@@ -130,7 +137,7 @@ const SearchShipping = () => {
                                             <td>{row.phone}</td>
                                             <td>{row.email}</td>
                                             <td><button className="btn btn-sm btn-outline-info" onClick={(e) => handleView(e, row.shipping_id)}>OPEN</button></td>
-                                            <td><button className="btn btn-sm btn-danger" onClick={(e) => handleRemove(e, row.shipping_id)}>DELETE</button></td>
+                                            <td><button disabled={setDeleteButtonDisabled} className="btn btn-sm btn-danger" onClick={(e) => handleRemove(e, row.shipping_id)}>DELETE</button></td>
                                         </tr>
                                     ))}
 

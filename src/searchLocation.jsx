@@ -7,6 +7,8 @@ import Axios from "axios";
 
 const SearchLocation = () => {
     const navigate = useNavigate();
+    const [deleteButtonDisabled, setDeleteButtonDisabled] = useState(true);
+
 
     const routeChange = () => {
         let path = '/login';
@@ -14,6 +16,9 @@ const SearchLocation = () => {
     };
     useEffect(() => {
         let authToken = sessionStorage.getItem('Auth Token')
+        if(sessionStorage.getItem('currentUser') === "absolutemediafirebase@gmail.com"){
+			setDeleteButtonDisabled(false);
+		}
         if (!authToken) {
             routeChange()
         }
@@ -151,7 +156,7 @@ const SearchLocation = () => {
                                             <td>{row.oem_pn}</td>
                                             <td>{row.description}</td>
                                             <td><button className="btn btn-sm btn-outline-info" onClick={(e) => handleView(e, row.location_id)}>OPEN</button></td>
-                                            <td><button className="btn btn-sm btn-danger" onClick={(e) => handleRemove(e, row.location_id)}>DELETE</button></td>
+                                            <td><button disabled={setDeleteButtonDisabled} className="btn btn-sm btn-danger" onClick={(e) => handleRemove(e, row.location_id)}>DELETE</button></td>
                                         </tr>
                                     ))}
 

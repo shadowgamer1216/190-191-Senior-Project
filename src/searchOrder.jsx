@@ -7,6 +7,8 @@ import Axios from "axios";
 
 const SearchOrder = () => {
     const navigate = useNavigate();
+    const [deleteButtonDisabled, setDeleteButtonDisabled] = useState(true);
+
 
     const routeChange = () => {
         let path = '/login';
@@ -14,6 +16,9 @@ const SearchOrder = () => {
     };
     useEffect(() => {
         let authToken = sessionStorage.getItem('Auth Token')
+        if(sessionStorage.getItem('currentUser') === "absolutemediafirebase@gmail.com"){
+			setDeleteButtonDisabled(false);
+		}
         if (!authToken) {
             routeChange()
         }
@@ -128,7 +133,7 @@ const SearchOrder = () => {
                                             <td>{row.product_id}</td>
                                             <td>{row.factor_order_quantity}</td>
                                             <td><button className="btn btn-sm btn-outline-info" onClick={(e) => handleView(e, row.company_id)}>OPEN</button></td>
-                                            <td><button className="btn btn-sm btn-danger" onClick={(e) => handleRemove(e, row.company_id)}>DELETE</button></td>
+                                            <td><button disabled={setDeleteButtonDisabled} className="btn btn-sm btn-danger" onClick={(e) => handleRemove(e, row.company_id)}>DELETE</button></td>
                                         </tr>
                                     ))}
 
