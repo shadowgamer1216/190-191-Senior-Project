@@ -12,7 +12,14 @@ function HomePage({ handleLogout }) {
         navigate(path);
     };
     useEffect(() => {
-        let authToken = sessionStorage.getItem('Auth Token')
+        let authToken = sessionStorage.getItem('Auth Token');
+		if(sessionStorage.getItem('currentUser') === "absolutemediafirebase@gmail.com"){
+			document.getElementById("signupButton").disabled = false;
+		}
+		else{
+			document.getElementById("signupButton").disabled = true;
+
+		}
 
         if (!authToken) {
             routeChange()
@@ -27,7 +34,7 @@ function HomePage({ handleLogout }) {
 					<label className="navbar-brand"><img src={logo} alt="Absolute Media Inc."/></label>
 					<div>
 					<Link to ="signup">
-					<button className="btn btn-outline-light">Sign Up</button>
+					<button id = 'signupButton' className="btn btn-outline-light">Sign Up</button>
 					</Link>
 					</div>
 					<button className="btn btn-outline-light" onClick={handleLogout}>Logout</button>

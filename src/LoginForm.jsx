@@ -33,13 +33,14 @@ const Login = ({handleLogin}) => {
         .then((userCredential) => {
             // Signed in
             const user = userCredential.user;
-            sessionStorage.setItem('Auth Token', userCredential._tokenResponse.refreshToken)
+            sessionStorage.setItem('Auth Token', userCredential._tokenResponse.refreshToken);
+            sessionStorage.setItem('currentUser', auth.currentUser.email);
             routeChange();
         })
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
-            console.log(errorCode, errorMessage)
+            console.log(errorCode, errorMessage);
         });
        
     }
