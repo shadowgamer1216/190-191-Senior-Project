@@ -310,6 +310,7 @@ CREATE TABLE order_table (
 CREATE TABLE shipping_table (
     shipping_id INT NOT NULL AUTO_INCREMENT,
     order_id INT DEFAULT NULL,
+    company_id VARCHAR(50) DEFAULT NULL
     company_name VARCHAR(100) DEFAULT NULL,
     contact_name VARCHAR(50) DEFAULT NULL,
     add1 VARCHAR(50) DEFAULT NULL,
