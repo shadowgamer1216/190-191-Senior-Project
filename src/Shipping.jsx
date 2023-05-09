@@ -58,30 +58,18 @@ const Shipping = ({ handleLogout }) => {
         });
     }
   }, [order_id]);
-  
   var company_id = orderData?.company_id ?? '';
-  var company_name = orderData?.company_name ?? '';
+  const [company_name, setCompanyName] = useState(null);
   useEffect(() => {
     if (company_id) {
-      Axios.get(`http://localhost:3001/api/contact1/${company_id}`).then((response) => {
-        const fName = response.data?.fname ?? '';
-        const lName = response.data?.lname ?? '';
-        setContactName(fName + " " + lName);
-        setAdd1(response.data?.add_1 ?? '');
-        setAdd2(response.data?.add_2 ?? '');
-        setCity(response.data?.city ?? '');
-        setState(response.data?.state_in_country ?? '');
-        setZip(response.data?.zip ?? '');
-        setCountry(response.data?.country ?? '');
-        setPhone(response.data?.phone ?? '');
-        setEmail(response.data?.email ?? '');
+      Axios.get(`http://localhost:3001/api/company/${company_id}`).then((response) => {
+        setCompanyName(response.data.company_name);
       }).catch(err => {
         console.log(err);
       });
     }
   }, [company_id]);
 
-  const [company_id, setCompanyId] - useState(null);
   const [contact_name, setContactName] = useState(null);
   const [add1, setAdd1] = useState(null);
   const [add2, setAdd2] = useState(null);
@@ -147,13 +135,13 @@ const Shipping = ({ handleLogout }) => {
       });
   }
 
+
   const Sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => { //validate if all required fields have inputs
-    setSubmitting(order_id && contact_name && add1 && city && state && zip && country && phone && email && request_ship_date && arrival_ship_date);
-   }, [order_id, contact_name, add1, city, state, zip, country, phone, email, request_ship_date, arrival_ship_date]);
-
+    setSubmitting(order_id && contact_name && add1 && city && state && zip && country && phone && email);
+  }, [order_id, contact_name, add1, city, state, zip, country, phone, email]);
 
   const handleNavigate = async (id) => {
     const idPassed = id.toString();
@@ -190,6 +178,7 @@ const Shipping = ({ handleLogout }) => {
       overflow: 'hidden',
     }),
   };
+
 
   return (
 
@@ -273,7 +262,6 @@ const Shipping = ({ handleLogout }) => {
                 </div>
               </div>
             </div>
-
             <div className="form-row">
               <label htmlFor="company-id" className="col-md-3 col-form-label">Company ID</label>
               <div className="input-group input-group-sm mb-3 col-md-8">
@@ -291,37 +279,31 @@ const Shipping = ({ handleLogout }) => {
             <div className="form-row">
               <label htmlFor="contact_name" className="col-md-3 col-form-label">Contact Name<span style={{ color: 'red' }}> *</span></label>
               <div className="input-group input-group-sm mb-3 col-md-8">
-                {/* <input onChange={(e) => setContactName(e.target.value)} className="form-control" id="contact_name" required /> */}
-                <input className="form-control" id="contact_name" value={contact_name} onChange={(e) => setContactName(e.target.value)} />
+                <input onChange={(e) => setContactName(e.target.value)} className="form-control" id="contact_name" required />
               </div>
             </div>
 
             <div className="form-row">
               <label htmlFor="add1" className="col-md-3 col-form-label">Address 1 <span style={{ color: 'red' }}>*</span></label>
               <div className="input-group input-group-sm mb-3 col-md-8">
-                {/* <input onChange={(e) => setAdd1(e.target.value)} className="form-control" id="add1" required /> */}
-                <input className="form-control" id="ad1" value={add1} onChange={(e) => setAdd1(e.target.value)} required />
+                <input onChange={(e) => setAdd1(e.target.value)} className="form-control" id="add1" required />
               </div>
             </div>
 
             <div className="form-row">
               <label htmlFor="add2" className="col-md-3 col-form-label">Address 2</label>
               <div className="input-group input-group-sm mb-3 col-md-8">
-                {/* <input onChange={(e) => setAdd2(e.target.value)} className="form-control" id="add2" /> */}
-                <input className="form-control" id="add2" value={add2} onChange={(e) => setAdd2(e.target.value)} />
+                <input onChange={(e) => setAdd2(e.target.value)} className="form-control" id="add2" />
               </div>
             </div>
 
             <div className="form-row">
               <label htmlFor="csz" className="col-md-3 col-form-label">City | State | Zip <span style={{ color: 'red' }}> *</span></label>
               <div className="input-group input-group-sm mb-3 col-md-4">
-                {/* <input onChange={(e) => setCity(e.target.value)} className="form-control" id="city" required /> */}
-                <input className="form-control" id="city" value={city} onChange={(e) => setCity(e.target.value)} required />
+                <input onChange={(e) => setCity(e.target.value)} className="form-control" id="city" required />
               </div>
-
               <div className="input-group input-group-sm mb-3 col-md-2">
-                {/* <select onChange={(e) => setState(e.target.value)} className="form-control" id="state" required> */}
-                <select className="form-control" id="state" value={state} onChange={(e) => setState(e.target.value)} required>
+                <select onChange={(e) => setState(e.target.value)} className="form-control" id="state" required>
                   <option value="">Select State</option>
                   <option value="AL">AL</option>
                   <option value="AK">AK</option>
@@ -378,9 +360,8 @@ const Shipping = ({ handleLogout }) => {
               </div>
 
               <div className="input-group input-group-sm mb-3 col-md-2">
-                {/* <input type="text" inputMode="numeric" onChange={(e) => setZip(e.target.value)} className="form-control"
-                  id="zip" required /> */}
-                  <input className="form-control" id="zip" value={zip} onChange={(e) => setZip(e.target.value)} required />
+                <input type="text" inputMode="numeric" onChange={(e) => setZip(e.target.value)} className="form-control"
+                  id="zip" required />
               </div>
             </div>
 
@@ -397,9 +378,8 @@ const Shipping = ({ handleLogout }) => {
                 <span style={{ color: 'red' }}> *</span>
               </label>
               <div className="input-group input-group-sm mb-3 col-md-8">
-                {/* <input onChange={(e) => setCountry(e.target.value)} className="form-control"
-                  id="country" required /> */}
-                  <input className="form-control" id="country" value={country} onChange={(e) => setCountry(e.target.value)} required />
+                <input onChange={(e) => setCountry(e.target.value)} className="form-control"
+                  id="country" required />
               </div>
             </div>
 
@@ -408,12 +388,10 @@ const Shipping = ({ handleLogout }) => {
                 <span style={{ color: 'red' }}> *</span>
               </label>
               <div className="input-group input-group-sm mb-3 col-md-8">
-                {/* <input onChange={(e) => setPhone(e.target.value)} className="form-control"
-                  id="phone" required /> */}
-                  <input className="form-control" id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} required />
+                <input onChange={(e) => setPhone(e.target.value)} className="form-control"
+                  id="phone" required />
               </div>
             </div>
-
             <div className="form-row">
               <label htmlFor="fax" className="col-md-3 col-form-label">Fax</label>
               <div className="input-group input-group-sm mb-3 col-md-8">
@@ -427,9 +405,8 @@ const Shipping = ({ handleLogout }) => {
                 <span style={{ color: 'red' }}> *</span>
               </label>
               <div className="input-group input-group-sm mb-3 col-md-8">
-                {/* <input onChange={(e) => setEmail(e.target.value)} className="form-control"
-                  id="email" required /> */}
-                  <input className="form-control" id="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                <input onChange={(e) => setEmail(e.target.value)} className="form-control"
+                  id="email" required />
               </div>
             </div>
 
@@ -439,47 +416,45 @@ const Shipping = ({ handleLogout }) => {
             <div className="section-headers">
               <h5>Shipment Information</h5>
             </div>
-
             <div className="form-row">
               <label htmlFor="fedex" className="col-md-3 col-form-label">Fed Ex</label>
               <div className="input-group input-group-sm mb-3 col-md-3">
                 <select onChange={(e) => setFedex(e.target.value)} className="form-control" id="fedex">
                   <option value="none">None</option>
-                  <option value="air-freight">Air Freight</option>
-                  <option value="custom-critical-freight">Cusom Critical Freight</option>
-                  <option value="express-2day">Express 2 Day</option>
-                  <option value="express-2dayam">Express 2 day AM</option>
-                  <option value="express-saver">Express Saver</option>
-                  <option value="first-overnight">First Overnight</option>
-                  <option value="ground">Ground</option>
-                  <option value="home">Home</option>
-                  <option value="international-first">International First</option>
-                  <option value="international-economy">International Economy</option>
-                  <option value="international-priority">International Priority</option>
-                  <option value="priority-overnight">Priority Overnight</option>
-                  <option value="standard-overnight">Standard Overnight</option>
-                  <option value="truck-freight-economy">Truck Freight Economy</option>
-                  <option value="truck-freight-priority">Truck Freight Economy</option>
+                  <option value="Air Freight">Air Freight</option>
+                  <option value="Custom Critical Freight">Custom Critical Freight</option>
+                  <option value="Express 2 Day">Express 2 Day</option>
+                  <option value="Express 2 Day AM">Express 2 day AM</option>
+                  <option value="Express Saver">Express Saver</option>
+                  <option value="First Overnight">First Overnight</option>
+                  <option value="Ground">Ground</option>
+                  <option value="Home">Home</option>
+                  <option value="International First">International First</option>
+                  <option value="International Economy">International Economy</option>
+                  <option value="International Priority">International Priority</option>
+                  <option value="Priority Overnight">Priority Overnight</option>
+                  <option value="Standard Oovernight">Standard Overnight</option>
+                  <option value="Truck Freight Economy">Truck Freight Economy</option>
+                  <option value="Truck Freight Priority">Truck Freight Economy</option>
                 </select>
               </div>
             </div>
-
             <div className="form-row">
               <label htmlFor="ups" className="col-md-3 col-form-label">UPS</label>
               <div className="input-group input-group-sm mb-3 col-md-3">
                 <select onChange={(e) => setUps(e.target.value)} className="form-control" id="ups">
                   <option value="none">None</option>
-                  <option value="2day-air">2 Day Air</option>
-                  <option value="2day-airam">2 Day Air AM</option>
-                  <option value="3day-select">3 Day Select</option>
-                  <option value="ground">Ground</option>
-                  <option value="nextday-air">Next Day Air</option>
-                  <option value="nextday-air-early">Next Day Air Early</option>
-                  <option value="nextday-air-saver">Next Day Air Saver</option>
-                  <option value="overnight-priority">Overnight Priority</option>
-                  <option value="worldwide-expedited"> Worldwide Expedited</option>
-                  <option value="worldwide-saver">Worldwide Saver</option>
-                  <option value="worldwide-Express-plus">Worldwide Express Plus</option>
+                  <option value="2 Day Air">2 Day Air</option>
+                  <option value="2 Day Air AM">2 Day Air AM</option>
+                  <option value="3 Day Select">3 Day Select</option>
+                  <option value="Ground">Ground</option>
+                  <option value="Nextday Air">Next Day Air</option>
+                  <option value="Nextday Air Early">Next Day Air Early</option>
+                  <option value="Nextday Air Saver">Next Day Air Saver</option>
+                  <option value="Overnight Priority">Overnight Priority</option>
+                  <option value="Worldwide Expedited"> Worldwide Expedited</option>
+                  <option value="Worldwide Saver">Worldwide Saver</option>
+                  <option value="Worldwide Express Plus">Worldwide Express Plus</option>
                 </select>
               </div>
             </div>
@@ -489,8 +464,8 @@ const Shipping = ({ handleLogout }) => {
               <div className="input-group input-group-sm mb-3 col-md-3">
                 <select onChange={(e) => setCourier_willcall(e.target.value)} className="form-control" id="courier_willcall">
                   <option value="none">None</option>
-                  <option value="courier">Courier</option>
-                  <option value="willcall">Will Call</option>
+                  <option value="Courier">Courier</option>
+                  <option value="Will Call">Will Call</option>
                 </select>
               </div>
             </div>
@@ -500,11 +475,10 @@ const Shipping = ({ handleLogout }) => {
               <div className="input-group input-group-sm mb-3 col-md-3">
                 <select onChange={(e) => setAbs(e.target.value)} className="form-control" id="abs">
                   <option value="none">None</option>
-                  <option value="abs-van">ABS Van</option>
+                  <option value="Abs Van">ABS Van</option>
                 </select>
               </div>
             </div>
-
             <div className="form-row">
               <label htmlFor="other_ship_method" className="col-md-3 col-form-label">Other Ship Method</label>
               <div className="input-group input-group-sm mb-3 col-md-8">
@@ -517,9 +491,9 @@ const Shipping = ({ handleLogout }) => {
               <label htmlFor="payment_type" className="col-md-3 col-form-label">Payment Type</label>
               <div className="input-group input-group-sm mb-3 col-md-3">
                 <select onChange={(e) => setPayment_type(e.target.value)} className="form-control" id="payment_type">
-                  <option value="">Select Option</option>
-                  <option value="credit">Credit</option>
-                  <option value="debit">Debit</option>
+                  <option value="none">None</option>
+                  <option value="Credit">Credit</option>
+                  <option value="Debit">Debit</option>
                 </select>
               </div>
             </div>
@@ -534,11 +508,10 @@ const Shipping = ({ handleLogout }) => {
             </div>
 
             <div className="form-row">
-              <label htmlFor="request_ship_date" className="col-md-3 col-form-label">Requested Ship Date/Time<span style={{ color: 'red' }}> *</span></label>
+              <label htmlFor="request_ship_date" className="col-md-3 col-form-label">Requested Ship Date/Time</label>
               <div className="input-group input-group-sm mb-3 col-md-3">
                 <input type="date" className="form-control" onChange={(e) => setRequested_ship_date(e.target.value)} />
               </div>
-
               <div className="input-group input-group-sm mb-3 col-md-3">
                 <select onChange={(e) => setRequested_ship_time(e.target.value)} className="form-control" id="request_ship_time" >
                   <option value="">Select Time</option>
@@ -558,7 +531,7 @@ const Shipping = ({ handleLogout }) => {
             </div>
 
             <div className="form-row">
-              <label htmlFor="arrival_ship_date" className="col-md-3 col-form-label">Requested Arrival Date/Time<span style={{ color: 'red' }}> *</span></label>
+              <label htmlFor="arrival_ship_date" className="col-md-3 col-form-label">Requested Arrival Date/Time</label>
               <div className="input-group input-group-sm mb-3 col-md-3">
                 <input type="date" className="form-control" onChange={(e) => setArrival_ship_date(e.target.value)}
                   name="arrival_ship_date" />
@@ -580,7 +553,6 @@ const Shipping = ({ handleLogout }) => {
                   <option value="7pm">7:00pm</option>
                 </select>
               </div>
-
               <div className="input-group input-group-sm col-sm-3 pl-5">
                 <div className="form-group custom-control custom-checkbox">
                   <input onChange={(prev) => setSaturday(prev => !prev)} checked={saturday} type="checkbox" className="custom-control-input" id="saturday" />
@@ -603,7 +575,7 @@ const Shipping = ({ handleLogout }) => {
             <div className="form-row">
               <label htmlFor="notes" className="col-md-3 col-form-label">Notes</label>
               <div className="input-group input-group-sm mb-3 col-md-8">
-                <textarea onChange={(e) => setNotes(e.target.value)} rows="4" cols="50" className="form-control" id="notes" />
+                <textarea onChange={(e) => setNotes(e.target.value)} rows="4" cols="50" className="form-control" id="custom-area" />
               </div>
             </div>
 
@@ -612,7 +584,6 @@ const Shipping = ({ handleLogout }) => {
                 <h5>Order Details</h5>
               </div>
             </div>
-
             <div className="order-detail">
               <div className="form-row">
                 <div className="input-group input-group-sm mb-3 col-md-3">
@@ -641,7 +612,6 @@ const Shipping = ({ handleLogout }) => {
                 </div>
               </div>
             </div>
-
             <div className="submit">
               <button type="submit" onClick={() => handleNavigate(nextShippingId)} disabled={!submitting} id="submit_company" className="btn btn-success">Submit</button>
             </div>
