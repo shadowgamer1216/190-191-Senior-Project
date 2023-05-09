@@ -81,6 +81,7 @@ const Shipping = ({ handleLogout }) => {
     }
   }, [company_id]);
 
+  const [company_id, setCompanyId] - useState(null);
   const [contact_name, setContactName] = useState(null);
   const [add1, setAdd1] = useState(null);
   const [add2, setAdd2] = useState(null);
@@ -150,8 +151,8 @@ const Shipping = ({ handleLogout }) => {
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => { //validate if all required fields have inputs
-    setSubmitting(order_id && contact_name && add1 && city && state && zip && country && phone && email);
-   }, [order_id, contact_name, add1, city, state, zip, country, phone, email]);
+    setSubmitting(order_id && contact_name && add1 && city && state && zip && country && phone && email && request_ship_date && arrival_ship_date);
+   }, [order_id, contact_name, add1, city, state, zip, country, phone, email, request_ship_date, arrival_ship_date]);
 
 
   const handleNavigate = async (id) => {
@@ -533,9 +534,9 @@ const Shipping = ({ handleLogout }) => {
             </div>
 
             <div className="form-row">
-              <label htmlFor="request_ship_date" className="col-md-3 col-form-label">Requested Ship Date/Time</label>
+              <label htmlFor="request_ship_date" className="col-md-3 col-form-label">Requested Ship Date/Time<span style={{ color: 'red' }}> *</span></label>
               <div className="input-group input-group-sm mb-3 col-md-3">
-                <input type="datetime-local" className="form-control" onChange={(e) => setRequested_ship_date(e.target.value)} />
+                <input type="date" className="form-control" onChange={(e) => setRequested_ship_date(e.target.value)} />
               </div>
 
               <div className="input-group input-group-sm mb-3 col-md-3">
@@ -557,9 +558,9 @@ const Shipping = ({ handleLogout }) => {
             </div>
 
             <div className="form-row">
-              <label htmlFor="arrival_ship_date" className="col-md-3 col-form-label">Requested Arrival Date/Time</label>
+              <label htmlFor="arrival_ship_date" className="col-md-3 col-form-label">Requested Arrival Date/Time<span style={{ color: 'red' }}> *</span></label>
               <div className="input-group input-group-sm mb-3 col-md-3">
-                <input type="datetime-local" className="form-control" onChange={(e) => setArrival_ship_date(e.target.value)}
+                <input type="date" className="form-control" onChange={(e) => setArrival_ship_date(e.target.value)}
                   name="arrival_ship_date" />
               </div>
 
@@ -602,7 +603,7 @@ const Shipping = ({ handleLogout }) => {
             <div className="form-row">
               <label htmlFor="notes" className="col-md-3 col-form-label">Notes</label>
               <div className="input-group input-group-sm mb-3 col-md-8">
-                <textarea onChange={(e) => setNotes(e.target.value)} rows="4" cols="50" className="form-control" id="custom-area" />
+                <textarea onChange={(e) => setNotes(e.target.value)} rows="4" cols="50" className="form-control" id="notes" />
               </div>
             </div>
 
