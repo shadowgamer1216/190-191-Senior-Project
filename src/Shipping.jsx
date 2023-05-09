@@ -60,7 +60,7 @@ const Shipping = ({ handleLogout }) => {
   }, [order_id]);
   
   var company_id = orderData?.company_id ?? '';
-  var company_name = orderData?.company_name ?? ''
+  var company_name = orderData?.company_name ?? '';
   useEffect(() => {
     if (company_id) {
       Axios.get(`http://localhost:3001/api/contact1/${company_id}`).then((response) => {
