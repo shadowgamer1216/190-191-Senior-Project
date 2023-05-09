@@ -310,8 +310,7 @@ CREATE TABLE order_table (
 CREATE TABLE shipping_table (
     shipping_id INT NOT NULL AUTO_INCREMENT,
     order_id INT DEFAULT NULL,
-    company_id VARCHAR(50) DEFAULT NULL
-    company_name VARCHAR(100) DEFAULT NULL,
+    company_name VARCHAR(100) NOT NULL,
     contact_name VARCHAR(50) DEFAULT NULL,
     add1 VARCHAR(50) DEFAULT NULL,
     add2 VARCHAR(50) DEFAULT NULL,
@@ -328,10 +327,10 @@ CREATE TABLE shipping_table (
     courier_willcall VARCHAR(50) DEFAULT NULL,
     abs VARCHAR(50) DEFAULT NULL,
     other_ship_method VARCHAR(50) DEFAULT NULL,
-    payment_type VARCHAR(25) DEFAULT NULL,
+    payment_type VARCHAR(50) DEFAULT NULL,
     account_number INT DEFAULT NULL,
     request_ship_date DATE DEFAULT NULL,
-    request_ship_time VARCHAR(50),
+    request_ship_time VARCHAR(50)DEFAULT NULL,
     arrival_ship_date DATE DEFAULT NULL,
     arrival_ship_time VARCHAR(50) DEFAULT NULL,
     saturday INT DEFAULT NULL,
