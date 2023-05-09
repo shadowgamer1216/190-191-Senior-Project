@@ -27,11 +27,13 @@ const SearchOrder = () => {
     const [data, setData] = useState([]);
     const [order_id, setOrderID] = useState("");
     const [product_id, setProductID] = useState("");
+    const [company_id, setCompanyID] = useState("");
+    const [company_name, setCompanyName] = useState("");
 
     // search order function
     const search = (e) => {
         e.preventDefault();
-        Axios.get(`http://localhost:3001/api/getSearchOrder?order_id=${order_id}&product_id=${product_id}`)
+        Axios.get(`http://localhost:3001/api/getSearchOrder?order_id=${order_id}&product_id=${product_id}&company_id=${company_id}&company_name=${company_name}`)
         .then((response) =>{
             setData(response.data);
         })
@@ -84,21 +86,37 @@ const SearchOrder = () => {
                     <h2>SEARCH ORDER</h2>
                 </div>
                 <form>
-                    <div className="search-info p-4 col-md-6">
+                <div className="search-info p-4 col-md-6">
                         <div className="form-row">
-                            <label htmlFor="id" className="col-md-3 col-form-label"><b>Order ID</b></label>
+                            <label htmlFor="customer-id" className="col-md-3 col-form-label"><b>Order ID</b></label>
                             <div className="input-group input-group-sm mb-3 col-md-3">
-                                <input type="text" className="form-control" id="id" onChange={(e) =>{
+                                <input type="text" className="form-control" id="customer-id" onChange={(e) =>{
                                 setOrderID(e.target.value)
-                            }} maxLength = "128"/>
+                                }} maxLength = "128"/>
                             </div>
                         </div>
                         <div className="form-row">
-                            <label htmlFor="name" className="col-md-3 col-form-label"><b>Product ID</b></label>
-                            <div className="input-group input-group-sm mb-3 col-md-6">
-                                <input type="text" className="form-control" id="name" onChange={(e) =>{
+                            <label htmlFor="component-id" className="col-md-3 col-form-label"><b>Product ID</b></label>
+                            <div className="input-group input-group-sm mb-3 col-md-3">
+                                <input type="text" className="form-control" id="component-id" onChange={(e) =>{
                                 setProductID(e.target.value)
-                            }} maxLength = "128"/>
+                                }} maxLength = "128"/>
+                            </div>
+                        </div>
+                        <div className="form-row">
+                            <label htmlFor="title" className="col-md-3 col-form-label"><b>Company ID</b></label>
+                            <div className="input-group input-group-sm mb-3 col-md-6">
+                                <input type="text" className="form-control" id="title" onChange={(e) =>{
+                                setCompanyID(e.target.value)
+                                }} maxLength = "4"/>
+                            </div>
+                        </div>
+                        <div className="form-row">
+                            <label htmlFor="component-type" className="col-md-3 col-form-label"><b>Company Name</b></label>
+                            <div className="input-group input-group-sm mb-3 col-md-6">
+                                <input type="text" className="form-control" id="component-type" onChange={(e) =>{
+                                setCompanyName(e.target.value)
+                                }} maxLength = "128"/>
                             </div>
 
                             <div className="input-group input-group mb-3 col-md-3 d-flex justify-content-end">
@@ -118,6 +136,7 @@ const SearchOrder = () => {
                                         <th scope="col">#</th>
                                         <th scope="col">Order ID</th>
                                         <th scope="col">Company ID</th>
+                                        <th scope="col">Company Name</th>
                                         <th scope="col">Product ID</th>
                                         <th scope="col">Factory Order Qty</th>
                                         <th scope="col">VIEW</th>
@@ -130,10 +149,11 @@ const SearchOrder = () => {
                                             <td>{index+1}</td>
                                             <td>{row.order_id}</td>
                                             <td>{row.company_id}</td>
+                                            <td>{row.company_name}</td>
                                             <td>{row.product_id}</td>
-                                            <td>{row.factor_order_quantity}</td>
-                                            <td><button className="btn btn-sm btn-outline-info" onClick={(e) => handleView(e, row.company_id)}>OPEN</button></td>
-                                            <td><button disabled={deleteButtonDisabled} className="btn btn-sm btn-danger" onClick={(e) => handleRemove(e, row.company_id)}>DELETE</button></td>
+                                            <td>{row.factory_order_quantity}</td>
+                                            <td><button className="btn btn-sm btn-outline-info" onClick={(e) => handleView(e, row.order_id)}>OPEN</button></td>
+                                            <td><button disabled={deleteButtonDisabled} className="btn btn-sm btn-danger" onClick={(e) => handleRemove(e, row.order_id)}>DELETE</button></td>
                                         </tr>
                                     ))}
 

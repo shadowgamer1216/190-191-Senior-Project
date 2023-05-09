@@ -27,14 +27,14 @@ const SearchProduct = () => {
     const [data, setData] = useState([]);
     const [product_id, setProductID] = useState("");
     const [customer_id, setCustomerID] = useState("");
-    const [product_type, setProductType] = useState("");
+    const [product_category, setProductCategory] = useState("");
     const [product_title, setProductTitle] = useState("");
 
 
     // search product function
     const search = (e) => {
         e.preventDefault();
-        Axios.get(`http://localhost:3001/api/getSearchProduct?product_id=${product_id}&customer_id=${customer_id}&product_category=${product_type}&product_title=${product_title}`)
+        Axios.get(`http://localhost:3001/api/getSearchProduct?product_id=${product_id}&customer_id=${customer_id}&product_category=${product_category}&product_title=${product_title}`)
         .then((response) =>{
             setData(response.data);
         })
@@ -113,10 +113,10 @@ const SearchProduct = () => {
                             </div>
                         </div>
                         <div className="form-row">
-                            <label htmlFor="product-type" className="col-md-3 col-form-label"><b>Product Type</b></label>
+                            <label htmlFor="product-type" className="col-md-3 col-form-label"><b>Product Category</b></label>
                             <div className="input-group input-group-sm mb-3 col-md-6">
-                                <input type="text" className="form-control" id="product-type" onChange={(e) =>{
-                                setProductType(e.target.value)
+                                <input type="text" className="form-control" id="product-category" onChange={(e) =>{
+                                setProductCategory(e.target.value)
                                 }} maxLength = "128"/>
                             </div>
                             <div className="input-group input-group mb-3 col-md-3 d-flex justify-content-end">
@@ -135,7 +135,7 @@ const SearchProduct = () => {
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">Customer ID</th>
-                                        <th scope="col">Product Type</th>
+                                        <th scope="col">Product Category</th>
                                         <th scope="col">Title</th>
                                         <th scope="col">OEM P/N</th>
                                         <th scope="col">Description</th>
@@ -148,10 +148,10 @@ const SearchProduct = () => {
                                         <tr key={index}>
                                             <td>{index+1}</td>
                                             <td>{row.customer_id}</td>
-                                            <td>{row.product_type}</td>
-                                            <td>{row.title}</td>
-                                            <td>{row.oem_pn}</td>
-                                            <td>{row.description}</td>
+                                            <td>{row.product_category}</td>
+                                            <td>{row.product_title}</td>
+                                            <td>{row.oem_product_id}</td>
+                                            <td>{row.product_desc}</td>
                                             <td><button className="btn btn-sm btn-outline-info" onClick={(e) => handleView(e, row.product_id)}>OPEN</button></td>
                                             <td><button disabled={deleteButtonDisabled} className="btn btn-sm btn-danger" onClick={(e) => handleRemove(e, row.product_id)}>DELETE</button></td>
                                         </tr>

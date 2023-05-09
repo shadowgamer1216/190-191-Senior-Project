@@ -502,14 +502,14 @@ app.get("/api/getSearchComponent", (req, res) =>{
 app.get("/api/getSearchProduct", (req, res) =>{
     const product_id = req.query.product_id;
     const customer_id = req.query.customer_id;
-    const product_type = req.query.product_category;
+    const product_category = req.query.product_category;
     const product_title = req.query.product_title;
     let query = "SELECT * FROM product_table";
     let queryParams = [];
 
     if (product_id) {
-        query += " WHERE product_id LIKE ?";
-        queryParams.push(`%${product_id}%`);
+        query += " WHERE product_id = ?";
+        queryParams.push(product_id);
     }
     if (customer_id) {
         if (queryParams.length > 0) {
@@ -519,13 +519,13 @@ app.get("/api/getSearchProduct", (req, res) =>{
         }
         queryParams.push(`%${customer_id}%`);
     }
-    if (product_type) {
+    if (product_category) {
         if (queryParams.length > 0) {
-            query += " AND product_type LIKE ?";
+            query += " AND product_category LIKE ?";
         } else {
-            query += " WHERE product_type LIKE ?";
+            query += " WHERE product_category LIKE ?";
         }
-        queryParams.push(`%${product_type}%`);
+        queryParams.push(`%${product_category}%`);
     }
     if (product_title) {
         if (queryParams.length > 0) {
@@ -585,7 +585,50 @@ app.get("/api/getSearchLocation", (req, res) =>{
     });
 });
 
-app.get("/api/getItemCheckIn", (req, res) =>{
+app.get("/api/getSearchOrder", (req, res) =>{
+    const order_id = req.query.order_id;
+    const product_id = req.query.product_id;
+    const company_id = req.query.company_id;
+    const company_name = req.query.company_name;
+    let query = "SELECT * FROM order_table";
+    let queryParams = [];
+
+    if (order_id) {
+        query += " WHERE order_id = ?";
+        queryParams.push(order_id);
+    }
+    if (product_id) {
+        if (queryParams.length > 0) {
+            query += " AND product_id = ?";
+        } else {
+            query += " WHERE product_id = ?";
+        }
+        queryParams.push(product_id);
+    }
+    if (company_id) {
+        if (queryParams.length > 0) {
+            query += " AND company_id LIKE ?";
+        } else {
+            query += " WHERE company_id LIKE ?";
+        }
+        queryParams.push(`%${company_id}%`);
+    }
+    if (company_name) {
+        if (queryParams.length > 0) {
+            query += " AND company_name LIKE ?";
+        } else {
+            query += " WHERE company_name LIKE ?";
+        }
+        queryParams.push(`%${company_name}%`);
+    }
+
+    db.query(query, queryParams, (err, result) =>{
+        if (err) throw err;
+        res.send(result);
+    });
+});
+
+app.get("/api/getSearchItemCheckIn", (req, res) =>{
     const customer_id = req.query.customer_id;
     const item_id = req.query.item_id;
     let query = "SELECT * FROM item_check_in_table";
@@ -597,11 +640,11 @@ app.get("/api/getItemCheckIn", (req, res) =>{
     }
     if (item_id) {
         if (queryParams.length > 0) {
-            query += " AND item_id LIKE ?";
+            query += " AND item_id = ?";
         } else {
-            query += " WHERE item_id LIKE ?";
+            query += " WHERE item_id = ?";
         }
-        queryParams.push(`%${item_id}%`);
+        queryParams.push(item_id);
     }
 
     db.query(query, queryParams, (err, result) =>{
@@ -610,40 +653,13 @@ app.get("/api/getItemCheckIn", (req, res) =>{
     });
 });
 
-app.get("/api/getOrder", (req, res) =>{
-    const order_id = req.query.order_id;
-    const product_id = req.query.product_id;
-    let query = "SELECT * FROM order_table";
-    let queryParams = [];
-
-    if (order_id) {
-        query += " WHERE order_id LIKE ?";
-        queryParams.push(`%${order_id}%`);
-    }
-    if (product_id) {
-        if (queryParams.length > 0) {
-            query += " AND product_id LIKE ?";
-        } else {
-            query += " WHERE product_id LIKE ?";
-        }
-        queryParams.push(`%${product_id}%`);
-    }
-
-    db.query(query, queryParams, (err, result) =>{
-        if (err) throw err;
-        res.send(result);
-    });
-});
-
-app.get("/api/getShipping", (req, res) =>{
+app.get("/api/getSearchShipping", (req, res) =>{
     const order_id = req.query.order_id;
     let query = "SELECT * FROM shipping_table";
     let queryParams = [];
 
-    //I think we need to handle ints differently from varchars
     if (order_id) {
         query += " WHERE order_id = ?";
-        //queryParams.push(`%${order_id}%`);
         queryParams.push(order_id);
     }
 

@@ -131,7 +131,7 @@ const SearchShipping = () => {
                                             <td>{row.contact_name}</td>
                                             <td>{row.add1}</td>
                                             <td>{row.city}</td>
-                                            <td>{row.country_state}</td>
+                                            <td>{row.state}</td>
                                             <td>{row.zip}</td>
                                             <td>{row.country}</td>
                                             <td>{row.phone}</td>

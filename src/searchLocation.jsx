@@ -151,12 +151,14 @@ const SearchLocation = () => {
                                         <tr key={index}>
                                             <td>{index+1}</td>
                                             <td>{row.location_id}</td>
-                                            <td>{row.component_type}</td>
-                                            <td>{row.title}</td>
-                                            <td>{row.oem_pn}</td>
-                                            <td>{row.description}</td>
-                                            <td><button className="btn btn-sm btn-outline-info" onClick={(e) => handleView(e, row.location_id)}>OPEN</button></td>
-                                            <td><button disabled={deleteButtonDisabled} className="btn btn-sm btn-danger" onClick={(e) => handleRemove(e, row.location_id)}>DELETE</button></td>
+                                            <td>{row.location_type}</td>
+                                            <td>{row.item_id}</td>
+                                            <td>{row.qty}</td>
+                                            <td>{row.item_owner}</td>
+                                            <td>{row.physical_location}</td>
+                                            <td>{row.notes}</td>
+                                            <td><button className="btn btn-sm btn-outline-info" onClick={(e) => handleView(e, row.id)}>OPEN</button></td>
+                                            <td><button disabled={deleteButtonDisabled} className="btn btn-sm btn-danger" onClick={(e) => handleRemove(e, row.id)}>DELETE</button></td>
                                         </tr>
                                     ))}
 
