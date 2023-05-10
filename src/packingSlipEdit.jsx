@@ -12,10 +12,10 @@ const PackingSlipEdit = ({ handleLogout }) => {
     const [city, setCity] = useState(null);
     const [state, setState] = useState(null);
     const [zip, setZip] = useState(null);
-    const [country, setCountry] = useState('United States');
+    const [country, setCountry] = useState(null);
     const [order_id, setOrderID] = useState(null);
-    const [ship_date, setShipDate] = useState('2023-01-01');
-    const [order_date, setOrderDate] = useState('2023-01-01');
+    const [ship_date, setShipDate] = useState(null);
+    const [order_date, setOrderDate] = useState(null);
     const [po, setPO] = useState(null);
     const [ship_via, setShipVia] = useState(null);
     const [saturday_delivery, setSaturdayDelivery] = useState(null);

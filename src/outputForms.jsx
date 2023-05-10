@@ -1180,12 +1180,7 @@ const OutputForms = ({ handleLogout }) => {
                 <div className='QCInspection'>
                     <button type='button' onClick={fetchQCInspectionData} className='HomePageButton'>QC Inspection</button>
                 </div>
-                <div className='block7'>
-                    <button type='button' onClick={Invoice({orderID:17})} className='HomePageButton'>
-                        Fetch Orders
-                    </button>
-                </div>
-
+        
                 <div className="PackingSlipEdit">
                     <Link to={{pathname: '/packingSlipEdit',search: `?shipping_id=${shippingData?.shipping_id}&order_id=${orderData?.order_id}`,}}>
                         <button type="button" className="HomePageButton">Packing Slip</button>

@@ -300,6 +300,10 @@ const Location = ({ handleLogout }) => {
                     </div>
                 </form>
 
+                <br></br>
+                <button className="btn btn-outline-dark" onClick={() => navigate(-1)}>Home</button>
+                <br></br>
+                
             </div>
             <footer className="footer">
                 <div className="container-fluid">

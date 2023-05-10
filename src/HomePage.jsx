@@ -97,24 +97,6 @@ function HomePage({ handleLogout }) {
 				</Link>
 			</div>
 			
-			<div className="block8">
-				<Link to = "PackingSlipEdit">
-					<button type="Search" id="Search" className="HomePageButton" >Packing Slip</button>
-				</Link>
-			</div>
-
-			<div className="block9">
-				<Link to = "QC-Inspection">
-					<button type="Search" id="Search" className="HomePageButton" >QC Inspection</button>
-				</Link>
-			</div>
-
-			<div className="block10">
-				<Link to = "JobOrder">
-					<button type="Search" id="Search" className="HomePageButton" >Job Order</button>
-				</Link>
-			</div>
-
 		</div>
 	);
 }
