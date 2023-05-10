@@ -4,6 +4,7 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { Link, useNavigate } from "react-router-dom"
 import Select from "react-select";
+import './App.css'
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -470,21 +471,26 @@ function Invoice() {
   };
 
   return (
-    <div className="form-row">
-                        <label htmlFor="orderID" className="col-md-3 col-form-label">Order ID <span style={{ color: 'red' }}>*</span></label>
-                        <div className="input-group input-group mb-3 col-md-8">
-                            <div className="form-control p-0">
-                                <Select onChange={(e) => setOrderID(e.value)} className="react-select" menuPortalTarget={document.body} styles={customStyle} value={orders.filter(function(option) {
-                                    return option.value === orderID;
-                                })} id="orderID" required options={orders}/>
-                            </div>
-                        </div> 
-                        <div>
-                          <button  type='button' onClick={() => fetchInvoiceData(orderID)} className='HomePageButton'>
-                          Create Invoice
-                        </button>
-                        </div>                   
-                    </div>
+    <div className="form-container" style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+  <div className="form-row">
+    <label htmlFor="orderID" className="col-md-3 col-form-label">Order ID </label>
+    <div className="input-group input-group mb-3 col-md-8">
+    </div> 
+
+      <div className="form-control p-0">
+        <Select onChange={(e) => setOrderID(e.value)} className="react-select" menuPortalTarget={document.body} styles={customStyle} value={orders.filter(function(option) {
+            return option.value === orderID;
+        })} id="orderID" required options={orders}/>
+      </div>
+    <div>
+      <button  type='button' onClick={() => fetchInvoiceData(orderID)} className='login-button'>
+        Create Invoice
+      </button>
+    </div>                   
+  </div>
+</div>
+
+
   );
 
 }
