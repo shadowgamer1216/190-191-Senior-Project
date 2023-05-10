@@ -1085,11 +1085,36 @@ app.post("/api/insertShipping", (req, res) =>{
     const fob = req.body.fob;
     const notes = req.body.notes;
 
-    const sqlInsert =  "INSERT INTO shipping_table (order_id, company_name, contact_name, add1, add2, city, state, zip, province, country, phone, fax, email, fedex, ups, courier_willcall, abs, other_ship_method, payment_type, account_number, request_ship_date, request_ship_time, arrival_ship_date, arrival_ship_time, saturday, fob, notes) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-    db.query(sqlInsert, [order_id, company_name, contact_name, add1, add2, city, state, zip, province, country, phone, fax, email, fedex, ups, courier_willcall, abs, other_ship_method, payment_type, account_number, request_ship_date, request_ship_time, arrival_ship_date, arrival_ship_time, saturday, fob, notes], (err, result) => {
+    const sqlInsert =  "INSERT INTO shipping_table (order_id, company_name, contact_name, add1, add2, city, state, zip, province, country, phone,\
+         fax, email, fedex, ups, courier_willcall, abs, other_ship_method, payment_type, account_number, request_ship_date, request_ship_time,\
+          arrival_ship_date, arrival_ship_time, saturday, fob, notes) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    db.query(sqlInsert, [order_id, company_name, contact_name, add1, add2, city, state, zip, province, country, phone, fax, email, 
+        fedex, ups, courier_willcall, abs, other_ship_method, payment_type, account_number, request_ship_date, request_ship_time, arrival_ship_date, arrival_ship_time, 
+        saturday, fob, notes], (err, result) => {
         console.log(result);
+        var shipvia = null;
+        if (fedex){
+            shipvia = fedex
+        }
+        if (ups){
+            shipvia = ups
+        }
+        if (courier_willcall){
+            shipvia = courier_willcall
+        }
+        if (abs){
+            shipvia = abs
+        }
+        if (other_ship_method){
+            shipvia = other_ship_method
+        }
+        db.query("Update invoice SET shipping = ?, shipping_address = ?, shipping_city = ?, shipping_state = ?, shipping_zip = ?, ship_via = ?, ship_date = ?, fob = ?\
+        WHERE order_num = ?", [company_name, add1, city, state, zip, shipvia, request_ship_date, fob, order_id], (err, result) => {
+            console.log(err);
+        })
     });
 });
+
 // COMPANY INFO BY ID - GET API <=
 app.get("/api/company/:company_id", (req, res) => {
     const company_id = req.params.company_id;

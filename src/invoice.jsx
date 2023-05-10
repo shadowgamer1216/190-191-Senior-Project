@@ -327,7 +327,7 @@ function Invoice({handleLogout}) {
                 [
                   {
                     border: [false, false, false, false],
-                    text: 'Terms',
+                    text: orders[0].terms,
                     bold: true,
 
                   },
@@ -365,7 +365,7 @@ function Invoice({handleLogout}) {
                   },
                   {
                     border: [false, false, false, false],
-                    text: 'ABS Sales Order Date'
+                    text: orders[0].invoice_date
                   },
                 ],
                 [
@@ -377,7 +377,7 @@ function Invoice({handleLogout}) {
                   },
                   {
                     border: [false, false, false, false],
-                    text: 'Shipping here'
+                    text: orders[0].ship_via
                   },
                   {
                     border: [false, false, false, false],
@@ -399,7 +399,7 @@ function Invoice({handleLogout}) {
                   },
                   {
                     border: [false, false, false, false],
-                    text: 'Ship Date here\n\n'
+                    text: orders[0].ship_date + '\n\n'
                   },
                   {
                     border: [false, false, false, false],
