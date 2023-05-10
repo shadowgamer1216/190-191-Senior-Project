@@ -1058,6 +1058,7 @@ app.get("/api/getShippingData", (req, res) => {
 // SHIPPING PAGE - POST API =>
 app.post("/api/insertShipping", (req, res) =>{
     const order_id = req.body.order_id;
+    const company_id =req.body.order_id;
     const company_name = req.body.company_name;
     const contact_name = req.body.contact_name;
     const add1 = req.body.add1;
@@ -1084,13 +1085,17 @@ app.post("/api/insertShipping", (req, res) =>{
     const saturday = req.body.saturday;
     const fob = req.body.fob;
     const notes = req.body.notes;
+    const productType = req.body.productType;
+    const priceTotal = req.body.priceTotal;
+    const customQuantity = req.body.customQuantity;
 
-    const sqlInsert =  "INSERT INTO shipping_table (order_id, company_name, contact_name, add1, add2, city, state, zip, province, country, phone,\
+
+    const sqlInsert =  "INSERT INTO shipping_table (order_id, company_id, company_name, contact_name, add1, add2, city, state, zip, province, country, phone,\
          fax, email, fedex, ups, courier_willcall, abs, other_ship_method, payment_type, account_number, request_ship_date, request_ship_time,\
-          arrival_ship_date, arrival_ship_time, saturday, fob, notes) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-    db.query(sqlInsert, [order_id, company_name, contact_name, add1, add2, city, state, zip, province, country, phone, fax, email, 
+          arrival_ship_date, arrival_ship_time, saturday, fob, notes, productType, priceTotal, customQuantity) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    db.query(sqlInsert, [order_id, company_id,company_name, contact_name, add1, add2, city, state, zip, province, country, phone, fax, email, 
         fedex, ups, courier_willcall, abs, other_ship_method, payment_type, account_number, request_ship_date, request_ship_time, arrival_ship_date, arrival_ship_time, 
-        saturday, fob, notes], (err, result) => {
+        saturday, fob, notes, productType, priceTotal, customQuantity], (err, result) => {
         console.log(result);
         var shipvia = null;
         if (fedex){
