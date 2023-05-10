@@ -88,7 +88,7 @@ useEffect(() => {
           <Route path="/login" element={<Login handleLogin={handleLogin} />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/OutputForms" element={<OutputForms />} />
-          <Route path="/invoice" element={<Invoice orderID={17}/>} />
+          <Route path="/invoice" element={<Invoice handleLogout={handleLogout}/>} />
           <Route path="/packingSlipEdit" element={<PackingSlipEdit />} />
           <Route path="/packingSlip/:packing_slip_master_id" element={<PackingSlip handleLogout={handleLogout}/>} />
           <Route path="/QC-Inspection" element={<QCInspection />} />
@@ -109,30 +109,30 @@ useEffect(() => {
           <Route path="/itemCheckIn/:id" element={<ItemCheckInViewPage handleLogout={handleLogout}/>} />
           <Route path="/shipping" element={<ShippingPage handleLogout={handleLogout}/>} />
           <Route path="/shipping/:shipping_id" element={<ShippingViewPage handleLogout={handleLogout}/>} />
-          <Route path="/search" element={<Search />} />
-          <Route path="/search/searchcompany" element={<SearchCompany />} />
-          <Route path="/search/searchContact" element={<SearchContact />} />
-          <Route path="/search/searchShipping" element={<SearchShipping />} />
-          <Route path="/search/searchComponent" element={<SearchComponent />} />
-          <Route path="/search/searchLocation" element={<SearchLocation />} />
-          <Route path="/search/searchOrder" element={<SearchOrder />} />
-          <Route path="/search/searchProduct" element={<SearchProduct />} />
-          <Route path="/search/searchItemCheckIn" element={<SearchItemCheckIn />} />
+          <Route path="/search" element={<Search handleLogout={handleLogout}/>} />
+          <Route path="/search/searchcompany" element={<SearchCompany handleLogout={handleLogout}/>} />
+          <Route path="/search/searchContact" element={<SearchContact handleLogout={handleLogout}/>} />
+          <Route path="/search/searchShipping" element={<SearchShipping handleLogout={handleLogout}/>} />
+          <Route path="/search/searchComponent" element={<SearchComponent handleLogout={handleLogout}/>} />
+          <Route path="/search/searchLocation" element={<SearchLocation handleLogout={handleLogout}/>} />
+          <Route path="/search/searchOrder" element={<SearchOrder handleLogout={handleLogout}/>} />
+          <Route path="/search/searchProduct" element={<SearchProduct handleLogout={handleLogout}/>} />
+          <Route path="/search/searchItemCheckIn" element={<SearchItemCheckIn handleLogout={handleLogout}/>} />
       </Routes>
       </>
       ) : (
         <Routes>
           <Route path="/" element={<ViewOnlyHome handleLogout={handleLogout} />} />
           <Route path="/login" element={<Login handleLogin={handleLogin} />} />
-          <Route path="/search" element={<Search />} />
-          <Route path="/search/searchCompany" element={<SearchCompany />} />
-          <Route path="/search/searchContact" element={<SearchContact />} />
-          <Route path="/search/searchShipping" element={<SearchShipping />} />
-          <Route path="/search/searchComponent" element={<SearchComponent />} />
-          <Route path="/search/searchLocation" element={<SearchLocation />} />
-          <Route path="/search/searchOrder" element={<SearchOrder />} />
-          <Route path="/search/searchProduct" element={<SearchProduct />} />
-          <Route path="/search/searchItemCheckIn" element={<SearchItemCheckIn />} />
+          <Route path="/search" element={<Search handleLogout={handleLogout}/>} />
+          <Route path="/search/searchCompany" element={<SearchCompany handleLogout={handleLogout}/>} />
+          <Route path="/search/searchContact" element={<SearchContact handleLogout={handleLogout}/>} />
+          <Route path="/search/searchShipping" element={<SearchShipping handleLogout={handleLogout}/>} />
+          <Route path="/search/searchComponent" element={<SearchComponent handleLogout={handleLogout}/>} />
+          <Route path="/search/searchLocation" element={<SearchLocation handleLogout={handleLogout}/>} />
+          <Route path="/search/searchOrder" element={<SearchOrder handleLogout={handleLogout}/>} />
+          <Route path="/search/searchProduct" element={<SearchProduct handleLogout={handleLogout}/>} />
+          <Route path="/search/searchItemCheckIn" element={<SearchItemCheckIn handleLogout={handleLogout}/>} />
         </Routes>
       )}
      

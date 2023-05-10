@@ -42,10 +42,6 @@ function Invoice({handleLogout}) {
     }),
 };
 
-  const handleOrderChange = (e) => {
-    setOrderID(e.targe.value);
-  }
-
   const navigate = useNavigate();
 
   const routeChange = () => {
@@ -79,7 +75,6 @@ function Invoice({handleLogout}) {
       try {
       const response = await Axios.get('http://localhost:3001/api/invoice', {params: {order: orderID}});
       const orders = response.data;
-      console.log(orders[0]);
       orders[0].customer ??= ''
       orders[0].customer_address ??= ''
       orders[0].customer_city ??= ''
@@ -365,7 +360,7 @@ function Invoice({handleLogout}) {
                   },
                   {
                     border: [false, false, false, false],
-                    text: orders[0].invoice_date
+                    text: orders[0].order_date
                   },
                 ],
                 [

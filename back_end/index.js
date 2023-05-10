@@ -284,10 +284,10 @@ app.post("/api/insertOrder", (req, res) => {
                         productRes = result;
                 
                         db.query(
-                             "INSERT INTO invoice (customer, customer_address, customer_city, customer_state, customer_country, customer_zip, invoice_date, order_num,\
+                             "INSERT INTO invoice (customer, customer_address, customer_city, customer_state, customer_country, customer_zip, order_date, invoice_date, order_num,\
                                  assemblyCharge, printingCharge, setupCharge, screensCharge, freightCharge, taxRate, tax, SubTotal)\
-                             VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
-                            [companyResult[0].company_name, companyResult[0].addr1, companyResult[0].city, companyResult[0].state, companyResult[0].country, companyResult[0].zip,
+                             VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                            [companyResult[0].company_name, companyResult[0].addr1, companyResult[0].city, companyResult[0].state, companyResult[0].country, companyResult[0].zip, ABSOrder,
                             invoiceDate, orderRes.insertId, assemblyChargesTotalPrice, printingChargesTotalPrice, setupCharge, screensPrice, taxRate, tax, freightCharges, subTotal],
                             (err, result) => {
                                 var itemTotal= 0;
@@ -1168,7 +1168,7 @@ app.get("/api/invoice", (req, res) =>{
     
    
 
-        db.query("SELECT * FROM invoice WHERE order_num = ?",[orderID], (err, result) =>{
+        db.query("SELECT *, DATE_FORMAT(ship_date, '%m-%d-%y') AS ship_date, DATE_FORMAT(order_date, '%m-%d-%y') AS order_date, DATE_FORMAT(invoice_date, '%m-%d-%y') AS invoice_date FROM invoice WHERE order_num = ?",[orderID], (err, result) =>{
             if (err) {throw err;}
             console.log(result)
             res.send(result);

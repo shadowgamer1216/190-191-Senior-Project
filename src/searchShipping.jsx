@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom"
 import Axios from "axios";
 
 
-const SearchShipping = () => {
+const SearchShipping = ({ handleLogout }) => {
     const [deleteButtonDisabled, setDeleteButtonDisabled] = useState(true);
 
     const navigate = useNavigate();
@@ -76,7 +76,7 @@ const SearchShipping = () => {
                     </div>
                 </div>
 
-                <button className="btn btn-outline-light">Logout</button>
+                <button className="btn btn-outline-light" onClick={handleLogout}>Logout</button>
             </nav>
 
             </div>
