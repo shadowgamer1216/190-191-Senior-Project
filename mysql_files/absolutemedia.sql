@@ -309,6 +309,7 @@ CREATE TABLE order_table (
 
 CREATE TABLE shipping_table (
     shipping_id INT NOT NULL AUTO_INCREMENT,
+    company_id VARCHAR(50) DEFAULT NULL,
     order_id INT DEFAULT NULL,
     company_name VARCHAR(100) NOT NULL,
     contact_name VARCHAR(50) DEFAULT NULL,
@@ -336,9 +337,13 @@ CREATE TABLE shipping_table (
     saturday INT DEFAULT NULL,
     fob VARCHAR(50) DEFAULT NULL,
     notes TEXT,
+    productType VARCHAR(50) DEFAULT NULL,
+    priceTotal VARCHAR(50) DEFAULT NULL,
+    customQuantity VARCHAR(50) DEFAULT NULL,
     PRIMARY KEY (shipping_id),
     FOREIGN KEY (order_id) REFERENCES order_table(order_id) ON DELETE CASCADE
 );
+
 
 CREATE TABLE orders (
     orderID INT NOT NULL AUTO_INCREMENT,
