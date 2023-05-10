@@ -414,6 +414,13 @@ CREATE TABLE invoice (
     description10 VARCHAR(225) DEFAULT '',
     price10 FLOAT,
     totPrice10 FLOAT,
+    assemblyCharge FLOAT,
+    printingCharge FLOAT,
+    setupCharge FLOAT,
+    screensCharge FLOAT,
+    taxRate FLOAT,
+    tax FLOAT,
+    freightCharge FLOAT,
     SubTotal FLOAT,
     GrandTotal FLOAT,
     PRIMARY KEY (invoiceID)

@@ -1,18 +1,85 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
+import { Link, useNavigate } from "react-router-dom"
+import Select from "react-select";
+
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
-function Invoice({ orderID }) {
+function Invoice() {
   var tableRows = [];
-  
+  const [orderID, setOrderID] = useState('');
+  const [orders, setOrders] = useState([]); 
   var rows = [];
+  const customStyle = {
+    control: base => ({
+        ...base,
+        height: 38,
+        minHeight: 38,
+        fontSize: '16px',
+        backgroundColor: '#E2EAFF',
+    }),
+    valueContainer: (base, state) => ({
+        ...base,
+        borderWidth: 1,
+        borderTopLeftRadius: 4,
+        borderBottomLeftRadius: 4,
+        paddingLeft: 10,
+        paddingBottom: 5,
+    }),
+    option: base => ({
+        ...base,
+        fontSize: '14px',
+    }),
+    menuPortal: (base) => ({
+        ...base,
+        zIndex: 9999,
+    }),
+    placeholder: (base, state) => ({
+        ...base,
+        overflow: 'hidden',
+    }),
+};
 
-  const fetchInvoiceData = async () => {
-    try {
-      const response = await Axios.get('http://localhost:3001/api/invoice');///' + orderID.toString());
+  const handleOrderChange = (e) => {
+    setOrderID(e.targe.value);
+  }
+
+  const navigate = useNavigate();
+
+  const routeChange = () => {
+    let path = '/login';
+    navigate(path);
+};
+
+  useEffect(() => {
+    let authToken = sessionStorage.getItem('Auth Token')
+    if (!authToken) {
+        routeChange()
+    }
+    
+     Axios.get('http://localhost:3001/api/getinvoices')
+     .then(response => {
+      const options = response.data.map(option => {
+        return {value: option.order_num, label: option.order_num};
+      });
+      setOrders(options);
+      console.log(orders)
+
+     })
+     .catch(error => {
+      console.log(error)
+     });
+
+}, []);
+    
+  
+    const fetchInvoiceData = async (orderID) => {
+      try {
+      const response = await Axios.get('http://localhost:3001/api/invoice', {params: {order: orderID}});
       const orders = response.data;
+      console.log(orders[0]);
       orders[0].customer ??= ''
       orders[0].customer_address ??= ''
       orders[0].customer_city ??= ''
@@ -72,6 +139,14 @@ function Invoice({ orderID }) {
       orders[0].totPrice8 ??= ''
       orders[0].totPrice9 ??= ''
       orders[0].totPrice10 ??= ''
+      orders[0].assemblyCharge ??= ''
+      orders[0].printingCharge ??= ''
+      orders[0].setupCharge ??= ''
+      orders[0].screensCharge ??= ''
+      orders[0].taxRate ??= ''
+      orders[0].tax ??= ''
+      orders[0].freightCharge ??= ''
+
 
       var tableTitle = [{ text: 'Quantity', colSpan: 1}, { text: 'Item Description', colSpan: 1},{text: 'Unit Price', colSpan: 1},{ text: 'Total Price', colSpan: 1}]
 
@@ -123,7 +198,30 @@ function Invoice({ orderID }) {
       if(orders[0].quantity10){
         rows = [orders[0].quantity10, orders[0].desctiption10, orders[0].price10, orders[0].totPrice10]
         tableRows.push(rows)
-
+      }
+      if(orders[0].assemblyCharge){
+        rows = ['', 'Assembly Charge', '', orders[0].assemblyCharge]
+        tableRows.push(rows)
+      }
+      if(orders[0].printingCharge){
+        rows = ['', 'Printing Charge', '', orders[0].printingCharge]
+        tableRows.push(rows)
+      }
+      if(orders[0].setupCharge){
+        rows = ['', 'Setup Charge', '', orders[0].setupCharge]
+        tableRows.push(rows)
+      }
+      if(orders[0].screensCharge){
+        rows = ['', 'Screens Charge', '', orders[0].screensCharge]
+        tableRows.push(rows)
+      }
+      if(orders[0].freightCharge){
+        rows = ['', 'freight Charge', '', orders[0].freightCharge]
+        tableRows.push(rows)
+      }
+      if(orders[0].taxRate){
+        rows = ['', 'Tax Rate', (orders[0].taxRate * 100) + '%', orders[0].tax]
+        tableRows.push(rows)
       }
       var customerCity = '';
       var shippingCity = '';
@@ -131,7 +229,7 @@ function Invoice({ orderID }) {
       customerCity = orders[0].customer_city + ","
       }
       if(orders[0].shipping_city){
-      var shippingCity = orders[0].shipping_city + ","
+      shippingCity = orders[0].shipping_city + ","
       }
 
 
@@ -283,13 +381,13 @@ function Invoice({ orderID }) {
                   },
                   {
                     border: [false, false, false, false],
-                    text: 'Order Master ID',
+                    text: 'Order ID',
                     bold: true,
 
                   },
                   {
                     border: [false, false, false, false],
-                    text: 'Order Master ID here'
+                    text: 'ABSO-' + orders[0].order_num
                   },
                 ],
                 [
@@ -343,9 +441,9 @@ function Invoice({ orderID }) {
                         body: [
                           
                           [{text: 'Subtotal'},
-                          {text: 'subtotal here'}],
+                          {text: '$' + orders[0].SubTotal}],
                           [{text: 'Grand Total'}, 
-                          {text: 'grandtotal here'}],
+                          {text: '$' + orders[0].GrandTotal}],
                         ],
                       },
                     },
@@ -372,12 +470,23 @@ function Invoice({ orderID }) {
   };
 
   return (
-    <div className='block7'>
-      <button type='button' onClick={fetchInvoiceData} className='HomePageButton'>
-        Fetch Orders
-      </button>
-    </div>
+    <div className="form-row">
+                        <label htmlFor="orderID" className="col-md-3 col-form-label">Order ID <span style={{ color: 'red' }}>*</span></label>
+                        <div className="input-group input-group mb-3 col-md-8">
+                            <div className="form-control p-0">
+                                <Select onChange={(e) => setOrderID(e.value)} className="react-select" menuPortalTarget={document.body} styles={customStyle} value={orders.filter(function(option) {
+                                    return option.value === orderID;
+                                })} id="orderID" required options={orders}/>
+                            </div>
+                        </div> 
+                        <div>
+                          <button  type='button' onClick={() => fetchInvoiceData(orderID)} className='HomePageButton'>
+                          Create Invoice
+                        </button>
+                        </div>                   
+                    </div>
   );
+
 }
 
 export default Invoice;
