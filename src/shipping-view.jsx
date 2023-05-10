@@ -20,6 +20,8 @@ const Shipping = ({ handleLogout }) => {
 
   var order_id = shippingData?.order_id ?? '';
   var company_id = shippingData?.company_id ?? '';
+
+  
   var company_name = shippingData?.company_name ?? '';
   var contact_name = shippingData?.contact_name ?? '';
   var add1 = shippingData?.add1 ?? '';
@@ -40,11 +42,26 @@ const Shipping = ({ handleLogout }) => {
   var payment_type = shippingData?.payment_type ?? '';
   var account_number = shippingData?.account_number ?? '';
   var request_ship_date = shippingData?.request_ship_date ?? '';
+  request_ship_date = request_ship_date.slice(0,10);
   var request_ship_time = shippingData?.request_ship_time ?? '';
   var arrival_ship_date = shippingData?.arrival_ship_date ?? '';
+  arrival_ship_date = arrival_ship_date.slice(0,10);
   var arrival_ship_time = shippingData?.arrival_ship_time ?? '';
+  var saturday = shippingData?.saturday ?? '';
   var fob = shippingData?.fob ?? '';
   var notes = shippingData?.notes ?? '';
+
+  const [currentDate, setCurrentDate] = useState(new Date());
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentDate(new Date());
+    }, 1000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
 
   return (
     <div className="product-page">
@@ -69,33 +86,6 @@ const Shipping = ({ handleLogout }) => {
         </div>
 
         <form id="shipping_form" autoComplete="off">
-          <div className="list-address pt-3">
-            <div className="section-headers">
-              <h5>List of Shipping Addresses For</h5>
-            </div>
-            <div className="table-responsive-md">
-              <table className="table">
-                <thead className="thead-light">
-                  <tr>
-                    <th scope="col">Edit</th>
-                    <th scope="col">Company</th>
-                    <th scope="col">Contact</th>
-                    <th scope="col">Address</th>
-                    <th scope="col">City</th>
-                    <th scope="col">State</th>
-                    <th scope="col">Ship Date</th>
-                    <th scope="col">Arrival Date</th>
-                    <th scope="col">Ship Via</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>No Records</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
 
           <div className="customer-info pt-3">
             <div className="section-headers">
@@ -103,14 +93,19 @@ const Shipping = ({ handleLogout }) => {
             </div>
 
             <div className="form-row">
-              <label htmlFor="order-id"
-                className="col-md-8 col-form-label"><h4>Order ID: <span style={{ color: 'red' }}>{order_id}</span></h4></label>
-              <label htmlFor="date"
-                className="col-md-4 col-form-label"><h5>Date:</h5></label>
+              <label htmlFor="date" className="col-md-4 col-form-label"><h5><strong>Date: {currentDate.toLocaleDateString()}</strong></h5></label>
             </div>
 
             <div className="form-row">
-              <label htmlFor="customer-id" className="col-md-3 col-form-label">Choose Order <span style={{ color: 'red' }}>*</span></label>
+              <label htmlFor="shipping_id" className="col-3 col-form-label">Shipping ID</label>
+              <div className="input-group input-group-sm mb-3 col-md-2">
+                <input tabIndex="-1" readOnly type="text" className="form-control" id="shipping_id" value={shipping_id} />
+              </div>
+            </div>
+            
+
+            <div className="form-row">
+              <label htmlFor="customer-id" className="col-md-3 col-form-label">Choose Order </label>
               <div className="input-group input-group mb-3 col-md-3">
                 <div className="form-control p-0">
                   <input type="text" readOnly className="form-control" id="customer-id" value={order_id} />
@@ -119,9 +114,9 @@ const Shipping = ({ handleLogout }) => {
             </div>
 
             <div className="form-row">
-              <label htmlFor="company-id" className="col-md-3 col-form-label">Company ID</label>
+              <label htmlFor="company_id" className="col-md-3 col-form-label">Company ID</label>
               <div className="input-group input-group-sm mb-3 col-md-8">
-                <input readOnly className="form-control" id="company-id" value={company_id} />
+                <input readOnly className="form-control" id="company_id" value={company_id} />
               </div>
             </div>
 
@@ -133,14 +128,14 @@ const Shipping = ({ handleLogout }) => {
             </div>
 
             <div className="form-row">
-              <label htmlFor="contact-name" className="col-md-3 col-form-label">Contact Name<span style={{ color: 'red' }}> *</span></label>
+              <label htmlFor="contact-name" className="col-md-3 col-form-label">Contact Name</label>
               <div className="input-group input-group-sm mb-3 col-md-8">
                 <input readOnly className="form-control" id="contact-name" value={contact_name} />
               </div>
             </div>
 
             <div className="form-row">
-              <label htmlFor="add1" className="col-md-3 col-form-label">Address 1 <span style={{ color: 'red' }}>*</span></label>
+              <label htmlFor="add1" className="col-md-3 col-form-label">Address 1</label>
               <div className="input-group input-group-sm mb-3 col-md-8">
                 <input className="form-control" id="add1" value={add1} readOnly />
               </div>
@@ -154,18 +149,18 @@ const Shipping = ({ handleLogout }) => {
             </div>
 
             <div className="form-row">
-              <label htmlFor="csz" className="col-md-3 col-form-label">City | State | Zip <span style={{ color: 'red' }}> *</span></label>
+              <label htmlFor="csz" className="col-md-3 col-form-label">City | State | Zip </label>
               <div className="input-group input-group-sm mb-3 col-md-4">
-                <input className="form-control" name="city" id="csz" value={city} readOnly />
+                <input className="form-control" id="city" value={city} readOnly />
               </div>
 
               <div className="input-group input-group-sm mb-3 col-md-2">
-                <input className="form-control" name="country_state" id="csz" value={state} readOnly />
+                <input className="form-control" id="state" value={state} readOnly />
               </div>
 
               <div className="input-group input-group-sm mb-3 col-md-2">
                 <input type="text" value={zip} className="form-control"
-                  name="zip" readOnly />
+                  id="zip" readOnly />
               </div>
             </div>
 
@@ -173,25 +168,23 @@ const Shipping = ({ handleLogout }) => {
               <label htmlFor="province" className="col-md-3 col-form-label">Province</label>
               <div className="input-group input-group-sm mb-3 col-md-8">
                 <input className="form-control"
-                  name="province" value={province} readOnly />
+                  id="province" value={province} readOnly />
               </div>
             </div>
 
             <div className="form-row">
               <label htmlFor="country" className="col-md-3 col-form-label">Country
-                <span style={{ color: 'red' }}> *</span>
               </label>
               <div className="input-group input-group-sm mb-3 col-md-8">
-                <input className="form-control" name="country" value={country} readOnly />
+                <input className="form-control" nid="country" value={country} readOnly />
               </div>
             </div>
 
             <div className="form-row">
               <label htmlFor="phone" className="col-md-3 col-form-label">Phone
-                <span style={{ color: 'red' }}> *</span>
               </label>
               <div className="input-group input-group-sm mb-3 col-md-8">
-                <input className="form-control" name="phone" value={phone} readOnly />
+                <input className="form-control" id="phone" value={phone} readOnly />
               </div>
             </div>
 
@@ -199,17 +192,16 @@ const Shipping = ({ handleLogout }) => {
               <label htmlFor="fax" className="col-md-3 col-form-label">Fax</label>
               <div className="input-group input-group-sm mb-3 col-md-8">
                 <input className="form-control"
-                  name="fax" value={fax} readOnly />
+                  id="fax" value={fax} readOnly />
               </div>
             </div>
 
             <div className="form-row">
               <label htmlFor="email" className="col-md-3 col-form-label">Email
-                <span style={{ color: 'red' }}> *</span>
               </label>
               <div className="input-group input-group-sm mb-3 col-md-8">
                 <input className="form-control"
-                  name="email" value={email} readOnly />
+                  id="email" value={email} readOnly />
               </div>
             </div>
 
@@ -223,7 +215,7 @@ const Shipping = ({ handleLogout }) => {
             <div className="form-row">
               <label htmlFor="fedex" className="col-md-3 col-form-label">Fed Ex</label>
               <div className="input-group input-group-sm mb-3 col-md-3">
-                <inout className="form-control" name="fedex" id="fedex" value={fedex} readOnly />
+                <input className="form-control" id="fedex" value={fedex} readOnly />
               </div>
             </div>
 
@@ -257,29 +249,29 @@ const Shipping = ({ handleLogout }) => {
 
             <div className="form-row">
               <label htmlFor="pay-type" className="col-md-3 col-form-label">Payment Type
-                <span style={{ color: 'red' }}>*</span>
+
               </label>
               <div className="input-group input-group-sm mb-3 col-md-3">
-                <input className="form-control" name="payment_type" id="pay-type" value={payment_type} readOnly />
+                <input className="form-control" id="payment-type" value={payment_type} readOnly />
               </div>
             </div>
 
             <div className="form-row">
-              <label htmlFor="acc-num" className="col-md-3 col-form-label">Account Number
-                <span style={{ color: 'red' }}> *</span>
+              <label htmlFor="account_number" className="col-md-3 col-form-label">Account Number
               </label>
               <div className="input-group input-group-sm mb-3 col-md-8" required>
-                <input className="form-control" name="account_number" value={account_number} readOnly />
+                <input readOnly value={account_number} className="form-control"
+                  id="account_number" />
               </div>
             </div>
 
             <div className="form-row">
               <label htmlFor="ship-date" className="col-md-3 col-form-label">Requested Ship Date/Time
-                <span style={{ color: 'red' }}> *</span>
+
               </label>
               <div className="input-group input-group-sm mb-3 col-md-3">
-                <input type="datetime-local" className="form-control"
-                  name="request_ship_date" value={request_ship_date} readOnly />
+                <input type="date" className="form-control"
+                  id="request_ship_date" value={request_ship_date} readOnly />
               </div>
 
               <div className="input-group input-group-sm mb-3 col-md-3">
@@ -289,11 +281,11 @@ const Shipping = ({ handleLogout }) => {
 
             <div className="form-row">
               <label htmlFor="arr-date" className="col-md-3 col-form-label">Requested Arrival Date/Time
-                <span style={{ color: 'red' }}> *</span>
+
               </label>
               <div className="input-group input-group-sm mb-3 col-md-3">
-                <input type="datetime-local" className="form-control" value={arrival_ship_date}
-                  name="arrival_ship_date" readOnly />
+                <input type="date" className="form-control" value={arrival_ship_date}
+                  id="arrival_ship_date" readOnly />
               </div>
 
               <div className="input-group input-group-sm mb-3 col-md-3">
@@ -302,7 +294,7 @@ const Shipping = ({ handleLogout }) => {
 
               <div className="input-group input-group-sm col-md-3 pl-3">
                 <div className="form-group custom-control custom-checkbox">
-                  <input type="checkbox" className="custom-control-input" name="saturday_deliv" readOnly />
+                <input readOnly checked={saturday} type="checkbox" className="custom-control-input" id="saturday" />
                   <label htmlFor="saturday" className="custom-control-label">Saturday?</label>
                 </div>
               </div>
@@ -380,3 +372,4 @@ const Shipping = ({ handleLogout }) => {
     </div>
   );
 }; export default Shipping;
+
