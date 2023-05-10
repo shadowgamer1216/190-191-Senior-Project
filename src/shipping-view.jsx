@@ -21,7 +21,7 @@ const Shipping = ({ handleLogout }) => {
   var order_id = shippingData?.order_id ?? '';
   var company_id = shippingData?.company_id ?? '';
 
-  
+
   var company_name = shippingData?.company_name ?? '';
   var contact_name = shippingData?.contact_name ?? '';
   var add1 = shippingData?.add1 ?? '';
@@ -42,14 +42,17 @@ const Shipping = ({ handleLogout }) => {
   var payment_type = shippingData?.payment_type ?? '';
   var account_number = shippingData?.account_number ?? '';
   var request_ship_date = shippingData?.request_ship_date ?? '';
-  request_ship_date = request_ship_date.slice(0,10);
+  request_ship_date = request_ship_date.slice(0, 10);
   var request_ship_time = shippingData?.request_ship_time ?? '';
   var arrival_ship_date = shippingData?.arrival_ship_date ?? '';
-  arrival_ship_date = arrival_ship_date.slice(0,10);
+  arrival_ship_date = arrival_ship_date.slice(0, 10);
   var arrival_ship_time = shippingData?.arrival_ship_time ?? '';
   var saturday = shippingData?.saturday ?? '';
   var fob = shippingData?.fob ?? '';
   var notes = shippingData?.notes ?? '';
+  var productType = shippingData?.productType ?? '';
+  var priceTotal = shippingData?.priceTotal ?? '';
+  var customQuantity = shippingData?.customQuantity ?? '';
 
   const [currentDate, setCurrentDate] = useState(new Date());
 
@@ -102,7 +105,7 @@ const Shipping = ({ handleLogout }) => {
                 <input tabIndex="-1" readOnly type="text" className="form-control" id="shipping_id" value={shipping_id} />
               </div>
             </div>
-            
+
 
             <div className="form-row">
               <label htmlFor="customer-id" className="col-md-3 col-form-label">Choose Order </label>
@@ -294,7 +297,7 @@ const Shipping = ({ handleLogout }) => {
 
               <div className="input-group input-group-sm col-md-3 pl-3">
                 <div className="form-group custom-control custom-checkbox">
-                <input readOnly checked={saturday} type="checkbox" className="custom-control-input" id="saturday" />
+                  <input readOnly checked={saturday} type="checkbox" className="custom-control-input" id="saturday" />
                   <label htmlFor="saturday" className="custom-control-label">Saturday?</label>
                 </div>
               </div>
@@ -323,30 +326,36 @@ const Shipping = ({ handleLogout }) => {
 
           <div className="order-detail">
             <div className="form-row">
+
               <div className="input-group input-group-sm mb-3 col-md-3">
+
                 <div className="col">
                   <label htmlFor="item">Item</label>
-                  <input type="text" className="form-control" id="search-dir" readOnly></input>
+                  <input type="text" className="form-control" id="item" value={productType} readOnly></input>
                 </div>
               </div>
+
               <div className="input-group input-group-sm mb-3 col-md-3">
                 <div className="col">
-                  <label htmlFor="total-order">Total of Order</label>
-                  <input type="text" className="form-control" id="search-dir" readOnly></input>
+                  <label htmlFor="total_order">Total of Order</label>
+                  <input type="text" className="form-control" id="total_order" value={priceTotal} readOnly></input>
                 </div>
               </div>
+
               <div className="input-group input-group-sm mb-3 col-md-3">
                 <div className="col">
-                  <label htmlFor="already-ordered">Already Ordered</label>
-                  <input type="text" className="form-control" id="search-dir" readOnly></input>
+                  <label htmlFor="custom_quantity">Already Ordered</label>
+                  <input readOnly className="form-control" id="custom_quantity" value={customQuantity} />
                 </div>
               </div>
+
               <div className="input-group input-group-sm mb-3 col-md-3">
                 <div className="col">
-                  <label htmlFor="ship-to-address">Ship to This Address</label>
-                  <input type="text" className="form-control" id="search-dir" readOnly></input>
+                  <label htmlFor="ship_to_address">Ship to This Address</label>
+                  <input className="form-control" id="add1" value={add1} readOnly />
                 </div>
               </div>
+
             </div>
           </div>
 
@@ -372,4 +381,6 @@ const Shipping = ({ handleLogout }) => {
     </div>
   );
 }; export default Shipping;
+
+
 
