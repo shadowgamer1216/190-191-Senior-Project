@@ -213,13 +213,6 @@ const Shipping = ({ handleLogout }) => {
     }),
   };
 
-  /*Test*/
-  function handlePhoneChange(event) {
-    setPhone(event.target.value);
-  }
-  function handleEmailChange(event) {
-    setEmail(event.target.value);
-  }
 
 
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -260,36 +253,6 @@ const Shipping = ({ handleLogout }) => {
         </div>
 
         <form id="shipping_form" onSubmit={handleSubmit} autoComplete="off">
-          <div className="list-address pt-3">
-            <div className="section-headers">
-              <h5>List of Shipping Addresses For</h5>
-            </div>
-
-            <div className="form-row">
-              <table className="table">
-                <thead className="thead-light">
-                  <tr>
-                    <th scope="col">Edit</th>
-                    <th scope="col">Company</th>
-                    <th scope="col">Contact</th>
-                    <th scope="col">Address</th>
-                    <th scope="col">City</th>
-                    <th scope="col">State</th>
-                    <th scope="col">Ship Date</th>
-                    <th scope="col">Arrival Date</th>
-                    <th scope="col">Ship Via</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>No Records</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-          </div>
-
           <div className="customer-info pt-3">
             <div className="section-headers">
               <h5>Customer Shipping Information</h5>
@@ -698,6 +661,3 @@ const Shipping = ({ handleLogout }) => {
   )
 }
 export default Shipping;
-
-
-
