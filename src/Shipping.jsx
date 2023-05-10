@@ -5,11 +5,13 @@ import { useState, useEffect } from "react";
 import Axios from "axios";
 import Select from "react-select";
 
+
 const Shipping = ({ handleLogout }) => {
   const routeChange = () => {
     let path = '/login';
     navigate(path);
   };
+
   useEffect(() => {
     let authToken = sessionStorage.getItem('Auth Token')
     if (!authToken) {
@@ -31,6 +33,46 @@ const Shipping = ({ handleLogout }) => {
       });
   }, []);
 
+  const [order_id, setOrderId] = useState(null);
+  const [orderData, setOrderData] = useState(null);
+  const [productType, setProductType] = useState('');
+  const [priceTotal, setPriceTotal] = useState('');
+  const [customQuantity, setCustomQuantity] = useState('');
+  useEffect(() => {
+    if (order_id) {
+      Axios.get(`http://localhost:3001/api/order/${order_id}`)
+        .then(response => {
+          const modifiedResponse = {
+            ...response.data,
+            priceTotal: response.data.order_price_total
+          };
+          setOrderData(modifiedResponse);
+          setProductType(response.data.product_type.replaceAll('_', ' ').replace(/\b(\w)/g, s => s.toUpperCase()));
+          setPriceTotal(response.data.order_price_total);
+          setCustomQuantity(response.data.custom_quantity);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  }, [order_id]);
+
+
+  var company_id = orderData?.company_id ?? '';
+  var company_name = orderData?.company_name ?? '';
+
+  const [contactData, setContactData] = useState(null);
+  useEffect(() => {
+    if (company_id) {
+      Axios.get(`http://localhost:3001/api/contact1/${company_id}`).then((response) => {
+        setContactData(response.data);
+      }).catch(err => {
+        console.log(err);
+      });
+    }
+  }, [company_id]);
+  /* TEST */
+
   const [orderOptions, setOrderOptions] = useState([]);
   useEffect(() => {
     Axios.get('http://localhost:3001/api/getOrderIdList')
@@ -45,30 +87,6 @@ const Shipping = ({ handleLogout }) => {
       });
   }, []);
 
-  const [order_id, setOrderId] = useState(null);
-  const [orderData, setOrderData] = useState(null);
-  useEffect(() => {
-    if (order_id) {
-      Axios.get(`http://localhost:3001/api/order/${order_id}`)
-        .then(response => {
-          setOrderData(response.data);
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    }
-  }, [order_id]);
-  var company_id = orderData?.company_id ?? '';
-  const [company_name, setCompanyName] = useState(null);
-  useEffect(() => {
-    if (company_id) {
-      Axios.get(`http://localhost:3001/api/company/${company_id}`).then((response) => {
-        setCompanyName(response.data.company_name);
-      }).catch(err => {
-        console.log(err);
-      });
-    }
-  }, [company_id]);
 
   const [contact_name, setContactName] = useState(null);
   const [add1, setAdd1] = useState(null);
@@ -95,6 +113,21 @@ const Shipping = ({ handleLogout }) => {
   const [saturday, setSaturday] = useState(0);
   const [fob, setFob] = useState(null);
   const [notes, setNotes] = useState(null);
+
+  useEffect(() => {
+    setContactName((contactData?.fname ?? '') + " " + (contactData?.lname ?? ''));
+    setAdd1((contactData?.add_1 ?? ''));
+    setAdd2((contactData?.add_2 ?? ''));
+    setCity((contactData?.city ?? ''));
+    setState((contactData?.state_in_country ?? ''));
+    setZip((contactData?.zip ?? ''));
+    setCountry((contactData?.country ?? ''));
+    setPhone((contactData?.phone ?? ''));
+    setEmail((contactData?.email ?? ''));
+
+  }, [contactData]);
+
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -136,12 +169,13 @@ const Shipping = ({ handleLogout }) => {
   }
 
 
+
   const Sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => { //validate if all required fields have inputs
-    setSubmitting(order_id && contact_name && add1 && city && state && zip && country && phone && email);
-  }, [order_id, contact_name, add1, city, state, zip, country, phone, email]);
+    setSubmitting(order_id && contact_name && add1 && city && state && zip && country && phone && email && request_ship_date && arrival_ship_date);
+  }, [order_id, contact_name, add1, city, state, zip, country, phone, email, request_ship_date, arrival_ship_date]);
 
   const handleNavigate = async (id) => {
     const idPassed = id.toString();
@@ -178,6 +212,27 @@ const Shipping = ({ handleLogout }) => {
       overflow: 'hidden',
     }),
   };
+
+  /*Test*/
+  function handlePhoneChange(event) {
+    setPhone(event.target.value);
+  }
+  function handleEmailChange(event) {
+    setEmail(event.target.value);
+  }
+
+
+  const [currentDate, setCurrentDate] = useState(new Date());
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentDate(new Date());
+    }, 1000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
 
 
   return (
@@ -241,8 +296,7 @@ const Shipping = ({ handleLogout }) => {
             </div>
 
             <div className="form-row">
-              <label htmlFor="date"
-                className="col-md-4 col-form-label"><h5>Date:</h5></label>
+              <label htmlFor="date" className="col-md-4 col-form-label"><h5><strong>Date: {currentDate.toLocaleDateString()}</strong></h5></label>
             </div>
 
             <div className="form-row">
@@ -258,10 +312,11 @@ const Shipping = ({ handleLogout }) => {
                 <div className="form-control p-0">
                   <Select onChange={(e) => setOrderId(e.value)} className="react-select" styles={customStyle} value={orderOptions.filter(function (option) {
                     return option.value === order_id;
-                  })} id="order_id" required options={orderOptions} />
+                  })[0]} id="order_id" required options={orderOptions} />
                 </div>
               </div>
             </div>
+
             <div className="form-row">
               <label htmlFor="company-id" className="col-md-3 col-form-label">Company ID</label>
               <div className="input-group input-group-sm mb-3 col-md-8">
@@ -279,31 +334,33 @@ const Shipping = ({ handleLogout }) => {
             <div className="form-row">
               <label htmlFor="contact_name" className="col-md-3 col-form-label">Contact Name<span style={{ color: 'red' }}> *</span></label>
               <div className="input-group input-group-sm mb-3 col-md-8">
-                <input onChange={(e) => setContactName(e.target.value)} className="form-control" id="contact_name" required />
+                {/*<input onChange={(e) => setContactName(e.target.value)} className="form-control" id="contact_name" required />*/}
+                <input className="form-control" id="contact_name" value={contact_name} onChange={(e) => setContactName(e.target.value)} required />
               </div>
             </div>
 
             <div className="form-row">
               <label htmlFor="add1" className="col-md-3 col-form-label">Address 1 <span style={{ color: 'red' }}>*</span></label>
               <div className="input-group input-group-sm mb-3 col-md-8">
-                <input onChange={(e) => setAdd1(e.target.value)} className="form-control" id="add1" required />
+                {/*<input onChange={(e) => setAdd1(e.target.value)} className="form-control" id="add1" required />*/}
+                <input className="form-control" id="add1" value={add1} onChange={(e) => setAdd1(e.target.value)} required />
               </div>
             </div>
 
             <div className="form-row">
               <label htmlFor="add2" className="col-md-3 col-form-label">Address 2</label>
               <div className="input-group input-group-sm mb-3 col-md-8">
-                <input onChange={(e) => setAdd2(e.target.value)} className="form-control" id="add2" />
+                <input className="form-control" id="add2" value={add2} onChange={(e) => setAdd2(e.target.value)} />
               </div>
             </div>
 
             <div className="form-row">
               <label htmlFor="csz" className="col-md-3 col-form-label">City | State | Zip <span style={{ color: 'red' }}> *</span></label>
               <div className="input-group input-group-sm mb-3 col-md-4">
-                <input onChange={(e) => setCity(e.target.value)} className="form-control" id="city" required />
+                <input className="form-control" id="city" value={city} onChange={(e) => setCity(e.target.value)} required />
               </div>
               <div className="input-group input-group-sm mb-3 col-md-2">
-                <select onChange={(e) => setState(e.target.value)} className="form-control" id="state" required>
+                <select className="form-control" id="state" value={state} onChange={(e) => setState(e.target.value)} required>
                   <option value="">Select State</option>
                   <option value="AL">AL</option>
                   <option value="AK">AK</option>
@@ -360,16 +417,14 @@ const Shipping = ({ handleLogout }) => {
               </div>
 
               <div className="input-group input-group-sm mb-3 col-md-2">
-                <input type="text" inputMode="numeric" onChange={(e) => setZip(e.target.value)} className="form-control"
-                  id="zip" required />
+                <input className="form-control" id="zip" value={zip} onChange={(e) => setZip(e.target.value)} required />
               </div>
             </div>
 
             <div className="form-row">
               <label htmlFor="province" className="col-md-3 col-form-label">Province</label>
               <div className="input-group input-group-sm mb-3 col-md-8">
-                <input onChange={(e) => setProvince(e.target.value)} className="form-control"
-                  id="province" />
+                <input className="form-control" id="province" value={province} onChange={(e) => setProvince(e.target.value)} />
               </div>
             </div>
 
@@ -378,8 +433,7 @@ const Shipping = ({ handleLogout }) => {
                 <span style={{ color: 'red' }}> *</span>
               </label>
               <div className="input-group input-group-sm mb-3 col-md-8">
-                <input onChange={(e) => setCountry(e.target.value)} className="form-control"
-                  id="country" required />
+                <input className="form-control" id="country" value={country} onChange={(e) => setCountry(e.target.value)} required />
               </div>
             </div>
 
@@ -388,8 +442,7 @@ const Shipping = ({ handleLogout }) => {
                 <span style={{ color: 'red' }}> *</span>
               </label>
               <div className="input-group input-group-sm mb-3 col-md-8">
-                <input onChange={(e) => setPhone(e.target.value)} className="form-control"
-                  id="phone" required />
+                <input className="form-control" id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} required />
               </div>
             </div>
             <div className="form-row">
@@ -405,8 +458,7 @@ const Shipping = ({ handleLogout }) => {
                 <span style={{ color: 'red' }}> *</span>
               </label>
               <div className="input-group input-group-sm mb-3 col-md-8">
-                <input onChange={(e) => setEmail(e.target.value)} className="form-control"
-                  id="email" required />
+                <input className="form-control" id="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
               </div>
             </div>
 
@@ -474,7 +526,7 @@ const Shipping = ({ handleLogout }) => {
               <label htmlFor="abs" className="col-md-3 col-form-label">ABS Van</label>
               <div className="input-group input-group-sm mb-3 col-md-3">
                 <select onChange={(e) => setAbs(e.target.value)} className="form-control" id="abs">
-                  <option value="none">None</option>
+                  <option value="None">None</option>
                   <option value="Abs Van">ABS Van</option>
                 </select>
               </div>
@@ -508,7 +560,7 @@ const Shipping = ({ handleLogout }) => {
             </div>
 
             <div className="form-row">
-              <label htmlFor="request_ship_date" className="col-md-3 col-form-label">Requested Ship Date/Time</label>
+              <label htmlFor="request_ship_date" className="col-md-3 col-form-label">Requested Ship Date/Time<span style={{ color: 'red' }}> *</span></label>
               <div className="input-group input-group-sm mb-3 col-md-3">
                 <input type="date" className="form-control" onChange={(e) => setRequested_ship_date(e.target.value)} />
               </div>
@@ -531,7 +583,7 @@ const Shipping = ({ handleLogout }) => {
             </div>
 
             <div className="form-row">
-              <label htmlFor="arrival_ship_date" className="col-md-3 col-form-label">Requested Arrival Date/Time</label>
+              <label htmlFor="arrival_ship_date" className="col-md-3 col-form-label">Requested Arrival Date/Time<span style={{ color: 'red' }}> *</span></label>
               <div className="input-group input-group-sm mb-3 col-md-3">
                 <input type="date" className="form-control" onChange={(e) => setArrival_ship_date(e.target.value)}
                   name="arrival_ship_date" />
@@ -584,32 +636,39 @@ const Shipping = ({ handleLogout }) => {
                 <h5>Order Details</h5>
               </div>
             </div>
+
             <div className="order-detail">
               <div className="form-row">
+
                 <div className="input-group input-group-sm mb-3 col-md-3">
+
                   <div className="col">
                     <label htmlFor="item">Item</label>
-                    <input type="text" className="form-control" id="search_dir" readOnly></input>
+                    <input type="text" className="form-control" id="item" value={productType} readOnly></input>
                   </div>
                 </div>
+
                 <div className="input-group input-group-sm mb-3 col-md-3">
                   <div className="col">
                     <label htmlFor="total_order">Total of Order</label>
-                    <input type="text" className="form-control" id="search_dir" readOnly></input>
+                    <input type="text" className="form-control" id="total_order" value={priceTotal} readOnly></input>
                   </div>
                 </div>
+
                 <div className="input-group input-group-sm mb-3 col-md-3">
                   <div className="col">
-                    <label htmlFor="already_ordered">Already Ordered</label>
-                    <input type="text" className="form-control" id="search_dir" readOnly></input>
+                    <label htmlFor="custom_quantity">Already Ordered</label>
+                    <input readOnly className="form-control" id="custom_quantity" value={customQuantity} />
                   </div>
                 </div>
+
                 <div className="input-group input-group-sm mb-3 col-md-3">
                   <div className="col">
                     <label htmlFor="ship_to_address">Ship to This Address</label>
-                    <input type="text" className="form-control" id="search_dir" readOnly></input>
+                    <input className="form-control" id="add1" value={add1} readOnly />
                   </div>
                 </div>
+
               </div>
             </div>
             <div className="submit">
@@ -639,4 +698,6 @@ const Shipping = ({ handleLogout }) => {
   )
 }
 export default Shipping;
+
+
 
