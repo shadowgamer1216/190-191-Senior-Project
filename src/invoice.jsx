@@ -4,11 +4,10 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { Link, useNavigate } from "react-router-dom"
 import Select from "react-select";
-import './App.css'
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
-function Invoice() {
+function Invoice({handleLogout}) {
   var tableRows = [];
   const [orderID, setOrderID] = useState('');
   const [orders, setOrders] = useState([]); 
@@ -471,26 +470,67 @@ function Invoice() {
   };
 
   return (
-    <div className="form-container" style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-  <div className="form-row">
-    <label htmlFor="orderID" className="col-md-3 col-form-label">Order ID </label>
-    <div className="input-group input-group mb-3 col-md-8">
-    </div> 
+    <div className="page">
 
-      <div className="form-control p-0">
-        <Select onChange={(e) => setOrderID(e.value)} className="react-select" menuPortalTarget={document.body} styles={customStyle} value={orders.filter(function(option) {
-            return option.value === orderID;
-        })} id="orderID" required options={orders}/>
-      </div>
-    <div>
-      <button  type='button' onClick={() => fetchInvoiceData(orderID)} className='login-button'>
-        Create Invoice
-      </button>
-    </div>                   
+            <nav className="navbar navbar-expand-lg navbar-dark bg-maroon">
+                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span className="navbar-toggler-icon"></span>
+                </button>
+
+                <label className="navbar-brand">ABSOLUTE MEDIA, INC.</label>
+
+                <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div className="navbar-nav">
+                        <Link className="nav-link" to="/">Home</Link>
+                    </div>
+                </div>
+
+                <button className="btn btn-outline-light" onClick={handleLogout}>Logout</button>
+            </nav>
+            <div className="container p-5">
+
+            <div className="page-headers">
+                    <h2>Invoice</h2>
+                </div>
+
+              <div className="form-row">
+                        <label htmlFor="orderID" className="col-md-3 col-form-label"><h4>Order ID <span style={{ color: 'red' }}>*</span></h4></label>
+                        <div className="input-group input-group mb-3 col-md-8">
+                            <div className="form-control p-0">
+                                <Select onChange={(e) => setOrderID(e.value)} className="react-select" menuPortalTarget={document.body} styles={customStyle} value={orders.filter(function(option) {
+                                    return option.value === orderID;
+                                })} id="orderID" required options={orders}/>
+                            </div>
+                        </div> 
+                        
+                    </div>
+
+                    <div>
+                        <button  type='button' onClick={() => fetchInvoiceData(orderID)} className='HomePageButton'>
+                          Create Invoice
+                        </button>
+                    </div>   
+                                        
+                    </div>  
+                                                      
+                    <footer className="footer">
+                <div className="container-fluid">
+                    <div className="row">
+                        <div className="col-sm">
+                            <label>Absolute Media, Inc.</label>
+                        </div>
+                        <div className="col-sm">
+                            <label>3350 Victor Ct. Santa Clara, CA 95054</label>
+                        </div>
+                        <div className="col-sm">
+                            <label>(408) 970-3283</label>
+                        </div>
+                    </div>
+                </div>
+            </footer>
   </div>
-</div>
 
-
+  
   );
 
 }
