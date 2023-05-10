@@ -35,9 +35,9 @@ const Shipping = ({ handleLogout }) => {
 
   const [order_id, setOrderId] = useState(null);
   const [orderData, setOrderData] = useState(null);
-  const [productType, setProductType] = useState('');
-  const [priceTotal, setPriceTotal] = useState('');
-  const [customQuantity, setCustomQuantity] = useState('');
+  const [productType, setProductType] = useState(null);
+  const [priceTotal, setPriceTotal] = useState(null);
+  const [customQuantity, setCustomQuantity] = useState(null);
   useEffect(() => {
     if (order_id) {
       Axios.get(`http://localhost:3001/api/order/${order_id}`)
@@ -123,6 +123,7 @@ const Shipping = ({ handleLogout }) => {
     setZip((contactData?.zip ?? ''));
     setCountry((contactData?.country ?? ''));
     setPhone((contactData?.phone ?? ''));
+    setFax((contactData?.fax ?? ''));
     setEmail((contactData?.email ?? ''));
 
   }, [contactData]);
@@ -160,7 +161,10 @@ const Shipping = ({ handleLogout }) => {
         arrival_ship_time: arrival_ship_time,
         saturday: saturday,
         fob: fob,
-        notes: notes
+        notes: notes,
+        productType: productType,
+        priceTotal: priceTotal,
+        customQuantity: customQuantity
       }).then(() => {
         alert('Inserted new shipping');
       }).catch(err => {
@@ -411,8 +415,7 @@ const Shipping = ({ handleLogout }) => {
             <div className="form-row">
               <label htmlFor="fax" className="col-md-3 col-form-label">Fax</label>
               <div className="input-group input-group-sm mb-3 col-md-8">
-                <input onChange={(e) => setFax(e.target.value)} className="form-control"
-                  id="fax" />
+                <input className="form-control" id="fax" value={fax} onChange={(e) => setFax(e.target.value)} />
               </div>
             </div>
 
@@ -618,12 +621,14 @@ const Shipping = ({ handleLogout }) => {
                   </div>
                 </div>
 
+
                 <div className="input-group input-group-sm mb-3 col-md-3">
                   <div className="col">
-                    <label htmlFor="custom_quantity">Already Ordered</label>
-                    <input readOnly className="form-control" id="custom_quantity" value={customQuantity} />
+                    <label htmlFor="custom_qunatity">Already Ordered</label>
+                    <input type="text" className="form-control" id="custom_quanity" value={customQuantity} readOnly></input>
                   </div>
                 </div>
+
 
                 <div className="input-group input-group-sm mb-3 col-md-3">
                   <div className="col">
