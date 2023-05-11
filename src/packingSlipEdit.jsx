@@ -439,7 +439,7 @@ const PackingSlipEdit = ({ handleLogout }) => {
                     </div>
 
                     <div className="submit p-3">
-                        <button onClick={() => handleNavigate(nextPackingSlipId)} disabled={!submitting}  id="add-packing-slip" className="btn btn-success">Save Packing Slip And Print</button>
+                        <button onClick={() => handleNavigate(nextPackingSlipId)} disabled={!submitting}  id="add-packing-slip" className="btn btn-success">Save Packing Slip</button>
                     </div>
 
                 </form>
