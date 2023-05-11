@@ -93,7 +93,7 @@ const SearchComponent = ({ handleLogout }) => {
                             <div className="input-group input-group-sm mb-3 col-md-3">
                                 <input type="text" className="form-control" id="customer-id" onChange={(e) =>{
                                 setCustomerID(e.target.value)
-                                }} maxLength = "128"/>
+                                }} maxLength = "4"/>
                             </div>
                         </div>
                         <div className="form-row">
@@ -101,7 +101,7 @@ const SearchComponent = ({ handleLogout }) => {
                             <div className="input-group input-group-sm mb-3 col-md-3">
                                 <input type="text" className="form-control" id="component-id" onChange={(e) =>{
                                 setComponentID(e.target.value)
-                                }} maxLength = "4"/>
+                                }} maxLength = "128"/>
                             </div>
                         </div>
                         <div className="form-row">

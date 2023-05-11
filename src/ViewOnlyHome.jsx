@@ -25,7 +25,6 @@ useEffect(() => {
     
 
     <div class='HomePage'>
-      {/*<img src={logo} className="App-logo" alt="logo" />*/}
       <div class='HomePageBar'>
       <nav className="navbar navbar-expand-lg navbar-dark bg-maroon">
                 <label className="navbar-brand">ABSOLUTE MEDIA, INC.</label>
@@ -35,13 +34,6 @@ useEffect(() => {
       </div>
 
        
-
-        <div class='block5'>
-          
-          {/*<Link to = "View">*/}
-            <button type="View" id="View" class="InactiveHomePageButton">View</button>
-          {/*</Link>*/}
-        </div>
 
         <div class="block6">
           <Link to = "Search">
