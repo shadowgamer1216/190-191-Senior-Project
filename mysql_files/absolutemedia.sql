@@ -39,7 +39,8 @@ CREATE TABLE company_table (
     vendor INT DEFAULT NULL,
     other INT DEFAULT NULL,
     notes TEXT,
-    PRIMARY KEY (company_id)
+    PRIMARY KEY (company_id),
+    UNIQUE (company_id)
 );
 
 CREATE TABLE component_table (
