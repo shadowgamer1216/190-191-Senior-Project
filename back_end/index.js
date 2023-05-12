@@ -42,6 +42,83 @@ app.get("/api/contact/:contact_id", (req, res) => {
     });
 });
 
+// CONTACT INFO BY ID - GET API <=
+app.get("/api/contactEdit/:contact_id", (req, res) => {
+    const contact_id = req.params.contact_id;
+    db.query("SELECT * FROM contact_table WHERE contact_id = ?", [contact_id], (err, result) =>{
+        if (err) {
+            console.error(err);
+            res.status(500).send('Error retrieving contact data');
+        } else {
+            res.send(result[0]);
+        }
+    });
+});
+
+app.post("/api/editContact", (req, res)=> {
+    const contact_id = req.body.contact_id;
+    const fname = req.body.fname;
+    const lname = req.body.lname;
+    const contact_type = req.body.contact_type;
+    const title = req.body.title;
+    const dept = req.body.dept;
+    const add_1 = req.body.add_1;
+    const add_2 = req.body.add_2;
+    const city = req.body.city;
+    const state_in_country = req.body.state_in_country;
+    const zip = req.body.zip;
+    const country = req.body.country;
+    const phone = req.body.phone;
+    const extension = req.body.extension;
+    const fax = req.body.fax;
+    const email = req.body.email;
+    const cell_phone_number = req.body.cell_phone_number;
+    const third_party_company = req.body.third_party_company;
+    const notes = req.body.notes;
+    
+
+
+    const testData = {
+        fname : req.body.fname,
+        lname : req.body.lname,
+        contact_type : req.body.contact_type,
+        title : req.body.title,
+        dept : req.body.dept,
+        add_1 : req.body.add_1,
+        add_2 : req.body.add_2,
+        city : req.body.city,
+        state_in_country : req.body.state_in_country,
+        zip : req.body.zip,
+        country : req.body.country,
+        phone : req.body.phone,
+        extension : req.body.extension,
+        fax : req.body.fax,
+        email : req.body.email,
+        cell_phone_number : req.body.cell_phone_number,
+        third_party_company : req.body.third_party_company,
+        notes : req.body.notes,
+    }
+
+    let sqlUpdate = 'UPDATE contact_table SET ';
+    let isFirstField = true;
+
+    for (const field in testData) {
+        if(testData[field]) {
+            if(!isFirstField) {
+                sqlUpdate += ', ';
+            }
+            sqlUpdate += `${field} = '${testData[field]}'`;
+            isFirstField = false;
+        }
+    }
+    sqlUpdate += ` WHERE contact_id = ${contact_id}`;
+    console.log(sqlUpdate);
+
+    db.query(sqlUpdate, [fname, lname, contact_type, title, dept, add_1, add_2, city, state_in_country, zip, country, phone, extension, fax, email, cell_phone_number, third_party_company, notes, contact_id], (err, result)=>{
+        console.log(result);
+    });
+});
+
 // CONTACT INFO BY COMPANY ID - GET API <=
 app.get("/api/contact1/:company_id", (req, res) => {
     const company_id = req.params.company_id;

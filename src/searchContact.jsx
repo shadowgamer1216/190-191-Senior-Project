@@ -46,12 +46,11 @@ const SearchContact = ({ handleLogout }) => {
         navigate(`/contact/${idPassed}`);
     }
     
-    // const handleView = (e, id) => {     // create new tab from list, open view (not working, due to firebase)
-    //     e.preventDefault();
-    //     const idPassed = id.toString();
-    //     const url = `/contact/${idPassed}`;
-    //     window.open(url, '_blank');
-    // }
+    const handleEdit = (e, id) => {
+        e.preventDefault();
+        const idPassed = id.toString();
+        navigate(`/contactEdit/${idPassed}`);
+    }
 
     const handleRemove = (e, id) => {
         e.preventDefault();
@@ -131,6 +130,7 @@ const SearchContact = ({ handleLogout }) => {
                                         <th scope="col">Title</th>
                                         <th scope="col">Dept</th>
                                         <th scope="col">VIEW</th>
+                                        <th scope="col">EDIT</th>
                                         <th scope="col">DELETE</th>
                                     </tr>
                                 </thead>
@@ -145,7 +145,8 @@ const SearchContact = ({ handleLogout }) => {
                                             <td>{row.contact_type}</td>
                                             <td>{row.title}</td>
                                             <td>{row.dept}</td>
-                                            <td><button className="btn btn-sm btn-outline-info" onClick={(e) => handleView(e, row.contact_id)}>OPEN</button></td>
+                                            <td><button className="btn btn-sm btn-outline-info" onClick={(e) => handleView(e, row.contact_id)}>VIEW</button></td>
+                                            <td><button className="btn btn-sm btn-outline-info" onClick={(e) => handleEdit(e, row.contact_id)}>EDIT</button></td>
                                             <td><button disabled={deleteButtonDisabled} className="btn btn-sm btn-danger" onClick={(e) => handleRemove(e, row.contact_id)}>DELETE</button></td>
                                         </tr>
                                     ))}
