@@ -42,6 +42,19 @@ app.get("/api/contact/:contact_id", (req, res) => {
     });
 });
 
+// COMPANY INFO BY ID - GET API <=
+app.get("/api/companyEdit/:company_id", (req, res) => {
+    const company_id = req.params.company_id;
+    db.query("SELECT * FROM company_table WHERE company_id = ?", [company_id], (err, result) =>{
+        if (err) {
+            console.error(err);
+            res.status(500).send('Error retrieving company data');
+        } else {
+            res.send(result[0]);
+        }
+    });
+});
+
 // CONTACT INFO BY ID - GET API <=
 app.get("/api/contactEdit/:contact_id", (req, res) => {
     const contact_id = req.params.contact_id;
@@ -55,6 +68,77 @@ app.get("/api/contactEdit/:contact_id", (req, res) => {
     });
 });
 
+// Edit Company
+app.post("/api/editCompany" , (req, res) =>{
+
+    const company_id = req.body.company_id;
+    const addr1 = req.body.addr1;
+    const addr2 = req.body.addr2;
+    const city = req.body.city;
+    const state = req.body.state;
+    const country = req.body.country;
+    const zip = req.body.zip;
+    const salesperson = req.body.salesperson;
+    const phone = req.body.phone;
+    const extension = req.body.extension;
+    const fax = req.body.fax;
+    const email = req.body.email;
+    const web_addr = req.body.web_addr;
+    const tax_id = req.body.tax_id;
+    const resale = req.body.resale;
+    const status = req.body.status;
+    const customer = req.body.customer;
+    const vendor = req.body.vendor;
+    const other = req.body.other;
+    const notes = req.body.notes;
+
+
+    const testData = {
+        addr1 : req.body.addr1,
+        addr2 : req.body.addr2,
+        city : req.body.city,
+        state : req.body.state,
+        country : req.body.country,
+        zip : req.body.zip,
+        salesperson : req.body.salesperson,
+        phone : req.body.phone,
+        extension : req.body.extension,
+        fax : req.body.fax,
+        email : req.body.email,
+        web_addr : req.body.web_addr,
+        tax_id : req.body.tax_id,
+        resale : req.body.resale,
+        status : req.body.status,
+        customer : req.body.customer,
+        vendor : req.body.vendor,
+        other : req.body.other,
+        notes : req.body.notes,
+    }
+
+    let sqlUpdate = 'UPDATE company_table SET ';
+    let isFirstField = true;
+
+    for (const field in testData) {
+        if(testData[field]) {
+            if(!isFirstField) {
+                sqlUpdate += ', ';
+            }
+            sqlUpdate += `${field} = '${testData[field]}'`;
+            isFirstField = false;
+        }
+    }
+    sqlUpdate += ` WHERE company_id = '${company_id}'`;
+    console.log(sqlUpdate);
+    console.log("\ncustomer: "+customer);
+    console.log("\nvendor: "+vendor);
+    console.log("\nother: "+other);
+
+    db.query(sqlUpdate, [addr1, addr2, city, state, country, zip, salesperson, phone, extension, fax, email, web_addr, tax_id, resale, status, customer, vendor, other, notes], (err, result)=>{
+        console.log(result);
+    });
+});
+
+// Edit Contact
 app.post("/api/editContact", (req, res)=> {
     const contact_id = req.body.contact_id;
     const fname = req.body.fname;

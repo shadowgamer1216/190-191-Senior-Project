@@ -46,6 +46,12 @@ const SearchCompany = ({ handleLogout }) => {
         navigate(`/company/${idPassed}`);
     }
 
+    const handleEdit = (e, id) => {
+        e.preventDefault();
+        const idPassed = id.toString();
+        navigate(`/companyEdit/${idPassed}`);
+    }
+
     const handleRemove = (e, id) => {
         e.preventDefault();
         const idPassed = id.toString();
@@ -119,6 +125,7 @@ const SearchCompany = ({ handleLogout }) => {
                                         <th scope="col">Company ID</th>
                                         <th scope="col">Company Name</th>
                                         <th scope="col">VIEW</th>
+                                        <th scope="col">EDIT</th>
                                         <th scope="col">DELETE</th>
                                     </tr>
                                 </thead>
@@ -129,6 +136,7 @@ const SearchCompany = ({ handleLogout }) => {
                                             <td>{row.company_id}</td>
                                             <td>{row.company_name}</td>
                                             <td><button className="btn btn-sm btn-outline-info" onClick={(e) => handleView(e, row.company_id)}>OPEN</button></td>
+                                            <td><button className="btn btn-sm btn-outline-info" onClick={(e) => handleEdit(e, row.company_id)}>EDIT</button></td>
                                             <td><button disabled={deleteButtonDisabled} className="btn btn-sm btn-danger" onClick={(e) => handleRemove(e, row.company_id)}>DELETE</button></td>
                                         </tr>
                                     ))}

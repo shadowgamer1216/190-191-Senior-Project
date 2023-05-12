@@ -14,6 +14,7 @@ import OrderPage from './order';
 import OrderViewPage from './order-view';
 import CompanyPage from './company';
 import CompanyViewPage from './company-view';
+import CompanyEditPage from './company-edit';
 import ItemCheckInPage from './itemCheckIn';
 import ItemCheckInViewPage from './itemCheckIn-view';
 import ShippingPage from './Shipping';
@@ -107,6 +108,7 @@ useEffect(() => {
           <Route path="/order/:order_id" element={<OrderViewPage handleLogout={handleLogout}/>} />
           <Route path="/company" element={<CompanyPage handleLogout={handleLogout}/>} />
           <Route path="/company/:company_id" element={<CompanyViewPage handleLogout={handleLogout}/>} />
+          <Route path="/companyEdit/:company_id" element={<CompanyEditPage handleLogout={handleLogout}/>} />
           <Route path="/itemCheckIn" element={<ItemCheckInPage handleLogout={handleLogout}/>} />
           <Route path="/itemCheckIn/:id" element={<ItemCheckInViewPage handleLogout={handleLogout}/>} />
           <Route path="/shipping" element={<ShippingPage handleLogout={handleLogout}/>} />
