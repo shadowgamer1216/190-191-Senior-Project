@@ -119,6 +119,97 @@ app.post("/api/editContact", (req, res)=> {
     });
 });
 
+//SHIPPING INFO BY ID - GET API <=
+app.get("/api/shippingEdit/:shipping_id", (req, res) => {
+    const shipping_id = req.params.shipping_id;
+    db.query("SELECT * FROM shipping_table WHERE shipping_id = ?", [shipping_id], (err, result) => {
+        if (err) {
+            console.error(err);
+            res.status(500).send('ERROR retrieving shipping data')
+        } else {
+            res.send(result[0]);
+        }
+    });
+});
+
+app.post("/api/editShipping", (req, res) => {
+    const shipping_id = req.body.shipping_id;
+    const contact_name = req.body.contact_name;
+    const add1 = req.body.add1;
+    const add2 = req.body.add2;
+    const city = req.body.city;
+    const state = req.body.state;
+    const zip = req.body.zip;
+    const province = req.body.province;
+    const country = req.body.country;
+    const phone = req.body.phone;
+    const fax = req.body.fax;
+    const email = req.body.email;
+
+    const fedex = req.body.fedex;
+    const ups = req.body.ups;
+    const courier_willcall = req.body.courier_willcall;
+    const abs = req.body.abs;
+    const other_ship_method = req.body.other_ship_method;
+    const payment_type = req.body.payment_type;
+    const account_number = req.body.account_number;
+    const request_ship_date = req.body.request_ship_date;
+    const request_ship_time = req.body.request_ship_time;
+    const arrival_ship_date = req.body.arrival_ship_date;
+    const arrival_ship_time = req.body.arrival_ship_time;
+    const saturday = req.body.saturday;
+    const fob = req.body.fob;
+    const notes = req.body.notes;
+
+    const testData = {
+        contact_name: req.body.contact_name,
+        add1: req.body.add1,
+        add2: req.body.add2,
+        city: req.body.city,
+        state: req.body.state,
+        zip: req.body.zip,
+        province: req.body.province,
+        country: req.body.country,
+        phone: req.body.phone,
+        fax: req.body.fax,
+        email: req.body.email,
+        fedex: req.body.fedex,
+        ups: req.body.ups,
+        courier_willcall: req.body.courier_willcall,
+        abs: req.body.abs,
+        other_ship_method: req.body.other_ship_method,
+        payment_type: req.body.payment_type,
+        account_number: req.body.account_number,
+        request_ship_date: req.body.request_ship_date,
+        request_ship_time: req.body.request_ship_time,
+        arrival_ship_date: req.body.arrival_ship_date,
+        arrival_ship_time: req.body.arrival_ship_time,
+        saturday: req.body.saturday,
+        fob: req.body.fob,
+        notes: req.body.notes,
+    }
+
+    let sqlUpdate = 'UPDATE shipping_table SET ';
+    let isFirstField = true;
+
+    for (const field in testData) {
+        if (testData[field]) {
+            if (!isFirstField) {
+                sqlUpdate += ', ';
+            }
+            sqlUpdate += `${field} = '${testData[field]}'`;
+            isFirstField = false;
+        }
+    }
+
+    sqlUpdate += ` WHERE shipping_id = ${shipping_id}`;
+    console.log(sqlUpdate);
+
+    db.query(sqlUpdate, [contact_name, add1, add2, city, state, zip, province, country, phone, fax, email, fedex, ups, courier_willcall, abs, other_ship_method, payment_type, account_number, request_ship_date, request_ship_time, arrival_ship_date, arrival_ship_time, saturday, fob, notes], (err, results) => {
+        console.log(results);
+    });
+});
+
 // CONTACT INFO BY COMPANY ID - GET API <=
 app.get("/api/contact1/:company_id", (req, res) => {
     const company_id = req.params.company_id;
