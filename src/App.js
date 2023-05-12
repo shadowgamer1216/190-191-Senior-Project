@@ -19,6 +19,7 @@ import ItemCheckInPage from './itemCheckIn';
 import ItemCheckInViewPage from './itemCheckIn-view';
 import ShippingPage from './Shipping';
 import ShippingViewPage from './shipping-view';
+import ShippingEditPage from './shipping-edit';
 import { useState, useEffect } from 'react';
 import Search from './search';
 import SearchCompany from './searchCompany';
@@ -100,6 +101,7 @@ useEffect(() => {
           <Route path="/contact" element={<ContactPage handleLogout={handleLogout}/>} />
           <Route path="/contact/:contact_id" element={<ContactViewPage handleLogout={handleLogout}/>} />
           <Route path="/contactEdit/:contact_id" element={<ContactEditPage handleLogout={handleLogout}/>} />
+          <Route path="/shippingEdit/:shipping_id" element={<ShippingEditPage handleLogout={handleLogout}/>} />
           <Route path="/component" element={<ComponentPage handleLogout={handleLogout}/>} />
           <Route path="/component/:component_id" element={<ComponentViewPage handleLogout={handleLogout}/>} />
           <Route path="/location" element={<LocationPage handleLogout={handleLogout}/>} />
