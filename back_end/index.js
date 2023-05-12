@@ -68,6 +68,19 @@ app.get("/api/contactEdit/:contact_id", (req, res) => {
     });
 });
 
+// PRODUCT INFO BY ID - GET API <=
+app.get("/api/productEdit/:product_id", (req, res) => {
+    const product_id = req.params.product_id;
+    db.query("SELECT * FROM product_table WHERE product_id = ?", [product_id], (err, result) =>{
+        if (err) {
+            console.error(err);
+            res.status(500).send('Error retrieving product data');
+        } else {
+            res.send(result[0]);
+        }
+    });
+});
+
 // Edit Company
 app.post("/api/editCompany" , (req, res) =>{
 
@@ -200,6 +213,127 @@ app.post("/api/editContact", (req, res)=> {
 
     db.query(sqlUpdate, [fname, lname, contact_type, title, dept, add_1, add_2, city, state_in_country, zip, country, phone, extension, fax, email, cell_phone_number, third_party_company, notes, contact_id], (err, result)=>{
         console.log(result);
+    });
+});
+
+app.post("/api/editProduct", (req, res) => {
+
+    const old_abs_id = req.body.old_abs_id;
+    //const customerId = req.body.customer_id;
+    const product_id = req.body.product_id;
+    const product_category = req.body.product_category;
+    const oem_product_id = req.body.oem_product_id;
+    const product_title = req.body.product_title;
+    const product_desc = req.body.product_desc;
+    const product_repl = req.body.product_repl;
+    const master_format = req.body.master_format;
+    const master_received = req.body.master_received;
+    const master_label = req.body.master_label;
+    const master_capacity = req.body.master_capacity;
+    const master_loc = req.body.master_loc;
+
+    const films_loc = req.body.films_loc;
+    //const dateCodeRequired = req.body.date_code_required;
+    const date_code_position = req.body.date_code_position;
+    const inner_hub = req.body.inner_hub;
+    const inner_hub_position = req.body.inner_hub_position;
+    //const floodCoat = req.body.floodcoat;
+    //const rimagePrint = req.body.rimage_print;
+    
+    var colorCount = 0;
+    var colors = [null, null, null, null, null, null, null, null];
+    for(let i=0; i<req.body.numOfColors; i++) 
+    {
+        colors[i] = req.body.colorList[i].color;
+        colorCount = i;
+    }
+    if(colors[0] !== "") { colorCount += 1; }
+    if(colors[0] === "") { colors[0] = null }
+    const color_notes = req.body.color_notes;
+    var components = [null, null, null, null, null, null, null, null, null, null, null, null];
+    for(let i=0; i<req.body.numOfComponents; i++) 
+    {
+        components[i] = req.body.componentList[i].component;
+    }
+    if(components[0] === "") { components[0] = null }
+    var componentNames = [];
+    var componentTypes = [];
+    for(let i=0; i<req.body.numOfComponents; i++) 
+    {
+        const nameString = req.body.componentNames[i].name;
+        const emDashIndex = nameString.indexOf("—"); // find index of em dash
+        const openParenIndex = nameString.indexOf("("); // find index of opening parenthesis
+        const closeParenIndex = nameString.indexOf(")"); // find index of closing parenthesis
+
+        const componentName = nameString.substring(emDashIndex + 2, openParenIndex - 1); // extract name
+        const componentType = nameString.substring(openParenIndex + 1, closeParenIndex); // extract type
+
+        componentNames.push(componentName);
+        componentTypes.push(componentType);
+    }
+    if(componentNames[0] === "") { componentNames[0] = null }
+    const packaging_notes = req.body.packaging_notes;
+    const product_notes = req.body.product_notes;
+    const product_status = req.body.product_status;
+
+    const color_1 = req.body.color_1;
+    const color_2 = req.body.color_2;
+    const color_3 = req.body.color_3;
+    const color_4 = req.body.color_4;
+    const color_5 = req.body.color_5;
+    const color_6 = req.body.color_6;
+    const color_7 = req.body.color_7;
+    const color_8 = req.body.color_8;
+
+    const testData = {
+        old_abs_id : req.body.old_abs_id,
+        product_category : req.body.product_category,
+        oem_product_id : req.body.oem_product_id,
+        product_title : req.body.product_title,
+        product_desc : req.body.product_desc,
+        product_repl: req.body.product_repl,
+        master_format: req.body.master_format,
+        master_received : req.body.master_received,
+        master_label : req.body.master_label,
+        master_capacity: req.body.master_capacity,
+        master_loc : req.body.master_loc,
+        films_loc : req.body.films_loc,
+        date_code_position : req.body.date_code_position,
+        inner_hub : req.body.inner_hub,
+        inner_hub_position : req.body.inner_hub_position,
+        color_notes : req.body.color_notes,
+        packaging_notes : req.body.packaging_notes,
+        product_notes : req.body.product_notes,
+        product_status : req.body.product_status,
+        color_2 : req.body.color_2,
+        color_3 : req.body.color_3,
+        color_4 : req.body.color_4,
+        color_5 : req.body.color_5,
+        color_6 : req.body.color_6,
+        color_7 : req.body.color_7,
+        color_8 : req.body.color_8,
+        
+    }
+
+    let sqlUpdate = 'UPDATE product_table SET ';
+    let isFirstField = true;
+
+    for (const field in testData) {
+        if (testData[field]) {
+            if (!isFirstField) {
+                sqlUpdate += ', ';
+            }
+            sqlUpdate += `${field} = '${testData[field]}'`;
+            isFirstField = false;
+        }
+    }
+
+    sqlUpdate += ` WHERE product_id = ${product_id}`;
+    console.log("sqlUpdate: " +sqlUpdate);
+ 
+
+    db.query(sqlUpdate, [old_abs_id, product_category, oem_product_id, product_title, product_desc, product_repl, master_format, master_received, master_label, master_capacity, master_loc, films_loc, date_code_position, inner_hub, inner_hub_position, color_notes, packaging_notes, product_notes, product_status, color_2, color_3, color_4, color_5, color_6, color_7, color_8], (err, results) => {
+        console.log(results);
     });
 });
 

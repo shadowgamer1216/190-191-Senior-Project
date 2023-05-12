@@ -3,6 +3,7 @@ import { Routes, Route, useNavigate} from 'react-router-dom';
 import HomePage from './HomePage';
 import ProductPage from './product';
 import ProductViewPage from './product-view';
+import ProductEditPage from './product-edit';
 import ContactPage from './contact';
 import ContactViewPage from './contact-view';
 import ContactEditPage from './contact-edit';
@@ -100,6 +101,7 @@ useEffect(() => {
           <Route path="/jobOrder" element={<JobOrder />} />
           <Route path="/product" element={<ProductPage handleLogout={handleLogout}/>} />
           <Route path="/product/:product_id" element={<ProductViewPage handleLogout={handleLogout}/>} />
+          <Route path="/productEdit/:product_id" element={<ProductEditPage handleLogout={handleLogout}/>} />
           <Route path="/contact" element={<ContactPage handleLogout={handleLogout}/>} />
           <Route path="/contact/:contact_id" element={<ContactViewPage handleLogout={handleLogout}/>} />
           <Route path="/contactEdit/:contact_id" element={<ContactEditPage handleLogout={handleLogout}/>} />

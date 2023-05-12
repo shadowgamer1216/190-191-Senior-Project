@@ -48,6 +48,13 @@ const SearchProduct = ({ handleLogout }) => {
         const idPassed = id.toString();
         navigate(`/product/${idPassed}`);
     }
+
+    const handleEdit = (e, id) => {
+        e.preventDefault();
+        const idPassed = id.toString();
+        navigate(`/productEdit/${idPassed}`);
+    }
+
     
     const handleRemove = (e, id) => {
         e.preventDefault();
@@ -140,6 +147,7 @@ const SearchProduct = ({ handleLogout }) => {
                                         <th scope="col">OEM P/N</th>
                                         <th scope="col">Description</th>
                                         <th scope="col">VIEW</th>
+                                        <th scope="col">EDIT</th>
                                         <th scope="col">DELETE</th>
                                     </tr>
                                 </thead>
@@ -153,6 +161,7 @@ const SearchProduct = ({ handleLogout }) => {
                                             <td>{row.oem_product_id}</td>
                                             <td>{row.product_desc}</td>
                                             <td><button className="btn btn-sm btn-outline-info" onClick={(e) => handleView(e, row.product_id)}>OPEN</button></td>
+                                            <td><button className="btn btn-sm btn-outline-info" onClick={(e) => handleEdit(e, row.product_id)}>EDIT</button></td>
                                             <td><button disabled={deleteButtonDisabled} className="btn btn-sm btn-danger" onClick={(e) => handleRemove(e, row.product_id)}>DELETE</button></td>
                                         </tr>
                                     ))}
