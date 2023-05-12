@@ -6,9 +6,8 @@ import Axios from "axios";
 
 
 const SearchShipping = ({ handleLogout }) => {
-    const [deleteButtonDisabled, setDeleteButtonDisabled] = useState(true);
-
     const navigate = useNavigate();
+    const [deleteButtonDisabled, setDeleteButtonDisabled] = useState(true);
 
     const routeChange = () => {
         let path = '/login';
@@ -47,7 +46,13 @@ const SearchShipping = ({ handleLogout }) => {
         const idPassed = id.toString();
         navigate(`/shipping/${idPassed}`);
     }
-    
+   
+    const handleEdit = (e, id) => {
+        e.preventDefault();
+        const idPassed = id.toString();
+        navigate(`/shippingEdit/${idPassed}`);
+    }
+
     const handleRemove = (e, id) => {
         e.preventDefault();
         const idPassed = id.toString();
@@ -58,6 +63,7 @@ const SearchShipping = ({ handleLogout }) => {
         .catch(error => {
             console.log(error);
         });
+
     }
 
     return (
@@ -120,6 +126,7 @@ const SearchShipping = ({ handleLogout }) => {
                                         <th scope="col">Phone</th>
                                         <th scope="col">Email</th>
                                         <th scope="col">VIEW</th>
+                                        <th scope="col">EDIT</th>
                                         <th scope="col">DELETE</th>
                                     </tr>
                                 </thead>
@@ -136,7 +143,8 @@ const SearchShipping = ({ handleLogout }) => {
                                             <td>{row.country}</td>
                                             <td>{row.phone}</td>
                                             <td>{row.email}</td>
-                                            <td><button className="btn btn-sm btn-outline-info" onClick={(e) => handleView(e, row.shipping_id)}>OPEN</button></td>
+                                            <td><button className="btn btn-sm btn-outline-info" onClick={(e) => handleView(e, row.shipping_id)}>VIEW</button></td>
+                                            <td><button className="btn btn-sm btn-outline-info" onClick={(e) => handleEdit(e, row.shipping_id)}>EDIT</button></td>
                                             <td><button disabled={deleteButtonDisabled} className="btn btn-sm btn-danger" onClick={(e) => handleRemove(e, row.shipping_id)}>DELETE</button></td>
                                         </tr>
                                     ))}
