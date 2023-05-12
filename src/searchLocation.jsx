@@ -48,6 +48,12 @@ const SearchLocation = ({ handleLogout }) => {
         const idPassed = id.toString();
         navigate(`/location/${idPassed}`);
     }
+
+    const handleEdit = (e, id) => {
+        e.preventDefault();
+        const idPassed = id.toString();
+        navigate(`/locationEdit/${idPassed}`);
+    }
     
     const handleRemove = (e, id) => {
         e.preventDefault();
@@ -143,6 +149,7 @@ const SearchLocation = ({ handleLogout }) => {
                                         <th scope="col">Physical Location</th>
                                         <th scope="col">Notes</th>
                                         <th scope="col">VIEW</th>
+                                        <th scope="col">EDIT</th>
                                         <th scope="col">DELETE</th>
                                     </tr>
                                 </thead>
@@ -157,7 +164,8 @@ const SearchLocation = ({ handleLogout }) => {
                                             <td>{row.item_owner}</td>
                                             <td>{row.physical_location}</td>
                                             <td>{row.notes}</td>
-                                            <td><button className="btn btn-sm btn-outline-info" onClick={(e) => handleView(e, row.id)}>OPEN</button></td>
+                                            <td><button className="btn btn-sm btn-outline-info" onClick={(e) => handleView(e, row.id)}>VIEW</button></td>
+                                            <td><button className="btn btn-sm btn-outline-info" onClick={(e) => handleEdit(e, row.id)}>EDIT</button></td>
                                             <td><button disabled={deleteButtonDisabled} className="btn btn-sm btn-danger" onClick={(e) => handleRemove(e, row.id)}>DELETE</button></td>
                                         </tr>
                                     ))}

@@ -1182,6 +1182,61 @@ app.get("/api/getLatestLocationId", (req, res) => {
     });
 });
 
+// LOCATION INFO BY ID - GET API <=
+app.get("/api/locationEdit/:id", (req, res) => {
+    const id = req.params.id;
+    db.query("SELECT * FROM location_table WHERE id = ?", [id], (err, result) =>{
+        if (err) {
+            console.error(err);
+            res.status(500).send('Error retrieving location data');
+        } else {
+            res.send(result[0]);
+        }
+    });
+});
+
+app.post("/api/editLocation", (req, res)=> {
+    const id = req.body.id;
+    const location_id = req.body.location_id;
+    const location_type = req.body.location_type;
+    const item_id = req.body.item_id;
+    const qty = req.body.qty;
+    const item_owner = req.body.item_owner;
+    const physical_location = req.body.physical_location;
+    const notes = req.body.notes;
+    
+
+
+    const testData = {
+        location_id : req.body.location_id,
+        location_type : req.body.location_type,
+        item_id : req.body.item_id,
+        qty : req.body.qty,
+        item_owner : req.body.item_owner,
+        physical_location : req.body.physical_location,
+        notes : req.body.notes,
+    }
+
+    let sqlUpdate = 'UPDATE location_table SET ';
+    let isFirstField = true;
+
+    for (const field in testData) {
+        if(testData[field]) {
+            if(!isFirstField) {
+                sqlUpdate += ', ';
+            }
+            sqlUpdate += `${field} = '${testData[field]}'`;
+            isFirstField = false;
+        }
+    }
+    sqlUpdate += ` WHERE id = ${id}`;
+    console.log(sqlUpdate);
+
+    db.query(sqlUpdate, [location_id, location_type, item_id, qty, item_owner, physical_location, notes, id], (err, result)=>{
+        console.log(result);
+    });
+});
+
 // ITEM CHECKIN TABLE PAGE - POST API =>
 app.post("/api/insertItem" , (req, res) =>{
     const customer_id = req.body.customer_id;

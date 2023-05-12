@@ -10,6 +10,7 @@ import ComponentPage from './component';
 import ComponentViewPage from './component-view';
 import LocationPage from './location';
 import LocationViewPage from './location-view';
+import LocationEditPage from './location-edit'
 import OrderPage from './order';
 import OrderViewPage from './order-view';
 import CompanyPage from './company';
@@ -106,6 +107,7 @@ useEffect(() => {
           <Route path="/component/:component_id" element={<ComponentViewPage handleLogout={handleLogout}/>} />
           <Route path="/location" element={<LocationPage handleLogout={handleLogout}/>} />
           <Route path="/location/:id" element={<LocationViewPage handleLogout={handleLogout}/>} />
+          <Route path="/locationEdit/:id" element={<LocationEditPage handleLogout={handleLogout}/>} />
           <Route path="/order" element={<OrderPage handleLogout={handleLogout}/>} />
           <Route path="/order/:order_id" element={<OrderViewPage handleLogout={handleLogout}/>} />
           <Route path="/company" element={<CompanyPage handleLogout={handleLogout}/>} />
