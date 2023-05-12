@@ -1195,6 +1195,7 @@ app.get("/api/locationEdit/:id", (req, res) => {
     });
 });
 
+//LOCATION EDIT PAGE - POST API <=
 app.post("/api/editLocation", (req, res)=> {
     const id = req.body.id;
     const location_id = req.body.location_id;
@@ -1274,6 +1275,68 @@ app.get("/api/getLatestItemCheckInId", (req, res) => {
     db.query ("SELECT MAX(id) FROM item_check_in_table", (err, result) =>{
         if (err) throw err;
         res.send(result);
+    });
+});
+
+// ITEM CHECK IN INFO BY ID - GET API <=
+app.get("/api/itemCheckInEdit/:id", (req, res) => {
+    const id = req.params.id;
+    db.query("SELECT * FROM item_check_in_table WHERE id = ?", [id], (err, result) =>{
+        if (err) {
+            console.error(err);
+            res.status(500).send('Error retrieving item check in data');
+        } else {
+            res.send(result[0]);
+        }
+    });
+});
+
+//ITEM CHECKIN EDIT - POST API <=
+app.post("/api/editItemCheckIn", (req, res)=> {
+    const id = req.body.id;
+    const customer_id = req.body.customer_id;
+    const item_id = req.body.item_id;
+    const mfr_pn = req.body.mfr_pn;
+    const description = req.body.description;
+    const carrier = req.body.carrier;
+    const quantity = req.body.quantity;
+    const disposition = req.body.disposition;
+    const signed_for_by = req.body.signed_for_by;
+    const date_in = req.body.date_in;
+    const date_complete = req.body.date_complete;
+    
+
+
+    const testData = {
+        customer_id : req.body.customer_id,
+        item_id : req.body.item_id,
+        mfr_pn : req.body.mfr_pn,
+        description : req.body.description,
+        carrier : req.body.carrier,
+        quantity : req.body.quantity,
+        disposition : req.body.disposition,
+        signed_for_by : req.body.signed_for_by,
+        date_in : req.body.date_in,
+        date_complete : req.body.date_complete,
+    }
+
+    let sqlUpdate = 'UPDATE item_check_in_table SET ';
+    let isFirstField = true;
+
+    for (const field in testData) {
+        if(testData[field]) {
+            if(!isFirstField) {
+                sqlUpdate += ', ';
+            }
+            sqlUpdate += `${field} = '${testData[field]}'`;
+            isFirstField = false;
+        }
+    }
+    sqlUpdate += ` WHERE id = ${id}`;
+    console.log(sqlUpdate);
+
+    db.query(sqlUpdate, [customer_id, item_id, mfr_pn, description, carrier, quantity, disposition, signed_for_by, date_in, date_complete, id], (err, result)=>{
+        console.log(result);
     });
 });
 
