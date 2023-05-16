@@ -47,6 +47,12 @@ const SearchOrder = ({ handleLogout }) => {
         const idPassed = id.toString();
         navigate(`/order/${idPassed}`);
     }
+    
+    const handleEdit = (e, id) => {
+        e.preventDefault();
+        const idPassed = id.toString();
+        navigate(`/order/${idPassed}`);
+    }
 
     const handleRemove = (e, id) => {
         e.preventDefault();
@@ -140,6 +146,7 @@ const SearchOrder = ({ handleLogout }) => {
                                         <th scope="col">Product ID</th>
                                         <th scope="col">Factory Order Qty</th>
                                         <th scope="col">VIEW</th>
+			   		<th scope="col">EDIT</th>
                                         <th scope="col">DELETE</th>
                                     </tr>
                                 </thead>
@@ -152,7 +159,8 @@ const SearchOrder = ({ handleLogout }) => {
                                             <td>{row.company_name}</td>
                                             <td>{row.product_id}</td>
                                             <td>{row.factory_order_quantity}</td>
-                                            <td><button className="btn btn-sm btn-outline-info" onClick={(e) => handleView(e, row.order_id)}>OPEN</button></td>
+                                            <td><button className="btn btn-sm btn-outline-info" onClick={(e) => handleView(e, row.order_id)}>VIEW</button></td>
+					    <td><button className="btn btn-sm btn-outline-info" onClick={(e) => handleEdit(e, row.order_id)}>EDIT</button></td>
                                             <td><button disabled={deleteButtonDisabled} className="btn btn-sm btn-danger" onClick={(e) => handleRemove(e, row.order_id)}>DELETE</button></td>
                                         </tr>
                                     ))}
