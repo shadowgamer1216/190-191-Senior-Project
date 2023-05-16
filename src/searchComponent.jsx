@@ -48,6 +48,12 @@ const SearchComponent = ({ handleLogout }) => {
         const idPassed = id.toString();
         navigate(`/component/${idPassed}`);
     }
+
+    const handleEdit = (e, id) => {
+        e.preventDefault();
+        const idPassed = id.toString();
+        navigate(`/componentEdit/${idPassed}`);
+    }
     
     const handleRemove = (e, id) => {
         e.preventDefault();
@@ -141,6 +147,7 @@ const SearchComponent = ({ handleLogout }) => {
                                         <th scope="col">OEM P/N</th>
                                         <th scope="col">Description</th>
                                         <th scope="col">VIEW</th>
+                                        <th scope="col">EDIT</th>
                                         <th scope="col">DELETE</th>
                                     </tr>
                                 </thead>
@@ -153,7 +160,8 @@ const SearchComponent = ({ handleLogout }) => {
                                             <td>{row.title}</td>
                                             <td>{row.oem_pn}</td>
                                             <td>{row.component_description}</td>
-                                            <td><button className="btn btn-sm btn-outline-info" onClick={(e) => handleView(e, row.component_id)}>OPEN</button></td>
+                                            <td><button className="btn btn-sm btn-outline-info" onClick={(e) => handleView(e, row.component_id)}>VIEW</button></td>
+                                            <td><button className="btn btn-sm btn-outline-info" onClick={(e) => handleEdit(e, row.component_id)}>EDIT</button></td>
                                             <td><button disabled={deleteButtonDisabled} className="btn btn-sm btn-danger" onClick={(e) => handleRemove(e, row.component_id)}>DELETE</button></td>
                                         </tr>
                                     ))}
