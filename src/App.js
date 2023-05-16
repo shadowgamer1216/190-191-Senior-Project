@@ -9,6 +9,7 @@ import ContactViewPage from './contact-view';
 import ContactEditPage from './contact-edit';
 import ComponentPage from './component';
 import ComponentViewPage from './component-view';
+import ComponentEditPage from './component-edit';
 import LocationPage from './location';
 import LocationViewPage from './location-view';
 import LocationEditPage from './location-edit'
@@ -108,6 +109,7 @@ useEffect(() => {
           <Route path="/shippingEdit/:shipping_id" element={<ShippingEditPage handleLogout={handleLogout}/>} />
           <Route path="/component" element={<ComponentPage handleLogout={handleLogout}/>} />
           <Route path="/component/:component_id" element={<ComponentViewPage handleLogout={handleLogout}/>} />
+          <Route path="/componentEdit/:component_id" element={<ComponentEditPage handleLogout={handleLogout} />} />
           <Route path="/location" element={<LocationPage handleLogout={handleLogout}/>} />
           <Route path="/location/:id" element={<LocationViewPage handleLogout={handleLogout}/>} />
           <Route path="/locationEdit/:id" element={<LocationEditPage handleLogout={handleLogout}/>} />
