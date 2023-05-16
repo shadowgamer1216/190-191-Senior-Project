@@ -15,6 +15,7 @@ import LocationViewPage from './location-view';
 import LocationEditPage from './location-edit'
 import OrderPage from './order';
 import OrderViewPage from './order-view';
+import OrderEditPage from './order-edit';
 import CompanyPage from './company';
 import CompanyViewPage from './company-view';
 import CompanyEditPage from './company-edit';
@@ -115,6 +116,7 @@ useEffect(() => {
           <Route path="/locationEdit/:id" element={<LocationEditPage handleLogout={handleLogout}/>} />
           <Route path="/order" element={<OrderPage handleLogout={handleLogout}/>} />
           <Route path="/order/:order_id" element={<OrderViewPage handleLogout={handleLogout}/>} />
+          <Route path="/orderEdit/:order_id" element={<OrderEditPage handleLogout={handleLogout}/>} />
           <Route path="/company" element={<CompanyPage handleLogout={handleLogout}/>} />
           <Route path="/company/:company_id" element={<CompanyViewPage handleLogout={handleLogout}/>} />
           <Route path="/companyEdit/:company_id" element={<CompanyEditPage handleLogout={handleLogout}/>} />
