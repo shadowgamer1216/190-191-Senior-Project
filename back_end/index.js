@@ -820,6 +820,70 @@ app.get("/api/getComponentData", (req, res) => {
     });
 });
 
+//COMPONENT INFO BY ID - GET API <=
+app.get("/api/componentEdit/:component_id", (req, res) => {
+    const component_id = req.params.component_id;
+    db.query("SELECT * FROM component_table WHERE component_id = ?", [component_id], (err, result) => {
+        if (err) {
+            console.error(err);
+            res.status(500).send('ERROR retrieving component data')
+        } else {
+            res.send(result[0]);
+        }
+    });
+});
+
+app.post("/api/editComponent", (req, res) => {
+    const component_id = req.body.component_id;
+    const component_type = req.body.component_type;
+    const title = req.body.title;
+    const oem_pn = req.body.oem_pn;
+    const component_description = req.body.component_description;
+    const size = req.body.size;
+    const supplier_brand_id = req.body.supplier_brand_id;
+    const color = req.body.color;
+    const notes = req.body.notes;
+    const uom = req.body.uom;
+    const component_status = req.body.component_status;
+    const owned_by = req.body.owned_by;
+    const packaging_component = req.body.packaging_component;
+
+    const testData = {
+        component_type: req.body.component_type,
+        title: req.body.title,
+        oem_pn: req.body.oem_pn,
+        component_description: req.body.component_description,
+        size: req.body.size,
+        supplier_brand_id: req.body.supplier_brand_id,
+        color: req.body.color,
+        notes: req.body.notes,
+        uom: req.body.uom,
+        component_status: req.body.component_status,
+        owned_by: req.body.owned_by,
+        packaging_component: req.body.packaging_component,
+    }
+
+    let sqlUpdate = 'UPDATE component_table SET ';
+    let isFirstField = true;
+
+    for (const field in testData) {
+        if (testData[field]) {
+            if (!isFirstField) {
+                sqlUpdate += ', ';
+            }
+            sqlUpdate += `${field} = '${testData[field]}'`;
+            isFirstField = false;
+        }
+    }
+
+    sqlUpdate += ` WHERE component_id = ${component_id}`;
+    console.log(sqlUpdate);
+
+    db.query(sqlUpdate, [component_type, title, oem_pn, component_description, size, supplier_brand_id, color, notes, uom, component_status, owned_by, packaging_component], (err, results) => {
+        console.log(results);
+    });
+});
+
 app.get("/api/getSearchCompany", (req, res) =>{
     const company_id = req.query.company_id;
     const company_name = req.query.company_name;
