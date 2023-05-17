@@ -253,13 +253,13 @@ const Component = ({ handleLogout }) => {
                         <div className="form-row">
                             <label htmlFor="owned_by" className="col-form-label col-sm-3 float-sm-left pt-1 mb-2">Owned by Individual Company?</label>
                             <div className="custom-control custom-checkbox col-sm-6 float-sm-left pt-1 mb-2 ml-2">
-                                <input defaultValue={owned_by} onChange={(prev) => setOwned_By(prev => !prev)} checked={owned_by} type="checkbox" className="custom-control-input" id="owned_by" />
+                                <input defaultValue={owned_by} onChange={(prev) => setOwned_By(prev => !prev)} defaultChecked={owned_by} type="checkbox" className="custom-control-input" id="owned_by" />
                                 <label className="custom-control-label" htmlFor="owned_by"></label>
                             </div>
 
                             <label htmlFor="packaging_component" className="col-form-label col-sm-3 float-sm-left pt-1 mb-2">Packaging Component?</label>
                             <div className="custom-control custom-checkbox col-sm-6 float-sm-left pt-1 mb-2 ml-2">
-                                <input defaultValue={packaging_component} onChange={(prev) => setPackaging_Component(prev => !prev)} checked={packaging_component} type="checkbox" className="custom-control-input" id="packaging_component" />
+                                <input defaultValue={packaging_component} onChange={(prev) => setPackaging_Component(prev => !prev)} defaultChecked={packaging_component} type="checkbox" className="custom-control-input" id="packaging_component" />
                                 <label className="custom-control-label" htmlFor="packaging_component"></label>
                             </div>
                         </div>
