@@ -116,7 +116,7 @@ useEffect(() => {
           <Route path="/locationEdit/:id" element={<LocationEditPage handleLogout={handleLogout}/>} />
           <Route path="/order" element={<OrderPage handleLogout={handleLogout}/>} />
           <Route path="/order/:order_id" element={<OrderViewPage handleLogout={handleLogout}/>} />
-          <Route path="/orderEdit/:order_id" element={<OrderEditPage handleLogout={handleLogout} />} />
+          <Route path="/orderEdit/:order_id" element={<OrderEditPage handleLogout={handleLogout}/>} />
           <Route path="/company" element={<CompanyPage handleLogout={handleLogout}/>} />
           <Route path="/company/:company_id" element={<CompanyViewPage handleLogout={handleLogout}/>} />
           <Route path="/companyEdit/:company_id" element={<CompanyEditPage handleLogout={handleLogout}/>} />
