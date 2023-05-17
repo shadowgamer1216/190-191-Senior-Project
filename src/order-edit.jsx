@@ -19,44 +19,45 @@ const OrderEdit = ({ handleLogout }) => {
     const [new_customPackingSlip, setCustomPackingSlip] = useState(0);
     const [new_customQuantity, setCustomQuantity] = useState(0);
     const [new_customUnitPrice, setCustomUnitPrice] = useState(0);
-    const [new_customTotalPrice, setCustomTotalPrice] = useState(customQuantity * customUnitPrice);
+    const [new_customTotalPrice, setCustomTotalPrice] = useState(0);
+
 
     const [new_nonItem1, setNonItem1] = useState(null);
     const [new_nonItemInvoice1, setNonItemInvoice1] = useState(0);
     const [new_nonItemPackingSlip1, setNonItemPackingSlip1] = useState(0);
     const [new_nonItemQuantity1, setNonItemQuantity1] = useState(0);
     const [new_nonItemUnitPrice1, setNonItemUnitPrice1] = useState(0);
-    const [new_nonItemTotalPrice1, setNonItemTotalPrice1] = useState(nonItemQuantity1 * nonItemUnitPrice1);
+    const [new_nonItemTotalPrice1, setNonItemTotalPrice1] = useState(0);
     const [new_nonItem2, setNonItem2] = useState(null);
     const [new_nonItemInvoice2, setNonItemInvoice2] = useState(0);
     const [new_nonItemPackingSlip2, setNonItemPackingSlip2] = useState(0);
     const [new_nonItemQuantity2, setNonItemQuantity2] = useState(0);
     const [new_nonItemUnitPrice2, setNonItemUnitPrice2] = useState(0);
-    const [new_nonItemTotalPrice2, setNonItemTotalPrice2] = useState(nonItemQuantity2 * nonItemUnitPrice2);
+    const [new_nonItemTotalPrice2, setNonItemTotalPrice2] = useState(0);
     const [new_nonItem3, setNonItem3] = useState(null);
     const [new_nonItemInvoice3, setNonItemInvoice3] = useState(0);
     const [new_nonItemPackingSlip3, setNonItemPackingSlip3] = useState(0);
     const [new_nonItemQuantity3, setNonItemQuantity3] = useState(0);
     const [new_nonItemUnitPrice3, setNonItemUnitPrice3] = useState(0);
-    const [new_nonItemTotalPrice3, setNonItemTotalPrice3] = useState(nonItemQuantity3 * nonItemUnitPrice3);
+    const [new_nonItemTotalPrice3, setNonItemTotalPrice3] = useState(0);
     const [new_nonItem4, setNonItem4] = useState(null);
     const [new_nonItemInvoice4, setNonItemInvoice4] = useState(0);
     const [new_nonItemPackingSlip4, setNonItemPackingSlip4] = useState(0);
     const [new_nonItemQuantity4, setNonItemQuantity4] = useState(0);
     const [new_nonItemUnitPrice4, setNonItemUnitPrice4] = useState(0);
-    const [new_nonItemTotalPrice4, setNonItemTotalPrice4] = useState(nonItemQuantity4 * nonItemUnitPrice4);
+    const [new_nonItemTotalPrice4, setNonItemTotalPrice4] = useState(0);
     const [new_nonItem5, setNonItem5] = useState(null);
     const [new_nonItemInvoice5, setNonItemInvoice5] = useState(0);
     const [new_nonItemPackingSlip5, setNonItemPackingSlip5] = useState(0);
     const [new_nonItemQuantity5, setNonItemQuantity5] = useState(0);
     const [new_nonItemUnitPrice5, setNonItemUnitPrice5] = useState(0);
-    const [new_nonItemTotalPrice5, setNonItemTotalPrice5] = useState(nonItemQuantity5 * nonItemUnitPrice5);
+    const [new_nonItemTotalPrice5, setNonItemTotalPrice5] = useState(0);
     const [new_nonItem6, setNonItem6] = useState(null);
     const [new_nonItemInvoice6, setNonItemInvoice6] = useState(0);
     const [new_nonItemPackingSlip6, setNonItemPackingSlip6] = useState(0);
     const [new_nonItemQuantity6, setNonItemQuantity6] = useState(0);
     const [new_nonItemUnitPrice6, setNonItemUnitPrice6] = useState(0);
-    const [new_nonItemTotalPrice6, setNonItemTotalPrice6] = useState(nonItemQuantity6 * nonItemUnitPrice6);
+    const [new_nonItemTotalPrice6, setNonItemTotalPrice6] = useState(0);
 
     const [new_item1, setItem1] = useState(null);
     const [new_itemName1, setItemName1] = useState(null);
@@ -65,7 +66,7 @@ const OrderEdit = ({ handleLogout }) => {
     const [new_itemPackingSlip1, setItemPackingSlip1] = useState(0);
     const [new_itemQuantity1, setItemQuantity1] = useState(0);
     const [new_itemUnitPrice1, setItemUnitPrice1] = useState(0);
-    const [new_itemTotalPrice1, setItemTotalPrice1] = useState(itemQuantity1 * itemUnitPrice1);
+    const [new_itemTotalPrice1, setItemTotalPrice1] = useState(0);
 
     const [new_item2, setItem2] = useState(null);
     const [new_itemName2, setItemName2] = useState(null);
@@ -74,7 +75,7 @@ const OrderEdit = ({ handleLogout }) => {
     const [new_itemPackingSlip2, setItemPackingSlip2] = useState(0);
     const [new_itemQuantity2, setItemQuantity2] = useState(0);
     const [new_itemUnitPrice2, setItemUnitPrice2] = useState(0);
-    const [new_itemTotalPrice2, setItemTotalPrice2] = useState(itemQuantity2 * itemUnitPrice2);
+    const [new_itemTotalPrice2, setItemTotalPrice2] = useState(0);
 
     const [new_item3, setItem3] = useState(null);
     const [new_itemName3, setItemName3] = useState(null);
@@ -83,7 +84,7 @@ const OrderEdit = ({ handleLogout }) => {
     const [new_itemPackingSlip3, setItemPackingSlip3] = useState(0);
     const [new_itemQuantity3, setItemQuantity3] = useState(0);
     const [new_itemUnitPrice3, setItemUnitPrice3] = useState(0);
-    const [new_itemTotalPrice3, setItemTotalPrice3] = useState(itemQuantity3 * itemUnitPrice3);
+    const [new_itemTotalPrice3, setItemTotalPrice3] = useState(0);
 
     const [new_assemblyChargesQuantity, setAssemblyChargesQuantity] = useState(0);
     const [new_assemblyChargesUnitPrice, setAssemblyChargesUnitPrice] = useState(0);
@@ -255,6 +256,92 @@ const OrderEdit = ({ handleLogout }) => {
     var orderNotes = orderData?.order_notes ?? '';
     var orderStatus = orderData?.order_status ?? '';
 
+    //setting variables for calculations
+    useEffect(() => {
+        setCustomQuantity(customQuantity);
+        setCustomUnitPrice(customUnitPrice);
+        
+        setNonItemQuantity1(nonItemQuantity1);
+        setNonItemUnitPrice1(nonItemUnitPrice1);
+        setNonItemQuantity2(nonItemQuantity2);
+        setNonItemUnitPrice2(nonItemUnitPrice2);
+        setNonItemQuantity3(nonItemQuantity3);
+        setNonItemUnitPrice3(nonItemUnitPrice3);
+        setNonItemQuantity4(nonItemQuantity4);
+        setNonItemUnitPrice4(nonItemUnitPrice4);
+        setNonItemQuantity5(nonItemQuantity5);
+        setNonItemUnitPrice5(nonItemUnitPrice5);
+        setNonItemQuantity6(nonItemQuantity6);
+        setNonItemUnitPrice6(nonItemUnitPrice6);
+
+        setItemQuantity1(itemQuantity1);
+        setItemUnitPrice1(itemUnitPrice1);
+        setItemQuantity2(itemQuantity2);
+        setItemUnitPrice2(itemUnitPrice2);
+        setItemQuantity3(itemQuantity3);
+        setItemUnitPrice3(itemUnitPrice3);
+
+        setAssemblyChargesQuantity(assemblyChargesQuantity);
+        setAssemblyChargesUnitPrice(assemblyChargesUnitPrice);
+        setPrintingChargesQuantity(printingChargesQuantity);
+        setPrintingChargesUnitPrice(printingChargesUnitPrice);
+
+        setSetupCharge(setupCharge);
+        setNumberOfScreens(numberOfScreens);
+        setScreensPrice(screensPrice);
+
+        setSubTotal(subTotal);
+        setTaxRate(taxRate);
+        setTax(tax);
+        setFreightCharges(freightCharges);
+
+        setPriceTotal(priceTotal);
+      }, [customQuantity, customUnitPrice,
+            nonItemQuantity1, nonItemUnitPrice1, nonItemQuantity2, nonItemUnitPrice2, nonItemQuantity3, nonItemUnitPrice3, nonItemQuantity4, nonItemUnitPrice4, nonItemQuantity5, nonItemUnitPrice5, nonItemQuantity6, nonItemUnitPrice6,
+            itemQuantity1, itemUnitPrice1, itemQuantity2, itemUnitPrice2, itemQuantity3, itemUnitPrice3,
+            assemblyChargesQuantity, assemblyChargesUnitPrice, printingChargesQuantity, printingChargesUnitPrice, setupCharge, numberOfScreens, screensPrice,
+            subTotal, taxRate, tax, freightCharges,
+            priceTotal]);
+
+    //Calculate Price's Total
+    useEffect(() => {
+        setCustomTotalPrice(Number((new_customQuantity * new_customUnitPrice).toFixed(2)));
+        setNonItemTotalPrice1(Number((new_nonItemQuantity1 * new_nonItemUnitPrice1).toFixed(2)));
+        setNonItemTotalPrice2(Number((new_nonItemQuantity2 * new_nonItemUnitPrice2).toFixed(2)));
+        setNonItemTotalPrice3(Number((new_nonItemQuantity3 * new_nonItemUnitPrice3).toFixed(2)));
+        setNonItemTotalPrice4(Number((new_nonItemQuantity4 * new_nonItemUnitPrice4).toFixed(2)));
+        setNonItemTotalPrice5(Number((new_nonItemQuantity5 * new_nonItemUnitPrice5).toFixed(2)));
+        setNonItemTotalPrice6(Number((new_nonItemQuantity6 * new_nonItemUnitPrice6).toFixed(2)));
+        setItemTotalPrice1(Number((new_itemQuantity1 * new_itemUnitPrice1).toFixed(2)));
+        setItemTotalPrice2(Number((new_itemQuantity2 * new_itemUnitPrice2).toFixed(2)));
+        setItemTotalPrice3(Number((new_itemQuantity3 * new_itemUnitPrice3).toFixed(2)));
+        setAssemblyChargesTotalPrice(Number((new_assemblyChargesQuantity * new_assemblyChargesUnitPrice).toFixed(2)));
+        setPrintingChargesTotalPrice(Number((new_printingChargesQuantity * new_printingChargesUnitPrice).toFixed(2)));
+    }, [new_customQuantity, new_customUnitPrice, 
+        new_nonItemQuantity1, new_nonItemUnitPrice1, new_nonItemQuantity2, new_nonItemUnitPrice2, new_nonItemQuantity3, new_nonItemUnitPrice3, new_nonItemQuantity4, new_nonItemUnitPrice4, new_nonItemQuantity5, new_nonItemUnitPrice5, new_nonItemQuantity6, new_nonItemUnitPrice6,
+        new_itemQuantity1, new_itemUnitPrice1, new_itemQuantity2, new_itemUnitPrice2, new_itemQuantity3, new_itemUnitPrice3,
+        new_assemblyChargesQuantity, new_assemblyChargesUnitPrice,
+        new_printingChargesQuantity,  new_printingChargesUnitPrice]);
+
+    //Calculate SubTotal
+    useEffect (() => {
+        const totalScreens = new_numberOfScreens * new_screensPrice;
+        setSubTotal(new_customTotalPrice + 
+            new_nonItemTotalPrice1 + new_nonItemTotalPrice2 + new_nonItemTotalPrice3 + new_nonItemTotalPrice4 + new_nonItemTotalPrice5 + new_nonItemTotalPrice6 + 
+            new_itemTotalPrice1 + new_itemTotalPrice2+ new_itemTotalPrice3 +
+            new_assemblyChargesTotalPrice + new_printingChargesTotalPrice + totalScreens + Number(new_setupCharge));
+    },[new_customTotalPrice,
+        new_nonItemTotalPrice1, new_nonItemTotalPrice2, new_nonItemTotalPrice3, new_nonItemTotalPrice4, new_nonItemTotalPrice5, new_nonItemTotalPrice6,
+        new_itemTotalPrice1, new_itemTotalPrice2, new_itemTotalPrice3,
+        new_assemblyChargesTotalPrice, new_printingChargesTotalPrice, new_setupCharge, new_numberOfScreens, new_screensPrice]);
+
+    //Calculate Total and Tax
+    useEffect(() => {
+        setTax(Number((new_subTotal * new_taxRate).toFixed(2)));
+        setPriceTotal(Number(new_subTotal) + Number(new_freightCharges) + Number(new_tax));
+    }, [new_subTotal, new_taxRate, new_tax,
+        new_freightCharges]);
+
     const handleNavigate = async () => {
         await Sleep(4000);
         navigate(`/order/${order_id}`);
@@ -386,7 +473,6 @@ const OrderEdit = ({ handleLogout }) => {
         });
 
     }
-
 
     return (
         <div className="page">
@@ -528,12 +614,12 @@ const OrderEdit = ({ handleLogout }) => {
 
                             <label className="col-md-2.5 col-form-label">Unit Price $</label>
                             <div className="input-group input-group-sm mb-3 col-md-1">
-                                <input type="number" className="form-control" id="customUnitPrice" defaultValue={customUnitPrice} onChange={(e) => {setCustomUnitPrice(e.target.value)}}/>
+                                <input type="number" step="0.01" className="form-control" id="customUnitPrice" defaultValue={customUnitPrice} onChange={(e) => {setCustomUnitPrice(e.target.value)}}/>
                             </div>
 
                             <label className="col-md-3.5 col-form-label">Total Price $</label>
                             <div className="input-group input-group-sm mb-3 col-md-1">
-                                <input type="number" readOnly className="form-control" id="customTotalPrice" defaultValue={customTotalPrice} onChange={(e) => {setCustomTotalPrice(e.target.value)}}/>
+                                <input type="number" step="0.01" readOnly className="form-control" id="customTotalPrice" value={new_customTotalPrice}/>
                             </div>
                         </div>
                     </div>
@@ -571,17 +657,17 @@ const OrderEdit = ({ handleLogout }) => {
 
                             <label className="col-md-2.5 col-form-label">Quantity</label>
                             <div className="input-group input-group-sm mb-3 col-md-1">
-                                <input type="number" className="form-control" id="nonItemQuantity1" deafultValue={nonItemQuantity1} onChange={(e) => {setNonItemQuantity1(e.target.value)}}/>
+                                <input type="number" className="form-control" id="nonItemQuantity1" defaultValue={nonItemQuantity1} onChange={(e) => {setNonItemQuantity1(e.target.value)}}/>
                             </div>
 
                             <label className="col-md-2.5 col-form-label">Unit Price $</label>
                             <div className="input-group input-group-sm mb-3 col-md-1">
-                                <input type="number" className="form-control" id="nonItemUnitPrice1" defaultValue={nonItemUnitPrice1}onChange={(e) => {setItemUnitPrice1(e.target.value)}} />
+                                <input type="number" step="0.01" className="form-control" id="nonItemUnitPrice1" defaultValue={nonItemUnitPrice1} onChange={(e) => {setItemUnitPrice1(e.target.value)}} />
                             </div>
 
                             <label className="col-md-2.5 col-form-label">Total Price $</label>
                             <div className="input-group input-group-sm mb-3 col-md-1">
-                                <input type="number" readOnly className="form-control" id="nonItemTotalPrice1" defaultValue={nonItemTotalPrice1} onChange={(e) => {setItemTotalPrice1(e.target.value)}}/>
+                                <input type="number" step="0.01" readOnly className="form-control" id="nonItemTotalPrice1" value={new_nonItemTotalPrice1}/>
                             </div>
                         </div>
 
@@ -617,12 +703,12 @@ const OrderEdit = ({ handleLogout }) => {
 
                             <label className="col-md-2.5 col-form-label">Unit Price $</label>
                             <div className="input-group input-group-sm mb-3 col-md-1">
-                                <input type="number" onChange={(e) => {setNonItemUnitPrice2(e.target.value)}} className="form-control" id="nonItemUnitPrice2" defaultValue={nonItemUnitPrice2} />
+                                <input type="number" step="0.01" onChange={(e) => {setNonItemUnitPrice2(e.target.value)}} className="form-control" id="nonItemUnitPrice2" defaultValue={nonItemUnitPrice2} />
                             </div>
 
                             <label className="col-md-2.5 col-form-label">Total Price $</label>
                             <div className="input-group input-group-sm mb-3 col-md-1">
-                                <input type="number" readOnly onChange={(e) => {setNonItemTotalPrice2(e.target.value)}}className="form-control" id="nonItemTotalPrice2" defaultValue={nonItemTotalPrice2} />
+                                <input type="number" step="0.01" readOnly className="form-control" id="nonItemTotalPrice2" value={new_nonItemTotalPrice2} />
                             </div>
                         </div>
 
@@ -658,12 +744,12 @@ const OrderEdit = ({ handleLogout }) => {
 
                             <label className="col-md-2.5 col-form-label">Unit Price $</label>
                             <div className="input-group input-group-sm mb-3 col-md-1">
-                                <input type="number" onChange={(e) => {setNonItemUnitPrice3(e.target.value)}} className="form-control" id="nonItemUnitPrice3" defaultValue={nonItemUnitPrice3} />
+                                <input type="number" step="0.01" onChange={(e) => {setNonItemUnitPrice3(e.target.value)}} className="form-control" id="nonItemUnitPrice3" defaultValue={nonItemUnitPrice3} />
                             </div>
 
                             <label className="col-md-2.5 col-form-label">Total Price $</label>
                             <div className="input-group input-group-sm mb-3 col-md-1">
-                                <input type="number" readOnly onChange={(e) => {setNonItemTotalPrice3(e.target.value)}} className="form-control" id="nonItemTotalPrice3" defaultValue={nonItemTotalPrice3} />
+                                <input type="number" step="0.01" readOnly className="form-control" id="nonItemTotalPrice3" value={new_nonItemTotalPrice3} />
                             </div>
                         </div>
 
@@ -699,12 +785,12 @@ const OrderEdit = ({ handleLogout }) => {
 
                             <label className="col-md-2.5 col-form-label">Unit Price $</label>
                             <div className="input-group input-group-sm mb-3 col-md-1">
-                                <input type="number" className="form-control" id="nonItemUnitPrice4" defaultValue={nonItemUnitPrice4} onChange={(e) => {setNonItemUnitPrice4(e.target.value)}}/>
+                                <input type="number" step="0.01" className="form-control" id="nonItemUnitPrice4" defaultValue={nonItemUnitPrice4} onChange={(e) => {setNonItemUnitPrice4(e.target.value)}}/>
                             </div>
 
                             <label className="col-md-2.5 col-form-label">Total Price $</label>
                             <div className="input-group input-group-sm mb-3 col-md-1">
-                                <input type="number" readOnly onChange={(e) => {setNonItemTotalPrice4(e.target.value)}} className="form-control" id="nonItemTotalPrice4" defaultValue={nonItemTotalPrice4} />
+                                <input type="number" step="0.01" readOnly className="form-control" id="nonItemTotalPrice4" value={new_nonItemTotalPrice4} />
                             </div>
                         </div>
 
@@ -740,12 +826,12 @@ const OrderEdit = ({ handleLogout }) => {
 
                             <label className="col-md-2.5 col-form-label">Unit Price $</label>
                             <div className="input-group input-group-sm mb-3 col-md-1">
-                                <input type="number" className="form-control" id="nonItemUnitPrice5" defaultValue={nonItemUnitPrice5} onChange={(e) => {setNonItemUnitPrice5(e.target.value)}}/>
+                                <input type="number" step="0.01" className="form-control" id="nonItemUnitPrice5" defaultValue={nonItemUnitPrice5} onChange={(e) => {setNonItemUnitPrice5(e.target.value)}}/>
                             </div>
 
                             <label className="col-md-2.5 col-form-label">Total Price $</label>
                             <div className="input-group input-group-sm mb-3 col-md-1">
-                                <input type="number" readOnly className="form-control" id="nonItemTotalPrice5" defaultValue={nonItemTotalPrice5} onChange={(e) => {setNonItemTotalPrice5(e.target.value)}}/>
+                                <input type="number" step="0.01" readOnly className="form-control" id="nonItemTotalPrice5" value={new_nonItemTotalPrice5}/>
                             </div>
                         </div>
 
@@ -769,7 +855,7 @@ const OrderEdit = ({ handleLogout }) => {
                             <label className="col-md-2.5 col-form-label">Packing Slip</label>
                             <div className="input-group input-group-sm mb-3 col-md-1">
                                 <div className="form-group custom-control custom-checkbox">
-                                    <input type="checkbox" deafultChecked={nonItemPackingSlip6} onChange={(e) => {setNonItemPackingSlip6(e.target.value)}}className="custom-control-input" id="nonItemPackingSlip6" />
+                                    <input type="checkbox" defaultChecked={nonItemPackingSlip6} onChange={(e) => {setNonItemPackingSlip6(e.target.value)}}className="custom-control-input" id="nonItemPackingSlip6" />
                                     <label htmlFor="nonItemPackingSlip6" className="custom-control-label"></label>
                                 </div>
                             </div>
@@ -781,12 +867,12 @@ const OrderEdit = ({ handleLogout }) => {
 
                             <label className="col-md-2.5 col-form-label">Unit Price $</label>
                             <div className="input-group input-group-sm mb-3 col-md-1">
-                                <input type="number" className="form-control" id="nonItemUnitPrice6" defaultValue={nonItemUnitPrice6} onChange={(e) => {setNonItemUnitPrice6(e.target.value)}}/>
+                                <input type="number" step="0.01" className="form-control" id="nonItemUnitPrice6" defaultValue={nonItemUnitPrice6} onChange={(e) => {setNonItemUnitPrice6(e.target.value)}}/>
                             </div>
 
                             <label className="col-md-2.5 col-form-label">Total Price $</label>
                             <div className="input-group input-group-sm mb-3 col-md-1">
-                                <input type="number"  className="form-control" readOnly id="nonItemTotalPrice6" defaultValue={nonItemTotalPrice6} onChange={(e) => {setNonItemTotalPrice6(e.target.value)}}/>
+                                <input type="number" step="0.01"  className="form-control" readOnly id="nonItemTotalPrice6" value={new_nonItemTotalPrice6}/>
                             </div>
                         </div>
                     </div>
@@ -843,12 +929,12 @@ const OrderEdit = ({ handleLogout }) => {
 
                             <label className="col-md-2.5 col-form-label">Unit Price $</label>
                             <div className="input-group input-group-sm mb-3 col-md-1">
-                                <input type="number" className="form-control" id="itemUnitPrice1" defaultValue={itemUnitPrice1} onChange={(e) => {setItemUnitPrice2(e.target.value)}}/>
+                                <input type="number" step="0.01" className="form-control" id="itemUnitPrice1" defaultValue={itemUnitPrice1} onChange={(e) => {setItemUnitPrice2(e.target.value)}}/>
                             </div>
 
                             <label className="col-md-2.5 col-form-label">Total Price $</label>
                             <div className="input-group input-group-sm mb-3 col-md-1">
-                                <input type="number" readOnly className="form-control" id="itemTotalPrice1" defaultValue={itemTotalPrice1} onChange={(e) => {setItemTotalPrice1(e.target.value)}}/>
+                                <input type="number" step="0.01" readOnly className="form-control" id="itemTotalPrice1" value={new_itemTotalPrice1}/>
                             </div>
                         </div>
 
@@ -898,12 +984,12 @@ const OrderEdit = ({ handleLogout }) => {
 
                             <label className="col-md-2.5 col-form-label">Unit Price $</label>
                             <div className="input-group input-group-sm mb-3 col-md-1">
-                                <input type="number" className="form-control" id="itemUnitPrice2" defaultValue={itemUnitPrice2} onChange={(e) => {setItemUnitPrice2(e.target.value)}}/>
+                                <input type="number" step="0.01" className="form-control" id="itemUnitPrice2" defaultValue={itemUnitPrice2} onChange={(e) => {setItemUnitPrice2(e.target.value)}}/>
                             </div>
 
                             <label className="col-md-2.5 col-form-label">Total Price $</label>
                             <div className="input-group input-group-sm mb-3 col-md-1">
-                                <input type="number" readOnly className="form-control" id="itemTotalPrice2" defaultValue={itemTotalPrice2} onChange={(e) => {setItemTotalPrice2(e.target.value)}}/>
+                                <input type="number" step="0.01" readOnly className="form-control" id="itemTotalPrice2" value={new_itemTotalPrice2}/>
                             </div>
                         </div>
 
@@ -953,12 +1039,12 @@ const OrderEdit = ({ handleLogout }) => {
 
                             <label className="col-md-2.5 col-form-label">Unit Price $</label>
                             <div className="input-group input-group-sm mb-3 col-md-1">
-                                <input type="number" className="form-control" id="itemUnitPrice3" defaultValue={itemUnitPrice3} onChange={(e) => {setItemUnitPrice3(e.target.value)}}/>
+                                <input type="number" step="0.01" className="form-control" id="itemUnitPrice3" defaultValue={itemUnitPrice3} onChange={(e) => {setItemUnitPrice3(e.target.value)}}/>
                             </div>
 
                             <label className="col-md-2.5 col-form-label">Total Price $</label>
                             <div className="input-group input-group-sm mb-3 col-md-1">
-                                <input type="number" readOnly className="form-control" id="itemTotalPrice3" defaultValue={itemTotalPrice3} onChange={(e) => {setItemTotalPrice3(e.target.value)}}/>
+                                <input type="number" step="0.01" readOnly className="form-control" id="itemTotalPrice3" value={new_itemTotalPrice3}/>
                             </div>
                         </div>
                     </div>
@@ -973,9 +1059,9 @@ const OrderEdit = ({ handleLogout }) => {
                             <div className="input-group input-group-sm mb-3 col-md-8">
                                 <input type="number" className="form-control" id="assemblyChargesQuantity" placeholder="Quantity" defaultValue={assemblyChargesQuantity} onChange={(e) => {setAssemblyChargesQuantity(e.target.value)}}/>
 
-                                <input type="number"  className="form-control" id="assemblyChargesUnitPrice" placeholder="Unit Price $" defaultValue={assemblyChargesUnitPrice} onChange={(e) => {setAssemblyChargesUnitPrice(e.target.value)}}/>
+                                <input type="number" step="0.01" className="form-control" id="assemblyChargesUnitPrice" placeholder="Unit Price $" defaultValue={assemblyChargesUnitPrice} onChange={(e) => {setAssemblyChargesUnitPrice(e.target.value)}}/>
 
-                                <input type="number" readOnly className="form-control" id="assemblyChargesTotalPrice" defaultValue={assemblyChargesTotalPrice} onChange={(e) => {setAssemblyChargesTotalPrice(e.target.value)}}/>
+                                <input type="number" step="0.01" readOnly className="form-control" id="assemblyChargesTotalPrice" value={new_assemblyChargesTotalPrice}/>
 
                             </div>
                         </div>
@@ -983,11 +1069,11 @@ const OrderEdit = ({ handleLogout }) => {
                         <div className="form-row">
                             <label htmlFor="printingCharges" className="col-md-3 col-form-label">Date Code Printing Charges $</label>
                             <div className="input-group input-group-sm mb-3 col-md-8">
-                                <input type="number"  className="form-control" id="printingChargesQuantity" placeholder="Quantity" defaultValue={printingChargesQuantity} onChange={(e) => {setPrintingChargesQuantity(e.target.value)}}/>
+                                <input type="number" className="form-control" id="printingChargesQuantity" placeholder="Quantity" defaultValue={printingChargesQuantity} onChange={(e) => {setPrintingChargesQuantity(e.target.value)}}/>
 
-                                <input type="number" className="form-control" id="printingChargesUnitPrice" placeholder="Unit Price $" defaultValue={printingChargesUnitPrice} onChange={(e) => {setPrintingChargesUnitPrice(e.target.value)}}/>
+                                <input type="number" step="0.01" className="form-control" id="printingChargesUnitPrice" placeholder="Unit Price $" defaultValue={printingChargesUnitPrice} onChange={(e) => {setPrintingChargesUnitPrice(e.target.value)}}/>
 
-                                <input type="number" readOnly className="form-control" id="printingChargesTotalPrice" defaultValue={printingChargesTotalPrice} onChange={(e) => {setPrintingChargesTotalPrice(e.target.value)}}/>
+                                <input type="number" step="0.01" readOnly className="form-control" id="printingChargesTotalPrice" value={new_printingChargesTotalPrice}/>
 
                             </div>
                         </div>
@@ -996,7 +1082,7 @@ const OrderEdit = ({ handleLogout }) => {
                             <label htmlFor="setupCharge" className="col-md-3 col-form-label">Date Code Setup Charge $</label>
                             <div className="input-group input-group-sm mb-3 col-md-8">
 
-                                <input type="number" className="form-control" id="setupCharge" defaultValue={setupCharge} onChange={(e) => {setSetupCharge(e.target.value)}}/>
+                                <input type="number" step="0.01" className="form-control" id="setupCharge" defaultValue={setupCharge} onChange={(e) => {setSetupCharge(e.target.value)}}/>
                             </div>
                         </div>
 
@@ -1006,42 +1092,42 @@ const OrderEdit = ({ handleLogout }) => {
                                 <input type="number" className="form-control" id="numberOfScreens" placeholder="Number of Screens" defaultValue={numberOfScreens} onChange={(e) => {setNumberOfScreens(e.target.value)}}/>
                             </div>
                             <div className="input-group input-group-sm mb-3 col-md-4">
-                                <input type="number" className="form-control" id="screensPrice" placeholder="Price per Screen" defaultValue={screensPrice} onChange={(e) => {setScreensPrice(e.target.value)}}/>
+                                <input type="number" step="0.01" className="form-control" id="screensPrice" placeholder="Price per Screen" defaultValue={screensPrice} onChange={(e) => {setScreensPrice(e.target.value)}}/>
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="subTotal" className="col-md-3 col-form-label">Sub Total $</label>
                             <div className="input-group input-group-sm mb-3 col-md-8">
-                                <input type="number" readOnly className="form-control" id="subTotal" defaultalue={subTotal} onChange={(e) => {setSubTotal(e.target.value)}}/>
+                                <input type="number" step="0.01" readOnly className="form-control" id="subTotal" value={new_subTotal}/>
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="taxable" className="col-md-3 col-form-label">Tax Rate</label>
                             <div className="input-group input-group-sm mb-3 col-md-8">
-                                <input type="number" className="form-control" id="taxable" defaultValue={taxRate} onChange={(e) => {setTaxRate(e.target.value)}}/>
+                                <input type="number" step="0.01" className="form-control" id="taxable" defaultValue={taxRate} onChange={(e) => {setTaxRate(e.target.value)}}/>
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="tax" className="col-md-3 col-form-label">Tax</label>
                             <div className="input-group input-group-sm mb-3 col-md-8">
-                                <input type="number" readOnly className="form-control" id="tax" defaultValue={tax} onChange={(e) => {setTax(e.target.value)}}/>
+                                <input type="number" step="0.01" readOnly className="form-control" id="tax" value={new_tax}/>
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="freightCharges" className="col-md-3 col-form-label">Freight Charges $</label>
                             <div className="input-group input-group-sm mb-3 col-md-8">
-                                <input type="number" className="form-control" id="freightCharges" defaultValue={freightCharges} onChange={(e) => {setFreightCharges(e.target.value)}}/>
+                                <input type="number" step="0.01" className="form-control" id="freightCharges" defaultValue={freightCharges} onChange={(e) => {setFreightCharges(e.target.value)}}/>
                             </div>
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="priceTotal" className="col-md-3 col-form-label">Order Price Total $</label>
                             <div className="input-group input-group-sm mb-3 col-md-8">
-                                <input type="number" readOnly className="form-control" id="priceTotal" defaultValue={priceTotal} onChange={(e) => {setPriceTotal(e.target.value)}} />
+                                <input type="number" step="0.01" readOnly className="form-control" id="priceTotal" value={new_priceTotal} />
                             </div>
                         </div>
                     </div>
@@ -1114,7 +1200,7 @@ const OrderEdit = ({ handleLogout }) => {
                         <div className="form-row">
                             <label htmlFor="customerPONumber" className="col-md-3 col-form-label">Customer PO Number</label>
                             <div className="input-group input-group-sm mb-3 col-md-8">
-                                <input type="number" className="form-control" id="customerPONumber" dafaultValue={customerPONumber} onChange={(e) => {
+                                <input type="number" className="form-control" id="customerPONumber" defaultValue={customerPONumber} onChange={(e) => {
                                     setCustomerPONumber(e.target.value)
                                 }} />
                             </div>
