@@ -67,7 +67,7 @@ const Contact = ({ handleLogout }) => {
         navigate(`/contact/${contact_id}`);
     }
 
-// search company function
+// edit contact function
 const handleSubmit = async (e) => {
     e.preventDefault();
     await Axios.post("http://localhost:3001/api/editContact", { 

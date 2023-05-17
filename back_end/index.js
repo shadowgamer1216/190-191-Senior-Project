@@ -142,9 +142,6 @@ app.post("/api/editCompany" , (req, res) =>{
     }
     sqlUpdate += ` WHERE company_id = '${company_id}'`;
     console.log(sqlUpdate);
-    console.log("\ncustomer: "+customer);
-    console.log("\nvendor: "+vendor);
-    console.log("\nother: "+other);
 
     db.query(sqlUpdate, [addr1, addr2, city, state, country, zip, salesperson, phone, extension, fax, email, web_addr, tax_id, resale, status, customer, vendor, other, notes], (err, result)=>{
         console.log(result);
@@ -438,6 +435,83 @@ app.get("/api/contact1/:company_id", (req, res) => {
         } else {
             res.send(result[0]);
         }
+    });
+});
+
+//ORDER INFO BY ID - GET API <=
+app.get("/api/orderEdit/:order_id", (req, res) => {
+    const order_id = req.params.order_id;
+    db.query("SELECT * FROM order_table WHERE order_id = ?", [order_id], (err, result) => {
+        if (err) {
+            console.error(err);
+            res.status(500).send('ERROR retrieving order data')
+        } else {
+            res.send(result[0]);
+        }
+    });
+});
+
+// Edit Order
+app.post("/api/editOrder", (req, res)=> {
+    const order_id = req.body.order_id;
+    const salesperson = req.body.salesperson;
+    const requestor = req.body.requestor;
+    const customer_contact = req.body.customer_contact;
+    const abs_sales_order_date = req.body.abs_sales_order_date;
+    const customer_order_date = req.body.customer_order_date;
+    const customer_po_date = req.body.customer_po_date;
+    const customer_po_number = req.body.customer_po_number;
+    const days_turn = req.body.days_turn;
+    const date_code_printing = req.body.date_code_printing;
+    const customer_provided_material = req.body.customer_provided_material;
+    const customer_material_eta = req.body.customer_material_eta;
+    const customer_notes = req.body.customer_notes;
+    const vendor_notes = req.body.vendor_notes;
+    const order_notes = req.body.order_notes;
+    const invoice_date = req.body.invoice_date;
+    const invoice_date_paid = req.body.invoice_date_paid;
+    const invoice_notes = req.body.invoice_notes;
+    const order_status = req.body.order_status;
+
+
+    const testData = {
+        salesperson : req.body.salesperson,
+        requestor : req.body.requestor,
+        customer_contact : req.body.customer_contact,
+        abs_sales_order_date : req.body.abs_sales_order_date,
+        customer_order_date : req.body.customer_order_date,
+        customer_po_date : req.body.customer_po_date,
+        customer_po_number : req.body.customer_po_number,
+        days_turn : req.body.days_turn,
+        date_code_printing : req.body.date_code_printing,
+        customer_provided_material : req.body.customer_provided_material,
+        customer_material_eta : req.body.customer_material_eta,
+        customer_notes : req.body.customer_notes,
+        vendor_notes : req.body.vendor_notes,
+        order_notes : req.body.order_notes,
+        invoice_date : req.body.invoice_date,
+        invoice_date_paid : req.body.invoice_date_paid,
+        invoice_notes : req.body.invoice_notes,
+        order_status : req.body.order_status,
+    }
+
+    let sqlUpdate = 'UPDATE order_table SET ';
+    let isFirstField = true;
+
+    for (const field in testData) {
+        if(testData[field]) {
+            if(!isFirstField) {
+                sqlUpdate += ', ';
+            }
+            sqlUpdate += `${field} = '${testData[field]}'`;
+            isFirstField = false;
+        }
+    }
+    sqlUpdate += ` WHERE order_id = ${order_id}`;
+    console.log(sqlUpdate);
+
+    db.query(sqlUpdate, [salesperson, requestor, customer_contact, abs_sales_order_date, customer_order_date, customer_po_date, customer_po_number, days_turn, date_code_printing, customer_provided_material, customer_material_eta, customer_notes, vendor_notes, order_notes, invoice_date, invoice_date_paid, invoice_notes, order_status], (err, result)=>{
+        console.log(result);
     });
 });
 
