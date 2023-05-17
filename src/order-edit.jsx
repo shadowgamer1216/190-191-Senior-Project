@@ -168,7 +168,7 @@ const OrderEdit = ({ handleLogout }) => {
     var orderStatus = orderData?.order_status ?? '';
 
     const handleNavigate = async () => {
-        await Sleep(2000);
+        await Sleep(4000);
         navigate(`/order/${order_id}`);
     }
 
@@ -1025,12 +1025,13 @@ const OrderEdit = ({ handleLogout }) => {
                     </div>
                 </div>
 
+                <div>
+                    <button onClick={() => handleNavigate({order_id})} id="edit-order" className="btn btn-outline-success">Update</button>
+                </div>
+
             </form>
 
             <br></br>
-            <div>
-                <button onClick={() => handleNavigate({order_id})} id="edit-order" className="btn btn-outline-success">Update</button>
-            </div>
             <button className="btn btn-outline-dark" onClick={() => navigate(-1)}>Back</button>
             
             </div>

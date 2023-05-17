@@ -51,7 +51,7 @@ const SearchOrder = ({ handleLogout }) => {
     const handleEdit = (e, id) => {
         e.preventDefault();
         const idPassed = id.toString();
-        navigate(`/order/${idPassed}`);
+        navigate(`/orderEdit/${idPassed}`);
     }
 
     const handleRemove = (e, id) => {
@@ -147,7 +147,6 @@ const SearchOrder = ({ handleLogout }) => {
                                         <th scope="col">Factory Order Qty</th>
                                         <th scope="col">VIEW</th>
                                         <th scope="col">EDIT</th>
-			   		<th scope="col">EDIT</th>
                                         <th scope="col">DELETE</th>
                                     </tr>
                                 </thead>
