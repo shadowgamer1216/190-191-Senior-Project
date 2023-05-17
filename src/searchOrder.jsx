@@ -24,12 +24,6 @@ const SearchOrder = ({ handleLogout }) => {
         }
     }, []);
 
-    const handleEdit = (e, id) => {
-        e.preventDefault();
-        const idPassed = id.toString();
-        navigate(`/orderEdit/${idPassed}`);
-    }
-
     const [data, setData] = useState([]);
     const [order_id, setOrderID] = useState("");
     const [product_id, setProductID] = useState("");
