@@ -468,7 +468,7 @@ const Shipping = ({ handleLogout }) => {
                             </div>
                             <div className="input-group input-group-sm col-sm-3 pl-5">
                                 <div className="form-group custom-control custom-checkbox">
-                                    <input defaultValue={saturday} onChange={(prev) => setSaturday(prev => !prev)} checked={saturday} type="checkbox" className="custom-control-input" id="saturday" />
+                                    <input defaultValue={saturday} onChange={(prev) => setSaturday(prev => !prev)} defaultChecked={saturday} type="checkbox" className="custom-control-input" id="saturday" />
                                     <label htmlFor="saturday" className="custom-control-label">Saturday?</label>
                                 </div>
                             </div>
