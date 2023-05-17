@@ -452,11 +452,113 @@ app.get("/api/orderEdit/:order_id", (req, res) => {
 });
 
 // Edit Order
-app.post("/api/editOrder", (req, res)=> {
+app.post("/api/editOrder", (req, res) => {
     const order_id = req.body.order_id;
     const salesperson = req.body.salesperson;
     const requestor = req.body.requestor;
     const customer_contact = req.body.customer_contact;
+    const reOrder = req.body.reOrder;
+
+    const factoryOrderQuantity = req.body.factoryOrderQuantity;
+    const customInvoice = req.body.customInvoice;
+    const customPackingSlip = req.body.customPackingSlip;
+    const customQuantity = req.body.customQuantity;
+    const customUnitPrice = req.body.customUnitPrice;
+    const customTotalPrice = req.body.customTotalPrice;
+
+    // Non-Inventory Items
+    const nonItem1 = req.body.nonItem1;
+    const nonItemInvoice1 = req.body.nonItemInvoice1;
+    const nonItemPackingSlip1 = req.body.nonItemPackingSlip1;
+    const nonItemQuantity1 = req.body.nonItemQuantity1;
+    const nonItemUnitPrice1 = req.body.nonItemUnitPrice1;
+    const nonItemTotalPrice1 = req.body.nonItemTotalPrice1;
+
+    const nonItem2 = req.body.nonItem2;
+    const nonItemInvoice2 = req.body.nonItemInvoice2;
+    const nonItemPackingSlip2 = req.body.nonItemPackingSlip2;
+    const nonItemQuantity2 = req.body.nonItemQuantity2;
+    const nonItemUnitPrice2 = req.body.nonItemUnitPrice2;
+    const nonItemTotalPrice2 = req.body.nonItemTotalPrice2;
+
+    const nonItem3 = req.body.nonItem3;
+    const nonItemInvoice3 = req.body.nonItemInvoice3;
+    const nonItemPackingSlip3 = req.body.nonItemPackingSlip3;
+    const nonItemQuantity3 = req.body.nonItemQuantity3;
+    const nonItemUnitPrice3 = req.body.nonItemUnitPrice3;
+    const nonItemTotalPrice3 = req.body.nonItemTotalPrice3;
+
+    const nonItem4 = req.body.nonItem4;
+    const nonItemInvoice4 = req.body.nonItemInvoice4;
+    const nonItemPackingSlip4 = req.body.nonItemPackingSlip4;
+    const nonItemQuantity4 = req.body.nonItemQuantity4;
+    const nonItemUnitPrice4 = req.body.nonItemUnitPrice4;
+    const nonItemTotalPrice4 = req.body.nonItemTotalPrice4;
+
+    const nonItem5 = req.body.nonItem5;
+    const nonItemInvoice5 = req.body.nonItemInvoice5;
+    const nonItemPackingSlip5 = req.body.nonItemPackingSlip5;
+    const nonItemQuantity5 = req.body.nonItemQuantity5;
+    const nonItemUnitPrice5 = req.body.nonItemUnitPrice5;
+    const nonItemTotalPrice5 = req.body.nonItemTotalPrice5;
+
+    const nonItem6 = req.body.nonItem6;
+    const nonItemInvoice6 = req.body.nonItemInvoice6;
+    const nonItemPackingSlip6 = req.body.nonItemPackingSlip6;
+    const nonItemQuantity6 = req.body.nonItemQuantity6;
+    const nonItemUnitPrice6 = req.body.nonItemUnitPrice6;
+    const nonItemTotalPrice6 = req.body.nonItemTotalPrice6;
+
+    // Inventory Items
+    const item1 = req.body.item1;
+    const itemName1 = req.body.itemName1;
+    const itemType1 = req.body.itemType1;
+    const itemInvoice1 = req.body.itemInvoice1;
+    const itemPackingSlip1 = req.body.itemPackingSlip1;
+    const itemQuantity1 = req.body.itemQuantity1;
+    const itemUnitPrice1 = req.body.itemUnitPrice1;
+    const itemTotalPrice1 = req.body.itemTotalPrice1;
+
+    const item2 = req.body.item2;
+    const itemName2 = req.body.itemName2;
+    const itemType2 = req.body.itemType2;
+    const itemInvoice2 = req.body.itemInvoice2;
+    const itemPackingSlip2 = req.body.itemPackingSlip2;
+    const itemQuantity2 = req.body.itemQuantity2;
+    const itemUnitPrice2 = req.body.itemUnitPrice2;
+    const itemTotalPrice2 = req.body.itemTotalPrice2;
+
+    const item3 = req.body.item3;
+    const itemName3 = req.body.itemName3;
+    const itemType3 = req.body.itemType3;
+    const itemInvoice3 = req.body.itemInvoice3;
+    const itemPackingSlip3 = req.body.itemPackingSlip3;
+    const itemQuantity3 = req.body.itemQuantity3;
+    const itemUnitPrice3 = req.body.itemUnitPrice3;
+    const itemTotalPrice3 = req.body.itemTotalPrice3;
+
+    // Billing Information
+    const assemblyChargesQuantity = req.body.assemblyChargesQuantity;
+    const assemblyChargesUnitPrice = req.body.assemblyChargesUnitPrice;
+    const assemblyChargesTotalPrice = req.body.assemblyChargesTotalPrice;
+    const printingChargesQuantity = req.body.printingChargesQuantity;
+    const printingChargesUnitPrice = req.body.printingChargesUnitPrice;
+    const printingChargesTotalPrice = req.body.printingChargesTotalPrice;
+    const setupCharge = req.body.setupCharge;
+    const numberOfScreens = req.body.numberOfScreens;
+    const screensPrice = req.body.screensPrice;
+    const subTotal = req.body.subTotal;
+    const taxRate = req.body.taxRate;
+    const tax = req.body.tax;
+    const freightCharges = req.body.freightCharges;
+    const priceTotal = req.body.priceTotal;
+
+    // Invoice Information
+    const invoice_date = req.body.invoiceDate;
+    const invoice_date_paid = req.body.invoiceDatePaid;
+    const invoice_notes = req.body.invoiceNotes;
+
+    // Job Information
     const abs_sales_order_date = req.body.abs_sales_order_date;
     const customer_order_date = req.body.customer_order_date;
     const customer_po_date = req.body.customer_po_date;
@@ -468,39 +570,135 @@ app.post("/api/editOrder", (req, res)=> {
     const customer_notes = req.body.customer_notes;
     const vendor_notes = req.body.vendor_notes;
     const order_notes = req.body.order_notes;
-    const invoice_date = req.body.invoice_date;
-    const invoice_date_paid = req.body.invoice_date_paid;
-    const invoice_notes = req.body.invoice_notes;
     const order_status = req.body.order_status;
 
 
     const testData = {
-        salesperson : req.body.salesperson,
-        requestor : req.body.requestor,
-        customer_contact : req.body.customer_contact,
-        abs_sales_order_date : req.body.abs_sales_order_date,
-        customer_order_date : req.body.customer_order_date,
-        customer_po_date : req.body.customer_po_date,
-        customer_po_number : req.body.customer_po_number,
-        days_turn : req.body.days_turn,
-        date_code_printing : req.body.date_code_printing,
-        customer_provided_material : req.body.customer_provided_material,
-        customer_material_eta : req.body.customer_material_eta,
-        customer_notes : req.body.customer_notes,
-        vendor_notes : req.body.vendor_notes,
-        order_notes : req.body.order_notes,
-        invoice_date : req.body.invoice_date,
-        invoice_date_paid : req.body.invoice_date_paid,
-        invoice_notes : req.body.invoice_notes,
-        order_status : req.body.order_status,
+        salesperson: req.body.salesperson,
+        requestor: req.body.requestor,
+        customer_contact: req.body.customer_contact,
+        reOrder: req.body.reOrder,
+
+        factoryOrderQuantity: req.body.factoryOrderQuantity,
+        customInvoice: req.body.customInvoice,
+        customPackingSlip: req.body.customPackingSlip,
+        customQuantity: req.body.customQuantity,
+        customUnitPrice: req.body.customUnitPrice,
+        customTotalPrice: req.body.customTotalPrice,
+
+        // Non-Inventory Items
+        nonItem1: req.body.nonItem1,
+        nonItemInvoice1: req.body.nonItemInvoice1,
+        nonItemPackingSlip1: req.body.nonItemPackingSlip1,
+        nonItemQuantity1: req.body.nonItemQuantity1,
+        nonItemUnitPrice1: req.body.nonItemUnitPrice1,
+        nonItemTotalPrice1: req.body.nonItemTotalPrice1,
+
+        nonItem2: req.body.nonItem2,
+        nonItemInvoice2: req.body.nonItemInvoice2,
+        nonItemPackingSlip2: req.body.nonItemPackingSlip2,
+        nonItemQuantity2: req.body.nonItemQuantity2,
+        nonItemUnitPrice2: req.body.nonItemUnitPrice2,
+        nonItemTotalPrice2: req.body.nonItemTotalPrice2,
+
+        nonItem3: req.body.nonItem3,
+        nonItemInvoice3: req.body.nonItemInvoice3,
+        nonItemPackingSlip3: req.body.nonItemPackingSlip3,
+        nonItemQuantity3: req.body.nonItemQuantity3,
+        nonItemUnitPrice3: req.body.nonItemUnitPrice3,
+        nonItemTotalPrice3: req.body.nonItemTotalPrice3,
+
+        nonItem4: req.body.nonItem4,
+        nonItemInvoice4: req.body.nonItemInvoice4,
+        nonItemPackingSlip4: req.body.nonItemPackingSlip4,
+        nonItemQuantity4: req.body.nonItemQuantity4,
+        nonItemUnitPrice4: req.body.nonItemUnitPrice4,
+        nonItemTotalPrice4: req.body.nonItemTotalPrice4,
+
+        nonItem5: req.body.nonItem5,
+        nonItemInvoice5: req.body.nonItemInvoice5,
+        nonItemPackingSlip5: req.body.nonItemPackingSlip5,
+        nonItemQuantity5: req.body.nonItemQuantity5,
+        nonItemUnitPrice5: req.body.nonItemUnitPrice5,
+        nonItemTotalPrice5: req.body.nonItemTotalPrice5,
+
+        nonItem6: req.body.nonItem6,
+        nonItemInvoice6: req.body.nonItemInvoice6,
+        nonItemPackingSlip6: req.body.nonItemPackingSlip6,
+        nonItemQuantity6: req.body.nonItemQuantity6,
+        nonItemUnitPrice6: req.body.nonItemUnitPrice6,
+        nonItemTotalPrice6: req.body.nonItemTotalPrice6,
+
+        // Inventory Items
+        item1: req.body.item1,
+        itemName1: req.body.itemName1,
+        itemType1: req.body.itemType1,
+        itemInvoice1: req.body.itemInvoice1,
+        itemPackingSlip1: req.body.itemPackingSlip1,
+        itemQuantity1: req.body.itemQuantity1,
+        itemUnitPrice1: req.body.itemUnitPrice1,
+        itemTotalPrice1: req.body.itemTotalPrice1,
+
+        item2: req.body.item2,
+        itemName2: req.body.itemName2,
+        itemType2: req.body.itemType2,
+        itemInvoice2: req.body.itemInvoice2,
+        itemPackingSlip2: req.body.itemPackingSlip2,
+        itemQuantity2: req.body.itemQuantity2,
+        itemUnitPrice2: req.body.itemUnitPrice2,
+        itemTotalPrice2: req.body.itemTotalPrice2,
+
+        item3: req.body.item3,
+        itemName3: req.body.itemName3,
+        itemType3: req.body.itemType3,
+        itemInvoice3: req.body.itemInvoice3,
+        itemPackingSlip3: req.body.itemPackingSlip3,
+        itemQuantity3: req.body.itemQuantity3,
+        itemUnitPrice3: req.body.itemUnitPrice3,
+        itemTotalPrice3: req.body.itemTotalPrice3,
+
+        // Billing Information
+        assemblyChargesQuantity: req.body.assemblyChargesQuantity,
+        assemblyChargesUnitPrice: req.body.assemblyChargesUnitPrice,
+        assemblyChargesTotalPrice: req.body.assemblyChargesTotalPrice,
+        printingChargesQuantity: req.body.printingChargesQuantity,
+        printingChargesUnitPrice: req.body.printingChargesUnitPrice,
+        printingChargesTotalPrice: req.body.printingChargesTotalPrice,
+        setupCharge: req.body.setupCharge,
+        numberOfScreens: req.body.numberOfScreens,
+        screensPrice: req.body.screensPrice,
+        subTotal: req.body.subTotal,
+        taxRate: req.body.taxRate,
+        tax: req.body.tax,
+        freightCharges: req.body.freightCharges,
+        priceTotal: req.body.priceTotal,
+
+        // Invoice Information
+        invoice_date: req.body.invoiceDate,
+        invoice_date_paid: req.body.invoiceDatePaid,
+        invoice_notes: req.body.invoiceNotes,
+
+        // Job Information
+        abs_sales_order_date: req.body.abs_sales_order_date,
+        customer_order_date: req.body.customer_order_date,
+        customer_po_date: req.body.customer_po_date,
+        customer_po_number: req.body.customer_po_number,
+        days_turn: req.body.days_turn,
+        date_code_printing: req.body.date_code_printing,
+        customer_provided_material: req.body.customer_provided_material,
+        customer_material_eta: req.body.customer_material_eta,
+        customer_notes: req.body.customer_notes,
+        vendor_notes: req.body.vendor_notes,
+        order_notes: req.body.order_notes,
+        order_status: req.body.order_status,
     }
 
     let sqlUpdate = 'UPDATE order_table SET ';
     let isFirstField = true;
 
     for (const field in testData) {
-        if(testData[field]) {
-            if(!isFirstField) {
+        if (testData[field]) {
+            if (!isFirstField) {
                 sqlUpdate += ', ';
             }
             sqlUpdate += `${field} = '${testData[field]}'`;
@@ -510,9 +708,113 @@ app.post("/api/editOrder", (req, res)=> {
     sqlUpdate += ` WHERE order_id = ${order_id}`;
     console.log(sqlUpdate);
 
-    db.query(sqlUpdate, [salesperson, requestor, customer_contact, abs_sales_order_date, customer_order_date, customer_po_date, customer_po_number, days_turn, date_code_printing, customer_provided_material, customer_material_eta, customer_notes, vendor_notes, order_notes, invoice_date, invoice_date_paid, invoice_notes, order_status], (err, result)=>{
-        console.log(result);
-    });
+    db.query(
+        sqlUpdate,
+        [
+            salesperson,
+            requestor,
+            customer_contact,
+            reOrder,
+            factoryOrderQuantity,
+            customInvoice,
+            customPackingSlip,
+            customQuantity,
+            customUnitPrice,
+            customTotalPrice,
+            nonItem1,
+            nonItemInvoice1,
+            nonItemPackingSlip1,
+            nonItemQuantity1,
+            nonItemUnitPrice1,
+            nonItemTotalPrice1,
+            nonItem2,
+            nonItemInvoice2,
+            nonItemPackingSlip2,
+            nonItemQuantity2,
+            nonItemUnitPrice2,
+            nonItemTotalPrice2,
+            nonItem3,
+            nonItemInvoice3,
+            nonItemPackingSlip3,
+            nonItemQuantity3,
+            nonItemUnitPrice3,
+            nonItemTotalPrice3,
+            nonItem4,
+            nonItemInvoice4,
+            nonItemPackingSlip4,
+            nonItemQuantity4,
+            nonItemUnitPrice4,
+            nonItemTotalPrice4,
+            nonItem5,
+            nonItemInvoice5,
+            nonItemPackingSlip5,
+            nonItemQuantity5,
+            nonItemUnitPrice5,
+            nonItemTotalPrice5,
+            nonItem6,
+            nonItemInvoice6,
+            nonItemPackingSlip6,
+            nonItemQuantity6,
+            nonItemUnitPrice6,
+            nonItemTotalPrice6,
+            item1,
+            itemName1,
+            itemType1,
+            itemInvoice1,
+            itemPackingSlip1,
+            itemQuantity1,
+            itemUnitPrice1,
+            itemTotalPrice1,
+            item2,
+            itemName2,
+            itemType2,
+            itemInvoice2,
+            itemPackingSlip2,
+            itemQuantity2,
+            itemUnitPrice2,
+            itemTotalPrice2,
+            item3,
+            itemName3,
+            itemType3,
+            itemInvoice3,
+            itemPackingSlip3,
+            itemQuantity3,
+            itemUnitPrice3,
+            itemTotalPrice3,
+            assemblyChargesQuantity,
+            assemblyChargesUnitPrice,
+            assemblyChargesTotalPrice,
+            printingChargesQuantity,
+            printingChargesUnitPrice,
+            printingChargesTotalPrice,
+            setupCharge,
+            numberOfScreens,
+            screensPrice,
+            subTotal,
+            taxRate,
+            tax,
+            freightCharges,
+            priceTotal,
+            invoice_date,
+            invoice_date_paid,
+            invoice_notes,
+            abs_sales_order_date,
+            customer_order_date,
+            customer_po_date,
+            customer_po_number,
+            days_turn,
+            date_code_printing,
+            customer_provided_material,
+            customer_material_eta,
+            customer_notes,
+            vendor_notes,
+            order_notes,
+            order_status
+        ],
+        (err, result) => {
+            console.log(result);
+        }
+    );
 });
 
 // CONTACT PAGE - POST API =>
