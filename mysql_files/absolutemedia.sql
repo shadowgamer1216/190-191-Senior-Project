@@ -345,16 +345,6 @@ CREATE TABLE shipping_table (
     FOREIGN KEY (order_id) REFERENCES order_table(order_id) ON DELETE CASCADE
 );
 
-
-CREATE TABLE orders (
-    orderID INT NOT NULL AUTO_INCREMENT,
-    company VARCHAR(255),
-    company_address VARCHAR(255),
-    customer VARCHAR(255),
-    customer_address VARCHAR(255),
-    date DATE,
-    PRIMARY KEY (orderID)
-);
 CREATE TABLE invoice (
     invoiceID INT NOT NULL AUTO_INCREMENT,
     customer VARCHAR(225) DEFAULT '',

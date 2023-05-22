@@ -343,7 +343,7 @@ const OrderEdit = ({ handleLogout }) => {
         new_freightCharges]);
 
     const handleNavigate = async () => {
-        await Sleep(4000);
+        await Sleep(5000);
         navigate(`/order/${order_id}`);
     }
 
@@ -642,7 +642,7 @@ const OrderEdit = ({ handleLogout }) => {
                             <label className="col-md-2.5 col-form-label">Invoice</label>
                             <div className="input-group input-group-sm mb-3 col-md-1">
                                 <div className="form-group custom-control custom-checkbox">
-                                    <input type="checkbox" defaultChecked={nonItemInvoice1} onChange={(e) => {setNonItem1(e.target.value)}} className="custom-control-input" id="nonItemInvoice1" />
+                                    <input type="checkbox" defaultChecked={nonItemInvoice1} onChange={(e) => {setNonItemInvoice1(e.target.value)}} className="custom-control-input" id="nonItemInvoice1" />
                                     <label htmlFor="nonItemInvoice1" className="custom-control-label"></label>
                                 </div>
                             </div>
@@ -662,7 +662,7 @@ const OrderEdit = ({ handleLogout }) => {
 
                             <label className="col-md-2.5 col-form-label">Unit Price $</label>
                             <div className="input-group input-group-sm mb-3 col-md-1">
-                                <input type="number" step="0.01" className="form-control" id="nonItemUnitPrice1" defaultValue={nonItemUnitPrice1} onChange={(e) => {setItemUnitPrice1(e.target.value)}} />
+                                <input type="number" step="0.01" className="form-control" id="nonItemUnitPrice1" defaultValue={nonItemUnitPrice1} onChange={(e) => {setNonItemUnitPrice1(e.target.value)}} />
                             </div>
 
                             <label className="col-md-2.5 col-form-label">Total Price $</label>
@@ -929,7 +929,7 @@ const OrderEdit = ({ handleLogout }) => {
 
                             <label className="col-md-2.5 col-form-label">Unit Price $</label>
                             <div className="input-group input-group-sm mb-3 col-md-1">
-                                <input type="number" step="0.01" className="form-control" id="itemUnitPrice1" defaultValue={itemUnitPrice1} onChange={(e) => {setItemUnitPrice2(e.target.value)}}/>
+                                <input type="number" step="0.01" className="form-control" id="itemUnitPrice1" defaultValue={itemUnitPrice1} onChange={(e) => {setItemUnitPrice1(e.target.value)}}/>
                             </div>
 
                             <label className="col-md-2.5 col-form-label">Total Price $</label>
